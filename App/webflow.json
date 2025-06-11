@@ -1,0 +1,6 @@
+{
+  "name": "waterfall",
+  "size": "default",
+  "publicDir": "dist",
+  "apiVersion": "2"
+}
