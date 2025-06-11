@@ -1,0 +1,25 @@
+{
+  "name": "wellflow",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd Data\\ Client && npm run dev\" \"cd Designer\\ Extension && npm run dev\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/well-webflow/Wellflow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/well-webflow/Wellflow/issues"
+  },
+  "homepage": "https://github.com/well-webflow/Wellflow#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

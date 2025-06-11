@@ -14,8 +14,10 @@
   "type": "commonjs",
   "dependencies": {
     "@ngrok/ngrok": "^1.5.1",
+    "@types/cors": "^2.8.19",
     "chalk": "^5.4.1",
     "cli-table3": "^0.6.5",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "webflow-api": "^3.1.3"
   },

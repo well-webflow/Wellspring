@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 
 // NGROK for hosting locally
@@ -16,9 +17,19 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
-app.post('/dice', (req, res) => {
-  const randomDice = Math.floor(Math.random() * 7) + 1;
-  res.json({ dice: randomDice });
+// Set up Middleware
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://striking-illegally-wallaby.ngrok-free.app',
+    ],
+  })
+);
+
+// Sample Route
+app.post('/hello', (req, res) => {
+  res.send('Hello World!');
 });
 
 // Setup Routes
