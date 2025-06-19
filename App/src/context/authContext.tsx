@@ -30,10 +30,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [siteData, setSiteData] = useState([]);
 
-  const PORT = import.meta.env.VITE_PORT;
-  const API_URL = `http://localhost:${PORT}/`;
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const exchangeAndVerifyIdToken = async () => {
+    console.log('Exchanging and verifying ID token...');
     try {
       setIsLoading(true);
       const idToken = await webflow.getIdToken();
@@ -123,9 +123,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   // Open OAuth screen
-  const openAuthScreen = () => {
-    window.open(`http://localhost:${PORT}`, '_blank', 'width=600,height=400');
-  };
+  // const openAuthScreen = () => {
+  //   window.open(`http://localhost:${PORT}`, '_blank', 'width=600,height=400');
+  // };
 
   return (
     <AuthContext.Provider

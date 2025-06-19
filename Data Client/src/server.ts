@@ -11,6 +11,7 @@ import { logServerInfo } from './utils/serverLog';
 
 // Import routes
 import sitesRoutes from './routes/sitesRoutes';
+import authRoutes from './routes/authRoutes';
 
 // Configure the Express server
 dotenv.config();
@@ -21,7 +22,7 @@ const PORT = Number(process.env.PORT) || 3000;
 app.use(
   cors({
     origin: [
-      'http://localhost:3000',
+      'http://localhost:1337',
       'https://striking-illegally-wallaby.ngrok-free.app',
     ],
   })
@@ -34,6 +35,7 @@ app.post('/hello', (req, res) => {
 
 // Setup Routes
 app.use('/sites', sitesRoutes);
+app.use('/auth', authRoutes);
 
 // Start server with NGROK
 const startServer = async () => {

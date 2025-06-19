@@ -11,8 +11,8 @@ export function logServerInfo(ngrokUrl: string | null, PORT: number) {
 
   // Add URL information to the table
   table.push(
-    ['Backend', `http://localhost:${PORT}`],
-    ['Frontend', 'http://localhost:3000']
+    ['Backend', `https://striking-illegally-wallaby.ngrok-free.app/`],
+    ['Frontend', 'http://localhost:1337']
   );
 
   // If using an App, also add the Redirect URI to the table
