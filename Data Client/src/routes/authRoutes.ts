@@ -1,6 +1,8 @@
 import express from 'express';
 import { WebflowClient } from 'webflow-api';
 
+import path from 'path';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -23,25 +25,35 @@ router.get('/callback', async (req, res) => {
   }
 
   // Get the access token from OAuth flow
-  try {
-    const accessToken = await WebflowClient.getAccessToken({
-      clientId: process.env.CLIENT_ID || '',
-      clientSecret: process.env.CLIENT_SECRET || '',
-      code: code as string,
-      redirectUri: process.env.REDIRECT_URI,
-    });
+  const accessToken = await WebflowClient.getAccessToken({
+    clientId: process.env.CLIENT_ID || '',
+    clientSecret: process.env.CLIENT_SECRET || '',
+    code: code as string,
+    redirectUri: process.env.REDIRECT_URI,
+  });
 
-    // NEED TO STORE THE ACCESS TOKEN IN A SECURE PLACE
-    // I THINK THIS IS WHERE JWT COMES IN HANDY
-    // For now, we will just send it back to the client
-    console.log('Access Token:', accessToken);
+  // Instantiate the Webflow Client with the access token
+  const webflow = new WebflowClient({ accessToken });
+  // NEED TO STORE THE ACCESS TOKEN IN A SECURE PLACE
+  // I THINK THIS IS WHERE JWT COMES IN HANDY
+  // For now, we will just send it back to the client
+  console.log('Access Token:', accessToken);
 
-    // Redirect the user to the frontend with the access token
-    res.redirect('/');
-  } catch (error) {
-    console.error('Error during OAuth process:', error);
-    res.status(500).send('Internal Server Error');
-  }
+  // Get site ID to pair with the authorization access token
+  const sites = await webflow.sites.list();
+  sites.sites?.forEach((site) => {
+    console.log(`Site ID: ${site.id}`);
+    //db.insertSiteAuthorization(site.id, accessToken);
+  });
+
+  // Send Auth Complete Screen with Post Message
+  // TODO: Improve UX by showing a list of sites to return to, or by updating the HTML
+  const filePath = path.resolve('public', 'authComplete.html');
+  res.sendFile(filePath);
 });
+
+// router.post("/token", jwt.retrieveAccessToken, async (req, res) => {
+
+// });
 
 export default router;

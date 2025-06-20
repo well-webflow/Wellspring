@@ -40,6 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const siteInfo = await webflow.getSiteInfo();
       setIdToken(idToken);
 
+      console.log('Site ID: ', siteInfo);
       console.log('URL:', API_URL);
 
       const response = await axios.post(API_URL + 'token', {
