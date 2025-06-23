@@ -8,6 +8,7 @@ import { useWaterfallContext } from '../context/waterfallContext';
 import Heading from '../components/Heading';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
+import { useAuth } from '../context/authContext';
 
 export default function InitializationView() {
   const { createWaterfall, loadWaterfall, elementSelected, waterfallSelected } =
@@ -80,6 +81,8 @@ export default function InitializationView() {
 }
 
 function InitializationHeader() {
+  const {openAuthWindow} = useAuth();
+
   return (
     <>
       <div className="w-full border border-border1 p-5 flex flex-row justify-between">
@@ -90,7 +93,12 @@ function InitializationHeader() {
           height={20}
           className=""
         />
+        <div className='flex flex-row gap-2'>
+        <Button onClick={openAuthWindow} color="primary">
+                Authorize App
+              </Button>
         <Button color="secondary">Donate</Button>
+        </div>
       </div>
       <div className="p-5">
         <Heading

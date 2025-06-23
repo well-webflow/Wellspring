@@ -1,71 +1,124 @@
-// import jwt from "jsonwebtoken";
-// import db from "./database.js";
+import { Request, Response, NextFunction, RequestHandler } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import db from '../db/db';
 
-// // Given a site ID, retrieve associated Access Token
-// const retrieveAccessToken = (req, res, next) => {
-//   const idToken = req.body.idToken;
-//   const siteId = req.body.siteId;
+// Extend Express Request to include custom fields
+declare module 'express-serve-static-core' {
+  interface Request {
+    accessToken?: string | null;
+  }
+}
 
-//   if (!idToken) {
-//     return res.status(401).json({ message: "ID Token is missing" });
-//   }
-//   if (!siteId) {
-//     return res.status(401).json({ message: "Site ID is missing" });
-//   }
+/**
+ * CREATE SESSION TOKEN
+ * Creates a JWT session token for the user, which can be used to authenticate requests
+ * @param user
+ * @returns
+ */
+const createSessionToken = (user: any) => {
+  // Get the Webflow secret from environment variables
+  const secret = process.env.WEBFLOW_CLIENT_SECRET;
+  if (!secret) {
+    throw new Error('WEBFLOW_CLIENT_SECRET is not defined in environment');
+  }
+  const sessionToken = jwt.sign({ user }, secret, {
+    expiresIn: '24h',
+  });
+  const decodedToken = jwt.decode(sessionToken) as JwtPayload | null;
+  return {
+    sessionToken,
+    exp: decodedToken?.exp,
+  };
+};
 
-//   db.getAccessTokenFromSiteId(siteId, (error, accessToken) => {
-//     if (error) {
-//       return res.status(500).json({ error: "Failed to retrieve access token" });
-//     }
-//     // Attach access token in the request object so that you can make an authenticated request to Webflow
-//     req.accessToken = accessToken;
+/**
+ * RETRIEVE ACCESS TOKEN
+ * Given a site ID, retrieve associated Access Token
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ */
+const retrieveAccessToken: RequestHandler = (req, res, next) => {
+  console.log('Retrieving access token for site ID:', req.body.siteId);
+  const idToken = req.body.idToken;
+  const siteId = req.body.siteId;
 
-//     next(); // Proceed to next middleware or route handler
-//   });
-// };
+  if (!idToken) {
+    res.status(401).json({ message: 'ID Token is missing' });
+    return;
+  }
+  if (!siteId) {
+    res.status(401).json({ message: 'Site ID is missing' });
+    return;
+  }
 
-// const createSessionToken = (user) => {
-//   const sessionToken = jwt.sign({ user }, process.env.WEBFLOW_CLIENT_SECRET, {
-//     expiresIn: "24h",
-//   }); // Example expiration time of 1 hour}
-//   const decodedToken = jwt.decode(sessionToken);
-//   return {
-//     sessionToken,
-//     exp: decodedToken.exp,
-//   };
-// };
+  db.getAccessTokenFromSiteId(
+    siteId,
+    (error: Error | null, accessToken: string | null) => {
+      if (error) {
+        return res
+          .status(500)
+          .json({ error: 'Failed to retrieve access token' });
+      }
+      // Attach access token in the request object so that you can make an authenticated request to Webflow
+      req.accessToken = accessToken;
 
-// // Middleware to authenticate and validate JWT, and fetch the access token given the user ID
-// const authenticateSessionToken = (req, res, next) => {
-//   const authHeader = req.headers.authorization;
-//   const sessionToken = authHeader && authHeader.split(" ")[1]; // Extract the token from 'Bearer <token>'
-//   if (!sessionToken) {
-//     return res.status(401).json({ message: "Authentication token is missing" });
-//   }
+      next(); // Proceed to next middleware or route handler
+    }
+  );
+};
 
-//   // Verify the Token
-//   jwt.verify(sessionToken, process.env.WEBFLOW_CLIENT_SECRET, (err, user) => {
-//     if (err) {
-//       return res.status(403).json({ message: "Invalid or expired token" });
-//     }
+/**
+ * Middleware to authenticate and validate JWT, and fetch the access token given the user ID
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ */
+const authenticateSessionToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const authHeader = req.headers.authorization;
+  const sessionToken = authHeader && authHeader.split(' ')[1]; // Extract the token from 'Bearer <token>'
+  if (!sessionToken) {
+    return res.status(401).json({ message: 'Authentication token is missing' });
+  }
 
-//     // Use the user details to fetch the access token from the database
-//     db.getAccessTokenFromUserId(user.user.id, (error, accessToken) => {
-//       if (error) {
-//         return res
-//           .status(500)
-//           .json({ error: "Failed to retrieve access token" });
-//       }
-//       // Attach access token in the request object so that you can make an authenticated request to Webflow
-//       req.accessToken = accessToken;
+  // Get the Webflow Secret
+  const secret = process.env.WEBFLOW_CLIENT_SECRET;
+  if (!secret) {
+    throw new Error('WEBFLOW_CLIENT_SECRET is not defined in environment');
+  }
 
-//       next(); // Proceed to next middleware or route handler
-//     });
-//   });
-// };
+  // Verify the Token
+  jwt.verify(sessionToken, secret, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid or expired token' });
+    }
 
-// export default {
-//   createSessionToken,
-//   retrieveAccessToken,
-//   authenticateSessionToken,
-// };
+    // Get the user from the decoded token
+    const user = (decoded as JwtPayload).user;
+
+    // Use the user details to fetch the access token from the database
+    db.getAccessTokenFromUserId(user.user.id, (error, accessToken) => {
+      if (error) {
+        return res
+          .status(500)
+          .json({ error: 'Failed to retrieve access token' });
+      }
+      // Attach access token in the request object so that you can make an authenticated request to Webflow
+      req.accessToken = accessToken;
+
+      next(); // Proceed to next middleware or route handler
+    });
+  });
+};
+
+export default {
+  createSessionToken,
+  retrieveAccessToken,
+  authenticateSessionToken,
+};

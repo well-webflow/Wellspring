@@ -19,9 +19,12 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   refetchAuth: () => void;
+  openAuthWindow: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const SESSION_TOKEN_NAME = 'wf_hybrid_user';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [idToken, setIdToken] = useState('');
@@ -32,6 +35,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
+  const openAuthWindow = () => {
+    // Open a new window for OAuth authentication
+    const authWindow = window.open(
+      `${API_URL}auth`,
+      '_blank',
+    );
+
+    if (!authWindow) {
+      console.error('Failed to open authentication window');
+      return;
+    }
+
+    // Polling to check if the authentication is complete
+    // const interval = setInterval(() => {
+    //   if (authWindow.closed) {
+    //     clearInterval(interval);
+    //     console.log('Authentication window closed');
+    //   }
+    // }, 1000);
+  }
+
   const exchangeAndVerifyIdToken = async () => {
     console.log('Exchanging and verifying ID token...');
     try {
@@ -39,9 +63,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const idToken = await webflow.getIdToken();
       const siteInfo = await webflow.getSiteInfo();
       setIdToken(idToken);
-
-      console.log('Site ID: ', siteInfo);
-      console.log('URL:', API_URL);
 
       const response = await axios.post(API_URL + 'token', {
         idToken,
@@ -53,13 +74,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const decodedToken = JSON.parse(atob(sessionToken.split('.')[1]));
       const { firstName, email } = decodedToken.user;
 
+      console.log("SESSION TOKEN:", sessionToken);
+
       localStorage.setItem(
-        'wf_hybrid_user',
+        SESSION_TOKEN_NAME,
         JSON.stringify({ sessionToken, firstName, email, exp: expAt })
       );
       setUser({ firstName, email });
       setSessionToken(sessionToken);
-      console.log(`Session Token: ${sessionToken}`);
     } catch (error) {
       console.error('Auth error:', error);
     } finally {
@@ -67,9 +89,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  /**
+   * INITIALIZE LOCAL SESSION TOKEN
+   * Look for the session token in local storage. If it is not expired, sets the session token and user. 
+   * Otherwise, exchanges the ID token for a new session token.
+   */
   const initializeLocalSessionToken = () => {
+    console.log('Initializing local session token...');
     // Check local storage for session token
-    const localStorageUser = localStorage.getItem('wf_hybrid_user');
+    const localStorageUser = localStorage.getItem(SESSION_TOKEN_NAME);
     if (localStorageUser) {
       // Parse the token
       const userParse = JSON.parse(localStorageUser);
@@ -77,13 +105,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const userStoredTokenExp = userParse.exp;
       // If the token is not expired, set session token and user
       // Otherwise, exchange and verify the ID token
-      if (userStoredSessionToken && Date.now() < userStoredTokenExp) {
+      const notExpired = Date.now() < (userStoredTokenExp * 1000); // convert exp to milliseconds
+      if (userStoredSessionToken && notExpired) {
         if (!sessionToken) {
+          console.log('Setting session token from local storage');
           setSessionToken(userStoredSessionToken);
           setUser({ firstName: userParse.firstName, email: userParse.email });
         }
       } else {
-        localStorage.removeItem('wf_hybrid_user');
+        console.log('Session token expired or not found, exchanging ID token');
+        localStorage.removeItem(SESSION_TOKEN_NAME);
         exchangeAndVerifyIdToken();
       }
     } else {
@@ -110,7 +141,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    exchangeAndVerifyIdToken();
     initializeLocalSessionToken();
     initializeOAuthCallback();
   }, [sessionToken]);
@@ -135,6 +165,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         sessionToken,
         user,
         isLoading,
+        openAuthWindow,
         refetchAuth: exchangeAndVerifyIdToken,
       }}
     >

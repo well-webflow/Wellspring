@@ -16,7 +16,7 @@ import { logServerInfo } from './utils/serverLog';
 // Import routes
 import sitesRoutes from './routes/sitesRoutes';
 import authRoutes from './routes/authRoutes';
-import { getAccessTokenBySiteId, insertSiteAuthorization } from './db/db';
+import tokenRoutes from './routes/tokenRoutes';
 
 // Configure the Express server
 const app = express();
@@ -25,35 +25,32 @@ const PORT = Number(process.env.PORT) || 3000;
 // Set up CORS Middleware
 app.use(
   cors({
-    origin: [
-      'http://localhost:1337',
-      'https://striking-illegally-wallaby.ngrok-free.app',
-    ],
+    origin: '*',
   })
 );
+
+// app.use(
+//   cors({
+//     origin: [
+//       'http://localhost:1337',
+//       'https://striking-illegally-wallaby.ngrok-free.app',
+//     ],
+//   })
+// );
 
 // Set up JSON body parser middleware
 app.use(express.json());
 
-// Sample Route
+// Sample Routes
 app.post('/hello', (req, res) => {
+  console.log('Received request on /hello');
   res.send('Hello World!');
-});
-
-app.get('/db', async (req, res) => {
-  await insertSiteAuthorization('sample-site-id', 'sample-access-token');
-  res.send('Database initialized');
-});
-
-app.post('/db/site', async (req, res) => {
-  const { siteId } = req.body;
-  const token = await getAccessTokenBySiteId(siteId);
-  res.send('Access Token: ' + token);
 });
 
 // Setup Routes
 app.use('/sites', sitesRoutes);
 app.use('/auth', authRoutes);
+app.use('/token', tokenRoutes);
 
 // Start server with NGROK
 const startServer = async () => {
