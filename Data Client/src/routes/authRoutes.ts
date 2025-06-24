@@ -14,7 +14,12 @@ router.get('/', (req, res) => {
   // Create the authorization URL to direct the user to Webflow's Authorization
   const authorizeUrl = WebflowClient.authorizeURL({
     state: process.env.STATE,
-    scope: ['authorized_user:read', 'sites:read'],
+    scope: [
+      'authorized_user:read',
+      'sites:read',
+      'custom_code:read',
+      'custom_code:write',
+    ],
     clientId: process.env.WEBFLOW_CLIENT_ID || '',
     redirectUri: process.env.REDIRECT_URI,
   });

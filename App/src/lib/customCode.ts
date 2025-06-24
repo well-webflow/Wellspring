@@ -9,7 +9,7 @@ export const addWaterfallScript = async (
   console.log(siteData);
 
   axiosInstance
-    .get('/custom-code/register', {
+    .get(`/custom-code/register${siteData.siteId}`, {
       headers: { authorization: `Bearer ${sessionToken}` },
     })
     .then((response) => {
