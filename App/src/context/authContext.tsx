@@ -13,11 +13,18 @@ interface User {
   email: string;
 }
 
+export interface WebflowSiteInfo {
+  siteId: string;
+  siteName: string;
+  shortName: string;
+}
+
 interface AuthContextType {
   idToken: string;
   sessionToken: string;
   user: User | null;
   isLoading: boolean;
+  siteData: WebflowSiteInfo | null;
   refetchAuth: () => void;
   openAuthWindow: () => void;
 }
@@ -31,16 +38,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [sessionToken, setSessionToken] = useState('');
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [siteData, setSiteData] = useState([]);
+  const [siteData, setSiteData] = useState<WebflowSiteInfo | null>(null);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
   const openAuthWindow = () => {
     // Open a new window for OAuth authentication
-    const authWindow = window.open(
-      `${API_URL}auth`,
-      '_blank',
-    );
+    const authWindow = window.open(`${API_URL}/auth`, '_blank');
 
     if (!authWindow) {
       console.error('Failed to open authentication window');
@@ -54,7 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     //     console.log('Authentication window closed');
     //   }
     // }, 1000);
-  }
+  };
 
   const exchangeAndVerifyIdToken = async () => {
     console.log('Exchanging and verifying ID token...');
@@ -64,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const siteInfo = await webflow.getSiteInfo();
       setIdToken(idToken);
 
-      const response = await axios.post(API_URL + 'token', {
+      const response = await axios.post(API_URL + '/token', {
         idToken,
         siteId: siteInfo.siteId,
       });
@@ -73,8 +77,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const expAt = response.data.exp;
       const decodedToken = JSON.parse(atob(sessionToken.split('.')[1]));
       const { firstName, email } = decodedToken.user;
-
-      console.log("SESSION TOKEN:", sessionToken);
 
       localStorage.setItem(
         SESSION_TOKEN_NAME,
@@ -91,11 +93,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   /**
    * INITIALIZE LOCAL SESSION TOKEN
-   * Look for the session token in local storage. If it is not expired, sets the session token and user. 
+   * Look for the session token in local storage. If it is not expired, sets the session token and user.
    * Otherwise, exchanges the ID token for a new session token.
    */
-  const initializeLocalSessionToken = () => {
+  const initializeLocalSessionToken = async () => {
     console.log('Initializing local session token...');
+
+    const siteInfo = await webflow.getSiteInfo();
+    setSiteData(siteInfo);
+
     // Check local storage for session token
     const localStorageUser = localStorage.getItem(SESSION_TOKEN_NAME);
     if (localStorageUser) {
@@ -105,13 +111,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const userStoredTokenExp = userParse.exp;
       // If the token is not expired, set session token and user
       // Otherwise, exchange and verify the ID token
-      const notExpired = Date.now() < (userStoredTokenExp * 1000); // convert exp to milliseconds
+      const notExpired = Date.now() < userStoredTokenExp * 1000; // convert exp to milliseconds
       if (userStoredSessionToken && notExpired) {
         if (!sessionToken) {
           console.log('Setting session token from local storage');
           setSessionToken(userStoredSessionToken);
           setUser({ firstName: userParse.firstName, email: userParse.email });
         }
+        console.log('Session token found and valid, using local storage token');
       } else {
         console.log('Session token expired or not found, exchanging ID token');
         localStorage.removeItem(SESSION_TOKEN_NAME);
@@ -145,14 +152,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initializeOAuthCallback();
   }, [sessionToken]);
 
-  // Handle request for site data
-  const getSiteData = async () => {
-    const sites = await axios.get(API_URL + 'sites', {
-      headers: { authorization: `Bearer ${sessionToken}` },
-    });
-    setSiteData(sites.data.data.sites);
-  };
-
   // Open OAuth screen
   // const openAuthScreen = () => {
   //   window.open(`http://localhost:${PORT}`, '_blank', 'width=600,height=400');
@@ -165,6 +164,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         sessionToken,
         user,
         isLoading,
+        siteData,
         openAuthWindow,
         refetchAuth: exchangeAndVerifyIdToken,
       }}

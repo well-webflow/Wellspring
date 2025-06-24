@@ -9,6 +9,7 @@ import Heading from '../components/Heading';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 import { useAuth } from '../context/authContext';
+import { addWaterfallScript } from '../lib/customCode';
 
 export default function InitializationView() {
   const { createWaterfall, loadWaterfall, elementSelected, waterfallSelected } =
@@ -81,7 +82,7 @@ export default function InitializationView() {
 }
 
 function InitializationHeader() {
-  const {openAuthWindow} = useAuth();
+  const { openAuthWindow, sessionToken, siteData } = useAuth();
 
   return (
     <>
@@ -93,11 +94,23 @@ function InitializationHeader() {
           height={20}
           className=""
         />
-        <div className='flex flex-row gap-2'>
-        <Button onClick={openAuthWindow} color="primary">
-                Authorize App
-              </Button>
-        <Button color="secondary">Donate</Button>
+        <div className="flex flex-row gap-2">
+          <Button
+            onClick={() => addWaterfallScript(siteData, sessionToken)}
+            color="primary"
+          >
+            Add Code
+          </Button>
+          {true ? (
+            <Button onClick={openAuthWindow} color="primary">
+              Authorize App
+            </Button>
+          ) : (
+            <Button onClick={() => {}} color="secondary">
+              Logout
+            </Button>
+          )}
+          <Button color="secondary">Donate</Button>
         </div>
       </div>
       <div className="p-5">

@@ -80,11 +80,12 @@ const authenticateSessionToken = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const authHeader = req.headers.authorization;
   const sessionToken = authHeader && authHeader.split(' ')[1]; // Extract the token from 'Bearer <token>'
   if (!sessionToken) {
-    return res.status(401).json({ message: 'Authentication token is missing' });
+    res.status(401).json({ message: 'Authentication token is missing' });
+    return;
   }
 
   // Get the Webflow Secret
@@ -96,14 +97,17 @@ const authenticateSessionToken = (
   // Verify the Token
   jwt.verify(sessionToken, secret, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: 'Invalid or expired token' });
+      res.status(403).json({ message: 'Invalid or expired token' });
+      return;
     }
 
     // Get the user from the decoded token
     const user = (decoded as JwtPayload).user;
 
+    console.log('Authenticated user:', user);
+
     // Use the user details to fetch the access token from the database
-    db.getAccessTokenFromUserId(user.user.id, (error, accessToken) => {
+    db.getAccessTokenFromUserId(user.id, (error, accessToken) => {
       if (error) {
         return res
           .status(500)

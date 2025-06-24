@@ -14,7 +14,7 @@ import { logServerInfo } from './utils/serverLog';
 // import webflowClientMiddleware from './middleware/webflowClientMiddleware';
 
 // Import routes
-import sitesRoutes from './routes/sitesRoutes';
+import codeRoutes from './routes/codeRoutes';
 import authRoutes from './routes/authRoutes';
 import tokenRoutes from './routes/tokenRoutes';
 
@@ -23,20 +23,16 @@ const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
 // Set up CORS Middleware
+//app.use(cors());
+
 app.use(
   cors({
-    origin: '*',
+    origin: [
+      'http://localhost:1337',
+      'https://striking-illegally-wallaby.ngrok-free.app',
+    ],
   })
 );
-
-// app.use(
-//   cors({
-//     origin: [
-//       'http://localhost:1337',
-//       'https://striking-illegally-wallaby.ngrok-free.app',
-//     ],
-//   })
-// );
 
 // Set up JSON body parser middleware
 app.use(express.json());
@@ -48,7 +44,7 @@ app.post('/hello', (req, res) => {
 });
 
 // Setup Routes
-app.use('/sites', sitesRoutes);
+app.use('/custom-code', codeRoutes);
 app.use('/auth', authRoutes);
 app.use('/token', tokenRoutes);
 

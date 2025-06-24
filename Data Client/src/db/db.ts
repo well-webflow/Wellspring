@@ -77,7 +77,7 @@ function getAccessTokenFromUserId(
 ) {
   // Retrieve the access token from the database
   supabase
-    .from('site_authorizations')
+    .from('user_authorizations')
     .select('access_token')
     .eq('id', userId)
     .single()
