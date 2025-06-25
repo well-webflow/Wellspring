@@ -1,8 +1,8 @@
 import Button from '../components/Button';
 import Heading from '../components/Heading';
 import Navigation from '../components/Navigation';
-import { convertToWaterfallEl } from '../lib/functions';
-import { defaultWaterfallSettings } from '../lib/waterfallSettings';
+import { convertToWaterfallEl } from '../utils/functions';
+import { defaultWaterfallSettings } from '../utils/waterfallSettings';
 
 export default function CreateView() {
   return (

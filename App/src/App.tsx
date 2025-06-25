@@ -5,10 +5,9 @@ import InitializationView from './views/InitializationView';
 import EditView from './views/EditView';
 import CategoryView from './views/CategoryView';
 import CreateView from './views/CreateView';
-import { AuthProvider } from './context/authContext';
+import { AuthProvider } from './context/authProvider';
 
 export default function App() {
-
   return (
     <AuthProvider>
       <WaterfallProvider>

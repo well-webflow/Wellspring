@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { defaultWaterfallSettings } from '../lib/waterfallSettings.tsx';
-import { throwErrorIfWaterfallNotSelected } from '../lib/notices.ts';
-import { getBaseAttr, getBreakpointAttr } from '../lib/attributes.ts';
+import { defaultWaterfallSettings } from '../utils/waterfallSettings.tsx';
+import { throwErrorIfWaterfallNotSelected } from '../utils/notices.ts';
+import { getBaseAttr, getBreakpointAttr } from '../utils/attributes.ts';
 import {
   WaterfallCategory,
   WaterfallSetting,

@@ -8,8 +8,9 @@ import { useWaterfallContext } from '../context/waterfallContext';
 import Heading from '../components/Heading';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
-import { useAuth } from '../context/authContext';
-import { addWaterfallScript } from '../lib/customCode';
+import { addWellflowScript } from '../utils/customCode';
+import { useAuth } from '../hooks/useAuth';
+import { clearSession } from '../utils/tokenManager';
 
 export default function InitializationView() {
   const { createWaterfall, loadWaterfall, elementSelected, waterfallSelected } =
@@ -84,6 +85,8 @@ export default function InitializationView() {
 function InitializationHeader() {
   const { openAuthWindow, sessionToken, siteData } = useAuth();
 
+  const siteId = siteData?.siteId || '';
+
   return (
     <>
       <div className="w-full border border-border1 p-5 flex flex-row justify-between">
@@ -95,13 +98,18 @@ function InitializationHeader() {
           className=""
         />
         <div className="flex flex-row gap-2">
-          <Button
-            onClick={() => addWaterfallScript(siteData, sessionToken)}
-            color="primary"
-          >
-            Add Code
+          {
+            <Button
+              onClick={() => addWellflowScript(siteId, sessionToken)}
+              color="primary"
+            >
+              Add Code
+            </Button>
+          }
+          <Button onClick={() => clearSession()} color="primary">
+            Clear Session
           </Button>
-          {true ? (
+          {!sessionToken ? (
             <Button onClick={openAuthWindow} color="primary">
               Authorize App
             </Button>
