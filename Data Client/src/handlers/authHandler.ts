@@ -1,6 +1,8 @@
 import { WebflowClient } from 'webflow-api';
 import path from 'path';
 import db from '../db/db';
+import axios from 'axios';
+import jwt from '../utils/jwt';
 
 /**
  * AUTHORIZE WEBFLOW
@@ -45,16 +47,57 @@ export async function authCallback(req: any, res: any) {
   // Instantiate the Webflow Client with the access token
   const webflow = new WebflowClient({ accessToken });
 
-  // Get site ID to pair with the authorization access token
+  // Add the site ID / access token pair to the database
   const sites = await webflow.sites.list();
   sites.sites?.forEach((site) => {
-    console.log(`Site ID: ${site.id}`);
-    // Add the site ID and access token to the database
     db.insertSiteAuthorization(site.id, accessToken);
   });
 
   // Send Auth Complete Screen with Post Message
-  // TODO: Improve UX by showing a list of sites to return to, or by updating the HTML
   const filePath = path.resolve('public', 'authComplete.html');
   res.sendFile(filePath);
+}
+
+/**
+ * VALIDATE TOKEN
+ * Resolves the ID Token by sending to Webflow, then creates a JWT session token and adds the user/access token pair to the db
+ */
+export async function validateToken(req: any, res: any) {
+  const token = req.body.idToken;
+  // Ensure there is an access token
+  if (!req.accessToken) {
+    res.status(401).json({ message: 'Access token is missing' });
+    return;
+  }
+  // Resolve Session Token by making a request to Webflow API
+  let sessionToken;
+  try {
+    const request = await axios.request({
+      method: 'POST',
+      url: 'https://api.webflow.com/beta/token/resolve',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${req.accessToken}`,
+      },
+      data: {
+        idToken: token,
+      },
+    });
+
+    const user = request.data;
+    // Create a JWT
+    const tokenPayload = jwt.createSessionToken(user);
+    sessionToken = tokenPayload.sessionToken;
+    // Add User / Access Token pair to the db
+    db.insertUserAuthorization(user.id, req.accessToken);
+    // Respond to user with sesion token
+    res.json({ sessionToken, exp: tokenPayload.exp, user });
+  } catch (error: any) {
+    console.error('Unauthorized request' + error.message);
+    res.status(error.status).json({
+      error:
+        'Error: Unauthorized request. User is not associated with authorization for this site.',
+    });
+  }
 }

@@ -16,7 +16,6 @@ import { logServerInfo } from './utils/serverLog';
 // Import routes
 import codeRoutes from './routes/codeRoutes';
 import authRoutes from './routes/authRoutes';
-import tokenRoutes from './routes/tokenRoutes';
 
 // Configure the Express server
 const app = express();
@@ -46,7 +45,6 @@ app.post('/hello', (req, res) => {
 // Setup Routes
 app.use('/custom-code', codeRoutes);
 app.use('/auth', authRoutes);
-app.use('/token', tokenRoutes);
 
 // Start server with NGROK
 const startServer = async () => {

@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const SESSION_TOKEN_NAME = 'wf_hybrid_user';
-const API_URL = import.meta.env.VITE_API_URL;
+const AUTH_URL = import.meta.env.VITE_AUTH_URL;
 
 export interface SessionData {
   sessionToken: string;
@@ -32,10 +32,9 @@ export const clearSession = () => {
 export const isTokenValid = (exp: number) => Date.now() < exp * 1000;
 
 export const fetchSessionToken = async (idToken: string, siteId: string) => {
-  const response = await axios.post(API_URL + '/token', {
+  const response = await axios.post(AUTH_URL + '/token', {
     idToken,
     siteId,
   });
-  console.log(response);
   return response.data;
 };

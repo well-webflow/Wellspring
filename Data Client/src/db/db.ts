@@ -1,4 +1,4 @@
-import { createClient, PostgrestError } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase Client
 const PROJECT_URL = process.env.SUPABASE_URL || '';
