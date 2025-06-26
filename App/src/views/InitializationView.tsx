@@ -109,7 +109,7 @@ function InitializationHeader() {
           <Button onClick={() => clearSession()} color="primary">
             Clear Session
           </Button>
-          {!sessionToken ? (
+          {true ? (
             <Button onClick={openAuthWindow} color="primary">
               Authorize App
             </Button>
