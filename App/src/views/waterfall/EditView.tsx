@@ -1,7 +1,7 @@
-import Button from '../components/Button';
-import { useWaterfallContext } from '../context/waterfallContext';
+import Button from '../../components/Button';
+import { useWaterfallContext } from '../../context/waterfallContext';
 import { useNavigate } from 'react-router';
-import Navigation from '../components/Navigation';
+import Navigation from '../../components/Navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function EditView() {

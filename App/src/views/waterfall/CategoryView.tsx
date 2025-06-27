@@ -1,7 +1,7 @@
-import { useWaterfallContext } from '../context/waterfallContext';
-import Heading from '../components/Heading';
-import BasicSetting from '../components/BasicSetting';
-import Navigation from '../components/Navigation';
+import { useWaterfallContext } from '../../context/waterfallContext';
+import { Heading } from '../../components/Typography';
+import BasicSetting from '../../components/BasicSetting';
+import Navigation from '../../components/Navigation';
 
 export default function CategoryView() {
   const { selectedCategory, waterfallSettings } = useWaterfallContext();

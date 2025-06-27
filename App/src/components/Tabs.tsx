@@ -24,12 +24,12 @@ export const Tabs = ({ children }: TabsProps) => {
   return (
     <div>
       {/* Tab Headers */}
-      <div className="tabs-header flex space-x-4 border-b">
+      <div className="tabs-header flex space-x-4">
         {tabs.map((tab, index) => (
           <button
             key={index}
             onClick={() => setActiveIndex(index)}
-            className={`py-2 px-4 ${
+            className={`py-1 text-sm ${
               index === activeIndex
                 ? 'border-b-2 border-blue-500 font-semibold'
                 : 'text-gray-500'

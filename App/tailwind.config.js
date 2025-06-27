@@ -41,6 +41,14 @@ export default {
       },
       fontFamily: {
         brand: ["Radley", "serif"]
+      },
+      fontSize: {
+        sm: '0.8rem',
+        base: '0.9rem',
+        lg: '1.1rem',
+        'xl': '1.25rem',
+        '2xl': '3rem',
+        '4xl': '5rem',
       }
     },
   },

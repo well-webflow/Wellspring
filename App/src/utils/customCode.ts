@@ -14,6 +14,7 @@ export const addWellflowScript = async (
     })
     .then((response) => {
       console.log(response.data);
+      webflow.notify({ type: 'Success', message: 'Wellflow code installed' });
     });
 };
 
