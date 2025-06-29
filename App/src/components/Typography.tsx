@@ -19,7 +19,7 @@ export function Heading({ level, children, className }: HeadingProps) {
   const defaultClassName = twMerge(
     clsx(
       {
-        'text-2xl mb-2': level === 1,
+        'text-2xl': level === 1,
         'text-xl': level === 2,
         'text-lg': level === 3,
         'text-base font-bold': level === 4,
@@ -32,11 +32,7 @@ export function Heading({ level, children, className }: HeadingProps) {
   return <Tag className={defaultClassName}>{children}</Tag>;
 }
 
-export function Paragraph({
-  size = 'md',
-  children,
-  className,
-}: ParagraphProps) {
+export function Paragraph({ size = 'md', children, className }: ParagraphProps) {
   const cls = twMerge(
     clsx(
       {

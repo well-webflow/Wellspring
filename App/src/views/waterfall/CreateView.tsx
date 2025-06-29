@@ -1,17 +1,15 @@
-import Button from '../../components/Button';
+import Card from '../../components/Card';
+import { StickyNavigation } from '../../components/Navigation';
 import { Heading } from '../../components/Typography';
-import Navigation from '../../components/Navigation';
-import { convertToWaterfallEl } from '../../utils/functions';
 import { defaultWaterfallSettings } from '../../utils/waterfallSettings';
 
 export default function CreateView() {
   return (
     <div>
-      <Navigation />
-      <div className="p-5">
-        <Heading level={1} className="mb-10">
-          Create Elements
-        </Heading>
+      <StickyNavigation onGoBack={() => {}}>
+        <Heading level={4}>Create Elements</Heading>
+      </StickyNavigation>
+      <div className="p-3">
         {defaultWaterfallSettings.map((category) => (
           <div key={category.name}>
             {category.actions && (
@@ -19,16 +17,11 @@ export default function CreateView() {
                 <Heading level={2} className="text-primary mb-3">
                   {category.name}
                 </Heading>
-                <div className="flex flex-row gap-3">
+                <div className="flex flex-col gap-3">
                   {category.actions.map((action) => (
-                    <Button
-                      key={action.attr}
-                      onClick={async () =>
-                        await convertToWaterfallEl(action.attr, action.label)
-                      }
-                    >
+                    <Card key={action.label} onClick={async () => action.func()}>
                       {action.label}
-                    </Button>
+                    </Card>
                   ))}
                 </div>
               </div>

@@ -1,10 +1,4 @@
-export const websiteBreakpoints = [
-  'lmobile',
-  'tablet',
-  'desktop',
-  'large',
-  'xlarge',
-] as const;
+export const websiteBreakpoints = ['lmobile', 'tablet', 'desktop', 'large', 'xlarge'] as const;
 
 export type Breakpoints = (typeof websiteBreakpoints)[number];
 
@@ -12,13 +6,12 @@ export type BreakpointObject = {
   [key in Breakpoints]: string;
 };
 
-export type SettingType =
-  | 'boolean'
-  | 'string'
-  | 'number'
-  | 'select'
-  | 'waterfall'
-  | 'waterfall-multiple';
+export type Action = {
+  label: string;
+  func: () => Promise<void>;
+};
+
+export type SettingType = 'boolean' | 'string' | 'number' | 'select' | 'waterfall' | 'waterfall-multiple';
 
 export interface WaterfallCategory {
   name: string;
@@ -52,8 +45,3 @@ export interface WaterfallSetting {
   icon?: IconDefinition;
   tested: boolean;
 }
-
-export type Action = {
-  label: string;
-  attr: string;
-};

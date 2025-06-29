@@ -1,5 +1,6 @@
 import { faBarsProgress } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
+import { createScrollbar } from '../createElements';
 
 export default function scrollbarCategory() {
   let config: WaterfallCategory = {
@@ -28,8 +29,7 @@ export default function scrollbarCategory() {
             swiperDefault: 'swiper-scrollbar-lock',
             value: '',
             type: 'string',
-            description:
-              'Scrollbar element additional CSS class when it is disabled',
+            description: 'Scrollbar element additional CSS class when it is disabled',
             tested: false,
           },
           {
@@ -67,8 +67,7 @@ export default function scrollbarCategory() {
         swiperDefault: 'false',
         value: '',
         type: 'boolean',
-        description:
-          'Set to true to enable make scrollbar draggable that allows you to control slider position',
+        description: 'Set to true to enable make scrollbar draggable that allows you to control slider position',
         tested: true,
       },
       {
@@ -77,8 +76,7 @@ export default function scrollbarCategory() {
         swiperDefault: '',
         value: '',
         type: 'boolean',
-        description:
-          'Boolean property to use with breakpoints to enable/disable scrollbar on certain breakpoints',
+        description: 'Boolean property to use with breakpoints to enable/disable scrollbar on certain breakpoints',
         tested: false,
       },
       {
@@ -87,8 +85,7 @@ export default function scrollbarCategory() {
         swiperDefault: 'true',
         value: '',
         type: 'boolean',
-        description:
-          '(Not Working) Set to true to hide scrollbar automatically after user interaction',
+        description: '(Not Working) Set to true to hide scrollbar automatically after user interaction',
         tested: false,
       },
       {
@@ -97,21 +94,16 @@ export default function scrollbarCategory() {
         swiperDefault: 'false', // the documentation says default is false but is actually true lmao
         value: '',
         type: 'boolean',
-        description:
-          'Set to true to snap slider position to slides when you release scrollbar',
+        description: 'Set to true to snap slider position to slides when you release scrollbar',
         tested: false,
       },
     ],
     actions: [
       {
-        label: 'Scrollbar Container',
-        attr: 'scrollbar',
+        label: 'Scrollbar',
+        func: createScrollbar,
       },
-      {
-        label: 'Scrollbar Drag',
-        attr: 'scrollbar-drag',
-      }
-    ]
+    ],
   };
   return config;
 }

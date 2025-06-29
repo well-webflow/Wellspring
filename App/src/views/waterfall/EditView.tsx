@@ -1,37 +1,54 @@
 import Button from '../../components/Button';
-import { useWaterfallContext } from '../../context/waterfallContext';
+import { useWaterfall } from '../../context/WaterfallContext';
 import { useNavigate } from 'react-router';
-import Navigation from '../../components/Navigation';
+import { faArrowsRotate, faSave } from '@fortawesome/free-solid-svg-icons';
+import { StickyNavigation } from '../../components/Navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect } from 'react';
 
 export default function EditView() {
-  const { setSelectedCategory, waterfallSettings } = useWaterfallContext();
+  const { setSelectedCategory, waterfallSettings, unloadWaterfall, loadedWaterfall, loadWaterfall, saveWaterfall } =
+    useWaterfall();
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    webflow.setExtensionSize('large');
+  }, []);
+
   function goToCategory(selectedCategory: string) {
     setSelectedCategory(selectedCategory);
-    navigate(`/edit/${selectedCategory}`);
+    navigate(`/waterfall/edit/${selectedCategory}`);
+  }
+
+  function goBack() {
+    setSelectedCategory(null);
+    unloadWaterfall();
   }
 
   return (
     <div className="">
-      <Navigation />
+      <StickyNavigation onGoBack={goBack}>
+        <div className="w-full flex flex-row justify-between items-center">
+          <div>Editing {loadedWaterfall?.name}</div>
+          <div className="flex flex-row gap-2">
+            <Button icon={faArrowsRotate} onClick={() => loadWaterfall()} color="secondary">
+              Reload
+            </Button>
+            <Button icon={faSave} onClick={() => saveWaterfall()} color="primary">
+              Save
+            </Button>
+          </div>
+        </div>
+      </StickyNavigation>{' '}
       <div className="p-2">
         <div className="space-y-3">
           {waterfallSettings?.map((category) => (
-            <Button
-              key={category.id}
-              onClick={() => goToCategory(category.id)}
-              className="w-full"
-            >
+            <Button key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
               <div className="flex flex-row items-center text-left gap-4">
                 {category.icon && (
                   <div className="bg-primary-dark w-8 h-8 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon
-                      icon={category.icon}
-                      className="text-white"
-                    />
+                    <FontAwesomeIcon icon={category.icon} className="text-white" />
                   </div>
                 )}
                 <div className="">

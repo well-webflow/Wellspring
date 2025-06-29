@@ -1,5 +1,6 @@
 import { faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
+import { createNavigation } from '../createElements';
 
 export default function navigationCategory() {
   let config: WaterfallCategory = {
@@ -18,8 +19,7 @@ export default function navigationCategory() {
             attr: 'nav-disabled-class',
             swiperDefault: 'swiper-button-disabled',
             value: '',
-            description:
-              'CSS class name added to navigation button when it becomes disabled',
+            description: 'CSS class name added to navigation button when it becomes disabled',
             tested: false,
           },
           {
@@ -27,8 +27,7 @@ export default function navigationCategory() {
             attr: 'nav-hidden-class',
             swiperDefault: 'swiper-button-hidden',
             value: '',
-            description:
-              'CSS class name added to navigation button when it becomes hidden',
+            description: 'CSS class name added to navigation button when it becomes hidden',
             tested: false,
           },
           {
@@ -36,8 +35,7 @@ export default function navigationCategory() {
             attr: 'nav-lock-class',
             swiperDefault: 'swiper-button-lock',
             value: '',
-            description:
-              'CSS class name added to navigation button when it is disabled',
+            description: 'CSS class name added to navigation button when it is disabled',
             tested: false,
           },
           {
@@ -45,8 +43,7 @@ export default function navigationCategory() {
             attr: 'nav-disabled-class',
             swiperDefault: 'swiper-navigation-disabled',
             value: '',
-            description:
-              'CSS class name added on swiper container when navigation is disabled by breakpoint',
+            description: 'CSS class name added on swiper container when navigation is disabled by breakpoint',
             tested: false,
           },
         ],
@@ -58,8 +55,7 @@ export default function navigationCategory() {
         attr: 'nav-enabled',
         swiperDefault: '',
         value: '',
-        description:
-          'Boolean property to use with breakpoints to enable/disable navigation on certain breakpoints',
+        description: 'Boolean property to use with breakpoints to enable/disable navigation on certain breakpoints',
         tested: false,
       },
       {
@@ -67,8 +63,7 @@ export default function navigationCategory() {
         attr: 'nav-hide-on-click',
         swiperDefault: 'false',
         value: '',
-        description:
-          "Toggle navigation buttons visibility after click on Slider's container",
+        description: "Toggle navigation buttons visibility after click on Slider's container",
         tested: false,
       },
       {
@@ -76,8 +71,7 @@ export default function navigationCategory() {
         attr: 'allow-slide-next',
         swiperDefault: 'true',
         value: '',
-        description:
-          'Set to false to disable swiping to next slide direction (to right or bottom)',
+        description: 'Set to false to disable swiping to next slide direction (to right or bottom)',
         tested: false,
       },
       {
@@ -85,21 +79,16 @@ export default function navigationCategory() {
         attr: 'allow-slide-prev',
         swiperDefault: 'true',
         value: '',
-        description:
-          'Set to false to disable swiping to previous slide direction (to left or top)',
+        description: 'Set to false to disable swiping to previous slide direction (to left or top)',
         tested: false,
       },
     ],
     actions: [
       {
-        label: 'Prev Button',
-        attr: 'prev'
+        label: 'Navigation',
+        func: createNavigation,
       },
-      {
-        label: 'Next Button',
-        attr: 'next'
-      }
-    ]
+    ],
   };
   return config;
 }

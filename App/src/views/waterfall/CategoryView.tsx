@@ -1,14 +1,15 @@
-import { useWaterfallContext } from '../../context/waterfallContext';
+import { useWaterfall } from '../../context/WaterfallContext';
 import { Heading } from '../../components/Typography';
 import BasicSetting from '../../components/BasicSetting';
-import Navigation from '../../components/Navigation';
+import { StickyNavigation } from '../../components/Navigation';
+import { WaterfallCategory } from '../../../types/waterfall-types';
 
 export default function CategoryView() {
-  const { selectedCategory, waterfallSettings } = useWaterfallContext();
+  const { selectedCategory, waterfallSettings } = useWaterfall();
 
   if (!selectedCategory || !waterfallSettings) return null;
 
-  const category = waterfallSettings.find(
+  const category: WaterfallCategory = waterfallSettings.find(
     (category) => category.id.toLowerCase() === selectedCategory.toLowerCase()
   );
   if (!category) return;
@@ -19,11 +20,10 @@ export default function CategoryView() {
   if (category)
     return (
       <>
-        <Navigation />
+        <StickyNavigation onGoBack={() => {}}>
+          <Heading level={4}>{category.name}</Heading>
+        </StickyNavigation>
         <div className="p-5">
-          <Heading level={2} className="text-xl font-semibold mb-2">
-            {category.name}
-          </Heading>
           <p className="mb-5 text-gray-300">{category.description}</p>
           <SettingSection>
             <div className="flex flex-col gap-4">
@@ -52,7 +52,5 @@ type SettingSectionProps = {
 };
 
 function SettingSection({ children }: SettingSectionProps) {
-  return (
-    <div className="border-b border-t border-border1 py-8">{children}</div>
-  );
+  return <div className="border-b border-t border-border1 py-8">{children}</div>;
 }

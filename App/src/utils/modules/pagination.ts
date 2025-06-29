@@ -1,5 +1,6 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
+import { createPagination } from '../createElements';
 
 export default function paginationCategory() {
   let config: WaterfallCategory = {
@@ -27,8 +28,7 @@ export default function paginationCategory() {
             attr: 'dynamic-main-bullets',
             swiperDefault: '1',
             value: '',
-            description:
-              'The number of main bullets visible when dynamicBullets enabled.',
+            description: 'The number of main bullets visible when dynamicBullets enabled.',
             tested: false,
           },
         ],
@@ -42,8 +42,7 @@ export default function paginationCategory() {
             attr: 'pagination-clickable-class',
             swiperDefault: 'swiper-pagination-clickable',
             value: '',
-            description:
-              'CSS class name set to pagination when it is clickable',
+            description: 'CSS class name set to pagination when it is clickable',
             tested: false,
           },
           {
@@ -51,8 +50,7 @@ export default function paginationCategory() {
             attr: 'pagination-current-class',
             swiperDefault: 'swiper-pagination-current',
             value: '',
-            description:
-              'CSS class name of the element with currently active index in "fraction" pagination',
+            description: 'CSS class name of the element with currently active index in "fraction" pagination',
             tested: false,
           },
           {
@@ -60,8 +58,7 @@ export default function paginationCategory() {
             attr: 'pagination-hidden-class',
             swiperDefault: 'swiper-pagination-hidden',
             value: '',
-            description:
-              'CSS class name of pagination when it becomes inactive',
+            description: 'CSS class name of pagination when it becomes inactive',
             tested: false,
           },
           {
@@ -69,8 +66,7 @@ export default function paginationCategory() {
             attr: 'pagination-horizontal-class',
             swiperDefault: 'swiper-pagination-horizontal',
             value: '',
-            description:
-              'CSS class name set to pagination in horizontal Swiper',
+            description: 'CSS class name set to pagination in horizontal Swiper',
             tested: false,
           },
           {
@@ -78,8 +74,7 @@ export default function paginationCategory() {
             attr: 'pagination-lock-class',
             swiperDefault: 'swiper-pagination-lock',
             value: '',
-            description:
-              'CSS class name added to navigation button when it is disabled',
+            description: 'CSS class name added to navigation button when it is disabled',
             tested: false,
           },
           {
@@ -105,8 +100,7 @@ export default function paginationCategory() {
             attr: 'progressbar-fill-class',
             swiperDefault: 'swiper-pagination-progressbar-fill',
             value: '',
-            description:
-              'CSS class name of pagination progressbar fill element',
+            description: 'CSS class name of pagination progressbar fill element',
             tested: false,
           },
           {
@@ -122,8 +116,7 @@ export default function paginationCategory() {
             attr: 'pagination-total-classs',
             swiperDefault: 'swiper-pagination-total',
             value: '',
-            description:
-              'CSS class name of the element with total number of "snaps" in "fraction" pagination',
+            description: 'CSS class name of the element with total number of "snaps" in "fraction" pagination',
             tested: false,
           },
           {
@@ -176,13 +169,7 @@ export default function paginationCategory() {
         value: 'bullets',
         description:
           "String with type of pagination. Can be 'bullets', 'numberBullets', 'fraction', 'progressbar' or 'custom'",
-        options: [
-          'bullets',
-          'numberBullets',
-          'fraction',
-          'progressbar',
-          'custom',
-        ],
+        options: ['bullets', 'numberBullets', 'fraction', 'progressbar', 'custom'],
         type: 'select',
         tested: false,
       },
@@ -202,8 +189,7 @@ export default function paginationCategory() {
         swiperDefault: '',
         value: '',
         type: 'boolean',
-        description:
-          'Boolean property to use with breakpoints to enable/disable pagination on certain breakpoints',
+        description: 'Boolean property to use with breakpoints to enable/disable pagination on certain breakpoints',
         tested: false,
       },
       {
@@ -212,25 +198,16 @@ export default function paginationCategory() {
         swiperDefault: 'true',
         value: '',
         type: 'boolean',
-        description:
-          "Toggle (hide/show) pagination container visibility after click on Slider's container",
+        description: "Toggle (hide/show) pagination container visibility after click on Slider's container",
         tested: false,
       },
     ],
     actions: [
       {
-        label: 'Pagination Container',
-        attr: 'pagination'
+        label: 'Pagination',
+        func: createPagination,
       },
-      {
-        label: 'Pagination Bullet',
-        attr: 'pagination-bullet'
-      },
-      {
-        label: 'Pagination Bullet Active',
-        attr: 'pagination-bullet-active'
-      }
-    ]
+    ],
   };
   return config;
 }
