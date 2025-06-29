@@ -2,7 +2,7 @@ import Button from '../../components/Button';
 import { useWaterfall } from '../../context/WaterfallContext';
 import { useNavigate } from 'react-router';
 import { faArrowsRotate, faSave } from '@fortawesome/free-solid-svg-icons';
-import { StickyNavigation } from '../../components/Navigation';
+import { EditNavigation, StickyNavigation } from '../../components/Navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
 
@@ -28,19 +28,7 @@ export default function EditView() {
 
   return (
     <div className="">
-      <StickyNavigation onGoBack={goBack}>
-        <div className="w-full flex flex-row justify-between items-center">
-          <div>Editing {loadedWaterfall?.name}</div>
-          <div className="flex flex-row gap-2">
-            <Button icon={faArrowsRotate} onClick={() => loadWaterfall()} color="secondary">
-              Reload
-            </Button>
-            <Button icon={faSave} onClick={() => saveWaterfall()} color="primary">
-              Save
-            </Button>
-          </div>
-        </div>
-      </StickyNavigation>{' '}
+      <EditNavigation onGoBack={goBack} heading={`Editing ${loadedWaterfall?.name}`} />
       <div className="p-2">
         <div className="space-y-3">
           {waterfallSettings?.map((category) => (

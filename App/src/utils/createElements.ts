@@ -26,7 +26,7 @@ export async function createPagination() {
 
   webflow.notify({
     type: 'Success',
-    message: 'Element successfully converted to Pagination Bullet (Active).',
+    message: 'Added Pagination to DOM',
   });
 }
 

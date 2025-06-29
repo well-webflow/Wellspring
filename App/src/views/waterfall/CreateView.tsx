@@ -1,9 +1,18 @@
 import Card from '../../components/Card';
 import { StickyNavigation } from '../../components/Navigation';
 import { Heading } from '../../components/Typography';
+import { useWaterfall } from '../../context/WaterfallContext';
 import { defaultWaterfallSettings } from '../../utils/waterfallSettings';
 
 export default function CreateView() {
+  const { setIsLoading } = useWaterfall();
+
+  async function createElement(func: () => Promise<void>) {
+    setIsLoading(true);
+    await func();
+    setIsLoading(false);
+  }
+
   return (
     <div>
       <StickyNavigation onGoBack={() => {}}>
@@ -19,7 +28,7 @@ export default function CreateView() {
                 </Heading>
                 <div className="flex flex-col gap-3">
                   {category.actions.map((action) => (
-                    <Card key={action.label} onClick={async () => action.func()}>
+                    <Card key={action.label} onClick={() => createElement(action.func)}>
                       {action.label}
                     </Card>
                   ))}

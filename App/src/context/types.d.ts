@@ -24,11 +24,13 @@ interface WaterfallState {
   loadedWaterfall: LoadedWaterfall | null;
   unloadWaterfall: () => void;
   updateWaterfall: (propAttrName: string, newValue: string, breakpoint?: string) => void;
-  saveWaterfall: () => void;
+  saveWaterfall: () => Promise<void>;
   searchForWaterfalls: () => void;
   getWaterfallName: (el: AnyElement) => Promise<string | null>;
   elementSelected: AnyElement | null;
   waterfallSelected: string | null;
+  isLoading: Boolean;
+  setIsLoading: (value: Boolean) => void;
 }
 
 export type LoadedWaterfall = {

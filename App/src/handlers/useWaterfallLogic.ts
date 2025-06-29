@@ -47,7 +47,6 @@ export function useWaterfallLogic(): WaterfallState {
   }, []);
 
   async function searchForWaterfalls() {
-    setIsLoading(true);
     const els = await webflow.getAllElements();
     const waterfalls: AnyElement[] = [];
     const names: string[] = [];
@@ -62,7 +61,6 @@ export function useWaterfallLogic(): WaterfallState {
     );
     setWaterfalls(waterfalls);
     setWaterfallNames(names);
-    setIsLoading(false);
   }
 
   async function getWaterfallName(el: AnyElement) {
@@ -86,21 +84,26 @@ export function useWaterfallLogic(): WaterfallState {
 
   // Create a new waterfall object with all of the default props
   async function createWaterfall() {
+    setIsLoading(true);
     const success = await createWaterfallElement(defaultWaterfallSettings);
     if (success) webflow.notify({ type: 'Success', message: 'Successfully Created new Waterfall' });
     await loadWaterfall();
+    setIsLoading(false);
     navigate('/waterfall/edit');
   }
 
   async function createWaterfallCMS() {
+    setIsLoading(true);
     const success = await createWaterfallCMSElement(defaultWaterfallSettings);
     if (success) webflow.notify({ type: 'Success', message: 'Successfully Created new CMS Waterfall' });
     await loadWaterfall();
+    setIsLoading(false);
     navigate('/waterfall/edit');
   }
 
   //--- LOAD WATERFALL ---
   async function loadWaterfall() {
+    setIsLoading(true);
     const el = await webflow.getSelectedElement();
     if (!el) return;
     const waterfallName = await getWaterfallName(el);
@@ -133,6 +136,7 @@ export function useWaterfallLogic(): WaterfallState {
 
     setWaterfallSettings(updatedProps); // Update state with transformed data
     await searchForWaterfalls();
+    setIsLoading(false);
   }
 
   async function loadAndEditWaterfall() {
@@ -244,7 +248,9 @@ export function useWaterfallLogic(): WaterfallState {
       })
     );
 
-    webflow.notify({
+    console.log('SAVE');
+
+    await webflow.notify({
       type: 'Success',
       message: `Updated Waterfall '${name}' Successfully!`,
     });
@@ -262,6 +268,8 @@ export function useWaterfallLogic(): WaterfallState {
     elementSelected,
     waterfallSelected,
     loadedWaterfall,
+    isLoading,
+    setIsLoading,
     createWaterfall,
     createWaterfallCMS,
     loadWaterfall,

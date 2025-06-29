@@ -1,11 +1,11 @@
 import { useWaterfall } from '../../context/WaterfallContext';
 import { Heading } from '../../components/Typography';
 import BasicSetting from '../../components/BasicSetting';
-import { StickyNavigation } from '../../components/Navigation';
+import { EditNavigation, StickyNavigation } from '../../components/Navigation';
 import { WaterfallCategory } from '../../../types/waterfall-types';
 
 export default function CategoryView() {
-  const { selectedCategory, waterfallSettings } = useWaterfall();
+  const { selectedCategory, waterfallSettings, loadedWaterfall } = useWaterfall();
 
   if (!selectedCategory || !waterfallSettings) return null;
 
@@ -20,9 +20,7 @@ export default function CategoryView() {
   if (category)
     return (
       <>
-        <StickyNavigation onGoBack={() => {}}>
-          <Heading level={4}>{category.name}</Heading>
-        </StickyNavigation>
+        <EditNavigation onGoBack={() => {}} heading={`Editing ${loadedWaterfall?.name} / ${category.name}`} />
         <div className="p-5">
           <p className="mb-5 text-gray-300">{category.description}</p>
           <SettingSection>
