@@ -16,24 +16,25 @@ export default function keyboardCategory() {
         description: 'Set to true to enable keyboard control',
         value: '',
         tested: true,
+        type: 'boolean',
       },
       {
         name: 'Only In Viewport',
         attr: 'keyboard-only-in-viewport',
         swiperDefault: 'true',
-        description:
-          'When enabled it will control sliders that are currently in viewport',
+        description: 'When enabled it will control sliders that are currently in viewport',
         value: '',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Page Up Down',
         attr: 'page-up-down',
         swiperDefault: 'true',
-        description:
-          'When enabled it will enable keyboard navigation by Page Up and Page Down keys',
+        description: 'When enabled it will enable keyboard navigation by Page Up and Page Down keys',
         value: '',
         tested: false,
+        type: 'boolean',
       },
     ],
   };

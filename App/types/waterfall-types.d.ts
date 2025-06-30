@@ -36,7 +36,7 @@ export interface WaterfallGroup {
 export interface WaterfallSetting {
   name: string;
   attr: string;
-  type?: SettingType;
+  type: SettingType;
   swiperDefault: string;
   description: string;
   value: string;

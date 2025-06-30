@@ -26,6 +26,7 @@ export default function mousewheelCategory() {
           'String with CSS selector or HTML element of the container accepting mousewheel events. By default it is swiper',
         value: '',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Force to Axis',
@@ -53,6 +54,7 @@ export default function mousewheelCategory() {
         description: 'Scrolling on elements with this class will be ignored',
         value: '',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Release on Edges',
@@ -68,28 +70,28 @@ export default function mousewheelCategory() {
         name: 'Sensitivity',
         attr: 'mouse-sensitivity',
         swiperDefault: '1',
-        description:
-          'Multiplier of mousewheel data, allows to tweak mouse wheel sensitivity',
+        description: 'Multiplier of mousewheel data, allows to tweak mouse wheel sensitivity',
         value: '',
         tested: false,
+        type: 'number',
       },
       {
         name: 'Threshold Delta',
         attr: 'mouse-threshold-delta',
         swiperDefault: 'null',
-        description:
-          'Minimum mousewheel scroll delta to trigger swiper slide change',
+        description: 'Minimum mousewheel scroll delta to trigger swiper slide change',
         value: '',
         tested: false,
+        type: 'number',
       },
       {
         name: 'Threshold Time',
         attr: 'mouse-threshold-time',
         swiperDefault: 'null',
-        description:
-          'Minimum mousewheel scroll time delta (in ms) to trigger swiper slide change',
+        description: 'Minimum mousewheel scroll time delta (in ms) to trigger swiper slide change',
         value: '',
         tested: false,
+        type: 'number',
       },
     ],
   };

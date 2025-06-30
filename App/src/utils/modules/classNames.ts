@@ -6,8 +6,7 @@ export default function classnamesCategory() {
     name: 'Class Names (Advanced)',
     id: 'class-names',
     icon: faFont,
-    summary:
-      'Change the class names used by swiperjs. Not recommended to edit.',
+    summary: 'Change the class names used by swiperjs. Not recommended to edit.',
     items: [
       {
         name: 'Container Modifier Class',
@@ -17,15 +16,16 @@ export default function classnamesCategory() {
         description:
           'The beginning of the modifier CSS class that can be added to swiper container depending on different parameters',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Events Prefix',
         attr: 'events-prefix',
         swiperDefault: 'swiper',
         value: '',
-        description:
-          'Event name prefix for all DOM events emitted by Swiper Element (web component)',
+        description: 'Event name prefix for all DOM events emitted by Swiper Element (web component)',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Slide Active Class',
@@ -35,15 +35,16 @@ export default function classnamesCategory() {
         description:
           "CSS class name of currently active slide. By changing classes you will also need to change Swiper's CSS to reflect changed classes",
         tested: false,
+        type: 'string',
       },
       {
         name: 'Slide Blank Class',
         attr: 'slide-blank-class',
         swiperDefault: 'swiper-slide-blank',
         value: '',
-        description:
-          'CSS class name of the blank slide added by the loop mode (when loopAddBlankSlides is enabled)',
+        description: 'CSS class name of the blank slide added by the loop mode (when loopAddBlankSlides is enabled)',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Slide Class',
@@ -53,15 +54,16 @@ export default function classnamesCategory() {
         description:
           "CSS class name of slide. By changing classes you will also need to change Swiper's CSS to reflect changed classes",
         tested: false,
+        type: 'string',
       },
       {
         name: 'Slide Fully Visible',
         attr: 'slide-fully-visible',
         swiperDefault: 'swiper-slide-fully-visible',
         value: '',
-        description:
-          'CSS class name of fully (when whole slide is in the viewport) visible slide',
+        description: 'CSS class name of fully (when whole slide is in the viewport) visible slide',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Slide Next Class',
@@ -71,6 +73,7 @@ export default function classnamesCategory() {
         description:
           "CSS class name of slide which is right after currently active slide. By changing classes you will also need to change Swiper's CSS to reflect changed classes",
         tested: false,
+        type: 'string',
       },
       {
         name: 'Slide Prev Class',
@@ -80,6 +83,7 @@ export default function classnamesCategory() {
         description:
           "CSS class name of slide which is right before currently active slide. By changing classes you will also need to change Swiper's CSS to reflect changed classes.",
         tested: false,
+        type: 'string',
       },
       {
         name: 'Slide Visible Class',
@@ -89,6 +93,7 @@ export default function classnamesCategory() {
         description:
           "CSS class name of currently/partially visible slide. By changing classes you will also need to change Swiper's CSS to reflect changed classes.",
         tested: false,
+        type: 'string',
       },
       {
         name: 'Wrapper Class',
@@ -98,6 +103,7 @@ export default function classnamesCategory() {
         description:
           "CSS class name of slides' wrapper. By changing classes you will also need to change Swiper's CSS to reflect changed classes",
         tested: false,
+        type: 'string',
       },
     ],
   };

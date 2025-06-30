@@ -21,6 +21,7 @@ export default function generalConfig() {
             description:
               "Whether Swiper initially enabled. When Swiper is disabled, it will hide all navigation elements and won't respond to any events and interactions",
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Init',
@@ -30,6 +31,7 @@ export default function generalConfig() {
             description:
               'Whether Swiper should be initialised automatically when you create an instance. If disabled, then you need to init it manually by calling swiper.init()',
             tested: false,
+            type: 'boolean',
           },
         ],
       },

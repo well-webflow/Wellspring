@@ -14,19 +14,19 @@ export default function memoryCategory() {
         name: 'Replace State',
         attr: 'hash-replace-state',
         swiperDefault: 'false',
-        description:
-          'Replace the current url state with the current slide instead of adding it to history',
+        description: 'Replace the current url state with the current slide instead of adding it to history',
         value: '',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Watch State',
         attr: 'hash-watch-state',
         swiperDefault: 'false',
-        description:
-          'Enable navigation through slides using browser history or by setting the hash directly',
+        description: 'Enable navigation through slides using browser history or by setting the hash directly',
         value: '',
         tested: false,
+        type: 'boolean',
       },
     ],
   };

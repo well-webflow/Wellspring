@@ -17,11 +17,12 @@ export default function controllerCategory() {
         options: ['slide', 'container'],
         value: '',
         tested: false,
+        type: 'select',
       },
       {
         name: 'Control',
         attr: 'controller-control',
-        swiperDefault: '',
+        swiperDefault: '--',
         description:
           'Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper. Also accepts string with CSS selector of Swiper element, or HTMLElement of Swiper element',
         value: '',

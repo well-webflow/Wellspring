@@ -40,6 +40,7 @@ export default function scrollbarCategory() {
             description:
               'CSS class name added on swiper container and scrollbar element when scrollbar is disabled by breakpoint',
             tested: false,
+            type: 'string',
           },
           {
             name: 'Vertical Class',
@@ -48,6 +49,7 @@ export default function scrollbarCategory() {
             value: '',
             description: 'CSS class name set to scrollbar in vertical Swiper',
             tested: false,
+            type: 'string',
           },
         ],
       },
@@ -60,6 +62,7 @@ export default function scrollbarCategory() {
         value: '',
         description: 'Size of scrollbar draggable element in px',
         tested: true,
+        type: 'string',
       },
       {
         name: 'Draggable',

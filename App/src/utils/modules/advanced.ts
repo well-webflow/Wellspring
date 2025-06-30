@@ -6,8 +6,7 @@ export default function advancedCategory() {
     name: 'Other Settings (Advanced)',
     id: 'other-advanced',
     icon: faLock,
-    summary:
-      "Settings you probably shouldn't touch unless you really know what you're doing",
+    summary: "Settings you probably shouldn't touch unless you really know what you're doing",
     items: [
       {
         name: 'Breakpoints Base',
@@ -17,6 +16,8 @@ export default function advancedCategory() {
         description:
           'Base for breakpoints (beta). Can be window or container. If set to window (by default) then breakpoint keys mean window width. If set to container then breakpoint keys treated as swiper container width',
         tested: false,
+        type: 'select',
+        options: ['window', 'container'],
       },
       {
         name: 'Create Elements',
@@ -26,15 +27,16 @@ export default function advancedCategory() {
         description:
           'When enabled Swiper will automatically wrap slides with swiper-wrapper element, and will create required elements for navigation, pagination and scrollbar they are enabled (with their respective params object or with boolean true))',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'CSS Mode',
         attr: 'css-mode',
         swiperDefault: 'false',
         value: '',
-        description:
-          'See https://swiperjs.com/swiper-api#param-cssMode for more information',
+        description: 'See https://swiperjs.com/swiper-api#param-cssMode for more information',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Focusable Elements',
@@ -44,15 +46,16 @@ export default function advancedCategory() {
         description:
           'CSS selector for focusable elements. Swiping will be disabled on such elements if they are "focused"',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Lazy Load Prev Next',
         attr: 'lazy-load-prev-next',
         swiperDefault: '0',
         value: '2',
-        description:
-          'Number of next and previous slides to preload. Only applicable if using lazy loading.',
+        description: 'Number of next and previous slides to preload. Only applicable if using lazy loading.',
         tested: true,
+        type: 'number',
       },
       {
         name: 'Lazy Preloader Class',
@@ -61,6 +64,7 @@ export default function advancedCategory() {
         value: '',
         description: 'CSS class name of lazy preloader',
         tested: true,
+        type: 'string',
       },
       {
         name: 'Max Backface Hidden Slides',
@@ -70,6 +74,7 @@ export default function advancedCategory() {
         description:
           'If total number of slides less than specified here value, then Swiper will enable backface-visibility: hidden on slide elements to reduce visual "flicker" in Safari.',
         tested: false,
+        type: 'number',
       },
       {
         name: 'Normalize Slide Index',
@@ -78,24 +83,25 @@ export default function advancedCategory() {
         value: '',
         description: 'Normalize slide index. First slide = 1 instead of 0.',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Observe Parents',
         attr: 'observe-parents',
         swiperDefault: 'false',
         value: '',
-        description:
-          'Set to true if you also need to watch Mutations for Swiper parent elements',
+        description: 'Set to true if you also need to watch Mutations for Swiper parent elements',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Observe Slide Children',
         attr: 'observe-slide-children',
         swiperDefault: 'false',
         value: '',
-        description:
-          'Set to true if you also need to watch Mutations for Swiper slide children elements',
+        description: 'Set to true if you also need to watch Mutations for Swiper slide children elements',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Observer',
@@ -105,6 +111,7 @@ export default function advancedCategory() {
         description:
           'Set to true to enable Mutation Observer on Swiper and its elements. In this case Swiper will be updated (reinitialized) each time if you change its style (like hide/show) or modify its child elements (like adding/removing slides)',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Passive Listeners',
@@ -114,6 +121,7 @@ export default function advancedCategory() {
         description:
           'Passive event listeners will be used by default where possible to improve scrolling performance on mobile devices. But if you need to use e.preventDefault and you have conflict with it, then you should disable this parameter',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Resize Observer',
@@ -123,6 +131,7 @@ export default function advancedCategory() {
         description:
           'When enabled it will use ResizeObserver (if supported by browser) on swiper container to detect container resize (instead of watching for window resize)',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Round Lengths',
@@ -132,6 +141,7 @@ export default function advancedCategory() {
         description:
           'Set to true to round values of slides width and height to prevent blurry texts on usual resolution screens (if you have such)',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Run Callbacks on Init',
@@ -141,6 +151,7 @@ export default function advancedCategory() {
         description:
           'Fire Transition/SlideChange/Start/End events on swiper initialization. Such events will be fired on initialization in case of your initialSlide is not 0, or you use loop mode',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Set Wrapper Size',
@@ -148,17 +159,18 @@ export default function advancedCategory() {
         swiperDefault: 'false',
         value: '',
         description:
-          "Enabled this option and plugin will set width/height on swiper wrapper equal to total size of all slides. Mostly should be used as compatibility fallback option for browser that don't support flexbox layout well",
+          "Enable this option and plugin to set width/height on swiper wrapper equal to total size of all slides. Mostly should be used as compatibility fallback option for browser that don't support flexbox layout well",
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Swiper Element Node Name',
         attr: 'swiper-element-node-name',
         swiperDefault: 'SWIPER-CONTAINER',
         value: '',
-        description:
-          'The name of the swiper element node name; used for detecting web component rendering',
+        description: 'The name of the swiper element node name; used for detecting web component rendering',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Unique Nav Elements',
@@ -168,24 +180,25 @@ export default function advancedCategory() {
         description:
           'If enabled (by default) and navigation elements\' parameters passed as a string (like ".pagination") then Swiper will look for such elements through child elements first. Applies for pagination, prev/next buttons and scrollbar elements',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'URL',
         attr: 'url',
         swiperDefault: '',
         value: '',
-        description:
-          'Required for active slide detection when rendered on server-side and enabled history',
+        description: 'Required for active slide detection when rendered on server-side and enabled history',
         tested: false,
+        type: 'string',
       },
       {
         name: 'User Agent',
         attr: 'user-agent',
         swiperDefault: '',
         value: '',
-        description:
-          'userAgent string. Required for browser/device detection when rendered on server-side',
+        description: 'userAgent string. Required for browser/device detection when rendered on server-side',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Virtual Translate',
@@ -195,6 +208,7 @@ export default function advancedCategory() {
         description:
           'Enabled this option and swiper will be operated as usual except it will not move, real translate values on wrapper will not be set. Useful when you may need to create custom slide transition',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Watch Overflow',
@@ -204,6 +218,7 @@ export default function advancedCategory() {
         description:
           'When enabled Swiper will be disabled and hide navigation buttons on case there are not enough slides for sliding.',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Watch Slides Progress',
@@ -213,6 +228,7 @@ export default function advancedCategory() {
         description:
           'Enable this feature to calculate each slides progress and visibility (slides in viewport will have additional visible class)',
         tested: false,
+        type: 'boolean',
       },
     ],
   };

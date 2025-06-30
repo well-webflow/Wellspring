@@ -13,8 +13,7 @@ export default function thumbsCategory() {
         name: 'Thumbs',
         attr: 'waterfall-thumbs',
         swiperDefault: 'false',
-        description:
-          'If true, this slider will act as Thumbnails for another slider',
+        description: 'If true, this slider will act as Thumbnails for another slider',
         type: 'boolean',
         value: 'false',
         tested: false,
@@ -31,10 +30,9 @@ export default function thumbsCategory() {
       {
         name: 'Swiper',
         attr: 'thumbs-name',
-        swiperDefault: '',
+        swiperDefault: '--',
         type: 'waterfall',
-        description:
-          'The name of the Waterfall these thumbs are associated with',
+        description: 'The name of the Waterfall these thumbs are associated with',
         value: '',
         tested: true,
       },
@@ -46,6 +44,7 @@ export default function thumbsCategory() {
           'Allows to set on which thumbs active slide from edge it should automatically move scroll thumbs. For example, if set to 1 and last visible thumb will be activated (1 from edge) it will auto scroll thumbs',
         value: '',
         tested: false,
+        type: 'number',
       },
       {
         name: 'Multiple Active Thumbs',
@@ -54,15 +53,16 @@ export default function thumbsCategory() {
         description: 'When enabled multiple thumbnail slides may get activated',
         value: '',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Slide Thumb Active Class',
         attr: 'slide-thumb-active-class',
         swiperDefault: 'swiper-slide-thumb-active',
-        description:
-          'Additional class that will be added to activated thumbs swiper slide',
+        description: 'Additional class that will be added to activated thumbs swiper slide',
         value: '',
         tested: false,
+        type: 'string',
       },
       {
         name: 'Thumbs Container Class',
@@ -71,6 +71,7 @@ export default function thumbsCategory() {
         description: 'Additional class that will be added to thumbs swiper',
         value: '',
         tested: false,
+        type: 'string',
       },
     ],
   };

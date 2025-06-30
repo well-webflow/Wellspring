@@ -21,6 +21,7 @@ export default function navigationCategory() {
             value: '',
             description: 'CSS class name added to navigation button when it becomes disabled',
             tested: false,
+            type: 'string',
           },
           {
             name: 'Hidden Class',
@@ -29,6 +30,7 @@ export default function navigationCategory() {
             value: '',
             description: 'CSS class name added to navigation button when it becomes hidden',
             tested: false,
+            type: 'string',
           },
           {
             name: 'Lock Class',
@@ -37,6 +39,7 @@ export default function navigationCategory() {
             value: '',
             description: 'CSS class name added to navigation button when it is disabled',
             tested: false,
+            type: 'string',
           },
           {
             name: 'Navigation Disabled Class',
@@ -45,6 +48,7 @@ export default function navigationCategory() {
             value: '',
             description: 'CSS class name added on swiper container when navigation is disabled by breakpoint',
             tested: false,
+            type: 'string',
           },
         ],
       },
@@ -57,6 +61,7 @@ export default function navigationCategory() {
         value: '',
         description: 'Boolean property to use with breakpoints to enable/disable navigation on certain breakpoints',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Hide on Click',
@@ -65,6 +70,7 @@ export default function navigationCategory() {
         value: '',
         description: "Toggle navigation buttons visibility after click on Slider's container",
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Allow Slide Next',
@@ -73,6 +79,7 @@ export default function navigationCategory() {
         value: '',
         description: 'Set to false to disable swiping to next slide direction (to right or bottom)',
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'Allow Slide Prev',
@@ -81,6 +88,7 @@ export default function navigationCategory() {
         value: '',
         description: 'Set to false to disable swiping to previous slide direction (to left or top)',
         tested: false,
+        type: 'boolean',
       },
     ],
     actions: [

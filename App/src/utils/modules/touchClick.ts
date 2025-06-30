@@ -1,10 +1,4 @@
-import {
-  faArrowsTurnRight,
-  faBan,
-  faHandPointer,
-  faICursor,
-  faPersonRunning,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowsTurnRight, faBan, faHandPointer, faICursor, faPersonRunning } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
 
 export default function touchClickCategory() {
@@ -24,37 +18,37 @@ export default function touchClickCategory() {
             attr: 'grab-cursor',
             swiperDefault: 'false',
             value: '',
-            description:
-              'If \'true\', the user will see the "grab" cursor when hovering on the slider.',
+            description: 'If \'true\', the user will see the "grab" cursor when hovering on the slider.',
             icon: faHandPointer,
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Slide to Clicked Slide',
             attr: 'slide-to-clicked-slide',
             swiperDefault: 'false',
             value: '',
-            description:
-              'Set to true and click on any slide will produce transition to this slide',
+            description: 'Set to true and click on any slide will produce transition to this slide',
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Simulate Touch',
             attr: 'simulate-touch',
             swiperDefault: 'true',
             value: '',
-            description:
-              'If true, Swiper will accept mouse events like touch events (click and drag to change slides)',
+            description: 'If true, Swiper will accept mouse events like touch events (click and drag to change slides)',
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Prevent Clicks',
             attr: 'prevent-clicks',
             swiperDefault: 'true',
             value: '',
-            description:
-              'Set to true to prevent accidental unwanted clicks on links during swiping',
+            description: 'Set to true to prevent accidental unwanted clicks on links during swiping',
             tested: true,
+            type: 'boolean',
           },
         ],
       },
@@ -70,52 +64,53 @@ export default function touchClickCategory() {
             description:
               "If 'false', then slider will be animated only when you release it, it will not move while you hold your finger on it",
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Resistance',
             attr: 'resistance',
             swiperDefault: 'true',
             value: '',
-            description:
-              "If 'true' the slider will snap back with small or incomplete swipes",
+            description: "If 'true' the slider will snap back with small or incomplete swipes",
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Short Swipes',
             attr: 'short-swipes',
             swiperDefault: 'true',
             value: '',
-            description:
-              '(Not working) Set to false if you want to disable short swipes',
+            description: '(Not working) Set to false if you want to disable short swipes',
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Long Swipes',
             attr: 'long-swipes',
             swiperDefault: 'true',
             value: '',
-            description:
-              'Set to false if you want to disable long swipes (ex. swiping multiple slides at a time)',
+            description: 'Set to false if you want to disable long swipes (ex. swiping multiple slides at a time)',
             icon: faPersonRunning,
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Long Swipes ms',
             attr: 'long-swipes-ms',
             swiperDefault: '300',
             value: '',
-            description:
-              'Minimal duration (in ms) to trigger swipe to next/previous slide during long swipes',
+            description: 'Minimal duration (in ms) to trigger swipe to next/previous slide during long swipes',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Long Swipes Ratio',
             attr: 'long-swipes-ratio',
             swiperDefault: '0.5',
             value: '',
-            description:
-              'Ratio to trigger swipe to next/previous slide during long swipes',
+            description: 'Ratio to trigger swipe to next/previous slide during long swipes',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Swipe Handler',
@@ -125,6 +120,7 @@ export default function touchClickCategory() {
             description:
               'String with CSS selector or HTML element of the container with pagination that will work as only available handler for swiping',
             tested: false,
+            type: 'string',
           },
         ],
       },
@@ -140,6 +136,7 @@ export default function touchClickCategory() {
             description:
               "If set to 'true' the slider will capture touch events and prevent system swipe-back navigation on iOS/Android.",
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Edge Swipe Threshold',
@@ -149,6 +146,7 @@ export default function touchClickCategory() {
             description:
               'Area (in px) from left edge of the screen to release touch events for swipe-back navigation on iOS/Android. (This has a minor, if any, effect)',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Touch Release on Edges',
@@ -158,6 +156,7 @@ export default function touchClickCategory() {
             description:
               'Release touch events on slider when it reaches the beginning or end to allow for page scrolling outside of the swiper container. This feature works only with "touch" events (and not pointer events). Also threshold parameter must be set to 0.',
             tested: true,
+            type: 'boolean',
           },
         ],
       },
@@ -173,6 +172,7 @@ export default function touchClickCategory() {
             description:
               'Enable/disable swiping on elements matched to class specified in noSwipingClass or noSwipingSelector',
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'No Swiping Class',
@@ -181,6 +181,7 @@ export default function touchClickCategory() {
             value: '',
             description: "Specify noSwiping's element css class",
             tested: true,
+            type: 'string',
           },
           {
             name: 'No Swiping Selector',
@@ -190,6 +191,7 @@ export default function touchClickCategory() {
             description:
               "Can be used instead of noSwipingClass to specify elements to disable swiping on. For example 'input' will disable swiping on all inputs",
             tested: true,
+            type: 'string',
           },
         ],
       },
@@ -205,15 +207,16 @@ export default function touchClickCategory() {
             description:
               '(Not Working?) Threshold value in px. If "touch distance" will be lower than this value then swiper will not move',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Touch Angle',
             attr: 'touch-angle',
             swiperDefault: '45',
             value: '',
-            description:
-              '(Untested) Allowable angle (in degrees) to trigger touch move',
+            description: '(Untested) Allowable angle (in degrees) to trigger touch move',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Touch Events Target',
@@ -223,33 +226,34 @@ export default function touchClickCategory() {
             description:
               "Target element to listen touch events on. Can be 'container' (to listen for touch events on swiper) or 'wrapper'(to listen for touch events on swiper-wrapper)",
             tested: true,
+            type: 'string',
           },
           {
             name: 'Touch Ratio',
             attr: 'touch-ratio',
             swiperDefault: '1',
             value: '',
-            description:
-              "Touch ratio (don't blame me, this is the real documentation note)",
+            description: "Touch ratio (don't blame me, this is the real documentation note)",
             tested: false,
+            type: 'number',
           },
           {
             name: 'Touch Move Stop Propagation',
             attr: 'touch-move-stop-propagation',
             swiperDefault: 'false',
             value: '',
-            description:
-              'If enabled, then propagation of "touchmove" will be stopped',
+            description: 'If enabled, then propagation of "touchmove" will be stopped',
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Touch Start Force Prevent Default',
             attr: 'touch-start-force-prevent-default',
             swiperDefault: 'false',
             value: '',
-            description:
-              'Force to always prevent default for touchstart (pointerdown) event',
+            description: 'Force to always prevent default for touchstart (pointerdown) event',
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Touch Start Prevent Default',
@@ -258,15 +262,16 @@ export default function touchClickCategory() {
             value: '',
             description: "If disabled, pointerdown event won't be prevented",
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Prevent Clicks Propagation',
             attr: 'prevent-clicks-propagation',
             swiperDefault: 'true',
             value: '',
-            description:
-              'Set to true to stop clicks event propagation on links during swiping',
+            description: 'Set to true to stop clicks event propagation on links during swiping',
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Resistance Ratio',
@@ -275,6 +280,7 @@ export default function touchClickCategory() {
             value: '',
             description: 'This option allows you to control resistance ratio.',
             tested: false,
+            type: 'number',
           },
         ],
       },
@@ -289,25 +295,26 @@ export default function touchClickCategory() {
           'If false, then the only way to switch the slide is use buttons or functions like slidePrev or slideNext',
         icon: faBan,
         tested: false,
+        type: 'boolean',
       },
       {
         name: 'One Way Movement',
         attr: 'data-one-way-movement',
         swiperDefault: 'false',
         value: '',
-        description:
-          "If 'true', will swipe slides only forward (one-way) regardless of swipe direction",
+        description: "If 'true', will swipe slides only forward (one-way) regardless of swipe direction",
         icon: faArrowsTurnRight,
         tested: true,
+        type: 'boolean',
       },
       {
         name: 'Prevent Interaction on Transition',
         attr: 'prevent-interaction-on-transition',
         swiperDefault: 'false',
         value: '',
-        description:
-          "If 'true' swiping and navigation/pagination buttons will be disabled during transition",
+        description: "If 'true' swiping and navigation/pagination buttons will be disabled during transition",
         tested: true,
+        type: 'boolean',
       },
       {
         name: 'Nested',
@@ -317,6 +324,7 @@ export default function touchClickCategory() {
         description:
           'Set to true on Swiper for correct touch events interception. Use only on swipers that use same direction as the parent one',
         tested: false,
+        type: 'boolean',
       },
     ],
   };

@@ -1,16 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWaterfall } from '../context/WaterfallContext';
-import { BreakpointObject, WaterfallSetting } from '../lib/waterfallSettings';
 import Input, { Select } from './Input';
 import Tooltip from './Tooltip';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDesktopAlt, faMobile, faPortrait, faTablet } from '@fortawesome/free-solid-svg-icons';
 import { faDeskpro } from '@fortawesome/free-brands-svg-icons';
+import { BreakpointObject, WaterfallSetting } from '../../types/waterfall-types';
 
 const breakpointIcons: IconDefinition[] = [faMobile, faPortrait, faTablet, faDeskpro, faDesktopAlt, faDesktopAlt];
 
 export default function BasicSetting({ prop }: { prop: WaterfallSetting }) {
-  const { updateWaterfall, waterfalls } = useWaterfall();
+  const { updateWaterfall, waterfalls, waterfallNames } = useWaterfall();
 
   let type = prop.type || 'string';
 
@@ -50,7 +50,7 @@ export default function BasicSetting({ prop }: { prop: WaterfallSetting }) {
           <Select
             type="select"
             value={prop.value}
-            options={waterfalls}
+            options={['--', ...waterfallNames]}
             onChange={(e) => updateWaterfall(prop.attr, e.target.value)}
           />
         )}

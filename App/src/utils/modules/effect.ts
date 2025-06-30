@@ -20,6 +20,7 @@ export default function effectCategory() {
             value: '',
             description: 'Depth offset in px (slides translate in Z axis)',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Coverflow Modifier',
@@ -28,6 +29,7 @@ export default function effectCategory() {
             value: '',
             description: 'Effect multiplier',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Coverflow Rotate',
@@ -36,6 +38,7 @@ export default function effectCategory() {
             value: '',
             description: 'Slide rotate in degrees',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Coverflow Scale',
@@ -44,6 +47,7 @@ export default function effectCategory() {
             value: '',
             description: 'Slide scale effect',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Coverflow Slide Shadows',
@@ -52,6 +56,7 @@ export default function effectCategory() {
             value: '',
             description: 'Enables slides shadows',
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Coverflow Stretch',
@@ -60,6 +65,7 @@ export default function effectCategory() {
             value: '',
             description: 'Stretch space between slides (in px)',
             tested: false,
+            type: 'number',
           },
         ],
       },
@@ -74,6 +80,7 @@ export default function effectCategory() {
             value: '',
             description: 'Limit edge slides rotation',
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Flip Slide Shadows',
@@ -82,6 +89,7 @@ export default function effectCategory() {
             value: '',
             description: 'Enables slides shadows',
             tested: false,
+            type: 'boolean',
           },
         ],
       },
@@ -96,6 +104,7 @@ export default function effectCategory() {
             value: '',
             description: 'Enables main slider shadow',
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Cube Shadow Offset',
@@ -104,6 +113,7 @@ export default function effectCategory() {
             value: '',
             description: 'Main shadow offset in px',
             tested: false,
+            type: 'number',
           },
           {
             name: 'Cube Shadow Scale',
@@ -112,6 +122,7 @@ export default function effectCategory() {
             value: '',
             description: 'Main shadow scale ratio',
             tested: false,
+            type: 'number',
           },
           {
             name: 'Cube Slide Shadows',
@@ -120,6 +131,7 @@ export default function effectCategory() {
             value: '',
             description: 'Enables slides shadows',
             tested: false,
+            type: 'boolean',
           },
         ],
       },
@@ -134,6 +146,7 @@ export default function effectCategory() {
             value: '',
             description: 'Offset distance per slide (in px)',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Cards Per Slide Rotate',
@@ -142,6 +155,7 @@ export default function effectCategory() {
             value: '',
             description: 'Rotate angle per slide (in degrees)',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Cards Rotate',
@@ -150,6 +164,7 @@ export default function effectCategory() {
             value: '',
             description: 'Enables cards rotation',
             tested: true,
+            type: 'boolean',
           },
           {
             name: 'Cards Slide Shadows',
@@ -158,6 +173,7 @@ export default function effectCategory() {
             value: '',
             description: 'Enables slides shadows',
             tested: false,
+            type: 'boolean',
           },
         ],
       },
@@ -170,15 +186,7 @@ export default function effectCategory() {
         value: '',
         description: 'Select an effect for the slide transitions',
         type: 'select',
-        options: [
-          'slide',
-          'fade',
-          'cube',
-          'coverflow',
-          'flip',
-          'creative',
-          'cards',
-        ],
+        options: ['slide', 'fade', 'cube', 'coverflow', 'flip', 'creative', 'cards'],
         tested: true,
       },
     ],

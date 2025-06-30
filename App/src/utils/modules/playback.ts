@@ -28,8 +28,7 @@ export default function playbackCategory() {
             swiperDefault: '',
             value: '',
             type: 'boolean',
-            description:
-              'If true, the slides will move continuously instead of stopping on each slide.',
+            description: 'If true, the slides will move continuously instead of stopping on each slide.',
             tested: false,
           },
           {
@@ -48,8 +47,7 @@ export default function playbackCategory() {
             swiperDefault: 'false', // documentation says default is true, doesn't appear to be true
             value: 'true',
             type: 'boolean',
-            description:
-              'If true, autoplay be disabled after any user interactions',
+            description: 'If true, autoplay be disabled after any user interactions',
             tested: true,
           },
           {
@@ -58,8 +56,7 @@ export default function playbackCategory() {
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
-            description:
-              'If true, autoplay will be paused when the pointer enters the Swiper container.',
+            description: 'If true, autoplay will be paused when the pointer enters the Swiper container.',
             tested: true,
           },
           {
@@ -68,8 +65,7 @@ export default function playbackCategory() {
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
-            description:
-              "If true, autoplays in the reverse direction. Works well with 'loop'.",
+            description: "If true, autoplays in the reverse direction. Works well with 'loop'.",
             tested: true,
           },
           {
@@ -78,8 +74,7 @@ export default function playbackCategory() {
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
-            description:
-              'If true, autoplay will be stopped when it reaches last slide (has no effect in loop mode)',
+            description: 'If true, autoplay will be stopped when it reaches last slide (has no effect in loop mode)',
             tested: true,
           },
           {
@@ -106,6 +101,7 @@ export default function playbackCategory() {
             description:
               'Automatically adds blank slides if you use Grid or slidesPerGroup and the total amount of slides is not even to slidesPerGroup or to grid.rows',
             tested: false,
+            type: 'boolean',
           },
           {
             name: 'Loop Additional Slides',
@@ -115,15 +111,16 @@ export default function playbackCategory() {
             description:
               'Increase amount of looped slides which may help with loading. Must be less than slidesPerView.',
             tested: true,
+            type: 'number',
           },
           {
             name: 'Loop Prevents Sliding',
             attr: 'loop-prevents-sliding',
             swiperDefault: 'true',
             value: '',
-            description:
-              'If enabled then slideNext/Prev will do nothing while slider is animating in loop mode',
+            description: 'If enabled then slideNext/Prev will do nothing while slider is animating in loop mode',
             tested: false,
+            type: 'boolean',
           },
         ],
       },
@@ -134,8 +131,7 @@ export default function playbackCategory() {
         attr: 'speed',
         swiperDefault: '300',
         value: '',
-        description:
-          'Duration of transition between slides (in ms). Small number go fast.',
+        description: 'Duration of transition between slides (in ms). Small number go fast.',
         tested: true,
         type: 'number',
       },
