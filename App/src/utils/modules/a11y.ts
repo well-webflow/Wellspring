@@ -21,8 +21,7 @@ export default function a11yConfig() {
         name: 'Container Role',
         attr: 'a11y-container-role',
         swiperDefault: '',
-        description:
-          'Value of the "role" attribute to be set on the swiper container',
+        description: 'Value of the "role" attribute to be set on the swiper container',
         value: '',
         tested: false,
       },
@@ -30,8 +29,7 @@ export default function a11yConfig() {
         name: 'Container Role Description Message',
         attr: 'a11y-container-role-description-message',
         swiperDefault: '',
-        description:
-          'Message for screen readers describing the role of outer swiper container',
+        description: 'Message for screen readers describing the role of outer swiper container',
         value: '',
         tested: false,
       },
@@ -48,8 +46,7 @@ export default function a11yConfig() {
         name: 'First Slide Message',
         attr: 'a11y-first-slide-message',
         swiperDefault: 'This is the first slide',
-        description:
-          'Message for screen readers for previous button when swiper is on first slide',
+        description: 'Message for screen readers for previous button when swiper is on first slide',
         value: '',
         tested: false,
       },
@@ -57,8 +54,7 @@ export default function a11yConfig() {
         name: 'Id',
         attr: 'a11y-id',
         swiperDefault: '',
-        description:
-          'Value of id attribute to be set on swiper-wrapper. If null will be generated automatically',
+        description: 'Value of id attribute to be set on swiper-wrapper. If null will be generated automatically',
         value: '',
         tested: false,
       },
@@ -66,8 +62,7 @@ export default function a11yConfig() {
         name: 'Item Role Description Message',
         attr: 'a11y-item-role-description-message',
         swiperDefault: '',
-        description:
-          'Message for screen readers describing the role of slide element',
+        description: 'Message for screen readers describing the role of slide element',
         value: '',
         tested: false,
       },
@@ -75,8 +70,7 @@ export default function a11yConfig() {
         name: 'Last Slide Message',
         attr: 'a11y-last-slide-message',
         swiperDefault: 'This is the last slide',
-        description:
-          'Message for screen readers for next button when swiper is on last slide',
+        description: 'Message for screen readers for next button when swiper is on last slide',
         value: '',
         tested: false,
       },
@@ -98,7 +92,7 @@ export default function a11yConfig() {
       },
       {
         name: 'Pagination Bullet Message',
-        attr: '',
+        attr: 'a11y-pagination-bullet-message',
         swiperDefault: 'Go to slide {{index}}',
         description: 'Message for screen readers for single pagination bullet',
         value: '',
@@ -125,8 +119,7 @@ export default function a11yConfig() {
         name: 'Slide Label Message',
         attr: 'a11y-slide-label-message',
         swiperDefault: '{{index}} / {{slidesLength}}',
-        description:
-          'Message for screen readers describing the label of slide element',
+        description: 'Message for screen readers describing the label of slide element',
         value: '',
         tested: false,
       },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { LoadedWaterfall, WaterfallState } from '../context/types';
-import { WaterfallCategory } from '../../types/waterfall-types';
+import { Breakpoints, WaterfallCategory } from '../../types/waterfall-types';
 import { defaultWaterfallSettings } from '../utils/waterfallSettings.tsx';
 import { findWaterfallSetting } from '../utils/waterfallHelpers.ts';
 import { throwErrorIfWaterfallNotSelected } from '../utils/notices.ts';
@@ -162,7 +162,7 @@ export function useWaterfallLogic(): WaterfallState {
   function updateWaterfall(propAttrName: string, newValue: string, breakpoint?: string) {
     if (!waterfallSettings) return;
 
-    console.log('updating ', propAttrName, 'to ', newValue);
+    //console.log('updating ', propAttrName, 'to ', newValue);
 
     const updatedData: WaterfallCategory[] = waterfallSettings.map((category) => {
       return {
@@ -213,46 +213,50 @@ export function useWaterfallLogic(): WaterfallState {
     const el = loadedWaterfall?.el;
     if (!el?.customAttributes) return;
 
-    await throwErrorIfWaterfallNotSelected(el);
-
-    const name = await el.getCustomAttribute('waterfall');
-    setLoadedWaterfall({ name, el });
-
     const allSettings =
       waterfallSettings?.flatMap((category) => [
         ...(category.items ?? []),
         ...(category.groups?.flatMap((g) => g.items) ?? []),
       ]) ?? [];
 
-    await Promise.all(
-      allSettings.map(async (setting) => {
-        const shouldRemove = !setting.value || setting.value === setting.swiperDefault;
-        if (shouldRemove) {
-          await el.removeCustomAttribute(setting.attr);
-        } else {
-          await el.setCustomAttribute(setting.attr, setting.value.toString());
-        }
+    try {
+      await Promise.all(
+        allSettings.map(async (setting, i) => {
+          if (!setting.attr) {
+            console.warn(`Skipping invalid setting (missing attr):`, setting);
+            return;
+          }
 
-        if (setting.breakpoints) {
-          await Promise.all(
-            Object.entries(setting.breakpoints).map(async ([bp, val]) => {
-              const attr = getBreakpointAttr(setting.attr, bp);
-              if (!val) {
-                await el.removeCustomAttribute(attr);
-              } else {
-                await el.setCustomAttribute(attr, val.toString());
-              }
-            })
-          );
-        }
-      })
-    );
+          const shouldRemove = !setting.value || setting.value === setting.swiperDefault;
 
-    console.log('SAVE');
+          if (shouldRemove) {
+            await el.removeCustomAttribute(setting.attr);
+          } else {
+            await el.setCustomAttribute(setting.attr, setting.value.toString());
+          }
+
+          if (setting.breakpoints) {
+            await Promise.all(
+              Object.entries(setting.breakpoints).map(([bp, val]) => {
+                const attr = getBreakpointAttr(setting.attr, bp as Breakpoints);
+                if (!attr) return;
+                return val ? el.setCustomAttribute(attr, val.toString()) : el.removeCustomAttribute(attr);
+              })
+            );
+          }
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    // Update the name
+    const name = await el.getCustomAttribute('waterfall');
+    setLoadedWaterfall({ name, el });
 
     await webflow.notify({
       type: 'Success',
-      message: `Updated Waterfall '${name}' Successfully!`,
+      message: `${name} has been saved!`,
     });
 
     await searchForWaterfalls();
