@@ -11,10 +11,10 @@ export function EditNavigation({ heading, onGoBack }: { heading: string; onGoBac
       <div className="w-full flex flex-row justify-between items-center">
         <Heading level={4}>{heading}</Heading>
         <div className="flex flex-row gap-2">
-          <Button icon={faArrowsRotate} onClick={() => loadWaterfall()} color="secondary">
+          <Button icon={faArrowsRotate} onClick={loadWaterfall} color="secondary">
             Reload
           </Button>
-          <Button icon={faSave} onClick={async () => await saveWaterfall()} color="primary">
+          <Button icon={faSave} onClick={saveWaterfall} color="primary">
             Save
           </Button>
         </div>
