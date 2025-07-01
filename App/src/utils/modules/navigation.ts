@@ -1,6 +1,6 @@
 import { faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
-import { createNavigation } from '../createElements';
+import { getOrCreateStyle } from '../webflowHelpers';
 
 export default function navigationCategory() {
   let config: WaterfallCategory = {
@@ -99,4 +99,32 @@ export default function navigationCategory() {
     ],
   };
   return config;
+}
+
+export async function createNavigation() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const navigationClass = await getOrCreateStyle('Navigation');
+  const prevClass = await getOrCreateStyle('Prev Button');
+  const nextClass = await getOrCreateStyle('Next Button');
+
+  const navigation = await parentEl.prepend(webflow.elementPresets.DOM);
+  navigation.setTag('div');
+  navigation.setStyles([navigationClass]);
+
+  const prevButton = await navigation.prepend(webflow.elementPresets.DOM);
+  prevButton.setTag('button');
+  prevButton.setAttribute('waterfall-el', 'prev');
+  prevButton.setStyles([prevClass]);
+
+  const nextButton = await navigation.prepend(webflow.elementPresets.DOM);
+  nextButton.setTag('button');
+  nextButton.setAttribute('waterfall-el', 'next');
+  nextButton.setStyles([nextClass]);
+
+  webflow.notify({
+    type: 'Success',
+    message: 'Added Navigation Elements',
+  });
 }

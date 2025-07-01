@@ -1,6 +1,6 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
-import { createPagination } from '../createElements';
+import { getOrCreateStyle } from '../webflowHelpers';
 
 export default function paginationCategory() {
   let config: WaterfallCategory = {
@@ -226,4 +226,44 @@ export default function paginationCategory() {
     ],
   };
   return config;
+}
+
+export async function convertToPaginationBulletActive() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute('waterfall-el', 'pagination-bullet-active');
+    webflow.notify({
+      type: 'Success',
+      message: 'Element successfully converted to Pagination Bullet (Active).',
+    });
+  }
+}
+
+export async function createPagination() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const paginationClass = await getOrCreateStyle('Pagination');
+  const paginationBulletActiveClass = await getOrCreateStyle('Pagination Bullet Active');
+  const paginationBulletClass = await getOrCreateStyle('Pagination Bullet');
+
+  const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
+  pagination.setTag('div');
+  pagination.setAttribute('waterfall-el', 'pagination');
+  pagination.setStyles([paginationClass]);
+
+  const paginationBulletActive = await pagination.prepend(webflow.elementPresets.DOM);
+  paginationBulletActive.setTag('button');
+  paginationBulletActive.setAttribute('waterfall-el', 'pagination-bullet-active');
+  paginationBulletActive.setStyles([paginationBulletActiveClass]);
+
+  const paginationBullet = await pagination.prepend(webflow.elementPresets.DOM);
+  paginationBullet.setTag('button');
+  paginationBullet.setAttribute('waterfall-el', 'pagination-bullet');
+  paginationBullet.setStyles([paginationBulletClass]);
+
+  webflow.notify({
+    type: 'Success',
+    message: 'Added Pagination Elements',
+  });
 }

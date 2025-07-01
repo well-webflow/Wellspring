@@ -1,6 +1,6 @@
 import { faBarsProgress } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
-import { createScrollbar } from '../createElements';
+import { getOrCreateStyle } from '../webflowHelpers';
 
 export default function scrollbarCategory() {
   let config: WaterfallCategory = {
@@ -109,4 +109,33 @@ export default function scrollbarCategory() {
     ],
   };
   return config;
+}
+
+export async function createScrollbar() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const scrollbarClass = await getOrCreateStyle('Scrollbar');
+  const scrollbarDragClass = await getOrCreateStyle('Scrollbar Drag');
+
+  const scrollbar = await parentEl.prepend(webflow.elementPresets.DOM);
+  scrollbar.setTag('div');
+  scrollbar.setStyles([scrollbarClass]);
+  scrollbar.setAttribute('waterfall-el', 'scrollbar');
+
+  const scrollbarDrag = await scrollbar.prepend(webflow.elementPresets.DOM);
+  scrollbarDrag.setTag('button');
+  scrollbarDrag.setStyles([scrollbarDragClass]);
+  scrollbarDrag.setAttribute('waterfall-el', 'scrollbar-drag');
+}
+
+export async function convertToScrollbar() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute('waterfall-el', 'scrollbar');
+    webflow.notify({
+      type: 'Success',
+      message: 'Element successfully converted to Scrollbar.',
+    });
+  }
 }

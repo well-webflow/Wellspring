@@ -64,10 +64,10 @@ export async function getOrCreateStyle(style: string) {
  * @param el AnyElement
  * @returns Attributes of an AnyElement, or null
  */
-export async function getAttributes(el: AnyElement) {
+export async function getAttributes(el: AnyElement | null) {
   let attr;
-  if (el.customAttributes) attr = await el.getAllCustomAttributes();
-  if (el.type === 'DOM') attr = await el.getAllAttributes();
+  if (el && el.customAttributes) attr = await el.getAllCustomAttributes();
+  if (el && el.type === 'DOM') attr = await el.getAllAttributes();
   return attr;
 }
 

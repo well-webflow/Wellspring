@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { LoadedWaterfall, WaterfallState } from '../context/types';
 import { Breakpoints, WaterfallCategory } from '../../types/waterfall-types';
 import { defaultWaterfallSettings } from '../utils/waterfallSettings.tsx';
-import { findWaterfallSetting } from '../utils/waterfallHelpers.ts';
+import { createWaterfallElement, findWaterfallSetting, WaterfallMode } from '../utils/waterfallHelpers.ts';
 import { getBaseAttr, getBreakpointAttr } from '../utils/attributes.ts';
-import { createWaterfallElement, WaterfallMode } from '../utils/createElements.ts';
 import { useNavigate } from 'react-router';
 import { getAttribute, getAttributes, removeAttribute, setAttribute } from '../utils/webflowHelpers.ts';
 

@@ -1,3 +1,5 @@
+import { WaterfallCategory } from '../../types/waterfall-types';
+
 import generalConfig from './modules/general';
 import layoutConfig from './modules/layout';
 import playbackCategory from './modules/playback';
@@ -14,7 +16,6 @@ import controllerCategory from './modules/controller';
 import a11yConfig from './modules/a11y';
 import classnamesCategory from './modules/classNames';
 import advancedCategory from './modules/advanced';
-import { WaterfallCategory } from '../../types/waterfall-types';
 import scrollbarCategory from './modules/scrollbar';
 
 export const defaultWaterfallSettings: WaterfallCategory[] = [
@@ -26,7 +27,6 @@ export const defaultWaterfallSettings: WaterfallCategory[] = [
   scrollbarCategory(),
   freemodeCategory(),
   touchClickCategory(),
-  // MANIPULATION (NOT IMPLEMENTED)
   // PARALLAX (NOT IMPLEMENTED)
   effectCategory(),
   thumbsCategory(),
