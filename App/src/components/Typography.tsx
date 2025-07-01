@@ -46,3 +46,8 @@ export function Paragraph({ size = 'md', children, className }: ParagraphProps) 
   );
   return <p className={cls}>{children}</p>;
 }
+
+export function Caption({ children, className }: ParagraphProps) {
+  const cls = twMerge(clsx('text-sm mb-3 text-text2', className));
+  return <p className={cls}>{children}</p>;
+}

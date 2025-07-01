@@ -24,13 +24,7 @@ export function useWaterfallLogic(): WaterfallState {
     setElementSelected(element);
     if (!element) return;
 
-    let waterfallName;
-    if (element.type === 'DOM') {
-      waterfallName = await element.getAttribute('waterfall');
-    } else {
-      if (!element?.customAttributes) return;
-      waterfallName = await element.getCustomAttribute('waterfall');
-    }
+    let waterfallName = await getAttribute(element, 'waterfall');
 
     if (waterfallName) {
       setWaterfallSelected(waterfallName);

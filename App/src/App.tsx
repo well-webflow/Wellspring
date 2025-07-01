@@ -9,6 +9,7 @@ import WellflowMainView from './views/WellflowMainView';
 import { WaterfallProvider } from './context/WaterfallContext';
 import WaterfallSearchView from './views/waterfall/WaterfallSearchView';
 import WaterfallLayout from './views/waterfall/WaterfallLayout';
+import ManipulationView from './views/waterfall/ManipulationView';
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
               <Route path="search" element={<WaterfallSearchView />} />
               <Route path="edit" element={<EditView />} />
               <Route path="edit/:categoryName" element={<CategoryView />} />
+              <Route path="manipulation" element={<ManipulationView />} />
             </Route>
           </Route>
         </Routes>

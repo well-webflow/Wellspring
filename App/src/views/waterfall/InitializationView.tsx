@@ -49,6 +49,12 @@ export default function InitializationView() {
                 Add elements like scrollbar, navigation, pagination
               </Paragraph>
             </Card>
+            <Card href="/waterfall/manipulation">
+              <Heading level={4}>Manipulation</Heading>
+              <Paragraph size="sm" className="text-text2 mb-0">
+                Add or Remove Elements to a Waterfall at runtime
+              </Paragraph>
+            </Card>
           </div>
         ) : (
           <Card>

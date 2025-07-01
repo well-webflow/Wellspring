@@ -6,7 +6,6 @@ export default {
       display: ['Inter'],
       body: ['Inter'],
     },
-
     extend: {
       backgroundImage: {
         'actionSecondaryBackground': "var(--actionSecondaryBackground)",
