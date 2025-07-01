@@ -26,7 +26,7 @@ export async function createPagination() {
 
   webflow.notify({
     type: 'Success',
-    message: 'Added Pagination to DOM',
+    message: 'Added Pagination Elements',
   });
 }
 
@@ -54,7 +54,7 @@ export async function createNavigation() {
 
   webflow.notify({
     type: 'Success',
-    message: 'Added Navigation to DOM',
+    message: 'Added Navigation Elements',
   });
 }
 
@@ -108,77 +108,63 @@ export async function convertToWaterfallEl(attr: string, name: string): Promise<
     });
   }
 }
-export const createWaterfallElement = async (defaultWaterfallSettings: WaterfallCategory[]) => {
+
+export type WaterfallMode = 'static' | 'cms';
+
+export const createWaterfallElement = async (
+  defaultWaterfallSettings: WaterfallCategory[],
+  mode: WaterfallMode = 'static'
+) => {
   const parentEl = await webflow.getSelectedElement();
   if (!parentEl?.children) return false;
 
-  const waterfallDiv = await parentEl.prepend(webflow.elementPresets.DOM);
-  waterfallDiv.setTag('waterfall');
-
   // Ensure required styles exist
+  const waterfall = await getOrCreateStyle('waterfall');
   const swiper = await getOrCreateStyle('swiper');
   const swiperWrapper = await getOrCreateStyle('swiper-wrapper');
   const swiperSlide = await getOrCreateStyle('swiper-slide');
 
-  const waterfallSwiper = await waterfallDiv.append(webflow.elementPresets.DOM);
-  waterfallSwiper.setTag('div');
-  waterfallSwiper.setStyles([swiper]);
-
-  const waterfallWrapper = await waterfallSwiper.append(webflow.elementPresets.DOM);
-  waterfallWrapper.setTag('div');
-  waterfallWrapper.setStyles([swiperWrapper]);
-
-  const waterfallSlide = await waterfallWrapper.append(webflow.elementPresets.DOM);
-  waterfallSlide.setTag('div');
-  waterfallSlide.setStyles([swiperSlide]);
-
-  addDefaultSettings(defaultWaterfallSettings, waterfallDiv);
-  webflow.setSelectedElement(waterfallDiv);
-
-  // Add modules
-  createNavigation();
-  createPagination();
-  createScrollbar();
-
-  return true;
-};
-
-export const createWaterfallCMSElement = async (defaultWaterfallSettings: WaterfallCategory[]) => {
-  const parentEl = await webflow.getSelectedElement();
-  if (!parentEl?.children) return false;
-
   const waterfallDiv = await parentEl.prepend(webflow.elementPresets.DOM);
-  waterfallDiv.setTag('waterfall');
+  waterfallDiv.setStyles([waterfall]);
+  waterfallDiv.setTag('div');
 
-  // Ensure required styles exist
-  const swiper = await getOrCreateStyle('swiper');
-  const swiperWrapper = await getOrCreateStyle('swiper-wrapper');
-  const swiperSlide = await getOrCreateStyle('swiper-slide');
+  if (mode === 'cms') {
+    // Append DynamoWrapper (Collection List Wrapper)
+    const waterfallCMS = await waterfallDiv.append(webflow.elementPresets.DynamoWrapper);
+    await waterfallCMS.setStyles([swiper]);
 
-  // Append DynamoWrapper (Collection List Wrapper)
-  const waterfallCMS = await waterfallDiv.append(webflow.elementPresets.DynamoWrapper);
-  await waterfallCMS.setStyles([swiper]);
+    // Set Collection List class to swiper-wrapper
+    const [collectionList] = await waterfallCMS.getChildren();
+    if (collectionList?.styles) {
+      await collectionList.setStyles([swiperWrapper]);
+    }
 
-  // Set Collection List class to swiper-wrapper
-  const [collectionList] = await waterfallCMS.getChildren();
-  if (collectionList?.styles) {
-    await collectionList.setStyles([swiperWrapper]);
-  }
+    // Set Collection Item class to swiper-slide
+    if (!collectionList.children || !collectionList.getChildren) return false;
+    const [collectionItem] = (await collectionList.getChildren()) ?? [];
+    if (collectionItem?.styles) {
+      await collectionItem.setStyles([swiperSlide]);
+    }
+  } else {
+    const waterfallSwiper = await waterfallDiv.append(webflow.elementPresets.DOM);
+    waterfallSwiper.setTag('div');
+    waterfallSwiper.setStyles([swiper]);
 
-  // Set Collection Item class to swiper-slide
-  if (!collectionList.children || !collectionList.getChildren) return false;
-  const [collectionItem] = (await collectionList.getChildren()) ?? [];
-  if (collectionItem?.styles) {
-    await collectionItem.setStyles([swiperSlide]);
+    const waterfallWrapper = await waterfallSwiper.append(webflow.elementPresets.DOM);
+    waterfallWrapper.setTag('div');
+    waterfallWrapper.setStyles([swiperWrapper]);
+
+    const waterfallSlide = await waterfallWrapper.append(webflow.elementPresets.DOM);
+    waterfallSlide.setTag('div');
+    waterfallSlide.setStyles([swiperSlide]);
   }
 
   addDefaultSettings(defaultWaterfallSettings, waterfallDiv);
-
   webflow.setSelectedElement(waterfallDiv);
 
-  // Add modules
   createNavigation();
   createPagination();
   createScrollbar();
+
   return true;
 };

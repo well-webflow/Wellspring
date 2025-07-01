@@ -3,9 +3,8 @@ import { LoadedWaterfall, WaterfallState } from '../context/types';
 import { Breakpoints, WaterfallCategory } from '../../types/waterfall-types';
 import { defaultWaterfallSettings } from '../utils/waterfallSettings.tsx';
 import { findWaterfallSetting } from '../utils/waterfallHelpers.ts';
-import { throwErrorIfWaterfallNotSelected } from '../utils/notices.ts';
 import { getBaseAttr, getBreakpointAttr } from '../utils/attributes.ts';
-import { createWaterfallCMSElement, createWaterfallElement } from '../utils/createElements.ts';
+import { createWaterfallElement, WaterfallMode } from '../utils/createElements.ts';
 import { useNavigate } from 'react-router';
 
 export function useWaterfallLogic(): WaterfallState {
@@ -83,19 +82,10 @@ export function useWaterfallLogic(): WaterfallState {
   }
 
   // Create a new waterfall object with all of the default props
-  async function createWaterfall() {
+  async function createWaterfall(mode: WaterfallMode) {
     setIsLoading(true);
-    const success = await createWaterfallElement(defaultWaterfallSettings);
-    if (success) webflow.notify({ type: 'Success', message: 'Successfully Created new Waterfall' });
-    await loadWaterfall();
-    setIsLoading(false);
-    navigate('/waterfall/edit');
-  }
-
-  async function createWaterfallCMS() {
-    setIsLoading(true);
-    const success = await createWaterfallCMSElement(defaultWaterfallSettings);
-    if (success) webflow.notify({ type: 'Success', message: 'Successfully Created new CMS Waterfall' });
+    const success = await createWaterfallElement(defaultWaterfallSettings, mode);
+    if (success) webflow.notify({ type: 'Success', message: 'Created new Waterfall' });
     await loadWaterfall();
     setIsLoading(false);
     navigate('/waterfall/edit');
@@ -275,7 +265,6 @@ export function useWaterfallLogic(): WaterfallState {
     isLoading,
     setIsLoading,
     createWaterfall,
-    createWaterfallCMS,
     loadWaterfall,
     loadAndEditWaterfall,
     unloadWaterfall,

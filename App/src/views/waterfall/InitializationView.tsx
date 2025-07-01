@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Card from '../../components/Card';
 
 export default function InitializationView() {
-  const { createWaterfall, createWaterfallCMS, elementSelected, waterfalls, searchForWaterfalls } = useWaterfall();
+  const { createWaterfall, elementSelected, waterfalls, searchForWaterfalls } = useWaterfall();
 
   useEffect(() => {
     webflow.setExtensionSize('comfortable');
@@ -31,13 +31,13 @@ export default function InitializationView() {
                 Modify an existing Waterfall on this page
               </Paragraph>
             </Card>
-            <Card onClick={createWaterfallCMS}>
+            <Card onClick={() => createWaterfall('cms')}>
               <Heading level={4}>Create CMS Waterfall</Heading>
               <Paragraph size="sm" className="text-text2 mb-0">
                 Add a waterfall ready to be connected to a CMS List
               </Paragraph>
             </Card>
-            <Card onClick={createWaterfall}>
+            <Card onClick={() => createWaterfall('static')}>
               <Heading level={4}>Create Waterfall</Heading>
               <Paragraph size="sm" className="text-text2 mb-0">
                 Add a waterfall with static slides

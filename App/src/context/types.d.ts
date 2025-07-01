@@ -1,3 +1,5 @@
+import { WaterfallMode } from '../utils/createElements';
+
 export interface AuthContextType {
   idToken: string;
   sessionToken: string;
@@ -17,8 +19,7 @@ interface WaterfallState {
   setWaterfallSettings: (value: WaterfallCategory[]) => void;
   selectedCategory: string | null;
   setSelectedCategory: (value: string | null) => void;
-  createWaterfall: () => void;
-  createWaterfallCMS: () => void;
+  createWaterfall: (mode: WaterfallMode) => void;
   loadWaterfall: () => void;
   loadAndEditWaterfall: () => void;
   loadedWaterfall: LoadedWaterfall | null;
