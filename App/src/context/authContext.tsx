@@ -1,7 +1,7 @@
 // context/authContext.tsx
 import { createContext } from 'react';
 import { SessionUser } from '../utils/tokenManager';
-import { WebflowSiteInfo } from './types';
+import { WebflowSiteInfo } from '../../types/types';
 
 interface AuthContextType {
   idToken: string;
@@ -14,6 +14,4 @@ interface AuthContextType {
   openAuthWindow: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);

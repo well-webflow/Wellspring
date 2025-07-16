@@ -1,14 +1,8 @@
 // context/authProvider.tsx
 import { useEffect, useState, ReactNode } from 'react';
 import { AuthContext } from './authContext';
-import {
-  fetchSessionToken,
-  getStoredSession,
-  isTokenValid,
-  SessionUser,
-  storeSession,
-} from '../utils/tokenManager';
-import { WebflowSiteInfo } from './types';
+import { fetchSessionToken, getStoredSession, isTokenValid, SessionUser, storeSession } from '../utils/tokenManager';
+import { WebflowSiteInfo } from '../../types/types';
 
 const SESSION_TOKEN_NAME = 'wf_hybrid_user';
 

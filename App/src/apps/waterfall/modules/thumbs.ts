@@ -1,5 +1,5 @@
 import { faFileImage } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../types/waterfall-types';
+import { WaterfallCategory } from '../../../../types/waterfall-types';
 
 export default function thumbsCategory() {
   let config: WaterfallCategory = {

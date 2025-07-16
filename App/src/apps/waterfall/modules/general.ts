@@ -1,5 +1,5 @@
 import { faBug, faCog, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../types/waterfall-types';
+import { WaterfallCategory } from '../../../../types/waterfall-types';
 
 export default function generalConfig() {
   let config: WaterfallCategory = {

@@ -7,6 +7,8 @@ import SelectedElement, { SelectedElementInfo } from '../../components/SelectedE
 import Button from '../../components/Button';
 import { setAttribute } from '../../utils/webflowHelpers';
 
+import { ATTR_MANIPULATION_ADD_SLIDE } from 'well-waterfall/src/lib/attributes';
+
 export default function ManipulationView() {
   const { waterfallNames, elementSelected } = useWaterfall();
   const [elementInfo, setElementInfo] = useState<SelectedElementInfo | null>(null);
@@ -16,9 +18,21 @@ export default function ManipulationView() {
     const el = await webflow.getSelectedElement();
     if (!el) return;
 
-    setAttribute(el, 'wtf-manipulation-add', selectedWaterfall);
+    setAttribute(el, ATTR_MANIPULATION_ADD_SLIDE, selectedWaterfall);
 
     webflow.notify({ type: 'Success', message: `Set Element to add to ${selectedWaterfall} during runtime.` });
+  }
+
+  function elementWillBeAdded(el: Element) {
+    // Check if the element has the wtf-manipulation-add attribute
+    if (el.hasAttribute(ATTR_MANIPULATION_ADD_SLIDE)) {
+      // If it does, we can assume it will be added to a Waterfall
+      console.log(`[SlideAdder] Element will be added to Waterfall: ${el.outerHTML}`);
+      return true;
+    } else {
+      console.warn(`[SlideAdder] Element does not have the ${ATTR_MANIPULATION_ADD_SLIDE} attribute.`);
+      return false;
+    }
   }
 
   function onWaterfallSelectChange(e: any) {

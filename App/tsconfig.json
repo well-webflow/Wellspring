@@ -20,12 +20,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@webflow",
-      "./node_modules/@fortawesome"
-    ]
+    "typeRoots": ["./node_modules/@types", "./node_modules/@webflow", "./node_modules/@fortawesome"]
   },
-  "include": ["src", "types/waterfall-types.d.ts"],
+  "include": ["src", "types/waterfall-types.d.ts", "types/types.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

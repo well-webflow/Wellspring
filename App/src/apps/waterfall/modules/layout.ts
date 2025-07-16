@@ -1,5 +1,5 @@
 import { faArrowsLeftRight, faArrowsLeftRightToLine, faHashtag, faTable } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../types/waterfall-types';
+import { WaterfallCategory } from '../../../../types/waterfall-types';
 
 export default function layoutConfig() {
   let config: WaterfallCategory = {

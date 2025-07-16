@@ -1,7 +1,7 @@
 import { WaterfallCategory, WaterfallSetting } from '../../types/waterfall-types';
-import { createNavigation } from './modules/navigation';
-import { createPagination } from './modules/pagination';
-import { createScrollbar } from './modules/scrollbar';
+import { createNavigation } from '../apps/waterfall/modules/navigation';
+import { createPagination } from '../apps/waterfall/modules/pagination';
+import { createScrollbar } from '../apps/waterfall/modules/scrollbar';
 import { addDefaultSettings, getOrCreateStyle } from './webflowHelpers';
 
 /**

@@ -1,5 +1,5 @@
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../types/waterfall-types';
+import { WaterfallCategory } from '../../../../types/waterfall-types';
 
 export default function playbackCategory() {
   let config: WaterfallCategory = {

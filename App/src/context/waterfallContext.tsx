@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { WaterfallState } from './types';
+import { WaterfallState } from '../../types/waterfall-types';
 import { useWaterfallLogic } from '../hooks/useWaterfallLogic';
 
 // Create the context with an initial value of undefined

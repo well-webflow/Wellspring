@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { LoadedWaterfall, WaterfallState } from '../context/types';
+import { WaterfallState } from '../../types/waterfall-types';
+import { LoadedWaterfall } from '../../types/waterfall-types';
 import { Breakpoints, WaterfallCategory } from '../../types/waterfall-types';
 import { defaultWaterfallSettings } from '../utils/waterfallSettings.tsx';
 import { createWaterfallElement, findWaterfallSetting, WaterfallMode } from '../utils/waterfallHelpers.ts';

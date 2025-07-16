@@ -1,5 +1,5 @@
 import { WaterfallCategory } from '../../types/waterfall-types';
-import { WebflowSiteInfo } from '../context/types';
+import { WebflowSiteInfo } from '../../types/types';
 import axiosInstance from './axios';
 
 /**

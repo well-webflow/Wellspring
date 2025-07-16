@@ -1,6 +1,6 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../types/waterfall-types';
-import { getOrCreateStyle } from '../webflowHelpers';
+import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 
 export default function paginationCategory() {
   let config: WaterfallCategory = {
