@@ -1,6 +1,17 @@
 import { faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
+import {
+  ATTR_ALLOW_SLIDE_NEXT,
+  ATTR_ALLOW_SLIDE_PREV,
+  ATTR_NAVIGATION_DISABLED_CLASS,
+  ATTR_NAVIGATION_ENABLED,
+  ATTR_NAVIGATION_HIDDEN_CLASS,
+  ATTR_NAVIGATION_HIDE_ON_CLICK,
+  ATTR_NAVIGATION_LOCK_CLASS,
+  ATTR_NAVIGATION_NAVIGATION_DISABLED_CLASS,
+  ATTR_WATERFALL_ELEMENT,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function navigationCategory() {
   let config: WaterfallCategory = {
@@ -16,7 +27,7 @@ export default function navigationCategory() {
         items: [
           {
             name: 'Disabled Class',
-            attr: 'nav-disabled-class',
+            attr: ATTR_NAVIGATION_DISABLED_CLASS,
             swiperDefault: 'swiper-button-disabled',
             value: '',
             description: 'CSS class name added to navigation button when it becomes disabled',
@@ -25,7 +36,7 @@ export default function navigationCategory() {
           },
           {
             name: 'Hidden Class',
-            attr: 'nav-hidden-class',
+            attr: ATTR_NAVIGATION_HIDDEN_CLASS,
             swiperDefault: 'swiper-button-hidden',
             value: '',
             description: 'CSS class name added to navigation button when it becomes hidden',
@@ -34,7 +45,7 @@ export default function navigationCategory() {
           },
           {
             name: 'Lock Class',
-            attr: 'nav-lock-class',
+            attr: ATTR_NAVIGATION_LOCK_CLASS,
             swiperDefault: 'swiper-button-lock',
             value: '',
             description: 'CSS class name added to navigation button when it is disabled',
@@ -43,7 +54,7 @@ export default function navigationCategory() {
           },
           {
             name: 'Navigation Disabled Class',
-            attr: 'nav-disabled-class',
+            attr: ATTR_NAVIGATION_NAVIGATION_DISABLED_CLASS,
             swiperDefault: 'swiper-navigation-disabled',
             value: '',
             description: 'CSS class name added on swiper container when navigation is disabled by breakpoint',
@@ -56,7 +67,7 @@ export default function navigationCategory() {
     items: [
       {
         name: 'Enabled',
-        attr: 'nav-enabled',
+        attr: ATTR_NAVIGATION_ENABLED,
         swiperDefault: '',
         value: '',
         description: 'Boolean property to use with breakpoints to enable/disable navigation on certain breakpoints',
@@ -65,7 +76,7 @@ export default function navigationCategory() {
       },
       {
         name: 'Hide on Click',
-        attr: 'nav-hide-on-click',
+        attr: ATTR_NAVIGATION_HIDE_ON_CLICK,
         swiperDefault: 'false',
         value: '',
         description: "Toggle navigation buttons visibility after click on Slider's container",
@@ -74,7 +85,7 @@ export default function navigationCategory() {
       },
       {
         name: 'Allow Slide Next',
-        attr: 'allow-slide-next',
+        attr: ATTR_ALLOW_SLIDE_NEXT,
         swiperDefault: 'true',
         value: '',
         description: 'Set to false to disable swiping to next slide direction (to right or bottom)',
@@ -83,7 +94,7 @@ export default function navigationCategory() {
       },
       {
         name: 'Allow Slide Prev',
-        attr: 'allow-slide-prev',
+        attr: ATTR_ALLOW_SLIDE_PREV,
         swiperDefault: 'true',
         value: '',
         description: 'Set to false to disable swiping to previous slide direction (to left or top)',
@@ -115,12 +126,12 @@ export async function createNavigation() {
 
   const prevButton = await navigation.prepend(webflow.elementPresets.DOM);
   prevButton.setTag('button');
-  prevButton.setAttribute('waterfall-el', 'prev');
+  prevButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'prev');
   prevButton.setStyles([prevClass]);
 
   const nextButton = await navigation.prepend(webflow.elementPresets.DOM);
   nextButton.setTag('button');
-  nextButton.setAttribute('waterfall-el', 'next');
+  nextButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'next');
   nextButton.setStyles([nextClass]);
 
   webflow.notify({

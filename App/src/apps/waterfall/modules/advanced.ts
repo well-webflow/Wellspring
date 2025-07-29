@@ -1,5 +1,30 @@
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_BREAKPOINTS_BASE,
+  ATTR_CREATE_ELEMENTS,
+  ATTR_CSS_MODE,
+  ATTR_FOCUSABLE_ELEMENTS,
+  ATTR_LAZY_PRELOAD_PREV_NEXT,
+  ATTR_LAZY_PRELOADER_CLASS,
+  ATTR_MAX_BACKFACE_HIDDEN_SLIDES,
+  ATTR_NORMALIZE_SLIDE_INDEX,
+  ATTR_OBSERVE_SLIDE_CHILDREN,
+  ATTR_OBSERVE_SLIDE_PARENTS,
+  ATTR_OBSERVER,
+  ATTR_PASSIVE_LISTENERS,
+  ATTR_RESIZE_OBSERVER,
+  ATTR_ROUND_LENGTHS,
+  ATTR_RUN_CALLBACKS_ON_INIT,
+  ATTR_SET_WRAPPER_SIZE,
+  ATTR_SWIPER_ELEMENT_NODE_NAME,
+  ATTR_UNIQUE_NAV_ELEMENTS,
+  ATTR_URL,
+  ATTR_USER_AGENT,
+  ATTR_VIRTUAL_TRANSLATE,
+  ATTR_WATCH_OVERFLOW,
+  ATTR_WATCH_SLIDES_PROGRESS,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function advancedCategory() {
   let config: WaterfallCategory = {
@@ -10,7 +35,7 @@ export default function advancedCategory() {
     items: [
       {
         name: 'Breakpoints Base',
-        attr: 'breakpoints-base',
+        attr: ATTR_BREAKPOINTS_BASE,
         swiperDefault: 'window',
         value: '',
         description:
@@ -21,7 +46,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Create Elements',
-        attr: 'create-elements',
+        attr: ATTR_CREATE_ELEMENTS,
         swiperDefault: 'false',
         value: '',
         description:
@@ -31,7 +56,7 @@ export default function advancedCategory() {
       },
       {
         name: 'CSS Mode',
-        attr: 'css-mode',
+        attr: ATTR_CSS_MODE,
         swiperDefault: 'false',
         value: '',
         description: 'See https://swiperjs.com/swiper-api#param-cssMode for more information',
@@ -40,7 +65,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Focusable Elements',
-        attr: 'focusable-elements',
+        attr: ATTR_FOCUSABLE_ELEMENTS,
         swiperDefault: 'input, select, option, textarea, button, video, label',
         value: '',
         description:
@@ -50,7 +75,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Lazy Load Prev Next',
-        attr: 'lazy-load-prev-next',
+        attr: ATTR_LAZY_PRELOAD_PREV_NEXT,
         swiperDefault: '0',
         value: '2',
         description: 'Number of next and previous slides to preload. Only applicable if using lazy loading.',
@@ -59,7 +84,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Lazy Preloader Class',
-        attr: 'lazy-preloader-class',
+        attr: ATTR_LAZY_PRELOADER_CLASS,
         swiperDefault: 'swiper-lazy-preloader',
         value: '',
         description: 'CSS class name of lazy preloader',
@@ -68,7 +93,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Max Backface Hidden Slides',
-        attr: 'max-backface-hidden-slides',
+        attr: ATTR_MAX_BACKFACE_HIDDEN_SLIDES,
         swiperDefault: '10',
         value: '',
         description:
@@ -78,7 +103,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Normalize Slide Index',
-        attr: 'normalize-slide-index',
+        attr: ATTR_NORMALIZE_SLIDE_INDEX,
         swiperDefault: 'true',
         value: '',
         description: 'Normalize slide index. First slide = 1 instead of 0.',
@@ -86,8 +111,8 @@ export default function advancedCategory() {
         type: 'boolean',
       },
       {
-        name: 'Observe Parents',
-        attr: 'observe-parents',
+        name: 'Observe Slide Parents',
+        attr: ATTR_OBSERVE_SLIDE_PARENTS,
         swiperDefault: 'false',
         value: '',
         description: 'Set to true if you also need to watch Mutations for Swiper parent elements',
@@ -96,7 +121,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Observe Slide Children',
-        attr: 'observe-slide-children',
+        attr: ATTR_OBSERVE_SLIDE_CHILDREN,
         swiperDefault: 'false',
         value: '',
         description: 'Set to true if you also need to watch Mutations for Swiper slide children elements',
@@ -105,7 +130,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Observer',
-        attr: 'observer',
+        attr: ATTR_OBSERVER,
         swiperDefault: 'false',
         value: '',
         description:
@@ -115,7 +140,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Passive Listeners',
-        attr: 'passive-listeners',
+        attr: ATTR_PASSIVE_LISTENERS,
         swiperDefault: 'true',
         value: '',
         description:
@@ -125,7 +150,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Resize Observer',
-        attr: 'resize-observer',
+        attr: ATTR_RESIZE_OBSERVER,
         swiperDefault: 'true',
         value: '',
         description:
@@ -135,7 +160,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Round Lengths',
-        attr: 'round-lengths',
+        attr: ATTR_ROUND_LENGTHS,
         swiperDefault: 'false',
         value: '',
         description:
@@ -145,7 +170,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Run Callbacks on Init',
-        attr: 'run-callbacks-on-init',
+        attr: ATTR_RUN_CALLBACKS_ON_INIT,
         swiperDefault: 'true',
         value: '',
         description:
@@ -155,7 +180,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Set Wrapper Size',
-        attr: 'set-wrapper-size',
+        attr: ATTR_SET_WRAPPER_SIZE,
         swiperDefault: 'false',
         value: '',
         description:
@@ -165,7 +190,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Swiper Element Node Name',
-        attr: 'swiper-element-node-name',
+        attr: ATTR_SWIPER_ELEMENT_NODE_NAME,
         swiperDefault: 'SWIPER-CONTAINER',
         value: '',
         description: 'The name of the swiper element node name; used for detecting web component rendering',
@@ -174,7 +199,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Unique Nav Elements',
-        attr: 'unique-nav-elements',
+        attr: ATTR_UNIQUE_NAV_ELEMENTS,
         swiperDefault: 'true',
         value: '',
         description:
@@ -184,7 +209,7 @@ export default function advancedCategory() {
       },
       {
         name: 'URL',
-        attr: 'url',
+        attr: ATTR_URL,
         swiperDefault: '',
         value: '',
         description: 'Required for active slide detection when rendered on server-side and enabled history',
@@ -193,7 +218,7 @@ export default function advancedCategory() {
       },
       {
         name: 'User Agent',
-        attr: 'user-agent',
+        attr: ATTR_USER_AGENT,
         swiperDefault: '',
         value: '',
         description: 'userAgent string. Required for browser/device detection when rendered on server-side',
@@ -202,7 +227,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Virtual Translate',
-        attr: 'virtual-translate',
+        attr: ATTR_VIRTUAL_TRANSLATE,
         swiperDefault: 'false',
         value: '',
         description:
@@ -212,7 +237,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Watch Overflow',
-        attr: 'watch-overflow',
+        attr: ATTR_WATCH_OVERFLOW,
         swiperDefault: 'true',
         value: '',
         description:
@@ -222,7 +247,7 @@ export default function advancedCategory() {
       },
       {
         name: 'Watch Slides Progress',
-        attr: 'watch-slides-progress',
+        attr: ATTR_WATCH_SLIDES_PROGRESS,
         swiperDefault: 'false',
         value: '',
         description:

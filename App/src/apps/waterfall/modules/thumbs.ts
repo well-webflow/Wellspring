@@ -1,5 +1,14 @@
 import { faFileImage } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_THUMBS,
+  ATTR_THUMBS_AUTO_SCROLL_OFFSET,
+  ATTR_THUMBS_CONTAINER_CLASS,
+  ATTR_THUMBS_MULTIPLE_ACTIVE_THUMBS,
+  ATTR_THUMBS_NAME,
+  ATTR_THUMBS_SLIDE_THUMB_ACTIVE_CLASS,
+  ATTR_WATERFALL_PRELOAD,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function thumbsCategory() {
   let config: WaterfallCategory = {
@@ -11,7 +20,7 @@ export default function thumbsCategory() {
     items: [
       {
         name: 'Thumbs',
-        attr: 'waterfall-thumbs',
+        attr: ATTR_THUMBS,
         swiperDefault: 'false',
         description: 'If true, this slider will act as Thumbnails for another slider',
         type: 'boolean',
@@ -20,7 +29,7 @@ export default function thumbsCategory() {
       },
       {
         name: 'Enabled',
-        attr: 'waterfall-preload',
+        attr: ATTR_WATERFALL_PRELOAD,
         swiperDefault: 'false',
         description: 'Set to true to enable the thumbnails',
         type: 'boolean',
@@ -29,7 +38,7 @@ export default function thumbsCategory() {
       },
       {
         name: 'Swiper',
-        attr: 'thumbs-name',
+        attr: ATTR_THUMBS_NAME,
         swiperDefault: '--',
         type: 'waterfall',
         description: 'The name of the Waterfall these thumbs are associated with',
@@ -38,7 +47,7 @@ export default function thumbsCategory() {
       },
       {
         name: 'Auto Scroll Offset',
-        attr: 'auto-scroll-offset',
+        attr: ATTR_THUMBS_AUTO_SCROLL_OFFSET,
         swiperDefault: '0',
         description:
           'Allows to set on which thumbs active slide from edge it should automatically move scroll thumbs. For example, if set to 1 and last visible thumb will be activated (1 from edge) it will auto scroll thumbs',
@@ -48,7 +57,7 @@ export default function thumbsCategory() {
       },
       {
         name: 'Multiple Active Thumbs',
-        attr: 'multiple-active-thumbs',
+        attr: ATTR_THUMBS_MULTIPLE_ACTIVE_THUMBS,
         swiperDefault: 'true',
         description: 'When enabled multiple thumbnail slides may get activated',
         value: '',
@@ -57,7 +66,7 @@ export default function thumbsCategory() {
       },
       {
         name: 'Slide Thumb Active Class',
-        attr: 'slide-thumb-active-class',
+        attr: ATTR_THUMBS_SLIDE_THUMB_ACTIVE_CLASS,
         swiperDefault: 'swiper-slide-thumb-active',
         description: 'Additional class that will be added to activated thumbs swiper slide',
         value: '',
@@ -66,7 +75,7 @@ export default function thumbsCategory() {
       },
       {
         name: 'Thumbs Container Class',
-        attr: 'thumbs-container-class',
+        attr: ATTR_THUMBS_CONTAINER_CLASS,
         swiperDefault: 'swiper-thumbs',
         description: 'Additional class that will be added to thumbs swiper',
         value: '',

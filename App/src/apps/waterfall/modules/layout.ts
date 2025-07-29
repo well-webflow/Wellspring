@@ -1,5 +1,25 @@
 import { faArrowsLeftRight, faArrowsLeftRightToLine, faHashtag, faTable } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_AUTO_HEIGHT,
+  ATTR_CENTER_INSUFFICIENT_SLIDES,
+  ATTR_CENTERED_SLIDES,
+  ATTR_CENTERED_SLIDES_BOUNDS,
+  ATTR_DIRECTION,
+  ATTR_GRID_FILL,
+  ATTR_GRID_ROWS,
+  ATTR_HEIGHT,
+  ATTR_INITIAL_SLIDE,
+  ATTR_SLIDES_OFFSET_AFTER,
+  ATTR_SLIDES_OFFSET_BEFORE,
+  ATTR_SLIDES_PER_GROUP,
+  ATTR_SLIDES_PER_GROUP_AUTO,
+  ATTR_SLIDES_PER_GROUP_SKIP,
+  ATTR_SLIDES_PER_VIEW,
+  ATTR_SPACE_BETWEEN,
+  ATTR_UPDATE_ON_WINDOW_RESIZE,
+  ATTR_WIDTH,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function layoutConfig() {
   let config: WaterfallCategory = {
@@ -15,7 +35,7 @@ export default function layoutConfig() {
         items: [
           {
             name: 'Slides Per Group',
-            attr: 'slides-per-group',
+            attr: ATTR_SLIDES_PER_GROUP,
             swiperDefault: '1',
             value: '',
             breakpoints: {
@@ -32,7 +52,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Slides Per Group Auto',
-            attr: 'slides-per-group-auto',
+            attr: ATTR_SLIDES_PER_GROUP_AUTO,
             swiperDefault: 'false',
             value: '',
             description:
@@ -42,7 +62,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Slides Per Group Skip',
-            attr: 'slides-per-group-skip',
+            attr: ATTR_SLIDES_PER_GROUP_SKIP,
             swiperDefault: '0',
             value: '',
             description: '',
@@ -57,7 +77,7 @@ export default function layoutConfig() {
         items: [
           {
             name: 'Centered Slides',
-            attr: 'centered-slides',
+            attr: ATTR_CENTERED_SLIDES,
             swiperDefault: 'false',
             value: 'false',
             breakpoints: {
@@ -73,7 +93,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Centered Slides Bounds',
-            attr: 'centered-slides-bounds',
+            attr: ATTR_CENTERED_SLIDES_BOUNDS,
             swiperDefault: 'false',
             value: '',
             description:
@@ -83,7 +103,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Center Insufficient Slides',
-            attr: 'center-insufficient-slides',
+            attr: ATTR_CENTER_INSUFFICIENT_SLIDES,
             swiperDefault: 'false',
             value: '',
             description:
@@ -101,7 +121,7 @@ export default function layoutConfig() {
         items: [
           {
             name: 'Fill',
-            attr: 'grid-fill',
+            attr: ATTR_GRID_FILL,
             swiperDefault: 'column',
             value: '',
             description: "Can be 'column' or 'row'. Defines how slides should fill rows, by column or by row",
@@ -111,7 +131,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Rows',
-            attr: 'grid-rows',
+            attr: ATTR_GRID_ROWS,
             swiperDefault: '1',
             value: '',
             description: 'Number of slides per column, for multirow layout.',
@@ -126,7 +146,7 @@ export default function layoutConfig() {
         items: [
           {
             name: 'Slides Offset After',
-            attr: 'slides-offset-after',
+            attr: ATTR_SLIDES_OFFSET_AFTER,
             swiperDefault: '0',
             value: '',
             description: 'Add (in px) additional slide offset in the end of the container (after all slides)',
@@ -135,7 +155,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Slides Offset Before',
-            attr: 'slides-offset-before',
+            attr: ATTR_SLIDES_OFFSET_BEFORE,
             swiperDefault: '0',
             value: '',
             description: 'Add (in px) additional slide offset in the beginning of the container (before all slides)',
@@ -150,7 +170,7 @@ export default function layoutConfig() {
         items: [
           {
             name: 'Auto Height',
-            attr: 'auto-height',
+            attr: ATTR_AUTO_HEIGHT,
             swiperDefault: 'false',
             value: '',
             description:
@@ -160,7 +180,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Height',
-            attr: 'height',
+            attr: ATTR_HEIGHT,
             swiperDefault: 'null',
             value: '',
             description:
@@ -170,7 +190,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Width',
-            attr: 'width',
+            attr: ATTR_WIDTH,
             swiperDefault: '',
             value: '',
             description:
@@ -180,7 +200,7 @@ export default function layoutConfig() {
           },
           {
             name: 'Update on Window Resize',
-            attr: 'update-on-window-resize',
+            attr: ATTR_UPDATE_ON_WINDOW_RESIZE,
             swiperDefault: 'true',
             value: '',
             description: 'Swiper will recalculate slides position on window resize (orientationchange)',
@@ -193,7 +213,7 @@ export default function layoutConfig() {
     items: [
       {
         name: 'Direction',
-        attr: 'direction',
+        attr: ATTR_DIRECTION,
         swiperDefault: 'horizontal',
         value: '',
         description: "Can be 'horizontal' or 'vertical' (for vertical slider).",
@@ -204,7 +224,7 @@ export default function layoutConfig() {
       },
       {
         name: 'Slides Per View',
-        attr: 'slides-per-view',
+        attr: ATTR_SLIDES_PER_VIEW,
         swiperDefault: '1',
         value: '1',
         icon: faHashtag,
@@ -221,7 +241,7 @@ export default function layoutConfig() {
       },
       {
         name: 'Space Between',
-        attr: 'space-between',
+        attr: ATTR_SPACE_BETWEEN,
         swiperDefault: '0',
         value: '0',
         breakpoints: {
@@ -239,7 +259,7 @@ export default function layoutConfig() {
       },
       {
         name: 'Initial Slide #',
-        attr: 'initial-slide',
+        attr: ATTR_INITIAL_SLIDE,
         swiperDefault: '0',
         value: '',
         description: 'Index number of initial slide. (0 is the first slide, 1 is the 2nd and so on)',

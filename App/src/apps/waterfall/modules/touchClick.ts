@@ -1,5 +1,37 @@
 import { faArrowsTurnRight, faBan, faHandPointer, faICursor, faPersonRunning } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_ALLOW_TOUCH_MOVE,
+  ATTR_EDGE_SWIPE_DETECTION,
+  ATTR_EDGE_SWIPE_THRESHOLD,
+  ATTR_FOLLOW_FINGER,
+  ATTR_GRAB_CURSOR,
+  ATTR_LONG_SWIPES,
+  ATTR_LONG_SWIPES_MS,
+  ATTR_LONG_SWIPES_RATIO,
+  ATTR_NESTED,
+  ATTR_NO_SWIPING,
+  ATTR_NO_SWIPING_CLASS,
+  ATTR_NO_SWIPING_SELECTOR,
+  ATTR_ONE_WAY_MOVEMENT,
+  ATTR_PREVENT_CLICKS,
+  ATTR_PREVENT_CLICKS_PROPAGATION,
+  ATTR_PREVENT_INTERACTION_ON_TRANSITION,
+  ATTR_RESISTANCE,
+  ATTR_RESISTANCE_RATIO,
+  ATTR_SHORT_SWIPES,
+  ATTR_SIMULATE_TOUCH,
+  ATTR_SLIDE_TO_CLICKED_SLIDE,
+  ATTR_SWIPE_HANDLER,
+  ATTR_THRESHOLD,
+  ATTR_TOUCH_ANGLE,
+  ATTR_TOUCH_EVENTS_TARGET,
+  ATTR_TOUCH_MOVE_STOP_PROPAGATION,
+  ATTR_TOUCH_RATIO,
+  ATTR_TOUCH_RELEASE_ON_EDGES,
+  ATTR_TOUCH_START_FORCE_PREVENT_DEFAULT,
+  ATTR_TOUCH_START_PREVENT_DEFAULT,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function touchClickCategory() {
   let config: WaterfallCategory = {
@@ -15,7 +47,7 @@ export default function touchClickCategory() {
         items: [
           {
             name: 'Grab Cursor',
-            attr: 'grab-cursor',
+            attr: ATTR_GRAB_CURSOR,
             swiperDefault: 'false',
             value: '',
             description: 'If \'true\', the user will see the "grab" cursor when hovering on the slider.',
@@ -25,7 +57,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Slide to Clicked Slide',
-            attr: 'slide-to-clicked-slide',
+            attr: ATTR_SLIDE_TO_CLICKED_SLIDE,
             swiperDefault: 'false',
             value: '',
             description: 'Set to true and click on any slide will produce transition to this slide',
@@ -34,7 +66,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Simulate Touch',
-            attr: 'simulate-touch',
+            attr: ATTR_SIMULATE_TOUCH,
             swiperDefault: 'true',
             value: '',
             description: 'If true, Swiper will accept mouse events like touch events (click and drag to change slides)',
@@ -43,7 +75,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Prevent Clicks',
-            attr: 'prevent-clicks',
+            attr: ATTR_PREVENT_CLICKS,
             swiperDefault: 'true',
             value: '',
             description: 'Set to true to prevent accidental unwanted clicks on links during swiping',
@@ -58,7 +90,7 @@ export default function touchClickCategory() {
         items: [
           {
             name: 'Follow Finger',
-            attr: 'follow-finger',
+            attr: ATTR_FOLLOW_FINGER,
             swiperDefault: 'true',
             value: '',
             description:
@@ -68,7 +100,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Resistance',
-            attr: 'resistance',
+            attr: ATTR_RESISTANCE,
             swiperDefault: 'true',
             value: '',
             description: "If 'true' the slider will snap back with small or incomplete swipes",
@@ -77,7 +109,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Short Swipes',
-            attr: 'short-swipes',
+            attr: ATTR_SHORT_SWIPES,
             swiperDefault: 'true',
             value: '',
             description: '(Not working) Set to false if you want to disable short swipes',
@@ -86,7 +118,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Long Swipes',
-            attr: 'long-swipes',
+            attr: ATTR_LONG_SWIPES,
             swiperDefault: 'true',
             value: '',
             description: 'Set to false if you want to disable long swipes (ex. swiping multiple slides at a time)',
@@ -96,7 +128,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Long Swipes ms',
-            attr: 'long-swipes-ms',
+            attr: ATTR_LONG_SWIPES_MS,
             swiperDefault: '300',
             value: '',
             description: 'Minimal duration (in ms) to trigger swipe to next/previous slide during long swipes',
@@ -105,7 +137,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Long Swipes Ratio',
-            attr: 'long-swipes-ratio',
+            attr: ATTR_LONG_SWIPES_RATIO,
             swiperDefault: '0.5',
             value: '',
             description: 'Ratio to trigger swipe to next/previous slide during long swipes',
@@ -114,7 +146,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Swipe Handler',
-            attr: 'swipe-handler',
+            attr: ATTR_SWIPE_HANDLER,
             swiperDefault: '',
             value: '',
             description:
@@ -130,7 +162,7 @@ export default function touchClickCategory() {
         items: [
           {
             name: 'Edge Swipe Detection',
-            attr: 'edge-swipe-detection',
+            attr: ATTR_EDGE_SWIPE_DETECTION,
             swiperDefault: 'false',
             value: '',
             description:
@@ -140,7 +172,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Edge Swipe Threshold',
-            attr: 'edge-swipe-threshold',
+            attr: ATTR_EDGE_SWIPE_THRESHOLD,
             swiperDefault: '20',
             value: '',
             description:
@@ -150,7 +182,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Touch Release on Edges',
-            attr: 'touch-release-on-edges',
+            attr: ATTR_TOUCH_RELEASE_ON_EDGES,
             swiperDefault: 'false',
             value: 'true',
             description:
@@ -166,7 +198,7 @@ export default function touchClickCategory() {
         items: [
           {
             name: 'No Swiping',
-            attr: 'no-swiping',
+            attr: ATTR_NO_SWIPING,
             swiperDefault: 'true',
             value: '',
             description:
@@ -176,7 +208,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'No Swiping Class',
-            attr: 'no-swiping-class',
+            attr: ATTR_NO_SWIPING_CLASS,
             swiperDefault: 'swiper-no-swiping',
             value: '',
             description: "Specify noSwiping's element css class",
@@ -185,7 +217,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'No Swiping Selector',
-            attr: 'no-swiping-selector',
+            attr: ATTR_NO_SWIPING_SELECTOR,
             swiperDefault: '',
             value: '',
             description:
@@ -201,7 +233,7 @@ export default function touchClickCategory() {
         items: [
           {
             name: 'Threshold',
-            attr: 'threshold',
+            attr: ATTR_THRESHOLD,
             swiperDefault: '5',
             value: '',
             description:
@@ -211,7 +243,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Touch Angle',
-            attr: 'touch-angle',
+            attr: ATTR_TOUCH_ANGLE,
             swiperDefault: '45',
             value: '',
             description: '(Untested) Allowable angle (in degrees) to trigger touch move',
@@ -220,7 +252,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Touch Events Target',
-            attr: 'touch-events-target',
+            attr: ATTR_TOUCH_EVENTS_TARGET,
             swiperDefault: 'wrapper',
             value: '',
             description:
@@ -230,7 +262,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Touch Ratio',
-            attr: 'touch-ratio',
+            attr: ATTR_TOUCH_RATIO,
             swiperDefault: '1',
             value: '',
             description: "Touch ratio (don't blame me, this is the real documentation note)",
@@ -239,7 +271,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Touch Move Stop Propagation',
-            attr: 'touch-move-stop-propagation',
+            attr: ATTR_TOUCH_MOVE_STOP_PROPAGATION,
             swiperDefault: 'false',
             value: '',
             description: 'If enabled, then propagation of "touchmove" will be stopped',
@@ -248,7 +280,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Touch Start Force Prevent Default',
-            attr: 'touch-start-force-prevent-default',
+            attr: ATTR_TOUCH_START_FORCE_PREVENT_DEFAULT,
             swiperDefault: 'false',
             value: '',
             description: 'Force to always prevent default for touchstart (pointerdown) event',
@@ -257,7 +289,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Touch Start Prevent Default',
-            attr: 'touch-start-prevent-default',
+            attr: ATTR_TOUCH_START_PREVENT_DEFAULT,
             swiperDefault: 'true',
             value: '',
             description: "If disabled, pointerdown event won't be prevented",
@@ -266,7 +298,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Prevent Clicks Propagation',
-            attr: 'prevent-clicks-propagation',
+            attr: ATTR_PREVENT_CLICKS_PROPAGATION,
             swiperDefault: 'true',
             value: '',
             description: 'Set to true to stop clicks event propagation on links during swiping',
@@ -275,7 +307,7 @@ export default function touchClickCategory() {
           },
           {
             name: 'Resistance Ratio',
-            attr: 'resistance-ratio',
+            attr: ATTR_RESISTANCE_RATIO,
             swiperDefault: '0.85',
             value: '',
             description: 'This option allows you to control resistance ratio.',
@@ -288,7 +320,7 @@ export default function touchClickCategory() {
     items: [
       {
         name: 'Allow Touch Move',
-        attr: 'allow-touch-move',
+        attr: ATTR_ALLOW_TOUCH_MOVE,
         swiperDefault: 'true',
         value: '',
         description:
@@ -299,7 +331,7 @@ export default function touchClickCategory() {
       },
       {
         name: 'One Way Movement',
-        attr: 'data-one-way-movement',
+        attr: ATTR_ONE_WAY_MOVEMENT,
         swiperDefault: 'false',
         value: '',
         description: "If 'true', will swipe slides only forward (one-way) regardless of swipe direction",
@@ -309,7 +341,7 @@ export default function touchClickCategory() {
       },
       {
         name: 'Prevent Interaction on Transition',
-        attr: 'prevent-interaction-on-transition',
+        attr: ATTR_PREVENT_INTERACTION_ON_TRANSITION,
         swiperDefault: 'false',
         value: '',
         description: "If 'true' swiping and navigation/pagination buttons will be disabled during transition",
@@ -318,7 +350,7 @@ export default function touchClickCategory() {
       },
       {
         name: 'Nested',
-        attr: 'nested',
+        attr: ATTR_NESTED,
         swiperDefault: 'false',
         value: '',
         description:

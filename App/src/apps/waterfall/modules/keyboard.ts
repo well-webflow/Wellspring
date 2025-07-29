@@ -1,5 +1,10 @@
 import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_KEYBOARD_ENABLED,
+  ATTR_KEYBOARD_ONLY_IN_VIEWPORT,
+  ATTR_KEYBOARD_PAGE_UP_DOWN,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function keyboardCategory() {
   let config: WaterfallCategory = {
@@ -11,7 +16,7 @@ export default function keyboardCategory() {
     items: [
       {
         name: 'Enabled',
-        attr: 'keyboard-enabled',
+        attr: ATTR_KEYBOARD_ENABLED,
         swiperDefault: 'false',
         description: 'Set to true to enable keyboard control',
         value: '',
@@ -20,7 +25,7 @@ export default function keyboardCategory() {
       },
       {
         name: 'Only In Viewport',
-        attr: 'keyboard-only-in-viewport',
+        attr: ATTR_KEYBOARD_ONLY_IN_VIEWPORT,
         swiperDefault: 'true',
         description: 'When enabled it will control sliders that are currently in viewport',
         value: '',
@@ -29,7 +34,7 @@ export default function keyboardCategory() {
       },
       {
         name: 'Page Up Down',
-        attr: 'page-up-down',
+        attr: ATTR_KEYBOARD_PAGE_UP_DOWN,
         swiperDefault: 'true',
         description: 'When enabled it will enable keyboard navigation by Page Up and Page Down keys',
         value: '',

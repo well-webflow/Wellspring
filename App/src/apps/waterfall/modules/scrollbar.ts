@@ -1,6 +1,18 @@
 import { faBarsProgress } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
+import {
+  ATTR_SCROLLBAR_DRAG_SIZE,
+  ATTR_SCROLLBAR_DRAGGABLE,
+  ATTR_SCROLLBAR_ENABLED,
+  ATTR_SCROLLBAR_HIDE,
+  ATTR_SCROLLBAR_HORIZONTAL_CLASS,
+  ATTR_SCROLLBAR_LOCK_CLASS,
+  ATTR_SCROLLBAR_SCROLLBAR_DISABLED_CLASS,
+  ATTR_SCROLLBAR_SNAP_ON_RELEASE,
+  ATTR_SCROLLBAR_VERTICAL_CLASS,
+  ATTR_WATERFALL_ELEMENT,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function scrollbarCategory() {
   let config: WaterfallCategory = {
@@ -16,7 +28,7 @@ export default function scrollbarCategory() {
         items: [
           {
             name: 'Horizontal Class',
-            attr: 'scrollbar-horizontal-class',
+            attr: ATTR_SCROLLBAR_HORIZONTAL_CLASS,
             swiperDefault: 'swiper-scrollbar-horizontal',
             value: '',
             type: 'string',
@@ -25,7 +37,7 @@ export default function scrollbarCategory() {
           },
           {
             name: 'Lock Class',
-            attr: 'scrollbar-lock-class',
+            attr: ATTR_SCROLLBAR_LOCK_CLASS,
             swiperDefault: 'swiper-scrollbar-lock',
             value: '',
             type: 'string',
@@ -34,7 +46,7 @@ export default function scrollbarCategory() {
           },
           {
             name: 'Scrollbar Disabled Class',
-            attr: 'scrollbar-disabled-class',
+            attr: ATTR_SCROLLBAR_SCROLLBAR_DISABLED_CLASS,
             swiperDefault: 'swiper-scrollbar-disabled',
             value: '',
             description:
@@ -44,7 +56,7 @@ export default function scrollbarCategory() {
           },
           {
             name: 'Vertical Class',
-            attr: 'scrollbar-vertical-class',
+            attr: ATTR_SCROLLBAR_VERTICAL_CLASS,
             swiperDefault: 'swiper-scrollbar-vertical',
             value: '',
             description: 'CSS class name set to scrollbar in vertical Swiper',
@@ -57,7 +69,7 @@ export default function scrollbarCategory() {
     items: [
       {
         name: 'Drag Size',
-        attr: 'scrollbar-drag-size',
+        attr: ATTR_SCROLLBAR_DRAG_SIZE,
         swiperDefault: 'auto',
         value: '',
         description: 'Size of scrollbar draggable element in px',
@@ -66,7 +78,7 @@ export default function scrollbarCategory() {
       },
       {
         name: 'Draggable',
-        attr: 'scrollbar-draggable',
+        attr: ATTR_SCROLLBAR_DRAGGABLE,
         swiperDefault: 'false',
         value: '',
         type: 'boolean',
@@ -75,7 +87,7 @@ export default function scrollbarCategory() {
       },
       {
         name: 'Enabled',
-        attr: 'scrollbar-enabled',
+        attr: ATTR_SCROLLBAR_ENABLED,
         swiperDefault: '',
         value: '',
         type: 'boolean',
@@ -84,7 +96,7 @@ export default function scrollbarCategory() {
       },
       {
         name: 'Hide',
-        attr: 'scrollbar-hide',
+        attr: ATTR_SCROLLBAR_HIDE,
         swiperDefault: 'true',
         value: '',
         type: 'boolean',
@@ -93,7 +105,7 @@ export default function scrollbarCategory() {
       },
       {
         name: 'Snap on Release',
-        attr: 'snap-on-release',
+        attr: ATTR_SCROLLBAR_SNAP_ON_RELEASE,
         swiperDefault: 'false', // the documentation says default is false but is actually true lmao
         value: '',
         type: 'boolean',
@@ -121,18 +133,18 @@ export async function createScrollbar() {
   const scrollbar = await parentEl.prepend(webflow.elementPresets.DOM);
   scrollbar.setTag('div');
   scrollbar.setStyles([scrollbarClass]);
-  scrollbar.setAttribute('waterfall-el', 'scrollbar');
+  scrollbar.setAttribute(ATTR_WATERFALL_ELEMENT, 'scrollbar');
 
   const scrollbarDrag = await scrollbar.prepend(webflow.elementPresets.DOM);
   scrollbarDrag.setTag('button');
   scrollbarDrag.setStyles([scrollbarDragClass]);
-  scrollbarDrag.setAttribute('waterfall-el', 'scrollbar-drag');
+  scrollbarDrag.setAttribute(ATTR_WATERFALL_ELEMENT, 'scrollbar-drag');
 }
 
 export async function convertToScrollbar() {
   const el = await webflow.getSelectedElement();
   if (el?.customAttributes) {
-    el.setCustomAttribute('waterfall-el', 'scrollbar');
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, 'scrollbar');
     webflow.notify({
       type: 'Success',
       message: 'Element successfully converted to Scrollbar.',

@@ -1,5 +1,16 @@
 import { faMouse } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_MOUSE_ENABLED,
+  ATTR_MOUSE_EVENTS_TARGET,
+  ATTR_MOUSE_FORCE_TO_AXIS,
+  ATTR_MOUSE_INVERT,
+  ATTR_MOUSE_NO_MOUSE_WHEEL_CLASS,
+  ATTR_MOUSE_RELEASE_ON_EDGES,
+  ATTR_MOUSE_SENSITIVITY,
+  ATTR_MOUSE_THRESHOLD_DELTA,
+  ATTR_MOUSE_THRESHOLD_TIME,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function mousewheelCategory() {
   let config: WaterfallCategory = {
@@ -11,7 +22,7 @@ export default function mousewheelCategory() {
     items: [
       {
         name: 'Mouse Enabled',
-        attr: 'mouse-enabled',
+        attr: ATTR_MOUSE_ENABLED,
         swiperDefault: 'false',
         description: 'Set to true to enable mousewheel control',
         type: 'boolean',
@@ -20,7 +31,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'Events Target',
-        attr: 'mouse-events-target',
+        attr: ATTR_MOUSE_EVENTS_TARGET,
         swiperDefault: 'container',
         description:
           'String with CSS selector or HTML element of the container accepting mousewheel events. By default it is swiper',
@@ -30,7 +41,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'Force to Axis',
-        attr: 'mouse-force-to-axis',
+        attr: ATTR_MOUSE_FORCE_TO_AXIS,
         swiperDefault: 'false',
         description:
           'Set to true to force mousewheel swipes to axis. So in horizontal mode mousewheel will work only with horizontal mousewheel scrolling, and only with vertical scrolling in vertical mode.',
@@ -40,7 +51,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'Invert',
-        attr: 'mouse-invert',
+        attr: ATTR_MOUSE_INVERT,
         swiperDefault: 'false',
         description: 'Set to true to invert sliding direction',
         value: '',
@@ -49,7 +60,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'No Mousewheel Class',
-        attr: 'no-mousewheel-class',
+        attr: ATTR_MOUSE_NO_MOUSE_WHEEL_CLASS,
         swiperDefault: 'swiper-no-mousewheel',
         description: 'Scrolling on elements with this class will be ignored',
         value: '',
@@ -58,7 +69,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'Release on Edges',
-        attr: 'mouse-release-on-edges',
+        attr: ATTR_MOUSE_RELEASE_ON_EDGES,
         swiperDefault: 'false',
         description:
           'Set to true and swiper will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end)',
@@ -68,7 +79,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'Sensitivity',
-        attr: 'mouse-sensitivity',
+        attr: ATTR_MOUSE_SENSITIVITY,
         swiperDefault: '1',
         description: 'Multiplier of mousewheel data, allows to tweak mouse wheel sensitivity',
         value: '',
@@ -77,7 +88,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'Threshold Delta',
-        attr: 'mouse-threshold-delta',
+        attr: ATTR_MOUSE_THRESHOLD_DELTA,
         swiperDefault: 'null',
         description: 'Minimum mousewheel scroll delta to trigger swiper slide change',
         value: '',
@@ -86,7 +97,7 @@ export default function mousewheelCategory() {
       },
       {
         name: 'Threshold Time',
-        attr: 'mouse-threshold-time',
+        attr: ATTR_MOUSE_THRESHOLD_TIME,
         swiperDefault: 'null',
         description: 'Minimum mousewheel scroll time delta (in ms) to trigger swiper slide change',
         value: '',

@@ -1,5 +1,10 @@
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_CONTROLLER_BY,
+  ATTR_CONTROLLER_CONTROL,
+  ATTR_CONTROLLER_INVERSE,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function controllerCategory() {
   let config: WaterfallCategory = {
@@ -10,7 +15,7 @@ export default function controllerCategory() {
     items: [
       {
         name: 'By',
-        attr: 'controller-by',
+        attr: ATTR_CONTROLLER_BY,
         swiperDefault: 'slide',
         description:
           "Defines a way how to control another slider: slide by slide (with respect to other slider's grid) or depending on all slides/container (depending on total slider percentage).",
@@ -21,7 +26,7 @@ export default function controllerCategory() {
       },
       {
         name: 'Control',
-        attr: 'controller-control',
+        attr: ATTR_CONTROLLER_CONTROL,
         swiperDefault: '--',
         description:
           'Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper. Also accepts string with CSS selector of Swiper element, or HTMLElement of Swiper element',
@@ -31,7 +36,7 @@ export default function controllerCategory() {
       },
       {
         name: 'Inverse',
-        attr: 'controller-inverse',
+        attr: ATTR_CONTROLLER_INVERSE,
         swiperDefault: '',
         description: 'Set to true and controlling will be in inverse direction',
         value: '',

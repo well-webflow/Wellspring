@@ -1,5 +1,15 @@
 import { faRoadSpikes } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_FREE_MODE_ENABLED,
+  ATTR_FREE_MODE_MINIMUM_VELOCITY,
+  ATTR_FREE_MODE_MOMENTUM,
+  ATTR_FREE_MODE_MOMENTUM_BOUNCE,
+  ATTR_FREE_MODE_MOMENTUM_BOUNCE_RATIO,
+  ATTR_FREE_MODE_MOMENTUM_RATIO,
+  ATTR_FREE_MODE_MOMENTUM_VELOCITY_RATIO,
+  ATTR_FREE_MODE_STICKY,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function freemodeCategory() {
   let config: WaterfallCategory = {
@@ -11,7 +21,7 @@ export default function freemodeCategory() {
     items: [
       {
         name: 'Enabled',
-        attr: 'free-mode-enabled',
+        attr: ATTR_FREE_MODE_ENABLED,
         swiperDefault: 'false',
         value: '',
         description: "If 'true', users have full control over the slider with swipes",
@@ -20,7 +30,7 @@ export default function freemodeCategory() {
       },
       {
         name: 'Minimum Velocity',
-        attr: 'free-mode-minimum-velocity',
+        attr: ATTR_FREE_MODE_MINIMUM_VELOCITY,
         swiperDefault: '0.02',
         value: '',
         description: 'Minimum touchmove-velocity required to trigger free mode momentum',
@@ -29,7 +39,7 @@ export default function freemodeCategory() {
       },
       {
         name: 'Momentum',
-        attr: 'free-mode-momentum',
+        attr: ATTR_FREE_MODE_MOMENTUM,
         swiperDefault: 'true',
         value: '',
         description: 'If enabled, then slide will keep moving for a while after you release it',
@@ -38,7 +48,7 @@ export default function freemodeCategory() {
       },
       {
         name: 'Momentum Ratio',
-        attr: 'free-mode-momentum-ratio',
+        attr: ATTR_FREE_MODE_MOMENTUM_RATIO,
         swiperDefault: '1',
         value: '',
         description: 'Higher value produces larger momentum distance after you release slider',
@@ -47,7 +57,7 @@ export default function freemodeCategory() {
       },
       {
         name: 'Momentum Bounce',
-        attr: 'free-mode-momentum-bounce',
+        attr: ATTR_FREE_MODE_MOMENTUM_BOUNCE,
         swiperDefault: 'true',
         value: '',
         description: 'Set to false if you want to disable momentum bounce when reaching first/last slides in free mode',
@@ -56,7 +66,7 @@ export default function freemodeCategory() {
       },
       {
         name: 'Momentum Bounce Ratio',
-        attr: 'free-mode-momentum-bounce-ratio',
+        attr: ATTR_FREE_MODE_MOMENTUM_BOUNCE_RATIO,
         swiperDefault: '1',
         value: '',
         description: 'Higher value produces larger momentum bounce effect',
@@ -65,7 +75,7 @@ export default function freemodeCategory() {
       },
       {
         name: 'Momentum Velocity Ratio',
-        attr: 'free-mode-momentum-velocity-ratio',
+        attr: ATTR_FREE_MODE_MOMENTUM_VELOCITY_RATIO,
         swiperDefault: '1',
         value: '',
         description: 'Higher value produces larger momentum velocity after you release slider',
@@ -74,7 +84,7 @@ export default function freemodeCategory() {
       },
       {
         name: 'Sticky',
-        attr: 'free-mode-sticky',
+        attr: ATTR_FREE_MODE_STICKY,
         swiperDefault: 'false',
         value: '',
         description: 'Set to enabled to enable snap to slides positions in free mode',

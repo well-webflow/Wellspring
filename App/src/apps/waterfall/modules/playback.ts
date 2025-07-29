@@ -1,5 +1,20 @@
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_AUTOPLAY,
+  ATTR_DELAY,
+  ATTR_DISABLE_ON_INTERACTION,
+  ATTR_LOOP_ADD_ADDITIONAL_SLIDES,
+  ATTR_LOOP_ADD_BLANK_SLIDES,
+  ATTR_LOOP_PREVENTS_SLIDING,
+  ATTR_PAUSE_ON_MOUSE_ENTER,
+  ATTR_PLAYBACK_MODE,
+  ATTR_REVERSE_DIRECTION,
+  ATTR_SMOOTH_AUTOPLAY,
+  ATTR_SPEED,
+  ATTR_STOP_ON_LAST_SLIDE,
+  ATTR_WAIT_FOR_TRANSITION,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function playbackCategory() {
   let config: WaterfallCategory = {
@@ -15,7 +30,7 @@ export default function playbackCategory() {
         items: [
           {
             name: 'AutoPlay',
-            attr: 'autoplay-mode',
+            attr: ATTR_AUTOPLAY,
             swiperDefault: 'false',
             value: '',
             description: "If true, 'autoplay' is enabled.",
@@ -24,7 +39,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Smooth Autoplay',
-            attr: 'smooth-autoplay',
+            attr: ATTR_SMOOTH_AUTOPLAY,
             swiperDefault: '',
             value: '',
             type: 'boolean',
@@ -33,7 +48,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Autoplay Delay',
-            attr: 'delay',
+            attr: ATTR_DELAY,
             swiperDefault: '',
             value: '',
             type: 'number',
@@ -43,7 +58,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Disable Autoplay on Interaction',
-            attr: 'disable-on-interaction',
+            attr: ATTR_DISABLE_ON_INTERACTION,
             swiperDefault: 'false', // documentation says default is true, doesn't appear to be true
             value: 'true',
             type: 'boolean',
@@ -52,7 +67,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Pause Autoplay on Hover',
-            attr: 'pause-on-mouse-enter',
+            attr: ATTR_PAUSE_ON_MOUSE_ENTER,
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
@@ -61,7 +76,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Reverse Autoplay Direction',
-            attr: 'reverse-direction',
+            attr: ATTR_REVERSE_DIRECTION,
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
@@ -70,7 +85,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Stop Autoplay on Last Slide',
-            attr: 'stop-on-last-slide',
+            attr: ATTR_STOP_ON_LAST_SLIDE,
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
@@ -79,7 +94,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Autoplay Wait for Transition',
-            attr: 'wait-for-transition',
+            attr: ATTR_WAIT_FOR_TRANSITION,
             swiperDefault: 'true',
             type: 'boolean',
             value: '',
@@ -95,7 +110,7 @@ export default function playbackCategory() {
         items: [
           {
             name: 'Loop Add Blank Slides',
-            attr: 'loop-add-blank-slides',
+            attr: ATTR_LOOP_ADD_BLANK_SLIDES,
             swiperDefault: 'true',
             value: '',
             description:
@@ -105,7 +120,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Loop Additional Slides',
-            attr: 'loop-additional-slides',
+            attr: ATTR_LOOP_ADD_ADDITIONAL_SLIDES,
             swiperDefault: '0',
             value: '',
             description:
@@ -115,7 +130,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Loop Prevents Sliding',
-            attr: 'loop-prevents-sliding',
+            attr: ATTR_LOOP_PREVENTS_SLIDING,
             swiperDefault: 'true',
             value: '',
             description: 'If enabled then slideNext/Prev will do nothing while slider is animating in loop mode',
@@ -128,7 +143,7 @@ export default function playbackCategory() {
     items: [
       {
         name: 'Speed',
-        attr: 'speed',
+        attr: ATTR_SPEED,
         swiperDefault: '300',
         value: '',
         description: 'Duration of transition between slides (in ms). Small number go fast.',
@@ -137,7 +152,7 @@ export default function playbackCategory() {
       },
       {
         name: 'Playback Mode',
-        attr: 'playback-mode',
+        attr: ATTR_PLAYBACK_MODE,
         swiperDefault: 'none',
         value: 'none',
         description: 'Choose between loop, rewind, and none',

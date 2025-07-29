@@ -1,5 +1,12 @@
 import { faBug, faCog, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_ADVANCED_DEBUG_MODE,
+  ATTR_DEBUG_MODE,
+  ATTR_ENABLED,
+  ATTR_INIT,
+  ATTR_WATERFALL,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function generalConfig() {
   let config: WaterfallCategory = {
@@ -15,7 +22,7 @@ export default function generalConfig() {
         items: [
           {
             name: 'Enabled',
-            attr: 'enabled',
+            attr: ATTR_ENABLED,
             swiperDefault: 'true',
             value: '',
             description:
@@ -25,7 +32,7 @@ export default function generalConfig() {
           },
           {
             name: 'Init',
-            attr: 'init',
+            attr: ATTR_INIT,
             swiperDefault: 'true',
             value: '',
             description:
@@ -39,7 +46,7 @@ export default function generalConfig() {
     items: [
       {
         name: 'Waterfall Name',
-        attr: 'waterfall',
+        attr: ATTR_WATERFALL,
         swiperDefault: '-',
         value: 'New Waterfall',
         description: 'The name of the waterfall',
@@ -49,7 +56,7 @@ export default function generalConfig() {
       },
       {
         name: 'Debug',
-        attr: 'debug-mode',
+        attr: ATTR_DEBUG_MODE,
         swiperDefault: 'false',
         value: 'false',
         description: 'Prints out debug statements to the browser console',
@@ -59,7 +66,7 @@ export default function generalConfig() {
       },
       {
         name: 'Debug (Advanced)',
-        attr: 'advanced-debug-mode',
+        attr: ATTR_ADVANCED_DEBUG_MODE,
         swiperDefault: 'false',
         value: 'false',
         description: 'Prints out more debug statements to the browser console',

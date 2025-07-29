@@ -1,5 +1,17 @@
 import { faFont } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_CONTAINER_MODIFIER_CLASS,
+  ATTR_EVENTS_PREFIX,
+  ATTR_SLIDE_ACTIVE_CLASS,
+  ATTR_SLIDE_BLANK_CLASS,
+  ATTR_SLIDE_CLASS,
+  ATTR_SLIDE_FULLY_VISIBLE_CLASS,
+  ATTR_SLIDE_NEXT_CLASS,
+  ATTR_SLIDE_PREV_CLASS,
+  ATTR_SLIDE_VISIBLE_CLASS,
+  ATTR_WRAPPER_CLASS,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function classnamesCategory() {
   let config: WaterfallCategory = {
@@ -10,7 +22,7 @@ export default function classnamesCategory() {
     items: [
       {
         name: 'Container Modifier Class',
-        attr: 'container-modifier-class',
+        attr: ATTR_CONTAINER_MODIFIER_CLASS,
         swiperDefault: 'swiper-',
         value: '',
         description:
@@ -20,7 +32,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Events Prefix',
-        attr: 'events-prefix',
+        attr: ATTR_EVENTS_PREFIX,
         swiperDefault: 'swiper',
         value: '',
         description: 'Event name prefix for all DOM events emitted by Swiper Element (web component)',
@@ -29,7 +41,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Slide Active Class',
-        attr: 'slide-active-class',
+        attr: ATTR_SLIDE_ACTIVE_CLASS,
         swiperDefault: 'swiper-slide-active',
         value: '',
         description:
@@ -39,7 +51,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Slide Blank Class',
-        attr: 'slide-blank-class',
+        attr: ATTR_SLIDE_BLANK_CLASS,
         swiperDefault: 'swiper-slide-blank',
         value: '',
         description: 'CSS class name of the blank slide added by the loop mode (when loopAddBlankSlides is enabled)',
@@ -48,7 +60,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Slide Class',
-        attr: 'slide-class',
+        attr: ATTR_SLIDE_CLASS,
         swiperDefault: 'swiper-slide',
         value: '',
         description:
@@ -58,7 +70,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Slide Fully Visible',
-        attr: 'slide-fully-visible',
+        attr: ATTR_SLIDE_FULLY_VISIBLE_CLASS,
         swiperDefault: 'swiper-slide-fully-visible',
         value: '',
         description: 'CSS class name of fully (when whole slide is in the viewport) visible slide',
@@ -67,7 +79,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Slide Next Class',
-        attr: 'slide-next-class',
+        attr: ATTR_SLIDE_NEXT_CLASS,
         swiperDefault: 'swiper-slide-next',
         value: '',
         description:
@@ -77,7 +89,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Slide Prev Class',
-        attr: 'slide-prev-class',
+        attr: ATTR_SLIDE_PREV_CLASS,
         swiperDefault: 'swiper-slide-prev',
         value: '',
         description:
@@ -87,7 +99,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Slide Visible Class',
-        attr: 'slide-visible-class',
+        attr: ATTR_SLIDE_VISIBLE_CLASS,
         swiperDefault: 'swiper-slide-visible',
         value: '',
         description:
@@ -97,7 +109,7 @@ export default function classnamesCategory() {
       },
       {
         name: 'Wrapper Class',
-        attr: 'wrapper-class',
+        attr: ATTR_WRAPPER_CLASS,
         swiperDefault: 'swiper-wrapper',
         value: '',
         description:

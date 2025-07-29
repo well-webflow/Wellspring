@@ -1,5 +1,24 @@
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import {
+  ATTR_CARDS_PER_SLIDE_OFFSET,
+  ATTR_CARDS_PER_SLIDE_ROTATE,
+  ATTR_CARDS_ROTATE,
+  ATTR_CARDS_SLIDE_SHADOWS,
+  ATTR_COVERFLOW_DEPTH,
+  ATTR_COVERFLOW_MODIFIER,
+  ATTR_COVERFLOW_ROTATE,
+  ATTR_COVERFLOW_SCALE,
+  ATTR_COVERFLOW_SLIDE_SHADOWS,
+  ATTR_COVERFLOW_STRETCH,
+  ATTR_CUBE_SHADOW,
+  ATTR_CUBE_SHADOW_OFFSET,
+  ATTR_CUBE_SHADOW_SCALE,
+  ATTR_CUBE_SLIDE_SHADOWS,
+  ATTR_EFFECT,
+  ATTR_FLIP_LIMIT_ROTATION,
+  ATTR_FLIP_SLIDE_SHADOWS,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function effectCategory() {
   let config: WaterfallCategory = {
@@ -15,7 +34,7 @@ export default function effectCategory() {
         items: [
           {
             name: 'Coverflow Depth',
-            attr: 'coverflow-depth',
+            attr: ATTR_COVERFLOW_DEPTH,
             swiperDefault: '100',
             value: '',
             description: 'Depth offset in px (slides translate in Z axis)',
@@ -24,7 +43,7 @@ export default function effectCategory() {
           },
           {
             name: 'Coverflow Modifier',
-            attr: 'coverflow-modifier',
+            attr: ATTR_COVERFLOW_MODIFIER,
             swiperDefault: '1',
             value: '',
             description: 'Effect multiplier',
@@ -33,7 +52,7 @@ export default function effectCategory() {
           },
           {
             name: 'Coverflow Rotate',
-            attr: 'coverflow-rotate',
+            attr: ATTR_COVERFLOW_ROTATE,
             swiperDefault: '50',
             value: '',
             description: 'Slide rotate in degrees',
@@ -42,7 +61,7 @@ export default function effectCategory() {
           },
           {
             name: 'Coverflow Scale',
-            attr: 'coverflow-scale',
+            attr: ATTR_COVERFLOW_SCALE,
             swiperDefault: '1',
             value: '',
             description: 'Slide scale effect',
@@ -51,7 +70,7 @@ export default function effectCategory() {
           },
           {
             name: 'Coverflow Slide Shadows',
-            attr: 'coverflow-slide-shadows',
+            attr: ATTR_COVERFLOW_SLIDE_SHADOWS,
             swiperDefault: 'true',
             value: '',
             description: 'Enables slides shadows',
@@ -60,7 +79,7 @@ export default function effectCategory() {
           },
           {
             name: 'Coverflow Stretch',
-            attr: 'coverflow-stretch',
+            attr: ATTR_COVERFLOW_STRETCH,
             swiperDefault: '0',
             value: '',
             description: 'Stretch space between slides (in px)',
@@ -75,7 +94,7 @@ export default function effectCategory() {
         items: [
           {
             name: 'Flip Limit Rotation',
-            attr: 'flip-limit-rotation',
+            attr: ATTR_FLIP_LIMIT_ROTATION,
             swiperDefault: 'true',
             value: '',
             description: 'Limit edge slides rotation',
@@ -84,7 +103,7 @@ export default function effectCategory() {
           },
           {
             name: 'Flip Slide Shadows',
-            attr: 'flip-slide-shadows',
+            attr: ATTR_FLIP_SLIDE_SHADOWS,
             swiperDefault: 'true',
             value: '',
             description: 'Enables slides shadows',
@@ -99,7 +118,7 @@ export default function effectCategory() {
         items: [
           {
             name: 'Cube Shadow',
-            attr: 'cube-shadow',
+            attr: ATTR_CUBE_SHADOW,
             swiperDefault: 'true',
             value: '',
             description: 'Enables main slider shadow',
@@ -108,7 +127,7 @@ export default function effectCategory() {
           },
           {
             name: 'Cube Shadow Offset',
-            attr: 'cube-shadow-offset',
+            attr: ATTR_CUBE_SHADOW_OFFSET,
             swiperDefault: '20',
             value: '',
             description: 'Main shadow offset in px',
@@ -117,7 +136,7 @@ export default function effectCategory() {
           },
           {
             name: 'Cube Shadow Scale',
-            attr: 'cube-shadow-scale',
+            attr: ATTR_CUBE_SHADOW_SCALE,
             swiperDefault: '0.94',
             value: '',
             description: 'Main shadow scale ratio',
@@ -126,7 +145,7 @@ export default function effectCategory() {
           },
           {
             name: 'Cube Slide Shadows',
-            attr: 'cube-slide-shadows',
+            attr: ATTR_CUBE_SLIDE_SHADOWS,
             swiperDefault: 'true',
             value: '',
             description: 'Enables slides shadows',
@@ -141,7 +160,7 @@ export default function effectCategory() {
         items: [
           {
             name: 'Cards Per Slide Offset',
-            attr: 'cards-per-slide-offset',
+            attr: ATTR_CARDS_PER_SLIDE_OFFSET,
             swiperDefault: '8',
             value: '',
             description: 'Offset distance per slide (in px)',
@@ -150,7 +169,7 @@ export default function effectCategory() {
           },
           {
             name: 'Cards Per Slide Rotate',
-            attr: 'cards-per-slide-rotate',
+            attr: ATTR_CARDS_PER_SLIDE_ROTATE,
             swiperDefault: '2',
             value: '',
             description: 'Rotate angle per slide (in degrees)',
@@ -159,7 +178,7 @@ export default function effectCategory() {
           },
           {
             name: 'Cards Rotate',
-            attr: 'cards-rotate',
+            attr: ATTR_CARDS_ROTATE,
             swiperDefault: 'true',
             value: '',
             description: 'Enables cards rotation',
@@ -168,7 +187,7 @@ export default function effectCategory() {
           },
           {
             name: 'Cards Slide Shadows',
-            attr: 'cards-slide-shadows',
+            attr: ATTR_CARDS_SLIDE_SHADOWS,
             swiperDefault: 'true',
             value: '',
             description: 'Enables slides shadows',
@@ -181,7 +200,7 @@ export default function effectCategory() {
     items: [
       {
         name: 'Effect',
-        attr: 'effect',
+        attr: ATTR_EFFECT,
         swiperDefault: 'slide',
         value: '',
         description: 'Select an effect for the slide transitions',

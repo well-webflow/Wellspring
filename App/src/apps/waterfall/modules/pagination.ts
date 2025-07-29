@@ -1,6 +1,26 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
+import {
+  ATTR_PAGINATION_CLICKABLE,
+  ATTR_PAGINATION_CLICKABLE_CLASS,
+  ATTR_PAGINATION_CURRENT_CLASS,
+  ATTR_PAGINATION_DYNAMIC_BULLETS,
+  ATTR_PAGINATION_DYNAMIC_MAIN_BULLETS,
+  ATTR_PAGINATION_ENABLED,
+  ATTR_PAGINATION_HIDDEN_CLASS,
+  ATTR_PAGINATION_HIDE_ON_CLICK,
+  ATTR_PAGINATION_HORIZONTAL_CLASS,
+  ATTR_PAGINATION_LOCK_CLASS,
+  ATTR_PAGINATION_MODIFIER_CLASS,
+  ATTR_PAGINATION_PAGINATION_DISABLED_CLASS,
+  ATTR_PAGINATION_PROGRESSBAR_FILL_CLASS,
+  ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
+  ATTR_PAGINATION_TOTAL_CLASS,
+  ATTR_PAGINATION_TYPE,
+  ATTR_PAGINATION_VERTICAL_CLASS,
+  ATTR_WATERFALL_ELEMENT,
+} from 'well-waterfall/src/lib/attributes';
 
 export default function paginationCategory() {
   let config: WaterfallCategory = {
@@ -16,7 +36,7 @@ export default function paginationCategory() {
         items: [
           {
             name: 'Dynamic Bullets',
-            attr: 'dynamic-bullets',
+            attr: ATTR_PAGINATION_DYNAMIC_BULLETS,
             swiperDefault: 'false',
             value: '',
             description:
@@ -26,7 +46,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Dynamic Main Bullets',
-            attr: 'dynamic-main-bullets',
+            attr: ATTR_PAGINATION_DYNAMIC_MAIN_BULLETS,
             swiperDefault: '1',
             value: '',
             description: 'The number of main bullets visible when dynamicBullets enabled.',
@@ -41,7 +61,7 @@ export default function paginationCategory() {
         items: [
           {
             name: 'Clickable Class',
-            attr: 'pagination-clickable-class',
+            attr: ATTR_PAGINATION_CLICKABLE_CLASS,
             swiperDefault: 'swiper-pagination-clickable',
             value: '',
             description: 'CSS class name set to pagination when it is clickable',
@@ -50,7 +70,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Current Class',
-            attr: 'pagination-current-class',
+            attr: ATTR_PAGINATION_CURRENT_CLASS,
             swiperDefault: 'swiper-pagination-current',
             value: '',
             description: 'CSS class name of the element with currently active index in "fraction" pagination',
@@ -59,7 +79,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Hidden Class',
-            attr: 'pagination-hidden-class',
+            attr: ATTR_PAGINATION_HIDDEN_CLASS,
             swiperDefault: 'swiper-pagination-hidden',
             value: '',
             description: 'CSS class name of pagination when it becomes inactive',
@@ -68,7 +88,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Horizontal Class',
-            attr: 'pagination-horizontal-class',
+            attr: ATTR_PAGINATION_HORIZONTAL_CLASS,
             swiperDefault: 'swiper-pagination-horizontal',
             value: '',
             description: 'CSS class name set to pagination in horizontal Swiper',
@@ -77,7 +97,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Lock Class',
-            attr: 'pagination-lock-class',
+            attr: ATTR_PAGINATION_LOCK_CLASS,
             swiperDefault: 'swiper-pagination-lock',
             value: '',
             description: 'CSS class name added to navigation button when it is disabled',
@@ -86,7 +106,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Modifier Class',
-            attr: 'pagination-modifier-class',
+            attr: ATTR_PAGINATION_MODIFIER_CLASS,
             swiperDefault: 'swiper-pagination-',
             value: '',
             description:
@@ -96,7 +116,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Pagination Disabled Class',
-            attr: 'pagination-disabled-class',
+            attr: ATTR_PAGINATION_PAGINATION_DISABLED_CLASS,
             swiperDefault: 'swiper-pagination-disabled',
             value: '',
             description:
@@ -106,7 +126,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Progressbar Fill Class',
-            attr: 'progressbar-fill-class',
+            attr: ATTR_PAGINATION_PROGRESSBAR_FILL_CLASS,
             swiperDefault: 'swiper-pagination-progressbar-fill',
             value: '',
             description: 'CSS class name of pagination progressbar fill element',
@@ -115,7 +135,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Progressbar Opposite Class',
-            attr: 'progressbar-opposite-class',
+            attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
             swiperDefault: 'swiper-pagination-progressbar-opposite',
             value: '',
             description: 'CSS class name of pagination progressbar opposite',
@@ -124,7 +144,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Total Class',
-            attr: 'pagination-total-classs',
+            attr: ATTR_PAGINATION_TOTAL_CLASS,
             swiperDefault: 'swiper-pagination-total',
             value: '',
             description: 'CSS class name of the element with total number of "snaps" in "fraction" pagination',
@@ -133,34 +153,10 @@ export default function paginationCategory() {
           },
           {
             name: 'Vertical Class',
-            attr: 'pagination-vertical-class',
+            attr: ATTR_PAGINATION_VERTICAL_CLASS,
             swiperDefault: 'swiper-pagination-vertical',
             value: '',
             description: 'CSS class name set to pagination in vertical Swiper',
-            tested: false,
-            type: 'string',
-          },
-        ],
-      },
-      {
-        name: 'Advanced',
-        id: 'pagination-advanced',
-        items: [
-          {
-            name: 'Format Fraction Current',
-            attr: 'format-fraction-current',
-            swiperDefault: '',
-            value: '',
-            description: '(NYI)',
-            tested: false,
-            type: 'string',
-          },
-          {
-            name: 'Format Fraction Total',
-            attr: 'format-fraction-total',
-            swiperDefault: '',
-            value: '',
-            description: '(NYI)',
             tested: false,
             type: 'string',
           },
@@ -170,7 +166,7 @@ export default function paginationCategory() {
     items: [
       {
         name: 'Type',
-        attr: 'pagination-type',
+        attr: ATTR_PAGINATION_TYPE,
         swiperDefault: 'bullets',
         value: 'bullets',
         description:
@@ -181,7 +177,7 @@ export default function paginationCategory() {
       },
       {
         name: 'Clickable',
-        attr: 'pagination-clickable',
+        attr: ATTR_PAGINATION_CLICKABLE,
         swiperDefault: 'false',
         value: '',
         description:
@@ -191,7 +187,7 @@ export default function paginationCategory() {
       },
       {
         name: 'Enabled',
-        attr: 'pagination-enabled',
+        attr: ATTR_PAGINATION_ENABLED,
         swiperDefault: '',
         value: '',
         type: 'boolean',
@@ -200,7 +196,7 @@ export default function paginationCategory() {
       },
       {
         name: 'Hide on Click',
-        attr: 'pagination-hide-on-click',
+        attr: ATTR_PAGINATION_HIDE_ON_CLICK,
         swiperDefault: 'true',
         value: '',
         type: 'boolean',
@@ -209,7 +205,7 @@ export default function paginationCategory() {
       },
       {
         name: 'Progressbar Opposite',
-        attr: 'progressbar-opposite',
+        attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
         swiperDefault: 'false',
         value: '',
         description:
@@ -231,7 +227,7 @@ export default function paginationCategory() {
 export async function convertToPaginationBulletActive() {
   const el = await webflow.getSelectedElement();
   if (el?.customAttributes) {
-    el.setCustomAttribute('waterfall-el', 'pagination-bullet-active');
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet-active');
     webflow.notify({
       type: 'Success',
       message: 'Element successfully converted to Pagination Bullet (Active).',
@@ -249,17 +245,17 @@ export async function createPagination() {
 
   const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
   pagination.setTag('div');
-  pagination.setAttribute('waterfall-el', 'pagination');
+  pagination.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination');
   pagination.setStyles([paginationClass]);
 
   const paginationBulletActive = await pagination.prepend(webflow.elementPresets.DOM);
   paginationBulletActive.setTag('button');
-  paginationBulletActive.setAttribute('waterfall-el', 'pagination-bullet-active');
+  paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet-active');
   paginationBulletActive.setStyles([paginationBulletActiveClass]);
 
   const paginationBullet = await pagination.prepend(webflow.elementPresets.DOM);
   paginationBullet.setTag('button');
-  paginationBullet.setAttribute('waterfall-el', 'pagination-bullet');
+  paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet');
   paginationBullet.setStyles([paginationBulletClass]);
 
   webflow.notify({

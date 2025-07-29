@@ -1,5 +1,6 @@
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { ATTR_HASH_REPLACE_STATE, ATTR_HASH_WATCH_STATE } from 'well-waterfall/src/lib/attributes';
 
 export default function memoryCategory() {
   let config: WaterfallCategory = {
@@ -12,7 +13,7 @@ export default function memoryCategory() {
     items: [
       {
         name: 'Replace State',
-        attr: 'hash-replace-state',
+        attr: ATTR_HASH_REPLACE_STATE,
         swiperDefault: 'false',
         description: 'Replace the current url state with the current slide instead of adding it to history',
         value: '',
@@ -21,7 +22,7 @@ export default function memoryCategory() {
       },
       {
         name: 'Watch State',
-        attr: 'hash-watch-state',
+        attr: ATTR_HASH_WATCH_STATE,
         swiperDefault: 'false',
         description: 'Enable navigation through slides using browser history or by setting the hash directly',
         value: '',
