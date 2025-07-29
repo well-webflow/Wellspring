@@ -29,16 +29,16 @@ export default function Button({
       className={twMerge(
         clsx(
           {
-            'bg-actionPrimaryBackground text-actionPrimaryText hover:text-actionPrimaryTextHover hover:bg-actionPrimaryBackgroundHover':
+            'bg-action-primary-background text-action-primary-text hover:text-action-primary-text-hover hover:bg-action-primary-background-hover':
               color === 'primary',
-            'bg-actionSecondaryBackground box-shadow text-actionSecondaryText hover:text-actionSecondaryTextHover hover:bg-actionSecondaryBackgroundHover':
+            'bg-action-secondary-background box-shadow text-action-secondary-text hover:text-action-secondary-text-hover hover:bg-action-secondary-background-hover':
               color === 'secondary',
           },
           {
-            'px-2 py-1 text-xs rounded-sm ': size === 'sm',
+            'px-2 py-1 text-xs rounded-xs ': size === 'sm',
             'px-3 py-2 text-sm': size === 'md',
           },
-          'rounded-sm flex flex-row gap-3 items-center shadow-sm transition',
+          'rounded-xs flex flex-row gap-3 items-center shadow-xs transition',
           className
         )
       )}

@@ -21,7 +21,7 @@ function Tooltip({ content, defaultValue }: TooltipProps) {
         className="text-gray-500 cursor-pointer"
       />
       {visible && (
-        <div className="absolute left-5 top-1/2 transform -translate-y-1/2 ml-2 z-10 bg-gray-900 text-white text-sm py-2 px-2 rounded shadow-lg whitespace-normal max-w-xs w-max transition-opacity duration-200 ease-in-out opacity-100">
+        <div className="absolute left-5 top-1/2 transform -translate-y-1/2 ml-2 z-10 bg-gray-900 text-white text-sm py-2 px-2 rounded-sm shadow-lg whitespace-normal max-w-xs w-max transition-opacity duration-200 ease-in-out opacity-100">
           {/* Triangle */}
           <div className="absolute left-[-6px] top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-4 border-r-4 border-b-4 border-transparent border-r-gray-900" />
           {content}

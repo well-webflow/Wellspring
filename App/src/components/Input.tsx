@@ -6,8 +6,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function Input({ ...props }: InputProps) {
   return (
-    <div className="border-2 border-border1 w-[220px] h-[2rem] rounded-sm overflow-hidden">
-      <input className="bg-background1 text-actionPrimaryText w-full h-full pl-1" {...props} />
+    <div className="border-2 border-border1 w-[220px] h-8 rounded-xs overflow-hidden">
+      <input className="bg-background1 text-action-primary-text w-full h-full pl-1" {...props} />
     </div>
   );
 }
@@ -19,8 +19,8 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 export function Select({ type, options, ...props }: SelectProps) {
   return (
-    <div className="border-2 border-border1 w-[220px] h-[2rem] rounded-sm overflow-hidden">
-      <select className="bg-background1 text-actionPrimaryText rounded-sm w-full h-full" {...props}>
+    <div className="border-2 border-border1 w-[220px] h-8 rounded-xs overflow-hidden">
+      <select className="bg-background1 text-action-primary-text rounded-xs w-full h-full" {...props}>
         {type === 'boolean' && (
           <>
             <option value="true">true</option>

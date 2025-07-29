@@ -10,7 +10,7 @@ export default function HorizontalRule({ className }: HorizontalRuleProps) {
 
   return (
     <div className={wrapperClass}>
-      <hr className="h-[1px] w-full bg-border1 opacity-25" />
+      <hr className="h-px w-full bg-border1 opacity-25" />
     </div>
   );
 }

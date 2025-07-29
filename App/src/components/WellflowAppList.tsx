@@ -9,7 +9,7 @@ export default function WellflowAppList() {
 
   return (
     <Link to="/waterfall">
-      <div className="bg-background2 p-5 rounded-sm">
+      <div className="bg-background2 p-5 rounded-xs">
         <Heading level={4}>Waterfall</Heading>
         <Paragraph size="sm" className="text-text2 mb-0">
           Add fully custom sliders to your website

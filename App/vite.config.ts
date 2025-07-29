@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import fs from 'fs';
 import react from '@vitejs/plugin-react-swc';
+import tailwindcss from '@tailwindcss/vite';
 
 type Manifest = {
   size: 'comfortable' | 'large' | 'default';
@@ -10,9 +11,7 @@ type Manifest = {
 
 function webflowExtension(manifest: Manifest) {
   const domain = 'webflow-ext.com';
-  const templatePromise = fetch(
-    `https://${domain}/template/v2?name=${manifest.name}`
-  )
+  const templatePromise = fetch(`https://${domain}/template/v2?name=${manifest.name}`)
     .then((res) => res.text())
     .catch(() => console.log('Failed retrieving template'));
 
@@ -64,7 +63,7 @@ function webflowExtension(manifest: Manifest) {
 
 const webflowManifest = JSON.parse(fs.readFileSync('webflow.json', 'utf8'));
 export default defineConfig({
-  plugins: [react(), webflowExtension(webflowManifest)],
+  plugins: [react(), webflowExtension(webflowManifest), tailwindcss()],
   server: {
     port: 1337,
   },

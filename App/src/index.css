@@ -1,6 +1,73 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --font-*: initial;
+  --font-display: Inter;
+  --font-body: Inter;
+  --font-brand: Radley, serif;
+
+  --background-image-action-secondary-background: var(
+    --actionSecondaryBackground
+  );
+  --background-image-action-secondary-background-hover: var(
+    --actionSecondaryBackgroundHover
+  );
+
+  --color-primary: #84c8d1;
+  --color-primary-dark: #3b838c;
+  --color-background1: var(--background1);
+  --color-background2: var(--background2);
+  --color-background3: var(--background3);
+  --color-background4: var(--background4);
+  --color-background5: var(--background5);
+  --color-background-input: var(--background-input);
+  --color-action-primary-background: var(--actionPrimaryBackground);
+  --color-action-primary-background-hover: var(--actionPrimaryBackgroundHover);
+  --color-action-primary-text: var(--actionPrimaryText);
+  --color-action-primary-text-hover: var(--actionPrimaryTextHover);
+  --color-action-secondary-text: var(--actionSecondaryText);
+  --color-action-secondary-text-hover: var(--actionSecondaryTextHover);
+  --color-box-shadows-action-secondary: var(--boxShadows-action-secondary);
+  --color-border1: var(--border1);
+  --color-border2: var(--border2);
+  --color-border3: var(--border3);
+  --color-text1: var(--text1);
+  --color-text2: var(--text2);
+  --color-text3: var(--text3);
+
+  --shadow-wf-input:
+    0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,
+    0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,
+    0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,
+    0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
+    0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,
+    0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset, 0 0 0 1px #2496ff;
+
+  --text-sm: 0.8rem;
+  --text-base: 0.9rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 3rem;
+  --text-4xl: 5rem;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @font-face {
   font-family: 'Radley';
