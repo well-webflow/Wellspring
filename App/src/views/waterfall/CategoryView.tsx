@@ -1,7 +1,7 @@
 import { useWaterfall } from '../../context/WaterfallContext';
 import { Heading } from '../../components/Typography';
 import BasicSetting from '../../components/BasicSetting';
-import { EditNavigation, StickyNavigation } from '../../components/Navigation';
+import { EditNavigation } from '../../components/Navigation';
 import { WaterfallCategory } from '../../../types/waterfall-types';
 
 export default function CategoryView() {
@@ -9,7 +9,7 @@ export default function CategoryView() {
 
   if (!selectedCategory || !waterfallSettings) return null;
 
-  const category: WaterfallCategory = waterfallSettings.find(
+  const category: WaterfallCategory | undefined = waterfallSettings.find(
     (category) => category.id.toLowerCase() === selectedCategory.toLowerCase()
   );
   if (!category) return;

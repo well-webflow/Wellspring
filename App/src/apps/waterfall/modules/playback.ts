@@ -60,7 +60,7 @@ export default function playbackCategory() {
             name: 'Disable Autoplay on Interaction',
             attr: ATTR_DISABLE_ON_INTERACTION,
             swiperDefault: 'false', // documentation says default is true, doesn't appear to be true
-            value: 'true',
+            value: 'false',
             type: 'boolean',
             description: 'If true, autoplay be disabled after any user interactions',
             tested: true,

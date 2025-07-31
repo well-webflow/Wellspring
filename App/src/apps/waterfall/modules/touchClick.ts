@@ -184,7 +184,7 @@ export default function touchClickCategory() {
             name: 'Touch Release on Edges',
             attr: ATTR_TOUCH_RELEASE_ON_EDGES,
             swiperDefault: 'false',
-            value: 'true',
+            value: 'false',
             description:
               'Release touch events on slider when it reaches the beginning or end to allow for page scrolling outside of the swiper container. This feature works only with "touch" events (and not pointer events). Also threshold parameter must be set to 0.',
             tested: true,

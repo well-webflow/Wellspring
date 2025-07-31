@@ -10,7 +10,7 @@ import { BreakpointObject, WaterfallSetting } from '../../types/waterfall-types'
 const breakpointIcons: IconDefinition[] = [faMobile, faPortrait, faTablet, faDeskpro, faDesktopAlt, faDesktopAlt];
 
 export default function BasicSetting({ prop }: { prop: WaterfallSetting }) {
-  const { updateWaterfall, waterfalls, waterfallNames } = useWaterfall();
+  const { updateWaterfall, waterfallNames } = useWaterfall();
 
   let type = prop.type || 'string';
 
@@ -18,9 +18,14 @@ export default function BasicSetting({ prop }: { prop: WaterfallSetting }) {
     <div className="flex flex-col gap-10 px-3 py-8 bg-background3 rounded-md">
       <div className="flex flex-row gap-5 justify-between">
         <div className="flex items-center gap-3 mb-2">
-          {prop.icon && <FontAwesomeIcon icon={prop.icon} className="text-primary" />}
-          <span>{prop.name}</span>
-          <Tooltip content={prop.description} defaultValue={prop.swiperDefault} />
+          <div>
+            <div className="flex flex-row items-center gap-3">
+              {prop.icon && <FontAwesomeIcon icon={prop.icon} className="text-primary" />}
+              <span>{prop.name}</span>
+              <Tooltip content={prop.description} defaultValue={prop.swiperDefault} />
+            </div>
+            <span className="text-sm text-text3">{prop.attr}</span>
+          </div>
         </div>
         {type === 'number' && (
           <Input
