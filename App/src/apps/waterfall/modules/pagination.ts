@@ -19,8 +19,8 @@ import {
   ATTR_PAGINATION_TOTAL_CLASS,
   ATTR_PAGINATION_TYPE,
   ATTR_PAGINATION_VERTICAL_CLASS,
-  ATTR_WATERFALL_ELEMENT,
 } from 'well-waterfall/src/lib/attributes';
+import { ATTR_WATERFALL_ELEMENT } from 'well-waterfall/src/lib/elements';
 
 export default function paginationCategory() {
   let config: WaterfallCategory = {
@@ -168,7 +168,7 @@ export default function paginationCategory() {
         name: 'Type',
         attr: ATTR_PAGINATION_TYPE,
         swiperDefault: 'bullets',
-        value: 'bullets',
+        value: '',
         description:
           "String with type of pagination. Can be 'bullets', 'numberBullets', 'fraction', 'progressbar' or 'custom'",
         options: ['bullets', 'numberBullets', 'fraction', 'progressbar', 'custom'],

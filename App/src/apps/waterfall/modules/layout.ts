@@ -79,7 +79,7 @@ export default function layoutConfig() {
             name: 'Centered Slides',
             attr: ATTR_CENTERED_SLIDES,
             swiperDefault: 'false',
-            value: 'false',
+            value: '',
             breakpoints: {
               lmobile: '',
               tablet: '',
@@ -226,7 +226,7 @@ export default function layoutConfig() {
         name: 'Slides Per View',
         attr: ATTR_SLIDES_PER_VIEW,
         swiperDefault: '1',
-        value: '1',
+        value: '',
         icon: faHashtag,
         breakpoints: {
           lmobile: '',
@@ -243,7 +243,7 @@ export default function layoutConfig() {
         name: 'Space Between',
         attr: ATTR_SPACE_BETWEEN,
         swiperDefault: '0',
-        value: '0',
+        value: '',
         breakpoints: {
           lmobile: '',
           tablet: '',

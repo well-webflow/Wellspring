@@ -77,7 +77,7 @@ export default function advancedCategory() {
         name: 'Lazy Load Prev Next',
         attr: ATTR_LAZY_PRELOAD_PREV_NEXT,
         swiperDefault: '0',
-        value: '0',
+        value: '',
         description: 'Number of next and previous slides to preload. Only applicable if using lazy loading.',
         tested: true,
         type: 'number',

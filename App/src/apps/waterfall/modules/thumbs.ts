@@ -22,9 +22,9 @@ export default function thumbsCategory() {
         name: 'Thumbs',
         attr: ATTR_THUMBS,
         swiperDefault: 'false',
+        value: '',
         description: 'If true, this slider will act as Thumbnails for another slider',
         type: 'boolean',
-        value: 'false',
         tested: false,
       },
       {
@@ -33,7 +33,7 @@ export default function thumbsCategory() {
         swiperDefault: 'false',
         description: 'Set to true to enable the thumbnails',
         type: 'boolean',
-        value: 'false',
+        value: '',
         tested: false,
       },
       {

@@ -46,7 +46,7 @@ export default function BasicSetting({ prop }: { prop: WaterfallSetting }) {
         {(type === 'boolean' || type === 'select') && (
           <Select
             type={type}
-            value={prop.value}
+            value={prop.value || prop.swiperDefault}
             options={prop.options}
             onChange={(e) => updateWaterfall(prop.attr, e.target.value)}
           />

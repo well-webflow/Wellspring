@@ -11,8 +11,9 @@ import {
   ATTR_SCROLLBAR_SCROLLBAR_DISABLED_CLASS,
   ATTR_SCROLLBAR_SNAP_ON_RELEASE,
   ATTR_SCROLLBAR_VERTICAL_CLASS,
-  ATTR_WATERFALL_ELEMENT,
 } from 'well-waterfall/src/lib/attributes';
+
+import { ATTR_WATERFALL_ELEMENT } from 'well-waterfall/src/lib/elements';
 
 export default function scrollbarCategory() {
   let config: WaterfallCategory = {
