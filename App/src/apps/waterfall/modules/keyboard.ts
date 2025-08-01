@@ -20,7 +20,7 @@ export default function keyboardCategory() {
         swiperDefault: 'false',
         description: 'Set to true to enable keyboard control',
         value: '',
-        tested: true,
+
         type: 'boolean',
       },
       {
@@ -29,7 +29,7 @@ export default function keyboardCategory() {
         swiperDefault: 'true',
         description: 'When enabled it will control sliders that are currently in viewport',
         value: '',
-        tested: false,
+
         type: 'boolean',
       },
       {
@@ -38,7 +38,7 @@ export default function keyboardCategory() {
         swiperDefault: 'true',
         description: 'When enabled it will enable keyboard navigation by Page Up and Page Down keys',
         value: '',
-        tested: false,
+
         type: 'boolean',
       },
     ],

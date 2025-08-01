@@ -1,14 +1,12 @@
 import Button from '../../components/Button';
 import { useWaterfall } from '../../context/WaterfallContext';
 import { useNavigate } from 'react-router';
-import { faArrowsRotate, faSave } from '@fortawesome/free-solid-svg-icons';
-import { EditNavigation, StickyNavigation } from '../../components/Navigation';
+import { EditNavigation } from '../../components/Navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
 
 export default function EditView() {
-  const { setSelectedCategory, waterfallSettings, unloadWaterfall, loadedWaterfall, loadWaterfall, saveWaterfall } =
-    useWaterfall();
+  const { setSelectedCategory, waterfallSettings, unloadWaterfall, loadedWaterfall } = useWaterfall();
 
   const navigate = useNavigate();
 

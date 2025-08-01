@@ -35,7 +35,6 @@ export default function playbackCategory() {
             value: '',
             description: "If true, 'autoplay' is enabled.",
             type: 'boolean',
-            tested: true,
           },
           {
             name: 'Smooth Autoplay',
@@ -44,7 +43,6 @@ export default function playbackCategory() {
             value: '',
             type: 'boolean',
             description: 'If true, the slides will move continuously instead of stopping on each slide.',
-            tested: false,
           },
           {
             name: 'Autoplay Delay',
@@ -54,7 +52,6 @@ export default function playbackCategory() {
             type: 'number',
             description:
               'Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled. If you need to specify different delay for specific slides you can do it by usingdata-swiper-autoplay (in ms) attribute on slide.',
-            tested: true,
           },
           {
             name: 'Disable Autoplay on Interaction',
@@ -63,7 +60,6 @@ export default function playbackCategory() {
             value: '',
             type: 'boolean',
             description: 'If true, autoplay be disabled after any user interactions',
-            tested: true,
           },
           {
             name: 'Pause Autoplay on Hover',
@@ -72,7 +68,6 @@ export default function playbackCategory() {
             value: '',
             type: 'boolean',
             description: 'If true, autoplay will be paused when the pointer enters the Swiper container.',
-            tested: true,
           },
           {
             name: 'Reverse Autoplay Direction',
@@ -81,7 +76,6 @@ export default function playbackCategory() {
             value: '',
             type: 'boolean',
             description: "If true, autoplays in the reverse direction. Works well with 'loop'.",
-            tested: true,
           },
           {
             name: 'Stop Autoplay on Last Slide',
@@ -90,7 +84,6 @@ export default function playbackCategory() {
             value: '',
             type: 'boolean',
             description: 'If true, autoplay will be stopped when it reaches last slide (has no effect in loop mode)',
-            tested: true,
           },
           {
             name: 'Autoplay Wait for Transition',
@@ -100,7 +93,6 @@ export default function playbackCategory() {
             type: 'boolean',
             description:
               'If true, autoplay will wait for the wrapper transition to continue. Can be disabled in case of using Virtual Translate when your slider may not have transition',
-            tested: false,
           },
         ],
       },
@@ -115,7 +107,7 @@ export default function playbackCategory() {
             value: '',
             description:
               'Automatically adds blank slides if you use Grid or slidesPerGroup and the total amount of slides is not even to slidesPerGroup or to grid.rows',
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -125,7 +117,7 @@ export default function playbackCategory() {
             value: '',
             description:
               'Increase amount of looped slides which may help with loading. Must be less than slidesPerView.',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -134,7 +126,7 @@ export default function playbackCategory() {
             swiperDefault: 'true',
             value: '',
             description: 'If enabled then slideNext/Prev will do nothing while slider is animating in loop mode',
-            tested: false,
+
             type: 'boolean',
           },
         ],
@@ -147,7 +139,7 @@ export default function playbackCategory() {
         swiperDefault: '300',
         value: '',
         description: 'Duration of transition between slides (in ms). Small number go fast.',
-        tested: true,
+
         type: 'number',
       },
       {
@@ -157,7 +149,7 @@ export default function playbackCategory() {
         value: '',
         description: 'Choose between loop, rewind, and none',
         options: ['none', 'loop', 'rewind', 'none'],
-        tested: false,
+
         type: 'select',
       },
     ],

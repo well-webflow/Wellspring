@@ -201,7 +201,7 @@ export function useWaterfallLogic(): WaterfallState {
 
     try {
       await Promise.all(
-        allSettings.map(async (setting, i) => {
+        allSettings.map(async (setting) => {
           if (!setting.attr) {
             console.warn(`Skipping invalid setting (missing attr):`, setting);
             return;

@@ -12,7 +12,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<SessionUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [siteData, setSiteData] = useState<WebflowSiteInfo | null>(null);
-  const [codeInstalled, setCodeInstalled] = useState(true);
+  const [codeInstalled] = useState(true);
 
   const AUTH_URL = import.meta.env.VITE_AUTH_URL;
 

@@ -17,7 +17,7 @@ export default function memoryCategory() {
         swiperDefault: 'false',
         description: 'Replace the current url state with the current slide instead of adding it to history',
         value: '',
-        tested: false,
+
         type: 'boolean',
       },
       {
@@ -26,7 +26,7 @@ export default function memoryCategory() {
         swiperDefault: 'false',
         description: 'Enable navigation through slides using browser history or by setting the hash directly',
         value: '',
-        tested: false,
+
         type: 'boolean',
       },
     ],

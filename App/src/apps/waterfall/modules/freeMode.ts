@@ -25,7 +25,7 @@ export default function freemodeCategory() {
         swiperDefault: 'false',
         value: '',
         description: "If 'true', users have full control over the slider with swipes",
-        tested: true,
+
         type: 'boolean',
       },
       {
@@ -34,7 +34,7 @@ export default function freemodeCategory() {
         swiperDefault: '0.02',
         value: '',
         description: 'Minimum touchmove-velocity required to trigger free mode momentum',
-        tested: true,
+
         type: 'number',
       },
       {
@@ -43,7 +43,7 @@ export default function freemodeCategory() {
         swiperDefault: 'true',
         value: '',
         description: 'If enabled, then slide will keep moving for a while after you release it',
-        tested: true,
+
         type: 'boolean',
       },
       {
@@ -52,7 +52,7 @@ export default function freemodeCategory() {
         swiperDefault: '1',
         value: '',
         description: 'Higher value produces larger momentum distance after you release slider',
-        tested: true,
+
         type: 'number',
       },
       {
@@ -61,7 +61,7 @@ export default function freemodeCategory() {
         swiperDefault: 'true',
         value: '',
         description: 'Set to false if you want to disable momentum bounce when reaching first/last slides in free mode',
-        tested: true,
+
         type: 'number',
       },
       {
@@ -70,7 +70,7 @@ export default function freemodeCategory() {
         swiperDefault: '1',
         value: '',
         description: 'Higher value produces larger momentum bounce effect',
-        tested: true,
+
         type: 'number',
       },
       {
@@ -79,7 +79,7 @@ export default function freemodeCategory() {
         swiperDefault: '1',
         value: '',
         description: 'Higher value produces larger momentum velocity after you release slider',
-        tested: true,
+
         type: 'number',
       },
       {
@@ -88,7 +88,7 @@ export default function freemodeCategory() {
         swiperDefault: 'false',
         value: '',
         description: 'Set to enabled to enable snap to slides positions in free mode',
-        tested: true,
+
         type: 'boolean',
       },
     ],

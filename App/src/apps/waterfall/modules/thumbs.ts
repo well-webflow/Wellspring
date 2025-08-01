@@ -25,7 +25,6 @@ export default function thumbsCategory() {
         value: '',
         description: 'If true, this slider will act as Thumbnails for another slider',
         type: 'boolean',
-        tested: false,
       },
       {
         name: 'Enabled',
@@ -34,7 +33,6 @@ export default function thumbsCategory() {
         description: 'Set to true to enable the thumbnails',
         type: 'boolean',
         value: '',
-        tested: false,
       },
       {
         name: 'Swiper',
@@ -43,7 +41,6 @@ export default function thumbsCategory() {
         type: 'waterfall',
         description: 'The name of the Waterfall these thumbs are associated with',
         value: '',
-        tested: true,
       },
       {
         name: 'Auto Scroll Offset',
@@ -52,7 +49,7 @@ export default function thumbsCategory() {
         description:
           'Allows to set on which thumbs active slide from edge it should automatically move scroll thumbs. For example, if set to 1 and last visible thumb will be activated (1 from edge) it will auto scroll thumbs',
         value: '',
-        tested: false,
+
         type: 'number',
       },
       {
@@ -61,7 +58,7 @@ export default function thumbsCategory() {
         swiperDefault: 'true',
         description: 'When enabled multiple thumbnail slides may get activated',
         value: '',
-        tested: false,
+
         type: 'boolean',
       },
       {
@@ -70,7 +67,7 @@ export default function thumbsCategory() {
         swiperDefault: 'swiper-slide-thumb-active',
         description: 'Additional class that will be added to activated thumbs swiper slide',
         value: '',
-        tested: false,
+
         type: 'string',
       },
       {
@@ -79,7 +76,7 @@ export default function thumbsCategory() {
         swiperDefault: 'swiper-thumbs',
         description: 'Additional class that will be added to thumbs swiper',
         value: '',
-        tested: false,
+
         type: 'string',
       },
     ],

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,10 +16,7 @@ function Tooltip({ content, defaultValue }: TooltipProps) {
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
-      <FontAwesomeIcon
-        icon={faQuestionCircle}
-        className="text-gray-500 cursor-pointer"
-      />
+      <FontAwesomeIcon icon={faQuestionCircle} className="text-gray-500 cursor-pointer" />
       {visible && (
         <div className="absolute left-5 top-1/2 transform -translate-y-1/2 ml-2 z-10 bg-gray-900 text-white text-sm py-2 px-2 rounded-sm shadow-lg whitespace-normal max-w-xs w-max transition-opacity duration-200 ease-in-out opacity-100">
           {/* Triangle */}

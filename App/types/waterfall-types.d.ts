@@ -46,7 +46,6 @@ export interface WaterfallSetting {
   options?: string[];
   breakpoints?: BreakpointObject;
   icon?: IconDefinition;
-  tested: boolean;
 }
 export type LoadedWaterfall = {
   name: string | null;

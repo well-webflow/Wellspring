@@ -34,7 +34,6 @@ export default function scrollbarCategory() {
             value: '',
             type: 'string',
             description: 'CSS class name set to scrollbar in horizontal Swiper',
-            tested: false,
           },
           {
             name: 'Lock Class',
@@ -43,7 +42,6 @@ export default function scrollbarCategory() {
             value: '',
             type: 'string',
             description: 'Scrollbar element additional CSS class when it is disabled',
-            tested: false,
           },
           {
             name: 'Scrollbar Disabled Class',
@@ -52,7 +50,7 @@ export default function scrollbarCategory() {
             value: '',
             description:
               'CSS class name added on swiper container and scrollbar element when scrollbar is disabled by breakpoint',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -61,7 +59,7 @@ export default function scrollbarCategory() {
             swiperDefault: 'swiper-scrollbar-vertical',
             value: '',
             description: 'CSS class name set to scrollbar in vertical Swiper',
-            tested: false,
+
             type: 'string',
           },
         ],
@@ -74,7 +72,7 @@ export default function scrollbarCategory() {
         swiperDefault: 'auto',
         value: '',
         description: 'Size of scrollbar draggable element in px',
-        tested: true,
+
         type: 'string',
       },
       {
@@ -84,7 +82,6 @@ export default function scrollbarCategory() {
         value: '',
         type: 'boolean',
         description: 'Set to true to enable make scrollbar draggable that allows you to control slider position',
-        tested: true,
       },
       {
         name: 'Enabled',
@@ -93,7 +90,6 @@ export default function scrollbarCategory() {
         value: '',
         type: 'boolean',
         description: 'Boolean property to use with breakpoints to enable/disable scrollbar on certain breakpoints',
-        tested: false,
       },
       {
         name: 'Hide',
@@ -102,7 +98,6 @@ export default function scrollbarCategory() {
         value: '',
         type: 'boolean',
         description: '(Not Working) Set to true to hide scrollbar automatically after user interaction',
-        tested: false,
       },
       {
         name: 'Snap on Release',
@@ -111,7 +106,6 @@ export default function scrollbarCategory() {
         value: '',
         type: 'boolean',
         description: 'Set to true to snap slider position to slides when you release scrollbar',
-        tested: false,
       },
     ],
     actions: [

@@ -52,7 +52,7 @@ export default function touchClickCategory() {
             value: '',
             description: 'If \'true\', the user will see the "grab" cursor when hovering on the slider.',
             icon: faHandPointer,
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -61,7 +61,7 @@ export default function touchClickCategory() {
             swiperDefault: 'false',
             value: '',
             description: 'Set to true and click on any slide will produce transition to this slide',
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -70,7 +70,7 @@ export default function touchClickCategory() {
             swiperDefault: 'true',
             value: '',
             description: 'If true, Swiper will accept mouse events like touch events (click and drag to change slides)',
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -79,7 +79,7 @@ export default function touchClickCategory() {
             swiperDefault: 'true',
             value: '',
             description: 'Set to true to prevent accidental unwanted clicks on links during swiping',
-            tested: true,
+
             type: 'boolean',
           },
         ],
@@ -95,7 +95,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               "If 'false', then slider will be animated only when you release it, it will not move while you hold your finger on it",
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -104,7 +104,7 @@ export default function touchClickCategory() {
             swiperDefault: 'true',
             value: '',
             description: "If 'true' the slider will snap back with small or incomplete swipes",
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -113,7 +113,7 @@ export default function touchClickCategory() {
             swiperDefault: 'true',
             value: '',
             description: '(Not working) Set to false if you want to disable short swipes',
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -123,7 +123,7 @@ export default function touchClickCategory() {
             value: '',
             description: 'Set to false if you want to disable long swipes (ex. swiping multiple slides at a time)',
             icon: faPersonRunning,
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -132,7 +132,7 @@ export default function touchClickCategory() {
             swiperDefault: '300',
             value: '',
             description: 'Minimal duration (in ms) to trigger swipe to next/previous slide during long swipes',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -141,7 +141,7 @@ export default function touchClickCategory() {
             swiperDefault: '0.5',
             value: '',
             description: 'Ratio to trigger swipe to next/previous slide during long swipes',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -151,7 +151,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               'String with CSS selector or HTML element of the container with pagination that will work as only available handler for swiping',
-            tested: false,
+
             type: 'string',
           },
         ],
@@ -167,7 +167,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               "If set to 'true' the slider will capture touch events and prevent system swipe-back navigation on iOS/Android.",
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -177,7 +177,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               'Area (in px) from left edge of the screen to release touch events for swipe-back navigation on iOS/Android. (This has a minor, if any, effect)',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -187,7 +187,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               'Release touch events on slider when it reaches the beginning or end to allow for page scrolling outside of the swiper container. This feature works only with "touch" events (and not pointer events). Also threshold parameter must be set to 0.',
-            tested: true,
+
             type: 'boolean',
           },
         ],
@@ -203,7 +203,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               'Enable/disable swiping on elements matched to class specified in noSwipingClass or noSwipingSelector',
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -212,7 +212,7 @@ export default function touchClickCategory() {
             swiperDefault: 'swiper-no-swiping',
             value: '',
             description: "Specify noSwiping's element css class",
-            tested: true,
+
             type: 'string',
           },
           {
@@ -222,7 +222,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               "Can be used instead of noSwipingClass to specify elements to disable swiping on. For example 'input' will disable swiping on all inputs",
-            tested: true,
+
             type: 'string',
           },
         ],
@@ -238,7 +238,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               '(Not Working?) Threshold value in px. If "touch distance" will be lower than this value then swiper will not move',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -247,7 +247,7 @@ export default function touchClickCategory() {
             swiperDefault: '45',
             value: '',
             description: '(Untested) Allowable angle (in degrees) to trigger touch move',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -257,7 +257,7 @@ export default function touchClickCategory() {
             value: '',
             description:
               "Target element to listen touch events on. Can be 'container' (to listen for touch events on swiper) or 'wrapper'(to listen for touch events on swiper-wrapper)",
-            tested: true,
+
             type: 'string',
           },
           {
@@ -266,7 +266,7 @@ export default function touchClickCategory() {
             swiperDefault: '1',
             value: '',
             description: "Touch ratio (don't blame me, this is the real documentation note)",
-            tested: false,
+
             type: 'number',
           },
           {
@@ -275,7 +275,7 @@ export default function touchClickCategory() {
             swiperDefault: 'false',
             value: '',
             description: 'If enabled, then propagation of "touchmove" will be stopped',
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -284,7 +284,7 @@ export default function touchClickCategory() {
             swiperDefault: 'false',
             value: '',
             description: 'Force to always prevent default for touchstart (pointerdown) event',
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -293,7 +293,7 @@ export default function touchClickCategory() {
             swiperDefault: 'true',
             value: '',
             description: "If disabled, pointerdown event won't be prevented",
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -302,7 +302,7 @@ export default function touchClickCategory() {
             swiperDefault: 'true',
             value: '',
             description: 'Set to true to stop clicks event propagation on links during swiping',
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -311,7 +311,7 @@ export default function touchClickCategory() {
             swiperDefault: '0.85',
             value: '',
             description: 'This option allows you to control resistance ratio.',
-            tested: false,
+
             type: 'number',
           },
         ],
@@ -326,7 +326,7 @@ export default function touchClickCategory() {
         description:
           'If false, then the only way to switch the slide is use buttons or functions like slidePrev or slideNext',
         icon: faBan,
-        tested: false,
+
         type: 'boolean',
       },
       {
@@ -336,7 +336,7 @@ export default function touchClickCategory() {
         value: '',
         description: "If 'true', will swipe slides only forward (one-way) regardless of swipe direction",
         icon: faArrowsTurnRight,
-        tested: true,
+
         type: 'boolean',
       },
       {
@@ -345,7 +345,7 @@ export default function touchClickCategory() {
         swiperDefault: 'false',
         value: '',
         description: "If 'true' swiping and navigation/pagination buttons will be disabled during transition",
-        tested: true,
+
         type: 'boolean',
       },
       {
@@ -355,7 +355,7 @@ export default function touchClickCategory() {
         value: '',
         description:
           'Set to true on Swiper for correct touch events interception. Use only on swipers that use same direction as the parent one',
-        tested: false,
+
         type: 'boolean',
       },
     ],

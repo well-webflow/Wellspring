@@ -27,7 +27,7 @@ export default function generalConfig() {
             value: '',
             description:
               "Whether Swiper initially enabled. When Swiper is disabled, it will hide all navigation elements and won't respond to any events and interactions",
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -37,7 +37,7 @@ export default function generalConfig() {
             value: '',
             description:
               'Whether Swiper should be initialised automatically when you create an instance. If disabled, then you need to init it manually by calling swiper.init()',
-            tested: false,
+
             type: 'boolean',
           },
         ],
@@ -50,7 +50,7 @@ export default function generalConfig() {
         swiperDefault: '-',
         value: 'New Waterfall',
         description: 'The name of the waterfall',
-        tested: true,
+
         icon: faNoteSticky,
         type: 'string',
       },
@@ -60,7 +60,7 @@ export default function generalConfig() {
         swiperDefault: 'false',
         value: '',
         description: 'Prints out debug statements to the browser console',
-        tested: true,
+
         icon: faBug,
         type: 'boolean',
       },
@@ -70,7 +70,7 @@ export default function generalConfig() {
         swiperDefault: 'false',
         value: '',
         description: 'Prints out more debug statements to the browser console',
-        tested: true,
+
         icon: faBug,
         type: 'boolean',
       },

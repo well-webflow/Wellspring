@@ -47,7 +47,7 @@ export default function layoutConfig() {
             },
             description:
               'Set numbers of slides to define and enable group sliding (sliding more than 1 slide at a time). Useful to use with slidesPerView > 1',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -57,7 +57,7 @@ export default function layoutConfig() {
             value: '',
             description:
               "This param intended to be used only with slidesPerView: 'auto' and slidesPerGroup: 1. If 'true', it will skip all slides in view on .slideNext() & .slidePrev() methods calls, on Navigation \"buttons\" clicks and in autoplay.",
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -66,7 +66,7 @@ export default function layoutConfig() {
             swiperDefault: '0',
             value: '',
             description: '',
-            tested: false,
+
             type: 'number',
           },
         ],
@@ -88,7 +88,7 @@ export default function layoutConfig() {
               xlarge: '',
             },
             description: 'If true, then active slide will be centered, not always on the left side.',
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -98,7 +98,7 @@ export default function layoutConfig() {
             value: '',
             description:
               'If true, then active slide will be centered without adding gaps at the beginning and end of slider. Required centeredSlides: true. Not intended to be used with loop or pagination.',
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -108,7 +108,7 @@ export default function layoutConfig() {
             value: '',
             description:
               'If true, centers slides if the total amount of slides is less than slidesPerView. Not intended to be used loop mode and grid.rows',
-            tested: true,
+
             type: 'boolean',
           },
         ],
@@ -125,7 +125,7 @@ export default function layoutConfig() {
             swiperDefault: 'column',
             value: '',
             description: "Can be 'column' or 'row'. Defines how slides should fill rows, by column or by row",
-            tested: true,
+
             type: 'select',
             options: ['column', 'row'],
           },
@@ -135,7 +135,7 @@ export default function layoutConfig() {
             swiperDefault: '1',
             value: '',
             description: 'Number of slides per column, for multirow layout.',
-            tested: true,
+
             type: 'number',
           },
         ],
@@ -150,7 +150,7 @@ export default function layoutConfig() {
             swiperDefault: '0',
             value: '',
             description: 'Add (in px) additional slide offset in the end of the container (after all slides)',
-            tested: true,
+
             type: 'number',
           },
           {
@@ -159,7 +159,7 @@ export default function layoutConfig() {
             swiperDefault: '0',
             value: '',
             description: 'Add (in px) additional slide offset in the beginning of the container (before all slides)',
-            tested: true,
+
             type: 'number',
           },
         ],
@@ -175,7 +175,7 @@ export default function layoutConfig() {
             value: '',
             description:
               'Set to true and slider wrapper will adapt its height to the height of the currently active slide',
-            tested: true,
+
             type: 'boolean',
           },
           {
@@ -185,7 +185,7 @@ export default function layoutConfig() {
             value: '',
             description:
               "(I swear this doesn't work) Swiper height (in px). Parameter allows to force Swiper height. Useful only if you initialize Swiper when it is hidden and in SSR and Test environments for correct Swiper initialization",
-            tested: true,
+
             type: 'number',
           },
           {
@@ -195,7 +195,7 @@ export default function layoutConfig() {
             value: '',
             description:
               'WARNING: Setting this parameter will make Swiper not responsive. Swiper width (in px). Parameter allows to force Swiper width. Useful only if you initialize Swiper when it is hidden and in SSR and Test environments for correct Swiper initialization.',
-            tested: false,
+
             type: 'number',
           },
           {
@@ -204,7 +204,7 @@ export default function layoutConfig() {
             swiperDefault: 'true',
             value: '',
             description: 'Swiper will recalculate slides position on window resize (orientationchange)',
-            tested: true,
+
             type: 'boolean',
           },
         ],
@@ -217,7 +217,7 @@ export default function layoutConfig() {
         swiperDefault: 'horizontal',
         value: '',
         description: "Can be 'horizontal' or 'vertical' (for vertical slider).",
-        tested: true,
+
         options: ['horizontal', 'vertical'],
         icon: faArrowsLeftRight,
         type: 'select',
@@ -236,7 +236,7 @@ export default function layoutConfig() {
           xlarge: '',
         },
         description: "Number of slides per view (slides visible at the same time on slider's container).",
-        tested: true,
+
         type: 'string',
       },
       {
@@ -253,7 +253,7 @@ export default function layoutConfig() {
         },
         description:
           'Distance between slides in px. NOTE: If you add margin to elements inside the Waterfall, navigation might not work properly.',
-        tested: true,
+
         icon: faArrowsLeftRightToLine,
         type: 'string',
       },
@@ -263,7 +263,7 @@ export default function layoutConfig() {
         swiperDefault: '0',
         value: '',
         description: 'Index number of initial slide. (0 is the first slide, 1 is the 2nd and so on)',
-        tested: true,
+
         type: 'number',
       },
     ],

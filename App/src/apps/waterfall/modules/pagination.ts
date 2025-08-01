@@ -41,7 +41,7 @@ export default function paginationCategory() {
             value: '',
             description:
               'Good to enable if you use bullets pagination with a lot of slides. So it will keep only few bullets visible at the same time.',
-            tested: false,
+
             type: 'boolean',
           },
           {
@@ -50,7 +50,7 @@ export default function paginationCategory() {
             swiperDefault: '1',
             value: '',
             description: 'The number of main bullets visible when dynamicBullets enabled.',
-            tested: false,
+
             type: 'number',
           },
         ],
@@ -65,7 +65,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-clickable',
             value: '',
             description: 'CSS class name set to pagination when it is clickable',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -74,7 +74,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-current',
             value: '',
             description: 'CSS class name of the element with currently active index in "fraction" pagination',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -83,7 +83,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-hidden',
             value: '',
             description: 'CSS class name of pagination when it becomes inactive',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -92,7 +92,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-horizontal',
             value: '',
             description: 'CSS class name set to pagination in horizontal Swiper',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -101,7 +101,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-lock',
             value: '',
             description: 'CSS class name added to navigation button when it is disabled',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -111,7 +111,7 @@ export default function paginationCategory() {
             value: '',
             description:
               'The beginning of the modifier CSS class name that will be added to pagination depending on parameters',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -121,7 +121,7 @@ export default function paginationCategory() {
             value: '',
             description:
               'CSS class name added on swiper container and pagination element when pagination is disabled by breakpoint',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -130,7 +130,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-progressbar-fill',
             value: '',
             description: 'CSS class name of pagination progressbar fill element',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -139,7 +139,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-progressbar-opposite',
             value: '',
             description: 'CSS class name of pagination progressbar opposite',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -148,7 +148,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-total',
             value: '',
             description: 'CSS class name of the element with total number of "snaps" in "fraction" pagination',
-            tested: false,
+
             type: 'string',
           },
           {
@@ -157,7 +157,7 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-vertical',
             value: '',
             description: 'CSS class name set to pagination in vertical Swiper',
-            tested: false,
+
             type: 'string',
           },
         ],
@@ -173,7 +173,6 @@ export default function paginationCategory() {
           "String with type of pagination. Can be 'bullets', 'numberBullets', 'fraction', 'progressbar' or 'custom'",
         options: ['bullets', 'numberBullets', 'fraction', 'progressbar', 'custom'],
         type: 'select',
-        tested: false,
       },
       {
         name: 'Clickable',
@@ -183,7 +182,6 @@ export default function paginationCategory() {
         description:
           'If true then clicking on pagination button will cause transition to appropriate slide. Only for bullets pagination type',
         type: 'boolean',
-        tested: false,
       },
       {
         name: 'Enabled',
@@ -192,7 +190,6 @@ export default function paginationCategory() {
         value: '',
         type: 'boolean',
         description: 'Boolean property to use with breakpoints to enable/disable pagination on certain breakpoints',
-        tested: false,
       },
       {
         name: 'Hide on Click',
@@ -201,7 +198,6 @@ export default function paginationCategory() {
         value: '',
         type: 'boolean',
         description: "Toggle (hide/show) pagination container visibility after click on Slider's container",
-        tested: false,
       },
       {
         name: 'Progressbar Opposite',
@@ -210,7 +206,7 @@ export default function paginationCategory() {
         value: '',
         description:
           "Makes pagination progressbar opposite to Swiper's direction parameter, means vertical progressbar for horizontal swiper direction and horizontal progressbar for vertical swiper direction",
-        tested: false,
+
         type: 'boolean',
       },
     ],
