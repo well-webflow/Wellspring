@@ -7,8 +7,7 @@ import { Breakpoints, websiteBreakpoints } from '../../types/waterfall-types.d';
  * @returns A combined string with the breakpoint and attribute
  */
 export function getBreakpointAttr(attrName: string, device: string) {
-  let name = device + '-' + attrName;
-  return name;
+  return attrName + '-' + device;
 }
 
 /**

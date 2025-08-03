@@ -33,7 +33,10 @@ export default function CategoryView() {
           {groups.map((group) => (
             <SettingSection key={group.id}>
               <div className="flex flex-col gap-4">
-                <Heading level={3}>{group.name}</Heading>
+                <div>
+                  <Heading level={3}>{group.name}</Heading>
+                  <p className="text-sm mb-5 text-gray-300">{group.description}</p>
+                </div>
                 {group.items.map((item) => (
                   <BasicSetting key={item.name} prop={item} />
                 ))}

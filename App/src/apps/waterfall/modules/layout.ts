@@ -117,7 +117,7 @@ export default function layoutConfig() {
         name: 'Grid',
         id: 'grid',
         description:
-          "Display slides in a grid. In order for this to work, slider should have a fixed height. Warnings: If used with loop mode, make sure the # of slides is specified or enable loopAddBlankSlides. slidesPerView: 'auto' is currently not compatible with multirow mode, when grid.rows > 1",
+          "Display slides in a grid. Use Slides Per View to set columns. In order for this to work, slider should have a fixed height. Warnings: If used with loop mode, make sure the # of slides is specified or enable loopAddBlankSlides. slidesPerView: 'auto' is currently not compatible when grid.rows > 1",
         items: [
           {
             name: 'Fill',

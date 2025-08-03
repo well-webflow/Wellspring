@@ -219,11 +219,7 @@ export function useWaterfallLogic(): WaterfallState {
             await Promise.all(
               Object.entries(setting.breakpoints).map(async ([bp, val]) => {
                 const attr = getBreakpointAttr(setting.attr, bp as Breakpoints);
-                if (!attr) {
-                  console.warn(`Skipping invalid setting (missing attr):`, setting);
-                  return;
-                }
-                val ? await setAttribute(el, attr, val) : await removeAttribute(el, setting.attr);
+                val ? await setAttribute(el, attr, val) : await removeAttribute(el, attr);
                 return;
               })
             );
