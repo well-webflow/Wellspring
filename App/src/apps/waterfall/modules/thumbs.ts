@@ -6,7 +6,6 @@ import {
   ATTR_THUMBS_MULTIPLE_ACTIVE_THUMBS,
   ATTR_THUMBS,
   ATTR_THUMBS_SLIDE_THUMB_ACTIVE_CLASS,
-  ATTR_WATERFALL_PRELOAD,
 } from 'well-waterfall/src/lib/attributes';
 
 export default function thumbsCategory() {
@@ -23,14 +22,6 @@ export default function thumbsCategory() {
         swiperDefault: '--',
         type: 'waterfall',
         description: 'Select the Waterfall this slider will use as Thumbnails',
-        value: '',
-      },
-      {
-        name: 'Enabled',
-        attr: ATTR_WATERFALL_PRELOAD,
-        swiperDefault: 'false',
-        description: 'Set to true to enable the thumbnails',
-        type: 'boolean',
         value: '',
       },
       {
@@ -58,7 +49,6 @@ export default function thumbsCategory() {
         swiperDefault: 'swiper-slide-thumb-active',
         description: 'Additional class that will be added to activated thumbs swiper slide',
         value: '',
-
         type: 'string',
       },
       {

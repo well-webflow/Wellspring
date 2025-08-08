@@ -9,11 +9,7 @@ import {
   ATTR_LAZY_PRELOADER_CLASS,
   ATTR_MAX_BACKFACE_HIDDEN_SLIDES,
   ATTR_NORMALIZE_SLIDE_INDEX,
-  ATTR_OBSERVE_SLIDE_CHILDREN,
-  ATTR_OBSERVE_SLIDE_PARENTS,
-  ATTR_OBSERVER,
   ATTR_PASSIVE_LISTENERS,
-  ATTR_RESIZE_OBSERVER,
   ATTR_ROUND_LENGTHS,
   ATTR_RUN_CALLBACKS_ON_INIT,
   ATTR_SET_WRAPPER_SIZE,
@@ -111,50 +107,12 @@ export default function advancedCategory() {
         type: 'boolean',
       },
       {
-        name: 'Observe Slide Parents',
-        attr: ATTR_OBSERVE_SLIDE_PARENTS,
-        swiperDefault: 'false',
-        value: '',
-        description: 'Set to true if you also need to watch Mutations for Swiper parent elements',
-
-        type: 'boolean',
-      },
-      {
-        name: 'Observe Slide Children',
-        attr: ATTR_OBSERVE_SLIDE_CHILDREN,
-        swiperDefault: 'false',
-        value: '',
-        description: 'Set to true if you also need to watch Mutations for Swiper slide children elements',
-
-        type: 'boolean',
-      },
-      {
-        name: 'Observer',
-        attr: ATTR_OBSERVER,
-        swiperDefault: 'false',
-        value: '',
-        description:
-          'Set to true to enable Mutation Observer on Swiper and its elements. In this case Swiper will be updated (reinitialized) each time if you change its style (like hide/show) or modify its child elements (like adding/removing slides)',
-
-        type: 'boolean',
-      },
-      {
         name: 'Passive Listeners',
         attr: ATTR_PASSIVE_LISTENERS,
         swiperDefault: 'true',
         value: '',
         description:
           'Passive event listeners will be used by default where possible to improve scrolling performance on mobile devices. But if you need to use e.preventDefault and you have conflict with it, then you should disable this parameter',
-
-        type: 'boolean',
-      },
-      {
-        name: 'Resize Observer',
-        attr: ATTR_RESIZE_OBSERVER,
-        swiperDefault: 'true',
-        value: '',
-        description:
-          'When enabled it will use ResizeObserver (if supported by browser) on swiper container to detect container resize (instead of watching for window resize)',
 
         type: 'boolean',
       },
@@ -232,26 +190,6 @@ export default function advancedCategory() {
         value: '',
         description:
           'Enabled this option and swiper will be operated as usual except it will not move, real translate values on wrapper will not be set. Useful when you may need to create custom slide transition',
-
-        type: 'boolean',
-      },
-      {
-        name: 'Watch Overflow',
-        attr: ATTR_WATCH_OVERFLOW,
-        swiperDefault: 'true',
-        value: '',
-        description:
-          'When enabled Swiper will be disabled and hide navigation buttons on case there are not enough slides for sliding.',
-
-        type: 'boolean',
-      },
-      {
-        name: 'Watch Slides Progress',
-        attr: ATTR_WATCH_SLIDES_PROGRESS,
-        swiperDefault: 'false',
-        value: '',
-        description:
-          'Enable this feature to calculate each slides progress and visibility (slides in viewport will have additional visible class)',
 
         type: 'boolean',
       },

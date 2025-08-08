@@ -64,16 +64,6 @@ export default function generalConfig() {
         icon: faBug,
         type: 'boolean',
       },
-      {
-        name: 'Debug (Advanced)',
-        attr: ATTR_ADVANCED_DEBUG_MODE,
-        swiperDefault: 'false',
-        value: '',
-        description: 'Prints out more debug statements to the browser console',
-
-        icon: faBug,
-        type: 'boolean',
-      },
     ],
   };
 

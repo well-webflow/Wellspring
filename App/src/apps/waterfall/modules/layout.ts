@@ -198,15 +198,6 @@ export default function layoutConfig() {
 
             type: 'number',
           },
-          {
-            name: 'Update on Window Resize',
-            attr: ATTR_UPDATE_ON_WINDOW_RESIZE,
-            swiperDefault: 'true',
-            value: '',
-            description: 'Swiper will recalculate slides position on window resize (orientationchange)',
-
-            type: 'boolean',
-          },
         ],
       },
     ],

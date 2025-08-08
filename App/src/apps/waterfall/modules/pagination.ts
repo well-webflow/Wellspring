@@ -2,6 +2,7 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 import {
+  ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
   ATTR_PAGINATION_CLICKABLE,
   ATTR_PAGINATION_CLICKABLE_CLASS,
   ATTR_PAGINATION_CURRENT_CLASS,
@@ -59,6 +60,14 @@ export default function paginationCategory() {
         name: 'Class Names',
         id: 'pagination-class-names',
         items: [
+          {
+            name: 'Bullet Active Class',
+            attr: ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
+            type: 'string',
+            swiperDefault: 'swiper-pagination-bullet-active',
+            description: 'CSS class name of currently active pagination bullet',
+            value: '',
+          },
           {
             name: 'Clickable Class',
             attr: ATTR_PAGINATION_CLICKABLE_CLASS,

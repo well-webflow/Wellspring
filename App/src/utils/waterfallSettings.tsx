@@ -17,6 +17,7 @@ import a11yConfig from '../apps/waterfall/modules/a11y';
 import classnamesCategory from '../apps/waterfall/modules/classNames';
 import advancedCategory from '../apps/waterfall/modules/advanced';
 import scrollbarCategory from '../apps/waterfall/modules/scrollbar';
+import ObserverCategory from '../apps/waterfall/modules/observer';
 
 export const defaultWaterfallSettings: WaterfallCategory[] = [
   generalConfig(),
@@ -38,6 +39,7 @@ export const defaultWaterfallSettings: WaterfallCategory[] = [
   // HISTORY NAVIGATION (NOT IMPLEMENTED)
   controllerCategory(),
   a11yConfig(),
+  ObserverCategory(),
   classnamesCategory(),
   advancedCategory(),
 ];

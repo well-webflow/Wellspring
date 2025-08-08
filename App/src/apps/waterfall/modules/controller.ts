@@ -1,10 +1,6 @@
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../../types/waterfall-types';
-import {
-  ATTR_CONTROLLER_BY,
-  ATTR_CONTROLLER_CONTROL,
-  ATTR_CONTROLLER_INVERSE,
-} from 'well-waterfall/src/lib/attributes';
+import { ATTR_CONTROLLER, ATTR_CONTROLLER_BY, ATTR_CONTROLLER_INVERSE } from 'well-waterfall/src/lib/attributes';
 
 export default function controllerCategory() {
   let config: WaterfallCategory = {
@@ -13,6 +9,15 @@ export default function controllerCategory() {
     icon: faGamepad,
     summary: 'Make another Waterfall controlled by this one',
     items: [
+      {
+        name: 'Control',
+        attr: ATTR_CONTROLLER,
+        swiperDefault: '--',
+        description:
+          'Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper. Also accepts string with CSS selector of Swiper element, or HTMLElement of Swiper element',
+        value: '',
+        type: 'waterfall',
+      },
       {
         name: 'By',
         attr: ATTR_CONTROLLER_BY,
@@ -25,18 +30,9 @@ export default function controllerCategory() {
         type: 'select',
       },
       {
-        name: 'Control',
-        attr: ATTR_CONTROLLER_CONTROL,
-        swiperDefault: '--',
-        description:
-          'Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper. Also accepts string with CSS selector of Swiper element, or HTMLElement of Swiper element',
-        value: '',
-        type: 'waterfall',
-      },
-      {
         name: 'Inverse',
         attr: ATTR_CONTROLLER_INVERSE,
-        swiperDefault: '',
+        swiperDefault: 'false',
         description: 'Set to true and controlling will be in inverse direction',
         value: '',
         type: 'boolean',
