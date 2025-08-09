@@ -1,5 +1,5 @@
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import { ATTR_HASH_REPLACE_STATE, ATTR_HASH_WATCH_STATE } from 'well-waterfall/src/lib/attributes';
 
 export default function memoryCategory() {

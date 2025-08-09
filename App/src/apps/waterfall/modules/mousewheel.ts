@@ -1,5 +1,5 @@
 import { faMouse } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_MOUSE_ENABLED,
   ATTR_MOUSE_EVENTS_TARGET,

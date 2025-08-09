@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Select } from '../../components/Input';
-import { StickyNavigation } from '../../components/Navigation';
-import { Caption, Heading } from '../../components/Typography';
-import { useWaterfall } from '../../context/WaterfallContext';
-import SelectedElement, { SelectedElementInfo } from '../../components/SelectedElement';
-import Button from '../../components/Button';
-import { setAttribute } from '../../utils/webflowHelpers';
+import { Select } from '../../../components/Input';
+import { StickyNavigation } from '../components/Navigation';
+import { Caption, Heading } from '../../../components/Typography';
+import SelectedElement, { SelectedElementInfo } from '../../../components/SelectedElement';
+import Button from '../../../components/Button';
+import { setAttribute } from '../../../utils/webflowHelpers';
 
 import { ATTR_MANIPULATION_ADD_SLIDE } from 'well-waterfall/src/lib/attributes';
+import { useWaterfall } from '../hooks/WaterfallContext';
 
 export default function ManipulationView() {
   const { waterfallNames, elementSelected } = useWaterfall();

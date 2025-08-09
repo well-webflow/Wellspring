@@ -1,5 +1,5 @@
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_CARDS_PER_SLIDE_OFFSET,
   ATTR_CARDS_PER_SLIDE_ROTATE,

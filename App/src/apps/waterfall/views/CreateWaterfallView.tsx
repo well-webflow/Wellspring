@@ -1,8 +1,8 @@
-import Card from '../../components/Card';
-import { StickyNavigation } from '../../components/Navigation';
-import { Heading } from '../../components/Typography';
-import { useWaterfall } from '../../context/WaterfallContext';
-import { defaultWaterfallSettings } from '../../utils/waterfallSettings';
+import Card from '../../../components/Card';
+import { StickyNavigation } from '../components/Navigation';
+import { Heading } from '../../../components/Typography';
+import { useWaterfall } from '../hooks/WaterfallContext';
+import { defaultWaterfallConfig } from '../lib/waterfallConfig';
 
 export default function CreateView() {
   const { setIsLoading } = useWaterfall();
@@ -19,7 +19,7 @@ export default function CreateView() {
         <Heading level={4}>Create Elements</Heading>
       </StickyNavigation>
       <div className="p-3">
-        {defaultWaterfallSettings.map((category) => (
+        {defaultWaterfallConfig.map((category) => (
           <div key={category.name}>
             {category.actions && (
               <div className="mb-10">

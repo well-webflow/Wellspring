@@ -1,21 +1,10 @@
-import { WaterfallMode } from '../utils/createElements';
-import { LoadedWaterfall } from './waterfall-types';
+import { BreakpointObject } from '../../wellflow';
 
-export const websiteBreakpoints = ['lmobile', 'tablet', 'desktop', 'large', 'xlarge'] as const;
+export type WaterfallMode = 'static' | 'cms';
 
-export type Breakpoints = (typeof websiteBreakpoints)[number];
+export type WaterfallConfig = WaterfallCategory[];
 
-export type BreakpointObject = {
-  [key in Breakpoints]: string;
-};
-
-export type Action = {
-  label: string;
-  func: () => Promise<void>;
-};
-
-export type SettingType = 'boolean' | 'string' | 'number' | 'select' | 'waterfall' | 'waterfall-multiple';
-
+// Categories -- Large Groups of Settings (Pagination, Navigation, etc.)
 export interface WaterfallCategory {
   name: string;
   id: string;
@@ -27,6 +16,7 @@ export interface WaterfallCategory {
   actions?: Action[];
 }
 
+// Groups -- Groups of Settings within a Category (General, Advanced, etc.)
 export interface WaterfallGroup {
   name: string;
   id: string;
@@ -35,6 +25,9 @@ export interface WaterfallGroup {
   actions?: Action[];
   items: WaterfallSetting[];
 }
+
+// Settings
+export type SettingType = 'boolean' | 'string' | 'number' | 'select' | 'waterfall' | 'waterfall-multiple';
 
 export interface WaterfallSetting {
   name: string;
@@ -47,15 +40,23 @@ export interface WaterfallSetting {
   breakpoints?: BreakpointObject;
   icon?: IconDefinition;
 }
+
+// Actions
+export type Action = {
+  label: string;
+  func: () => Promise<void>;
+};
+
 export type LoadedWaterfall = {
   name: string | null;
   el: AnyElement | null;
-}; // Define the shape of the context state
+};
+
 interface WaterfallState {
   waterfalls: AnyElement[];
   waterfallNames: string[];
-  waterfallSettings: WaterfallCategory[] | null;
-  setWaterfallSettings: (value: WaterfallCategory[]) => void;
+  waterfallConfig: WaterfallCategory[] | null;
+  setWaterfallConfig: (value: WaterfallCategory[]) => void;
   selectedCategory: string | null;
   setSelectedCategory: (value: string | null) => void;
   createWaterfall: (mode: WaterfallMode) => void;

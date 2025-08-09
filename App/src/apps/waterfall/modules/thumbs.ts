@@ -1,5 +1,5 @@
 import { faFileImage } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_THUMBS_AUTO_SCROLL_OFFSET,
   ATTR_THUMBS_CONTAINER_CLASS,

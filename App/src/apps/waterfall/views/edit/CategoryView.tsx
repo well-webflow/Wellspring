@@ -1,15 +1,15 @@
-import { useWaterfall } from '../../context/WaterfallContext';
-import { Heading } from '../../components/Typography';
-import BasicSetting from '../../components/BasicSetting';
+import { Heading } from '../../../../components/Typography';
 import { EditNavigation } from '../../components/Navigation';
-import { WaterfallCategory } from '../../../types/waterfall-types';
+import Setting from '../../components/Setting';
+import { useWaterfall } from '../../hooks/WaterfallContext';
+import { WaterfallCategory } from '../../waterfall';
 
 export default function CategoryView() {
-  const { selectedCategory, waterfallSettings, loadedWaterfall } = useWaterfall();
+  const { selectedCategory, waterfallConfig, loadedWaterfall } = useWaterfall();
 
-  if (!selectedCategory || !waterfallSettings) return null;
+  if (!selectedCategory || !waterfallConfig) return null;
 
-  const category: WaterfallCategory | undefined = waterfallSettings.find(
+  const category: WaterfallCategory | undefined = waterfallConfig.find(
     (category) => category.id.toLowerCase() === selectedCategory.toLowerCase()
   );
   if (!category) return;
@@ -26,7 +26,7 @@ export default function CategoryView() {
           <SettingSection>
             <div className="flex flex-col gap-4">
               {filteredProps.map((prop) => (
-                <BasicSetting key={prop.name} prop={prop} />
+                <Setting key={prop.name} prop={prop} />
               ))}
             </div>
           </SettingSection>
@@ -38,7 +38,7 @@ export default function CategoryView() {
                   <p className="text-sm mb-5 text-gray-300">{group.description}</p>
                 </div>
                 {group.items.map((item) => (
-                  <BasicSetting key={item.name} prop={item} />
+                  <Setting key={item.name} prop={item} />
                 ))}
               </div>
             </SettingSection>

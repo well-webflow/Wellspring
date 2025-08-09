@@ -1,12 +1,12 @@
-import Button from '../../components/Button';
-import { useWaterfall } from '../../context/WaterfallContext';
 import { useNavigate } from 'react-router';
-import { EditNavigation } from '../../components/Navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
+import { EditNavigation } from '../../components/Navigation';
+import Button from '../../../../components/Button';
+import { useWaterfall } from '../../hooks/WaterfallContext';
 
 export default function EditView() {
-  const { setSelectedCategory, waterfallSettings, unloadWaterfall, loadedWaterfall } = useWaterfall();
+  const { setSelectedCategory, waterfallConfig: waterfallSettings, unloadWaterfall, loadedWaterfall } = useWaterfall();
 
   const navigate = useNavigate();
 

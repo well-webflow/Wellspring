@@ -1,5 +1,5 @@
 import { faFont } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_CONTAINER_MODIFIER_CLASS,
   ATTR_EVENTS_PREFIX,

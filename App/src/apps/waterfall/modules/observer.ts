@@ -1,5 +1,5 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_OBSERVE_SLIDE_CHILDREN,
   ATTR_OBSERVE_SLIDE_PARENTS,

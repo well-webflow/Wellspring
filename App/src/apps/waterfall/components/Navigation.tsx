@@ -1,8 +1,8 @@
 import { faArrowLeft, faArrowsRotate, faSave } from '@fortawesome/free-solid-svg-icons';
-import Button from './Button';
+import Button from '../../../components/Button';
 import { useNavigate } from 'react-router';
-import { useWaterfall } from '../context/WaterfallContext';
-import { Heading } from './Typography';
+import { Heading } from '../../../components/Typography';
+import { useWaterfall } from '../hooks/WaterfallContext';
 
 export function EditNavigation({ heading, onGoBack }: { heading: string; onGoBack: () => void }) {
   const { loadWaterfall, saveWaterfall } = useWaterfall();

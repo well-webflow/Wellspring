@@ -1,5 +1,5 @@
 import { faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 import {
   ATTR_ALLOW_SLIDE_NEXT,

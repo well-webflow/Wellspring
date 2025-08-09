@@ -1,7 +1,7 @@
-import { useWaterfall } from '../../context/WaterfallContext';
-import { Heading, Paragraph } from '../../components/Typography';
+import { Heading, Paragraph } from '../../../components/Typography';
 import { useEffect } from 'react';
-import Card from '../../components/Card';
+import Card from '../../../components/Card';
+import { useWaterfall } from '../hooks/WaterfallContext';
 
 export default function InitializationView() {
   const { createWaterfall, elementSelected, waterfalls, searchForWaterfalls } = useWaterfall();
@@ -27,33 +27,18 @@ export default function InitializationView() {
           <div className="flex flex-col gap-4 items-stretch justify-stretch w-full">
             <Card href="/waterfall/search" disabled={waterfalls.length <= 0}>
               <Heading level={4}>Edit Waterfall</Heading>
-              <Paragraph size="sm" className="text-text2 mb-0">
-                Modify an existing Waterfall on this page
-              </Paragraph>
             </Card>
             <Card onClick={() => createWaterfall('cms')}>
               <Heading level={4}>Create CMS Waterfall</Heading>
-              <Paragraph size="sm" className="text-text2 mb-0">
-                Add a waterfall ready to be connected to a CMS List
-              </Paragraph>
             </Card>
             <Card onClick={() => createWaterfall('static')}>
               <Heading level={4}>Create Waterfall</Heading>
-              <Paragraph size="sm" className="text-text2 mb-0">
-                Add a waterfall with static slides
-              </Paragraph>
             </Card>
             <Card href="/waterfall/create">
               <Heading level={4}>Create Waterfall Elements</Heading>
-              <Paragraph size="sm" className="text-text2 mb-0">
-                Add elements like scrollbar, navigation, pagination
-              </Paragraph>
             </Card>
             <Card href="/waterfall/manipulation">
-              <Heading level={4}>Manipulation</Heading>
-              <Paragraph size="sm" className="text-text2 mb-0">
-                Add or Remove Elements to a Waterfall at runtime
-              </Paragraph>
+              <Heading level={4}>Add/Remove Slides at Runtime</Heading>
             </Card>
           </div>
         ) : (

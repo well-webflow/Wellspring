@@ -1,5 +1,5 @@
 import { faPerson } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_A11Y_CONTAINER_MESSAGE,
   ATTR_A11Y_CONTAINER_ROLE,

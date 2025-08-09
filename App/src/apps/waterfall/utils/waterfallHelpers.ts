@@ -1,8 +1,8 @@
-import { WaterfallCategory, WaterfallSetting } from '../../types/waterfall-types';
-import { createNavigation } from '../apps/waterfall/modules/navigation';
-import { createPagination } from '../apps/waterfall/modules/pagination';
-import { createScrollbar } from '../apps/waterfall/modules/scrollbar';
-import { addDefaultSettings, getOrCreateStyle } from './webflowHelpers';
+import { WaterfallCategory, WaterfallMode, WaterfallSetting } from '../waterfall';
+import { createNavigation } from '../modules/navigation';
+import { createPagination } from '../modules/pagination';
+import { createScrollbar } from '../modules/scrollbar';
+import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 
 /**
  * Find Waterfall Setting
@@ -29,8 +29,6 @@ export function findWaterfallSetting(category: WaterfallCategory, baseAttr: stri
   // Return undefined if no match is found
   return undefined;
 }
-
-export type WaterfallMode = 'static' | 'cms';
 
 export const createWaterfallElement = async (
   defaultWaterfallSettings: WaterfallCategory[],
@@ -89,3 +87,18 @@ export const createWaterfallElement = async (
 
   return true;
 };
+
+// Load and add Waterfall Settings as attributes
+export function addDefaultSettings(defaultWaterfallSettings: WaterfallCategory[], waterfallDiv: DOMElement) {
+  defaultWaterfallSettings.forEach((group) => {
+    group.items?.forEach((prop) => {
+      waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+    });
+    group.groups?.forEach((group) => {
+      group.items?.forEach((prop) => {
+        waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+      });
+    });
+  });
+  return waterfallDiv;
+}

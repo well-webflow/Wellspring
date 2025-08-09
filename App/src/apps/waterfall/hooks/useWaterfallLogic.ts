@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import { WaterfallState } from '../../types/waterfall-types';
-import { LoadedWaterfall } from '../../types/waterfall-types';
-import { Breakpoints, WaterfallCategory } from '../../types/waterfall-types';
-import { defaultWaterfallSettings } from '../utils/waterfallSettings.tsx';
-import { createWaterfallElement, findWaterfallSetting, WaterfallMode } from '../utils/waterfallHelpers.ts';
-import { getBaseAttr, getBreakpointAttr } from '../utils/attributes.ts';
 import { useNavigate } from 'react-router';
-import { getAttribute, getAttributes, removeAttribute, setAttribute } from '../utils/webflowHelpers.ts';
+import { LoadedWaterfall, WaterfallCategory, WaterfallConfig, WaterfallMode, WaterfallState } from '../waterfall';
+import { getAttribute, getAttributes, removeAttribute, setAttribute } from '../../../utils/webflowHelpers';
+import { createWaterfallElement, findWaterfallSetting } from '../utils/waterfallHelpers';
+import { defaultWaterfallConfig } from '../lib/waterfallConfig';
+import { getBaseAttr, getBreakpointAttr } from '../../../utils/attributes';
+import { Breakpoints } from '../../../utils/breakpoints';
 
 export function useWaterfallLogic(): WaterfallState {
   const [waterfalls, setWaterfalls] = useState<AnyElement[]>([]);
   const [waterfallNames, setWaterfallNames] = useState<string[]>([]);
-  const [waterfallSettings, setWaterfallSettings] = useState<WaterfallCategory[] | null>(null);
+  const [waterfallConfig, setWaterfallConfig] = useState<WaterfallConfig | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [elementSelected, setElementSelected] = useState<AnyElement | null>(null);
   const [waterfallSelected, setWaterfallSelected] = useState<string | null>(null);
@@ -72,7 +71,7 @@ export function useWaterfallLogic(): WaterfallState {
   // Create a new waterfall object with all of the default props
   async function createWaterfall(mode: WaterfallMode) {
     setIsLoading(true);
-    const success = await createWaterfallElement(defaultWaterfallSettings, mode);
+    const success = await createWaterfallElement(defaultWaterfallConfig, mode);
     if (success) webflow.notify({ type: 'Success', message: 'Created new Waterfall' });
     await loadWaterfall();
     setIsLoading(false);
@@ -89,7 +88,7 @@ export function useWaterfallLogic(): WaterfallState {
     setLoadedWaterfall({ name: waterfallName, el });
     const customAttributes = await getAttributes(el);
     // Create a deep copy of the default waterfall props to update
-    const updatedProps: WaterfallCategory[] = JSON.parse(JSON.stringify(defaultWaterfallSettings));
+    const updatedProps: WaterfallCategory[] = JSON.parse(JSON.stringify(defaultWaterfallConfig));
 
     // Iterate through all custom attributes and map them to updatedProps
     customAttributes?.forEach((attr) => {
@@ -112,7 +111,7 @@ export function useWaterfallLogic(): WaterfallState {
       });
     });
 
-    setWaterfallSettings(updatedProps); // Update state with transformed data
+    setWaterfallConfig(updatedProps); // Update state with transformed data
     await searchForWaterfalls();
     setIsLoading(false);
   }
@@ -124,7 +123,7 @@ export function useWaterfallLogic(): WaterfallState {
 
   async function unloadWaterfall() {
     setWaterfallSelected(null);
-    setWaterfallSettings(null);
+    setWaterfallConfig(null);
     setSelectedCategory(null);
     setLoadedWaterfall(null);
   }
@@ -138,11 +137,9 @@ export function useWaterfallLogic(): WaterfallState {
    * @returns null
    */
   function updateWaterfall(propAttrName: string, newValue: string, breakpoint?: string) {
-    if (!waterfallSettings) return;
+    if (!waterfallConfig) return;
 
-    //console.log('updating ', propAttrName, 'to ', newValue);
-
-    const updatedData: WaterfallCategory[] = waterfallSettings.map((category) => {
+    const updatedData: WaterfallCategory[] = waterfallConfig.map((category) => {
       return {
         ...category,
         items: category.items?.map((item) => {
@@ -183,7 +180,7 @@ export function useWaterfallLogic(): WaterfallState {
       };
     });
 
-    setWaterfallSettings(updatedData);
+    setWaterfallConfig(updatedData);
     return updatedData;
   }
 
@@ -194,7 +191,7 @@ export function useWaterfallLogic(): WaterfallState {
     if (!attr) return;
 
     const allSettings =
-      waterfallSettings?.flatMap((category) => [
+      waterfallConfig?.flatMap((category) => [
         ...(category.items ?? []),
         ...(category.groups?.flatMap((g) => g.items) ?? []),
       ]) ?? [];
@@ -245,8 +242,8 @@ export function useWaterfallLogic(): WaterfallState {
   return {
     waterfalls,
     waterfallNames,
-    waterfallSettings,
-    setWaterfallSettings,
+    waterfallConfig,
+    setWaterfallConfig,
     selectedCategory,
     setSelectedCategory,
     elementSelected,

@@ -1,15 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useWaterfall } from '../context/WaterfallContext';
-import Input, { Select } from './Input';
-import Tooltip from './Tooltip';
+import Input, { Select } from '../../../components/Input';
+import Tooltip from '../../../components/Tooltip';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDesktopAlt, faMobile, faPortrait, faTablet } from '@fortawesome/free-solid-svg-icons';
 import { faDeskpro } from '@fortawesome/free-brands-svg-icons';
-import { BreakpointObject, WaterfallSetting } from '../../types/waterfall-types';
+import { useWaterfall } from '../hooks/WaterfallContext';
+import { WaterfallSetting } from '../waterfall';
+import { BreakpointObject } from '../../../utils/breakpoints';
 
 const breakpointIcons: IconDefinition[] = [faMobile, faPortrait, faTablet, faDeskpro, faDesktopAlt, faDesktopAlt];
 
-export default function BasicSetting({ prop }: { prop: WaterfallSetting }) {
+export default function Setting({ prop }: { prop: WaterfallSetting }) {
   const { updateWaterfall, waterfallNames } = useWaterfall();
 
   let type = prop.type || 'string';

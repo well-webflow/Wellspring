@@ -1,5 +1,5 @@
 import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_KEYBOARD_ENABLED,
   ATTR_KEYBOARD_ONLY_IN_VIEWPORT,

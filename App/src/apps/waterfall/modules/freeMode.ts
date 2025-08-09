@@ -1,5 +1,5 @@
 import { faRoadSpikes } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_FREE_MODE_ENABLED,
   ATTR_FREE_MODE_MINIMUM_VELOCITY,

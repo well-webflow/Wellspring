@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { useWaterfall } from '../../context/WaterfallContext';
-import Card from '../../components/Card';
-import { Heading } from '../../components/Typography';
+import Card from '../../../../components/Card';
+import { Heading } from '../../../../components/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { StickyNavigation } from '../../components/Navigation';
+import { useWaterfall } from '../../hooks/WaterfallContext';
 
 export default function WaterfallSearchView() {
   const { waterfalls, waterfallNames, searchForWaterfalls, loadAndEditWaterfall } = useWaterfall();

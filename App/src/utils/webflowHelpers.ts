@@ -1,5 +1,4 @@
-import { WaterfallCategory } from '../../types/waterfall-types';
-import { WebflowSiteInfo } from '../../types/types';
+import { WebflowSiteInfo } from '../wellflow';
 import axiosInstance from './axios';
 
 /**
@@ -26,21 +25,6 @@ export const isWellflowScriptInstalled = async (
     return false;
   }
 };
-
-// Load and add Waterfall Settings as attributes
-export function addDefaultSettings(defaultWaterfallSettings: WaterfallCategory[], waterfallDiv: DOMElement) {
-  defaultWaterfallSettings.forEach((group) => {
-    group.items?.forEach((prop) => {
-      waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
-    });
-    group.groups?.forEach((group) => {
-      group.items?.forEach((prop) => {
-        waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
-      });
-    });
-  });
-  return waterfallDiv;
-}
 
 /**
  * Get or Create Style

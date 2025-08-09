@@ -1,5 +1,5 @@
 import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_BREAKPOINTS_BASE,
   ATTR_CREATE_ELEMENTS,
@@ -18,8 +18,6 @@ import {
   ATTR_URL,
   ATTR_USER_AGENT,
   ATTR_VIRTUAL_TRANSLATE,
-  ATTR_WATCH_OVERFLOW,
-  ATTR_WATCH_SLIDES_PROGRESS,
 } from 'well-waterfall/src/lib/attributes';
 
 export default function advancedCategory() {

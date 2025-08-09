@@ -1,5 +1,5 @@
 import { faArrowsLeftRight, faArrowsLeftRightToLine, faHashtag, faTable } from '@fortawesome/free-solid-svg-icons';
-import { WaterfallCategory } from '../../../../types/waterfall-types';
+import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_AUTO_HEIGHT,
   ATTR_CENTER_INSUFFICIENT_SLIDES,
@@ -17,7 +17,6 @@ import {
   ATTR_SLIDES_PER_GROUP_SKIP,
   ATTR_SLIDES_PER_VIEW,
   ATTR_SPACE_BETWEEN,
-  ATTR_UPDATE_ON_WINDOW_RESIZE,
   ATTR_WIDTH,
 } from 'well-waterfall/src/lib/attributes';
 
