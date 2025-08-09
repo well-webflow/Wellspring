@@ -2,9 +2,11 @@ import { Heading, Paragraph } from '../../../components/Typography';
 import { useEffect } from 'react';
 import Card from '../../../components/Card';
 import { useWaterfall } from '../hooks/WaterfallContext';
+import { useWebflow } from '../../../context/webflowContext';
 
 export default function InitializationView() {
-  const { createWaterfall, elementSelected, waterfalls, searchForWaterfalls } = useWaterfall();
+  const { createWaterfall, waterfalls, searchForWaterfalls } = useWaterfall();
+  const { elementSelected } = useWebflow();
 
   useEffect(() => {
     webflow.setExtensionSize('comfortable');

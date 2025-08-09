@@ -68,7 +68,6 @@ interface WaterfallState {
   saveWaterfall: () => Promise<void>;
   searchForWaterfalls: () => void;
   getWaterfallName: (el: AnyElement) => Promise<string | null>;
-  elementSelected: AnyElement | null;
   waterfallSelected: string | null;
   isLoading: Boolean;
   setIsLoading: (value: Boolean) => void;

@@ -12,25 +12,20 @@ export function useWaterfallLogic(): WaterfallState {
   const [waterfallNames, setWaterfallNames] = useState<string[]>([]);
   const [waterfallConfig, setWaterfallConfig] = useState<WaterfallConfig | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [elementSelected, setElementSelected] = useState<AnyElement | null>(null);
   const [waterfallSelected, setWaterfallSelected] = useState<string | null>(null);
   const [loadedWaterfall, setLoadedWaterfall] = useState<LoadedWaterfall | null>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   const navigate = useNavigate();
 
-  // Called to check if an element has been selected
+  // Check if a Waterfall has been selected
   const selectedElementCallback = async (element: AnyElement | null) => {
-    setElementSelected(element);
     if (!element) return;
 
     let waterfallName = await getAttribute(element, 'waterfall');
 
-    if (waterfallName) {
-      setWaterfallSelected(waterfallName);
-    } else {
-      setWaterfallSelected(null);
-    }
+    if (waterfallName) setWaterfallSelected(waterfallName);
+    else setWaterfallSelected(null);
   };
 
   // Subscribe to the selected element event
@@ -246,7 +241,6 @@ export function useWaterfallLogic(): WaterfallState {
     setWaterfallConfig,
     selectedCategory,
     setSelectedCategory,
-    elementSelected,
     waterfallSelected,
     loadedWaterfall,
     isLoading,

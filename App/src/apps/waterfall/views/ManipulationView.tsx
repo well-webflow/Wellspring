@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import { Select } from '../../../components/Input';
 import { StickyNavigation } from '../components/Navigation';
 import { Caption, Heading } from '../../../components/Typography';
-import SelectedElement, { SelectedElementInfo } from '../../../components/SelectedElement';
 import Button from '../../../components/Button';
 import { setAttribute } from '../../../utils/webflowHelpers';
 
 import { ATTR_MANIPULATION_ADD_SLIDE } from 'well-waterfall/src/lib/attributes';
 import { useWaterfall } from '../hooks/WaterfallContext';
+import SelectedElement from '../../../components/SelectedElement';
+import { useWebflow } from '../../../context/webflowContext';
 
 export default function ManipulationView() {
-  const { waterfallNames, elementSelected } = useWaterfall();
-  const [elementInfo, setElementInfo] = useState<SelectedElementInfo | null>(null);
+  const { waterfallNames } = useWaterfall();
+  const { elementSelected, elementInfo } = useWebflow();
   const [selectedWaterfall, setSelectedWaterfall] = useState<string | null>(null);
 
   async function submitAddSlide() {
@@ -29,27 +30,6 @@ export default function ManipulationView() {
 
   useEffect(() => {
     setSelectedWaterfall(waterfallNames[0]);
-    async function displaySelectedElement() {
-      const t = elementSelected?.type || 'Unknown';
-      if (elementSelected && elementSelected.styles) {
-        const styles = await elementSelected.getStyles();
-
-        const styleDetails = (
-          await Promise.all(
-            styles?.map(async (style) => {
-              if (!style) return null;
-              const styleName = await style.getName();
-              return styleName;
-            }) ?? []
-          )
-        ).filter((name): name is string => !!name); // <- This ensures string[]
-
-        console.log('Resolved style details:', styleDetails);
-        setElementInfo({ type: t, classes: styleDetails });
-      }
-    }
-
-    displaySelectedElement();
   }, [elementSelected]);
 
   return (
@@ -69,6 +49,10 @@ export default function ManipulationView() {
         <div className="space-y-1">
           <Heading level={4}>To Waterfall:</Heading>
           <Select onChange={(e) => onWaterfallSelectChange(e)} type="select" options={waterfallNames}></Select>
+        </div>
+        <div className="space-y-1">
+          <Heading level={4}>With Method:</Heading>
+          <Select options={['append', 'prepend', 'add']} type="select"></Select>
         </div>
         <Button onClick={submitAddSlide}>Convert</Button>
       </div>

@@ -7,14 +7,14 @@ import WellflowMainView from './views/WellflowMainView';
 import WaterfallSearchView from './apps/waterfall/views/edit/SelectWaterfallView';
 import WaterfallLayout from './apps/waterfall/views/WaterfallLayout';
 import ManipulationView from './apps/waterfall/views/ManipulationView';
-import { WaterfallProvider } from './apps/waterfall/hooks/WaterfallContext';
 import EditView from './apps/waterfall/views/edit/EditView';
 import CategoryView from './apps/waterfall/views/edit/CategoryView';
+import { WebflowProvider } from './context/webflowContext';
 
 export default function App() {
   return (
     <AuthProvider>
-      <WaterfallProvider>
+      <WebflowProvider>
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<WellflowMainView />} />
@@ -28,7 +28,7 @@ export default function App() {
             </Route>
           </Route>
         </Routes>
-      </WaterfallProvider>
+      </WebflowProvider>
     </AuthProvider>
   );
 }

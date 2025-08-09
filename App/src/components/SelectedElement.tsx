@@ -1,10 +1,6 @@
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
-
-export type SelectedElementInfo = {
-  type: string;
-  classes: string[] | null;
-};
+import { SelectedElementInfo } from '../context/webflowContext';
 
 export default function SelectedElement({ el, classNames }: { el: SelectedElementInfo | null; classNames?: string }) {
   if (!el) return null;
