@@ -99,25 +99,11 @@ export async function createNavigation() {
 }
 
 export async function convertElementToNextButton() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_NEXT);
-  }
-  webflow.notify({
-    type: 'Success',
-    message: 'Converted Element to Next Button',
-  });
+  convertElementTo(EL_NAVIGATION_NEXT, 'Next Button');
 }
 
 export async function convertElementToPrevButton() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_PREV);
-  }
-  webflow.notify({
-    type: 'Success',
-    message: 'Converted Element to Prev Button',
-  });
+  convertElementTo(EL_NAVIGATION_PREV, 'Prev Button');
 }
 
 export async function createPagination() {
@@ -150,36 +136,15 @@ export async function createPagination() {
 }
 
 export async function convertElementToPaginationContainer() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION);
-    webflow.notify({
-      type: 'Success',
-      message: 'Element successfully converted to Pagination.',
-    });
-  }
+  convertElementTo(EL_PAGINATION, 'Pagination Container');
 }
 
 export async function convertElementToPaginationBullet() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET);
-    webflow.notify({
-      type: 'Success',
-      message: 'Element successfully converted to Pagination Bullet.',
-    });
-  }
+  convertElementTo(EL_PAGINATION_BULLET, 'Pagination Bullet');
 }
 
 export async function convertElementToPaginationBulletActive() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET_ACTIVE);
-    webflow.notify({
-      type: 'Success',
-      message: 'Element successfully converted to Pagination Bullet (Active).',
-    });
-  }
+  convertElementTo(EL_PAGINATION_BULLET_ACTIVE, 'Pagination Bullet Active');
 }
 
 export async function createScrollbar() {
@@ -201,23 +166,20 @@ export async function createScrollbar() {
 }
 
 export async function convertElementToScrollbarContainer() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR);
-    webflow.notify({
-      type: 'Success',
-      message: 'Element successfully converted to Scrollbar.',
-    });
-  }
+  convertElementTo(EL_SCROLLBAR, 'Scrollbar');
 }
 
 export async function convertElementToScrollbarDrag() {
+  convertElementTo(EL_SCROLLBAR_DRAG, 'Scrollbar Drag');
+}
+
+export async function convertElementTo(elAttr: string, name: string) {
   const el = await webflow.getSelectedElement();
   if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR_DRAG);
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, elAttr);
     webflow.notify({
       type: 'Success',
-      message: 'Element successfully converted to Scrollbar Drag.',
+      message: `Element successfully converted to ${name}.`,
     });
   }
 }

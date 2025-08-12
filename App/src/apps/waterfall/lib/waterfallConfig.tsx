@@ -18,6 +18,7 @@ import thumbsCategory from '../modules/thumbs';
 import touchClickCategory from '../modules/touchClick';
 import manipulationCategory from '../modules/manipulation';
 import { WaterfallConfig } from '../waterfall';
+import zoomCategory from '../modules/zoom';
 
 export const defaultWaterfallConfig: WaterfallConfig = [
   generalConfig(),
@@ -31,7 +32,6 @@ export const defaultWaterfallConfig: WaterfallConfig = [
   // PARALLAX (NOT IMPLEMENTED)
   effectCategory(),
   thumbsCategory(),
-  // ZOOM (NOT IMPLEMENTED)
   keyboardCategory(),
   mousewheelCategory(),
   // VIRTUAL (NOT IMPLEMENTED)
@@ -41,6 +41,7 @@ export const defaultWaterfallConfig: WaterfallConfig = [
   controllerCategory(),
   a11yConfig(),
   ObserverCategory(),
+  zoomCategory(),
   classnamesCategory(),
   advancedCategory(),
 ];
