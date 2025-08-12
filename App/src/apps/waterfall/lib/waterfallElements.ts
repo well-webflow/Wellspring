@@ -1,0 +1,223 @@
+import {
+  ATTR_WATERFALL_ELEMENT,
+  EL_NAVIGATION_NEXT,
+  EL_NAVIGATION_PREV,
+  EL_PAGINATION,
+  EL_PAGINATION_BULLET,
+  EL_PAGINATION_BULLET_ACTIVE,
+  EL_SCROLLBAR,
+  EL_SCROLLBAR_DRAG,
+} from 'well-waterfall/src/lib/elements';
+import { getOrCreateStyle } from '../../../utils/webflowHelpers';
+import { WaterfallCategory, WaterfallMode } from '../waterfall';
+import { addDefaultSettings } from './waterfallHelpers';
+
+export const createWaterfallElement = async (
+  defaultWaterfallSettings: WaterfallCategory[],
+  mode: WaterfallMode = 'static'
+) => {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return false;
+
+  // Ensure required styles exist
+  const waterfall = await getOrCreateStyle('waterfall');
+  const swiper = await getOrCreateStyle('swiper');
+  const swiperWrapper = await getOrCreateStyle('swiper-wrapper');
+  const swiperSlide = await getOrCreateStyle('swiper-slide');
+
+  const waterfallDiv = await parentEl.prepend(webflow.elementPresets.DOM);
+  waterfallDiv.setStyles([waterfall]);
+  waterfallDiv.setTag('div');
+
+  if (mode === 'cms') {
+    // Append DynamoWrapper (Collection List Wrapper)
+    const waterfallCMS = await waterfallDiv.append(webflow.elementPresets.DynamoWrapper);
+    await waterfallCMS.setStyles([swiper]);
+
+    // Set Collection List class to swiper-wrapper
+    const [collectionList] = await waterfallCMS.getChildren();
+    if (collectionList?.styles) {
+      await collectionList.setStyles([swiperWrapper]);
+    }
+
+    // Set Collection Item class to swiper-slide
+    if (!collectionList.children || !collectionList.getChildren) return false;
+    const [collectionItem] = (await collectionList.getChildren()) ?? [];
+    if (collectionItem?.styles) {
+      await collectionItem.setStyles([swiperSlide]);
+    }
+  } else {
+    const waterfallSwiper = await waterfallDiv.append(webflow.elementPresets.DOM);
+    waterfallSwiper.setTag('div');
+    waterfallSwiper.setStyles([swiper]);
+
+    const waterfallWrapper = await waterfallSwiper.append(webflow.elementPresets.DOM);
+    waterfallWrapper.setTag('div');
+    waterfallWrapper.setStyles([swiperWrapper]);
+
+    const waterfallSlide = await waterfallWrapper.append(webflow.elementPresets.DOM);
+    waterfallSlide.setTag('div');
+    waterfallSlide.setStyles([swiperSlide]);
+  }
+
+  addDefaultSettings(defaultWaterfallSettings, waterfallDiv);
+  webflow.setSelectedElement(waterfallDiv);
+
+  createNavigation();
+  createPagination();
+  createScrollbar();
+
+  return true;
+};
+
+export async function createNavigation() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const navigationClass = await getOrCreateStyle('Navigation');
+  const prevClass = await getOrCreateStyle('Prev Button');
+  const nextClass = await getOrCreateStyle('Next Button');
+
+  const navigation = await parentEl.prepend(webflow.elementPresets.DOM);
+  navigation.setTag('div');
+  navigation.setStyles([navigationClass]);
+
+  const prevButton = await navigation.prepend(webflow.elementPresets.DOM);
+  prevButton.setTag('button');
+  prevButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'prev');
+  prevButton.setStyles([prevClass]);
+
+  const nextButton = await navigation.prepend(webflow.elementPresets.DOM);
+  nextButton.setTag('button');
+  nextButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'next');
+  nextButton.setStyles([nextClass]);
+
+  webflow.notify({
+    type: 'Success',
+    message: 'Added Navigation Elements',
+  });
+}
+
+export async function convertElementToNextButton() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_NEXT);
+  }
+  webflow.notify({
+    type: 'Success',
+    message: 'Converted Element to Next Button',
+  });
+}
+
+export async function convertElementToPrevButton() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_PREV);
+  }
+  webflow.notify({
+    type: 'Success',
+    message: 'Converted Element to Prev Button',
+  });
+}
+
+export async function createPagination() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const paginationClass = await getOrCreateStyle('Pagination');
+  const paginationBulletActiveClass = await getOrCreateStyle('Pagination Bullet Active');
+  const paginationBulletClass = await getOrCreateStyle('Pagination Bullet');
+
+  const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
+  pagination.setTag('div');
+  pagination.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination');
+  pagination.setStyles([paginationClass]);
+
+  const paginationBulletActive = await pagination.prepend(webflow.elementPresets.DOM);
+  paginationBulletActive.setTag('button');
+  paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet-active');
+  paginationBulletActive.setStyles([paginationBulletActiveClass]);
+
+  const paginationBullet = await pagination.prepend(webflow.elementPresets.DOM);
+  paginationBullet.setTag('button');
+  paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet');
+  paginationBullet.setStyles([paginationBulletClass]);
+
+  webflow.notify({
+    type: 'Success',
+    message: 'Added Pagination Elements',
+  });
+}
+
+export async function convertElementToPaginationContainer() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION);
+    webflow.notify({
+      type: 'Success',
+      message: 'Element successfully converted to Pagination.',
+    });
+  }
+}
+
+export async function convertElementToPaginationBullet() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET);
+    webflow.notify({
+      type: 'Success',
+      message: 'Element successfully converted to Pagination Bullet.',
+    });
+  }
+}
+
+export async function convertElementToPaginationBulletActive() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET_ACTIVE);
+    webflow.notify({
+      type: 'Success',
+      message: 'Element successfully converted to Pagination Bullet (Active).',
+    });
+  }
+}
+
+export async function createScrollbar() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const scrollbarClass = await getOrCreateStyle('Scrollbar');
+  const scrollbarDragClass = await getOrCreateStyle('Scrollbar Drag');
+
+  const scrollbar = await parentEl.prepend(webflow.elementPresets.DOM);
+  scrollbar.setTag('div');
+  scrollbar.setStyles([scrollbarClass]);
+  scrollbar.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR);
+
+  const scrollbarDrag = await scrollbar.prepend(webflow.elementPresets.DOM);
+  scrollbarDrag.setTag('button');
+  scrollbarDrag.setStyles([scrollbarDragClass]);
+  scrollbarDrag.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR_DRAG);
+}
+
+export async function convertElementToScrollbarContainer() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR);
+    webflow.notify({
+      type: 'Success',
+      message: 'Element successfully converted to Scrollbar.',
+    });
+  }
+}
+
+export async function convertElementToScrollbarDrag() {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR_DRAG);
+    webflow.notify({
+      type: 'Success',
+      message: 'Element successfully converted to Scrollbar Drag.',
+    });
+  }
+}

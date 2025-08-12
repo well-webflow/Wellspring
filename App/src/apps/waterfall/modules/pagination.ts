@@ -1,6 +1,5 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 import {
   ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
   ATTR_PAGINATION_CLICKABLE,
@@ -22,6 +21,7 @@ import {
   ATTR_PAGINATION_VERTICAL_CLASS,
 } from 'well-waterfall/src/lib/attributes';
 import { ATTR_WATERFALL_ELEMENT } from 'well-waterfall/src/lib/elements';
+import PaginationScreen from '../components/Pagination';
 
 export default function paginationCategory() {
   let config: WaterfallCategory = {
@@ -30,6 +30,7 @@ export default function paginationCategory() {
     icon: faEllipsis,
     summary: 'Add pagination bullets or progress bar to the slider',
     description: 'Add pagination bullets or progress bar to the slider',
+    component: PaginationScreen,
     groups: [
       {
         name: 'Dynamic',
@@ -219,52 +220,6 @@ export default function paginationCategory() {
         type: 'boolean',
       },
     ],
-    actions: [
-      {
-        label: 'Pagination',
-        func: createPagination,
-      },
-    ],
   };
   return config;
-}
-
-export async function convertToPaginationBulletActive() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet-active');
-    webflow.notify({
-      type: 'Success',
-      message: 'Element successfully converted to Pagination Bullet (Active).',
-    });
-  }
-}
-
-export async function createPagination() {
-  const parentEl = await webflow.getSelectedElement();
-  if (!parentEl?.children) return;
-
-  const paginationClass = await getOrCreateStyle('Pagination');
-  const paginationBulletActiveClass = await getOrCreateStyle('Pagination Bullet Active');
-  const paginationBulletClass = await getOrCreateStyle('Pagination Bullet');
-
-  const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
-  pagination.setTag('div');
-  pagination.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination');
-  pagination.setStyles([paginationClass]);
-
-  const paginationBulletActive = await pagination.prepend(webflow.elementPresets.DOM);
-  paginationBulletActive.setTag('button');
-  paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet-active');
-  paginationBulletActive.setStyles([paginationBulletActiveClass]);
-
-  const paginationBullet = await pagination.prepend(webflow.elementPresets.DOM);
-  paginationBullet.setTag('button');
-  paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet');
-  paginationBullet.setStyles([paginationBulletClass]);
-
-  webflow.notify({
-    type: 'Success',
-    message: 'Added Pagination Elements',
-  });
 }

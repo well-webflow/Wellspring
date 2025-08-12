@@ -36,12 +36,6 @@ export default function InitializationView() {
             <Card onClick={() => createWaterfall('static')}>
               <Heading level={4}>Create Waterfall</Heading>
             </Card>
-            <Card href="/waterfall/create">
-              <Heading level={4}>Create Waterfall Elements</Heading>
-            </Card>
-            <Card href="/waterfall/manipulation">
-              <Heading level={4}>Add/Remove Slides at Runtime</Heading>
-            </Card>
           </div>
         ) : (
           <Card>

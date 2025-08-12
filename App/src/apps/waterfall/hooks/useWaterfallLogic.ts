@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { LoadedWaterfall, WaterfallCategory, WaterfallConfig, WaterfallMode, WaterfallState } from '../waterfall';
 import { getAttribute, getAttributes, removeAttribute, setAttribute } from '../../../utils/webflowHelpers';
-import { createWaterfallElement, findWaterfallSetting } from '../utils/waterfallHelpers';
+import { createWaterfallElement } from '../lib/waterfallElements';
+import { findWaterfallSetting } from '../lib/waterfallHelpers';
 import { defaultWaterfallConfig } from '../lib/waterfallConfig';
 import { getBaseAttr, getBreakpointAttr } from '../../../utils/attributes';
 import { Breakpoints } from '../../../utils/breakpoints';
+import { deepCloneWithFunctions } from '../utils/categoryParser';
 
 export function useWaterfallLogic(): WaterfallState {
   const [waterfalls, setWaterfalls] = useState<AnyElement[]>([]);
@@ -83,7 +85,7 @@ export function useWaterfallLogic(): WaterfallState {
     setLoadedWaterfall({ name: waterfallName, el });
     const customAttributes = await getAttributes(el);
     // Create a deep copy of the default waterfall props to update
-    const updatedProps: WaterfallCategory[] = JSON.parse(JSON.stringify(defaultWaterfallConfig));
+    const updatedProps: WaterfallCategory[] = deepCloneWithFunctions(defaultWaterfallConfig);
 
     // Iterate through all custom attributes and map them to updatedProps
     customAttributes?.forEach((attr) => {
@@ -155,7 +157,7 @@ export function useWaterfallLogic(): WaterfallState {
         groups: category.groups?.map((group) => {
           return {
             ...group,
-            items: group.items.map((item) => {
+            items: group.items?.map((item) => {
               if (item.attr === propAttrName) {
                 if (breakpoint && item.breakpoints) {
                   return {

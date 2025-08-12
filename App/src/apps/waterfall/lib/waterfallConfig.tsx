@@ -16,6 +16,7 @@ import playbackCategory from '../modules/playback';
 import scrollbarCategory from '../modules/scrollbar';
 import thumbsCategory from '../modules/thumbs';
 import touchClickCategory from '../modules/touchClick';
+import manipulationCategory from '../modules/manipulation';
 import { WaterfallConfig } from '../waterfall';
 
 export const defaultWaterfallConfig: WaterfallConfig = [
@@ -35,6 +36,7 @@ export const defaultWaterfallConfig: WaterfallConfig = [
   mousewheelCategory(),
   // VIRTUAL (NOT IMPLEMENTED)
   memoryCategory(),
+  manipulationCategory(),
   // HISTORY NAVIGATION (NOT IMPLEMENTED)
   controllerCategory(),
   a11yConfig(),

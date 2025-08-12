@@ -1,6 +1,5 @@
 import { faBarsProgress } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 import {
   ATTR_SCROLLBAR_DRAG_SIZE,
   ATTR_SCROLLBAR_DRAGGABLE,
@@ -12,8 +11,7 @@ import {
   ATTR_SCROLLBAR_SNAP_ON_RELEASE,
   ATTR_SCROLLBAR_VERTICAL_CLASS,
 } from 'well-waterfall/src/lib/attributes';
-
-import { ATTR_WATERFALL_ELEMENT } from 'well-waterfall/src/lib/elements';
+import ScrollbarScreen from '../components/Scrollbar';
 
 export default function scrollbarCategory() {
   let config: WaterfallCategory = {
@@ -22,6 +20,7 @@ export default function scrollbarCategory() {
     icon: faBarsProgress,
     summary: 'Add a scrollbar to the slider',
     description: 'Add a scrollbar to the slider',
+    component: ScrollbarScreen,
     groups: [
       {
         name: 'Class Names',
@@ -108,41 +107,6 @@ export default function scrollbarCategory() {
         description: 'Set to true to snap slider position to slides when you release scrollbar',
       },
     ],
-    actions: [
-      {
-        label: 'Scrollbar',
-        func: createScrollbar,
-      },
-    ],
   };
   return config;
-}
-
-export async function createScrollbar() {
-  const parentEl = await webflow.getSelectedElement();
-  if (!parentEl?.children) return;
-
-  const scrollbarClass = await getOrCreateStyle('Scrollbar');
-  const scrollbarDragClass = await getOrCreateStyle('Scrollbar Drag');
-
-  const scrollbar = await parentEl.prepend(webflow.elementPresets.DOM);
-  scrollbar.setTag('div');
-  scrollbar.setStyles([scrollbarClass]);
-  scrollbar.setAttribute(ATTR_WATERFALL_ELEMENT, 'scrollbar');
-
-  const scrollbarDrag = await scrollbar.prepend(webflow.elementPresets.DOM);
-  scrollbarDrag.setTag('button');
-  scrollbarDrag.setStyles([scrollbarDragClass]);
-  scrollbarDrag.setAttribute(ATTR_WATERFALL_ELEMENT, 'scrollbar-drag');
-}
-
-export async function convertToScrollbar() {
-  const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, 'scrollbar');
-    webflow.notify({
-      type: 'Success',
-      message: 'Element successfully converted to Scrollbar.',
-    });
-  }
 }

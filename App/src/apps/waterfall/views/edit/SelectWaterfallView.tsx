@@ -3,7 +3,7 @@ import Card from '../../../../components/Card';
 import { Heading } from '../../../../components/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
-import { StickyNavigation } from '../../components/Navigation';
+import { StickyNavigation } from '../../components/Navbar';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 
 export default function WaterfallSearchView() {

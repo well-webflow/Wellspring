@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
-import { EditNavigation } from '../../components/Navigation';
+import { EditNavbar } from '../../components/Navbar';
 import Button from '../../../../components/Button';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 
 export default function EditView() {
-  const { setSelectedCategory, waterfallConfig: waterfallSettings, unloadWaterfall, loadedWaterfall } = useWaterfall();
+  const { setSelectedCategory, waterfallConfig, unloadWaterfall, loadedWaterfall } = useWaterfall();
 
   const navigate = useNavigate();
 
@@ -26,10 +26,10 @@ export default function EditView() {
 
   return (
     <div className="">
-      <EditNavigation onGoBack={goBack} heading={`Editing ${loadedWaterfall?.name}`} />
+      <EditNavbar onGoBack={goBack} heading={`Editing ${loadedWaterfall?.name}`} />
       <div className="p-2">
         <div className="space-y-3">
-          {waterfallSettings?.map((category) => (
+          {waterfallConfig?.map((category) => (
             <Button key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
               <div className="flex flex-row items-center text-left gap-4">
                 {category.icon && (

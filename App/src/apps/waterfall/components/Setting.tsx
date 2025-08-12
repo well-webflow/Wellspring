@@ -7,6 +7,7 @@ import { faDeskpro } from '@fortawesome/free-brands-svg-icons';
 import { useWaterfall } from '../hooks/WaterfallContext';
 import { WaterfallSetting } from '../waterfall';
 import { BreakpointObject } from '../../../utils/breakpoints';
+import Card from '../../../components/Card';
 
 const breakpointIcons: IconDefinition[] = [faMobile, faPortrait, faTablet, faDeskpro, faDesktopAlt, faDesktopAlt];
 
@@ -16,7 +17,7 @@ export default function Setting({ prop }: { prop: WaterfallSetting }) {
   let type = prop.type || 'string';
 
   return (
-    <div className="flex flex-col gap-10 px-3 py-8 bg-background3 rounded-md">
+    <Card>
       <div className="flex flex-row gap-5 justify-between">
         <div className="flex items-center gap-3 mb-2">
           <div>
@@ -76,6 +77,6 @@ export default function Setting({ prop }: { prop: WaterfallSetting }) {
           ))}
         </div>
       )}
-    </div>
+    </Card>
   );
 }

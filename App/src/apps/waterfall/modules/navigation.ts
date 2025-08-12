@@ -1,6 +1,7 @@
 import { faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { getOrCreateStyle } from '../../../utils/webflowHelpers';
+import NavigationElements from '../components/Nav';
+
 import {
   ATTR_ALLOW_SLIDE_NEXT,
   ATTR_ALLOW_SLIDE_PREV,
@@ -12,8 +13,6 @@ import {
   ATTR_NAVIGATION_NAVIGATION_DISABLED_CLASS,
 } from 'well-waterfall/src/lib/attributes';
 
-import { ATTR_WATERFALL_ELEMENT } from 'well-waterfall/src/lib/elements';
-
 export default function navigationCategory() {
   let config: WaterfallCategory = {
     name: 'Navigation',
@@ -21,6 +20,7 @@ export default function navigationCategory() {
     icon: faArrowsLeftRight,
     summary: 'Add navigation buttons to the slider',
     description: 'Add navigation buttons to the slider',
+    component: NavigationElements,
     groups: [
       {
         name: 'Classes',
@@ -103,40 +103,6 @@ export default function navigationCategory() {
         type: 'boolean',
       },
     ],
-    actions: [
-      {
-        label: 'Navigation',
-        func: createNavigation,
-      },
-    ],
   };
   return config;
-}
-
-export async function createNavigation() {
-  const parentEl = await webflow.getSelectedElement();
-  if (!parentEl?.children) return;
-
-  const navigationClass = await getOrCreateStyle('Navigation');
-  const prevClass = await getOrCreateStyle('Prev Button');
-  const nextClass = await getOrCreateStyle('Next Button');
-
-  const navigation = await parentEl.prepend(webflow.elementPresets.DOM);
-  navigation.setTag('div');
-  navigation.setStyles([navigationClass]);
-
-  const prevButton = await navigation.prepend(webflow.elementPresets.DOM);
-  prevButton.setTag('button');
-  prevButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'prev');
-  prevButton.setStyles([prevClass]);
-
-  const nextButton = await navigation.prepend(webflow.elementPresets.DOM);
-  nextButton.setTag('button');
-  nextButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'next');
-  nextButton.setStyles([nextClass]);
-
-  webflow.notify({
-    type: 'Success',
-    message: 'Added Navigation Elements',
-  });
 }

@@ -35,10 +35,10 @@ export default function Button({
               color === 'secondary',
           },
           {
-            'px-2 py-1 text-xs rounded-xs ': size === 'sm',
-            'px-3 py-2 text-sm': size === 'md',
+            'px-2 h-8 text-xs rounded-xs ': size === 'sm',
+            'px-3 h-14 text-sm': size === 'md',
           },
-          'rounded-xs flex flex-row gap-3 items-center shadow-xs transition',
+          'rounded-xs flex flex-row gap-3 items-center shadow-xs transition cursor-pointer',
           className
         )
       )}

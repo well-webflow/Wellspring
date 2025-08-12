@@ -4,6 +4,10 @@ export type WaterfallMode = 'static' | 'cms';
 
 export type WaterfallConfig = WaterfallCategory[];
 
+export type CategoryScreen = {
+  [key: string]: JSX.Element;
+};
+
 // Categories -- Large Groups of Settings (Pagination, Navigation, etc.)
 export interface WaterfallCategory {
   name: string;
@@ -13,7 +17,7 @@ export interface WaterfallCategory {
   summary?: string;
   groups?: WaterfallGroup[];
   items?: WaterfallSetting[];
-  actions?: Action[];
+  component?: React.ComponentType;
 }
 
 // Groups -- Groups of Settings within a Category (General, Advanced, etc.)
