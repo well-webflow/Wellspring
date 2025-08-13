@@ -69,6 +69,12 @@ export async function getAttribute(el: AnyElement, attr: string) {
   return a;
 }
 
+export async function hasAttributes(el: AnyElement) {
+  if (el && el.customAttributes) return true;
+  if (el.type === 'DOM') return true;
+  return false;
+}
+
 /**
  * Remove Attribute
  * Removes an attribute by name from an AnyElement regardless of its type

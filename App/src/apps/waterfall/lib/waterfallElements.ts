@@ -183,3 +183,18 @@ export async function convertElementTo(elAttr: string, name: string) {
     });
   }
 }
+
+export async function addAttributeToSelectedElement(attr: string, value: string) {
+  const el = await webflow.getSelectedElement();
+  if (el?.customAttributes) {
+    el.setCustomAttribute(attr, value);
+  } else if (el?.type === 'DOM') {
+    el.setAttribute(attr, value);
+  } else {
+    return false;
+  }
+  webflow.notify({
+    type: 'Success',
+    message: `Added ${attr} = ${value} to the Selected Element.`,
+  });
+}

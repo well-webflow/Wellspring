@@ -22,10 +22,11 @@ import {
 
 export default function advancedCategory() {
   let config: WaterfallCategory = {
-    name: 'Other Settings (Advanced)',
+    name: 'Advanced Settings (Custom)',
     id: 'other-advanced',
     icon: faLock,
-    summary: "Settings you probably shouldn't touch unless you really know what you're doing",
+    description:
+      "Settings you probably shouldn't touch unless you really know what you're doing. Certain features like Creative Effect, Virtual Slides, and Custom Events can be managed with custom code by accessing the global waterfalls object. It is in the form [{name, swiper}] so you can lookup swipers by name.",
     items: [
       {
         name: 'Breakpoints Base',

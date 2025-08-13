@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from '../../../components/Typography';
 import { useEffect } from 'react';
-import Card from '../../../components/Card';
+import Card from '../../../components/UI/Card';
 import { useWaterfall } from '../hooks/WaterfallContext';
 import { useWebflow } from '../../../context/webflowContext';
 

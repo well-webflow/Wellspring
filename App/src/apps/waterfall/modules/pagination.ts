@@ -20,7 +20,6 @@ import {
   ATTR_PAGINATION_TYPE,
   ATTR_PAGINATION_VERTICAL_CLASS,
 } from 'well-waterfall/src/lib/attributes';
-import { ATTR_WATERFALL_ELEMENT } from 'well-waterfall/src/lib/elements';
 import PaginationScreen from '../components/Pagination';
 
 export default function paginationCategory() {

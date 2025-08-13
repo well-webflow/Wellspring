@@ -4,7 +4,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface TooltipProps {
   content: string;
-  defaultValue: string;
+  defaultValue?: string;
 }
 
 function Tooltip({ content, defaultValue }: TooltipProps) {
@@ -22,8 +22,12 @@ function Tooltip({ content, defaultValue }: TooltipProps) {
           {/* Triangle */}
           <div className="absolute left-[-6px] top-1/2 transform -translate-y-1/2 w-0 h-0 border-t-4 border-r-4 border-b-4 border-transparent border-r-gray-900" />
           {content}
-          <div className="w-full h-2 border-t-2 border-border1 my-2"></div>
-          <div>Default: {defaultValue}</div>
+          {defaultValue && (
+            <>
+              <hr />
+              <div>Default: {defaultValue}</div>
+            </>
+          )}
         </div>
       )}
     </div>

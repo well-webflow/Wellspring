@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import Button from '../components/Button';
-import HorizontalRule from '../components/hr';
+import Button from '../components/UI/Button';
+import HorizontalRule from '../components/UI/hr';
 import { Tab, Tabs } from '../components/Tabs';
 import { Heading, Paragraph } from '../components/Typography';
 import WellflowAppList from '../components/WellflowAppList';
@@ -30,11 +30,9 @@ export default function WellflowMainView() {
               </Paragraph>
             </div>
             <Paragraph size="sm">
-              Thank you for installing{' '}
-              <span className="text-primary">Wellflow</span>! My goal with this
-              package is to provide a free and open-source library for common
-              Webflow problems. I develop these solutions in my free time, if
-              you appreciate the work, please consider donating.
+              Thank you for installing <span className="text-primary">Wellflow</span>! My goal with this package is to
+              provide a free and open-source library for common Webflow problems. I develop these solutions in my free
+              time, if you appreciate the work, please consider donating.
             </Paragraph>
             <Button size="sm" color="secondary">
               Donate
@@ -43,9 +41,7 @@ export default function WellflowMainView() {
             <Heading level={4} className="mt-3">
               1. Authorize
             </Heading>
-            <Paragraph size="sm">
-              Wellflow needs permission to access your site before working.
-            </Paragraph>
+            <Paragraph size="sm">Wellflow needs permission to access your site before working.</Paragraph>
             {!sessionToken ? (
               <Button onClick={openAuthWindow} size="sm" color="primary">
                 Authorize App
@@ -60,14 +56,9 @@ export default function WellflowMainView() {
               2. Install Code
             </Heading>
             <Paragraph size="sm">
-              In order to run, install the code snippet on your site. The
-              Wellflow code package includes: SwiperJS
+              In order to run, install the code snippet on your site. The Wellflow code package includes: SwiperJS
             </Paragraph>
-            <Button
-              onClick={() => addWellflowScript(siteId, sessionToken)}
-              color="primary"
-              size="sm"
-            >
+            <Button onClick={() => addWellflowScript(siteId, sessionToken)} color="primary" size="sm">
               Add Code
             </Button>
           </Tab>
@@ -82,13 +73,7 @@ export function WellflowHeader() {
     <>
       <div className="w-full border-b border-b-border1 p-3 flex flex-row justify-between">
         <Link to="/">
-          <img
-            src="/wellflow-logo-white.svg"
-            alt="Wellflow Logo"
-            width={80}
-            height={20}
-            className=""
-          />
+          <img src="/wellflow-logo-white.svg" alt="Wellflow Logo" width={80} height={20} className="" />
         </Link>
         <div className="flex flex-row gap-2"></div>
       </div>

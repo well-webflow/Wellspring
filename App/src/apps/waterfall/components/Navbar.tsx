@@ -1,5 +1,5 @@
 import { faArrowLeft, faArrowsRotate, faSave } from '@fortawesome/free-solid-svg-icons';
-import Button from '../../../components/Button';
+import Button from '../../../components/UI/Button';
 import { useNavigate } from 'react-router';
 import { Heading } from '../../../components/Typography';
 import { useWaterfall } from '../hooks/WaterfallContext';

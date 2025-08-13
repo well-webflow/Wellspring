@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import { WellflowHeader } from '../../../views/WellflowMainView';
-import Loader from '../../../components/Loader';
+import Loader from '../../../components/UI/Loader';
 import { useWaterfall, WaterfallProvider } from '../hooks/WaterfallContext';
 
 export default function WaterfallLayout() {

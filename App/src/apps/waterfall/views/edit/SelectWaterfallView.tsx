@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Card from '../../../../components/Card';
+import Card from '../../../../components/UI/Card';
 import { Heading } from '../../../../components/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';

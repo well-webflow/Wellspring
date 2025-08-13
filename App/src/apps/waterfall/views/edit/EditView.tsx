@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
 import { EditNavbar } from '../../components/Navbar';
-import Button from '../../../../components/Button';
+import Button from '../../../../components/UI/Button';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 
 export default function EditView() {

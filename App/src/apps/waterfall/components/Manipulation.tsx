@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useWebflow } from '../../../context/webflowContext';
 import { useWaterfall } from '../hooks/WaterfallContext';
-import Button from '../../../components/Button';
+import Button from '../../../components/UI/Button';
 import { setAttribute } from '../../../utils/webflowHelpers';
-import { Select } from '../../../components/Input';
+import { Select } from '../../../components/UI/Select';
 
 import { ATTR_MANIPULATION_PREPEND_SLIDE, ATTR_MANIPULATION_APPEND_SLIDE } from 'well-waterfall/src/lib/attributes';
 import SelectedElement from '../../../components/SelectedElement';

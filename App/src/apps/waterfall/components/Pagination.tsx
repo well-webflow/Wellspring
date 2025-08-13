@@ -1,5 +1,5 @@
 import { faDotCircle, faPlusCircle, faSquare } from '@fortawesome/free-solid-svg-icons';
-import Button from '../../../components/Button';
+import Button from '../../../components/UI/Button';
 import SelectedElement from '../../../components/SelectedElement';
 import {
   convertElementToPaginationBullet,

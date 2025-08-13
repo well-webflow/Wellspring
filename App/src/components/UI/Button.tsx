@@ -10,6 +10,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
   icon?: IconDefinition;
   size?: 'sm' | 'md' | 'lg';
+  fillHeight?: boolean;
+  fillWidth?: boolean;
   className?: string;
   children?: React.ReactNode;
   color?: ButtonColor;
@@ -19,6 +21,8 @@ export default function Button({
   text,
   icon,
   size = 'md',
+  fillHeight = false,
+  fillWidth = false,
   color = 'secondary',
   className,
   children,
@@ -37,7 +41,10 @@ export default function Button({
           {
             'px-2 h-8 text-xs rounded-xs ': size === 'sm',
             'px-3 h-14 text-sm': size === 'md',
+            'px-5 h-16 text-lg': size === 'lg',
           },
+          { 'h-full text-center': fillHeight },
+          { 'w-full text-center': fillWidth },
           'rounded-xs flex flex-row gap-3 items-center shadow-xs transition cursor-pointer',
           className
         )
