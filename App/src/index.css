@@ -9,7 +9,7 @@
   --background-image-action-secondary-background: var(--actionSecondaryBackground);
   --background-image-action-secondary-background-hover: var(--actionSecondaryBackgroundHover);
 
-  --color-primary: #84c8d1;
+  --color-primary: #b8dee8;
   --color-primary-dark: #3b838c;
   --color-background1: var(--background1);
   --color-background2: var(--background2);
@@ -36,8 +36,8 @@
     0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset, 0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
     0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset, 0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset, 0 0 0 1px #2496ff;
 
-  --text-sm: 0.8rem;
-  --text-base: 0.9rem;
+  --text-sm: 0.78rem;
+  --text-base: 0.92rem;
   --text-lg: 1.1rem;
   --text-xl: 1.25rem;
   --text-2xl: 2.5rem;

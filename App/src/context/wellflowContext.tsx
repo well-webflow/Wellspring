@@ -1,16 +1,48 @@
 import { createContext, useContext, useState } from 'react';
 
+interface WellflowApp {
+  id: string;
+  name: string;
+  imageSrc: string;
+}
+
+const approvedApps: WellflowApp[] = [
+  {
+    id: 'waterfall',
+    name: 'Waterfall',
+    imageSrc: '/brand/waterfall.png',
+  },
+];
+
 interface WellflowContextType {
-  activeApp: string;
-  setActiveApp: (app: string) => void;
+  activeApp: WellflowApp | null;
+  changeActiveApp: (app: string) => void;
+  appIcon: string;
+  approvedApps: WellflowApp[];
 }
 
 export const WellflowContext = createContext<WellflowContextType | undefined>(undefined);
 
 export function WellflowProvider({ children }: { children: React.ReactNode }) {
-  const [activeApp, setActiveApp] = useState<string>('');
+  const [activeApp, setActiveApp] = useState<WellflowApp | null>(null);
+  const [appIcon, setAppIcon] = useState<string>('');
 
-  return <WellflowContext.Provider value={{ activeApp, setActiveApp }}>{children}</WellflowContext.Provider>;
+  const changeActiveApp = (app: string) => {
+    const selectedApp = approvedApps.find((a) => a.name.toLowerCase() === app.toLowerCase());
+    if (selectedApp) {
+      setActiveApp(selectedApp);
+      setAppIcon(selectedApp.imageSrc);
+    } else {
+      setActiveApp(null);
+      setAppIcon('');
+    }
+  };
+
+  return (
+    <WellflowContext.Provider value={{ activeApp, changeActiveApp, appIcon, approvedApps }}>
+      {children}
+    </WellflowContext.Provider>
+  );
 }
 
 export function useWellflow() {

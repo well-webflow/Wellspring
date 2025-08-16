@@ -29,7 +29,7 @@ export const Tabs = ({ headerClasses, contentClasses, children }: TabsProps) => 
   function tabStyles(index: number) {
     return twMerge(
       clsx(
-        'cursor-pointer py-1 px-3 rounded-sm text-sm text-text1 hover:text-text2',
+        'cursor-pointer py-1 px-3 rounded-sm text-base text-text1 hover:text-text2',
         index === activeIndex && 'bg-white text-black hover:text-black font-semibold'
       )
     );

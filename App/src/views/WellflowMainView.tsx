@@ -1,23 +1,21 @@
 import { useLocation } from 'react-router';
-import Button from '../components/UI/Button';
 import HorizontalRule from '../components/UI/hr';
 import { Tab, Tabs } from '../components/Tabs';
 import { Heading, Paragraph } from '../components/Typography';
 import WellflowAppList from '../components/WellflowAppList';
 import { useAuth } from '../hooks/useAuth';
-import { addWellflowScript } from '../utils/customCode';
 import { useEffect } from 'react';
 import { faBug, faChevronLeft, faCircleDollarToSlot } from '@fortawesome/free-solid-svg-icons';
 import { useWellflow } from '../context/wellflowContext';
 import NavigationLink from '../components/UI/NavigationLink';
 
 export default function WellflowMainView() {
-  const { sessionToken, siteData, openAuthWindow } = useAuth();
+  const { siteData } = useAuth();
 
   const siteId = siteData?.siteId || '';
 
   useEffect(() => {
-    webflow.setExtensionSize('large');
+    webflow.setExtensionSize('comfortable');
   });
 
   return (
@@ -27,7 +25,7 @@ export default function WellflowMainView() {
         <Tab label="Apps">
           <WellflowAppList />
         </Tab>
-        <Tab label="Setup">
+        <Tab label="About">
           <div className="flex flex-row gap-2 items-baseline">
             <Heading level={4}>Wellflow</Heading>
             <Paragraph size="sm" className="text-text2">
@@ -36,14 +34,24 @@ export default function WellflowMainView() {
           </div>
           <Paragraph size="sm">
             Thank you for installing <span className="text-primary">Wellflow</span>! My goal with this package is to
-            provide a free and open-source library for common Webflow problems. I develop these solutions in my free
-            time, if you appreciate the work, please consider donating.
+            provide an affordable solution for common Webflow problems, starting with sliders. I am a solo developer
+            creating these apps in my free time. If you appreciate the work, please consider donating.
           </Paragraph>
-          <Button size="sm" color="secondary">
-            Donate
-          </Button>
+          <Paragraph size="sm">
+            Created by{' '}
+            <a href="https://kevingerstner.com" target="_blank" className="text-primary">
+              Kevin Gerstner
+            </a>
+          </Paragraph>
           <HorizontalRule className="my-3" />
-          <Heading level={4} className="mt-3">
+          <Heading level={4} className="mb-2">
+            Release Notes
+          </Heading>
+          <Heading level={5}>1.0.0</Heading>
+          <li className="list-none">
+            <ul className="text-sm text-text2">- Initial Release</ul>
+          </li>
+          {/* <Heading level={4} className="mt-3">
             1. Authorize
           </Heading>
           <Paragraph size="sm">Wellflow needs permission to access your site before working.</Paragraph>
@@ -65,7 +73,7 @@ export default function WellflowMainView() {
           </Paragraph>
           <Button onClick={() => addWellflowScript(siteId, sessionToken)} color="primary" size="sm">
             Add Code
-          </Button>
+          </Button> */}
         </Tab>
       </Tabs>
     </div>
@@ -73,21 +81,26 @@ export default function WellflowMainView() {
 }
 
 export function WellflowHeader() {
-  const { activeApp, setActiveApp } = useWellflow();
+  const { activeApp, appIcon, changeActiveApp } = useWellflow();
   const location = useLocation();
 
   function handleBackClick() {
-    setActiveApp('');
+    changeActiveApp('');
   }
   return (
     <>
       <div className="bg-background5 w-full border-b border-b-border1 p-3 flex flex-row justify-between">
-        <div className="flex flex-row items-baseline gap-2">
+        <div className="flex flex-row items-center gap-2">
           <NavigationLink to="/" onClick={handleBackClick} icon={location.pathname !== '/' ? faChevronLeft : undefined}>
             <img src="/wellflow-logo-white.svg" alt="Wellflow Logo" width={80} height={20} className="" />
           </NavigationLink>
           {activeApp && (
-            <span className="text-base font-bold text-text1 ml-2 pl-2 border-l-2 border-border1">{activeApp}</span>
+            <>
+              <span className="flex items-center gap-2 text-base font-bold text-text1 ml-2 pl-2 border-l-2 border-border1">
+                <img src={appIcon} alt="Waterfall App" className="rounded-sm h-6 w-6" />
+                {activeApp.name}
+              </span>
+            </>
           )}
         </div>
         <div className="flex flex-row gap-4">

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { Link } from 'react-router';
 
 interface CardProps {
+  size?: 'sm' | 'lg';
   children: React.ReactNode;
   href?: string; // optional Next.js link
   onClick?: () => void;
@@ -10,9 +11,10 @@ interface CardProps {
   className?: string;
 }
 
-export default function Card({ children, href, onClick, disabled = false, className }: CardProps) {
+export default function Card({ children, href, onClick, size = 'lg', disabled = false, className }: CardProps) {
   const baseClass = clsx(
-    'rounded-md p-5 transition-opacity duration-200',
+    'rounded-md transition-opacity duration-200',
+    size === 'sm' ? 'p-2' : 'p-5',
     disabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90',
     (href || onClick) && 'cursor-pointer',
     'bg-background2',
