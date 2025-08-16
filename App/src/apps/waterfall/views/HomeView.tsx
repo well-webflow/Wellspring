@@ -1,50 +1,35 @@
-import { Heading, Paragraph } from '../../../components/Typography';
-import { useEffect } from 'react';
+import { Heading } from '../../../components/Typography';
 import Card from '../../../components/UI/Card';
-import { useWaterfall } from '../hooks/WaterfallContext';
-import { useWebflow } from '../../../context/webflowContext';
+import { Tab, Tabs } from '../../../components/Tabs';
+import { faCirclePlus, faGear, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { WaterfallCode } from '../components/WaterfallCode';
+import SelectWaterfallView from './edit/SelectWaterfallView';
+import CreateView from './CreateView';
 
 export default function InitializationView() {
-  const { createWaterfall, waterfalls, searchForWaterfalls } = useWaterfall();
-  const { elementSelected } = useWebflow();
-
-  useEffect(() => {
-    webflow.setExtensionSize('comfortable');
-    searchForWaterfalls();
-  });
-
   return (
     <div>
-      <div className="p-3 h-full">
+      <div className="h-full">
         <div className="mb-5">
-          <Heading level={1} className="text-5xl text-primary font-bold font-brand">
-            Waterfall
-          </Heading>
-          <p className="text-sm">
-            Waterfall is a wrapper around SwiperJS (11.1.14) that allows for full swiper customization using attributes
-            with a sensible builder.
-          </p>
+          <Tabs>
+            <Tab label="Create" icon={faCirclePlus}>
+              <CreateView />
+            </Tab>
+            <Tab label="Edit" icon={faPencil}>
+              <SelectWaterfallView />
+            </Tab>
+            <Tab label="Setup" icon={faGear}>
+              <Heading level={1}>Waterfall</Heading>
+              <p className="text-sm mb-5">
+                Waterfall is a wrapper around SwiperJS (11.2.10) that allows for full swiper customization using
+                attributes.
+              </p>
+              <Card>
+                <WaterfallCode />
+              </Card>
+            </Tab>
+          </Tabs>
         </div>
-        {elementSelected ? (
-          <div className="flex flex-col gap-4 items-stretch justify-stretch w-full">
-            <Card href="/waterfall/search" disabled={waterfalls.length <= 0}>
-              <Heading level={4}>Edit Waterfall</Heading>
-            </Card>
-            <Card onClick={() => createWaterfall('cms')}>
-              <Heading level={4}>Create CMS Waterfall</Heading>
-            </Card>
-            <Card onClick={() => createWaterfall('static')}>
-              <Heading level={4}>Create Waterfall</Heading>
-            </Card>
-          </div>
-        ) : (
-          <Card>
-            <Heading level={2}>Select An Element</Heading>
-            <Paragraph size="sm" className="text-text3 mb-0">
-              Please select an <span className="text-primary">Element</span> to begin.
-            </Paragraph>
-          </Card>
-        )}
       </div>
     </div>
   );

@@ -28,9 +28,9 @@ export default function EditView() {
     <div className="">
       <EditNavbar onGoBack={goBack} heading={`Editing ${loadedWaterfall?.name}`} />
       <div className="p-2">
-        <div className="space-y-3">
+        <div className="space-y-2">
           {waterfallConfig?.map((category) => (
-            <Button key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
+            <Button size="lg" key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
               <div className="flex flex-row items-center text-left gap-4">
                 {category.icon && (
                   <div className="bg-primary-dark w-8 h-8 rounded-full flex items-center justify-center">

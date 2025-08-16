@@ -6,12 +6,8 @@
   --font-body: Inter;
   --font-brand: Radley, serif;
 
-  --background-image-action-secondary-background: var(
-    --actionSecondaryBackground
-  );
-  --background-image-action-secondary-background-hover: var(
-    --actionSecondaryBackgroundHover
-  );
+  --background-image-action-secondary-background: var(--actionSecondaryBackground);
+  --background-image-action-secondary-background-hover: var(--actionSecondaryBackgroundHover);
 
   --color-primary: #84c8d1;
   --color-primary-dark: #3b838c;
@@ -36,37 +32,16 @@
   --color-text3: var(--text3);
 
   --shadow-wf-input:
-    0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset,
-    0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,
-    0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset,
-    0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
-    0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset,
-    0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset, 0 0 0 1px #2496ff;
+    0px 1px 1px -1px rgba(0, 0, 0, 0.13) inset, 0px 3px 3px -3px rgba(0, 0, 0, 0.17) inset,
+    0px 4px 4px -4px rgba(0, 0, 0, 0.17) inset, 0px 8px 8px -8px rgba(0, 0, 0, 0.17) inset,
+    0px 12px 12px -12px rgba(0, 0, 0, 0.13) inset, 0px 16px 16px -16px rgba(0, 0, 0, 0.13) inset, 0 0 0 1px #2496ff;
 
   --text-sm: 0.8rem;
   --text-base: 0.9rem;
   --text-lg: 1.1rem;
   --text-xl: 1.25rem;
-  --text-2xl: 3rem;
+  --text-2xl: 2.5rem;
   --text-4xl: 5rem;
-}
-
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
 }
 
 @font-face {
