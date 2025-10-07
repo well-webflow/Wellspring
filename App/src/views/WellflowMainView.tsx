@@ -38,6 +38,11 @@ export default function WellflowMainView() {
             creating these apps in my free time. If you appreciate the work, please consider donating.
           </Paragraph>
           <Paragraph size="sm">
+            <a href="https://wellflow-app.webflow.io" target="_blank" className="text-primary">
+              Visit our Website
+            </a>
+          </Paragraph>
+          <Paragraph size="sm">
             Created by{' '}
             <a href="https://kevingerstner.com" target="_blank" className="text-primary">
               Kevin Gerstner
@@ -84,31 +89,27 @@ export function WellflowHeader() {
   const { activeApp, appIcon, changeActiveApp } = useWellflow();
   const location = useLocation();
 
-  function handleBackClick() {
-    changeActiveApp('');
-  }
   return (
     <>
       <div className="bg-background5 w-full border-b border-b-border1 p-3 flex flex-row justify-between">
         <div className="flex flex-row items-center gap-2">
-          <NavigationLink to="/" onClick={handleBackClick} icon={location.pathname !== '/' ? faChevronLeft : undefined}>
-            <img src="/wellflow-logo-white.svg" alt="Wellflow Logo" width={80} height={20} className="" />
-          </NavigationLink>
-          {activeApp && (
-            <>
+          {activeApp ? (
+            <NavigationLink
+              to="/"
+              onClick={() => changeActiveApp('')}
+              icon={location.pathname !== '/' ? faChevronLeft : undefined}
+            >
               <span className="flex items-center gap-2 text-base font-bold text-text1 ml-2 pl-2 border-l-2 border-border1">
                 <img src={appIcon} alt="Waterfall App" className="rounded-sm h-6 w-6" />
                 {activeApp.name}
               </span>
-            </>
+            </NavigationLink>
+          ) : (
+            <img src="/wellflow-logo-white.svg" alt="Wellflow Logo" width={80} height={20} className="" />
           )}
         </div>
         <div className="flex flex-row gap-4">
-          <NavigationLink
-            to="mailto:kag@kevingerstner.com?subject=Wellflow%20Bug%20Report"
-            target="_blank"
-            icon={faBug}
-          >
+          <NavigationLink to="https://wellflow-app.webflow.io/contact" target="_blank" icon={faBug}>
             Report Bug
           </NavigationLink>
           <NavigationLink to="https://www.buymeacoffee.com/cactoid" target="_blank" icon={faCircleDollarToSlot}>

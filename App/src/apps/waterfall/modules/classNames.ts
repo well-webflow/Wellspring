@@ -11,7 +11,7 @@ import {
   ATTR_SLIDE_PREV_CLASS,
   ATTR_SLIDE_VISIBLE_CLASS,
   ATTR_WRAPPER_CLASS,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function classnamesCategory() {
   let config: WaterfallCategory = {

@@ -10,7 +10,7 @@ import {
   ATTR_MOUSE_SENSITIVITY,
   ATTR_MOUSE_THRESHOLD_DELTA,
   ATTR_MOUSE_THRESHOLD_TIME,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function mousewheelCategory() {
   let config: WaterfallCategory = {

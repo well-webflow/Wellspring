@@ -14,7 +14,7 @@ import {
   ATTR_SPEED,
   ATTR_STOP_ON_LAST_SLIDE,
   ATTR_WAIT_FOR_TRANSITION,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function playbackCategory() {
   let config: WaterfallCategory = {

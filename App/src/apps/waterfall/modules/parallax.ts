@@ -1,4 +1,4 @@
-import { ATTR_PARALLAX_ENABLED } from 'well-waterfall/src/lib/attributes';
+import { ATTR_PARALLAX_ENABLED } from 'well-waterfall';
 import { WaterfallCategory } from '../waterfall';
 import ParallaxScreen from '../components/ParallaxScreen';
 import { faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons';

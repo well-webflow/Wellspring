@@ -18,7 +18,7 @@ import {
   ATTR_SLIDES_PER_VIEW,
   ATTR_SPACE_BETWEEN,
   ATTR_WIDTH,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function layoutConfig() {
   let config: WaterfallCategory = {

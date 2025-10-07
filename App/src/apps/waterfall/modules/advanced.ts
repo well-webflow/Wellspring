@@ -18,7 +18,7 @@ import {
   ATTR_URL,
   ATTR_USER_AGENT,
   ATTR_VIRTUAL_TRANSLATE,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function advancedCategory() {
   let config: WaterfallCategory = {

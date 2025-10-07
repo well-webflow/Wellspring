@@ -6,9 +6,11 @@ import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type TabProps = {
+  active?: boolean;
+  onClick?: () => void;
   label: string;
+  children?: React.ReactNode;
   icon?: IconProp;
-  children: React.ReactNode;
 };
 
 type TabsProps = {
@@ -17,23 +19,24 @@ type TabsProps = {
   children: React.ReactNode;
 };
 
-export const Tab = ({ children }: TabProps) => {
-  return <div>{children}</div>;
+export const Tab = ({ label, icon, active, onClick }: TabProps) => {
+  const tabStyles = clsx(
+    'cursor-pointer py-1 px-3 rounded-sm text-base',
+    active ? 'bg-white text-black hover:text-black font-semibold' : 'bg-none hover:bg-background2 text-text1'
+  );
+
+  return (
+    <button onClick={onClick} className={tabStyles}>
+      {icon && <FontAwesomeIcon icon={icon} className="mr-2" />}
+      {label}
+    </button>
+  );
 };
 
 export const Tabs = ({ headerClasses, contentClasses, children }: TabsProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const tabs = React.Children.toArray(children) as React.ReactElement<TabProps>[];
-
-  function tabStyles(index: number) {
-    return twMerge(
-      clsx(
-        'cursor-pointer py-1 px-3 rounded-sm text-base text-text1 hover:text-text2',
-        index === activeIndex && 'bg-white text-black hover:text-black font-semibold'
-      )
-    );
-  }
 
   function headerStyles() {
     return twMerge(clsx('px-3 py-2 border-b border-border1 flex space-x-3', headerClasses));
@@ -49,17 +52,19 @@ export const Tabs = ({ headerClasses, contentClasses, children }: TabsProps) => 
       <div className={headerStyles()}>
         {tabs.map((tab, index) => (
           <React.Fragment key={index}>
-            <button onClick={() => setActiveIndex(index)} className={tabStyles(index)}>
-              {tab.props.icon && <FontAwesomeIcon icon={tab.props.icon} className="mr-2" />}
-              {tab.props.label}
-            </button>
+            <Tab
+              icon={tab.props.icon}
+              label={tab.props.label}
+              onClick={() => setActiveIndex(index)}
+              active={activeIndex === index}
+            />
             {index < tabs.length - 1 && <div className="border-l border-border1 h-6 self-center"></div>}
           </React.Fragment>
         ))}
       </div>
 
       {/* Active Tab Content */}
-      <div className={contentStyles()}>{tabs[activeIndex]}</div>
+      <div className={contentStyles()}>{tabs[activeIndex].props.children}</div>
     </div>
   );
 };

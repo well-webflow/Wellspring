@@ -16,7 +16,7 @@ import {
   ATTR_A11Y_SCROLL_ON_FOCUS,
   ATTR_A11Y_SLIDE_LABEL_MESSAGE,
   ATTR_A11Y_SLIDE_ROLE,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function a11yConfig() {
   let config: WaterfallCategory = {

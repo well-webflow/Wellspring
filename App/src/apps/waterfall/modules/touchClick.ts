@@ -31,7 +31,7 @@ import {
   ATTR_TOUCH_RELEASE_ON_EDGES,
   ATTR_TOUCH_START_FORCE_PREVENT_DEFAULT,
   ATTR_TOUCH_START_PREVENT_DEFAULT,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function touchClickCategory() {
   let config: WaterfallCategory = {

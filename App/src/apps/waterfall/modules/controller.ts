@@ -1,6 +1,6 @@
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { ATTR_CONTROLLER, ATTR_CONTROLLER_BY, ATTR_CONTROLLER_INVERSE } from 'well-waterfall/src/lib/attributes';
+import { ATTR_CONTROLLER, ATTR_CONTROLLER_BY, ATTR_CONTROLLER_INVERSE } from 'well-waterfall';
 
 export default function controllerCategory() {
   let config: WaterfallCategory = {

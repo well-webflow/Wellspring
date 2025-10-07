@@ -7,7 +7,8 @@ import {
   EL_PAGINATION_BULLET_ACTIVE,
   EL_SCROLLBAR,
   EL_SCROLLBAR_DRAG,
-} from 'well-waterfall/src/lib/elements';
+  EL_SLIDE_COUNT,
+} from 'well-waterfall';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 import { WaterfallCategory, WaterfallMode } from '../waterfall';
 import { addDefaultSettings } from './waterfallHelpers';
@@ -63,10 +64,6 @@ export const createWaterfallElement = async (
   addDefaultSettings(defaultWaterfallSettings, waterfallDiv);
   webflow.setSelectedElement(waterfallDiv);
 
-  createNavigation();
-  createPagination();
-  createScrollbar();
-
   return true;
 };
 
@@ -84,12 +81,12 @@ export async function createNavigation() {
 
   const prevButton = await navigation.prepend(webflow.elementPresets.DOM);
   prevButton.setTag('button');
-  prevButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'prev');
+  prevButton.setAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_PREV);
   prevButton.setStyles([prevClass]);
 
   const nextButton = await navigation.prepend(webflow.elementPresets.DOM);
   nextButton.setTag('button');
-  nextButton.setAttribute(ATTR_WATERFALL_ELEMENT, 'next');
+  nextButton.setAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_NEXT);
   nextButton.setStyles([nextClass]);
 
   webflow.notify({
@@ -116,17 +113,17 @@ export async function createPagination() {
 
   const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
   pagination.setTag('div');
-  pagination.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination');
+  pagination.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION);
   pagination.setStyles([paginationClass]);
 
   const paginationBulletActive = await pagination.prepend(webflow.elementPresets.DOM);
   paginationBulletActive.setTag('button');
-  paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet-active');
+  paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET_ACTIVE);
   paginationBulletActive.setStyles([paginationBulletActiveClass]);
 
   const paginationBullet = await pagination.prepend(webflow.elementPresets.DOM);
   paginationBullet.setTag('button');
-  paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, 'pagination-bullet');
+  paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET);
   paginationBullet.setStyles([paginationBulletClass]);
 
   webflow.notify({
@@ -171,6 +168,12 @@ export async function convertElementToScrollbarContainer() {
 
 export async function convertElementToScrollbarDrag() {
   convertElementTo(EL_SCROLLBAR_DRAG, 'Scrollbar Drag');
+}
+
+/** SLIDE COUNT */
+
+export async function convertElementToSlideCount() {
+  convertElementTo(EL_SLIDE_COUNT, 'Slide Count');
 }
 
 export async function convertElementTo(elAttr: string, name: string) {

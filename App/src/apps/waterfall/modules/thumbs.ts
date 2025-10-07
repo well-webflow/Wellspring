@@ -6,7 +6,7 @@ import {
   ATTR_THUMBS_MULTIPLE_ACTIVE_THUMBS,
   ATTR_THUMBS,
   ATTR_THUMBS_SLIDE_THUMB_ACTIVE_CLASS,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function thumbsCategory() {
   let config: WaterfallCategory = {

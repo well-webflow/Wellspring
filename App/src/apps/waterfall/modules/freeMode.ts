@@ -9,7 +9,7 @@ import {
   ATTR_FREE_MODE_MOMENTUM_RATIO,
   ATTR_FREE_MODE_MOMENTUM_VELOCITY_RATIO,
   ATTR_FREE_MODE_STICKY,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function freemodeCategory() {
   let config: WaterfallCategory = {

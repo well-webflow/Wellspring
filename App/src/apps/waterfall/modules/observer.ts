@@ -8,7 +8,7 @@ import {
   ATTR_UPDATE_ON_WINDOW_RESIZE,
   ATTR_WATCH_OVERFLOW,
   ATTR_WATCH_SLIDES_PROGRESS,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function ObserverCategory() {
   let config: WaterfallCategory = {

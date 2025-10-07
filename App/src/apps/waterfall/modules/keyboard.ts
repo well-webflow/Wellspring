@@ -4,7 +4,7 @@ import {
   ATTR_KEYBOARD_ENABLED,
   ATTR_KEYBOARD_ONLY_IN_VIEWPORT,
   ATTR_KEYBOARD_PAGE_UP_DOWN,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function keyboardCategory() {
   let config: WaterfallCategory = {

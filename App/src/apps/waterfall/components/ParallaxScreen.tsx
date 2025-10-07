@@ -9,9 +9,10 @@ import {
   ATTR_PARALLAX_SCALE,
   ATTR_PARALLAX_X,
   ATTR_PARALLAX_Y,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 import { GenericSetting } from './UI/GenericSetting';
 import { InputWithButton } from '../../../components/UI/Input';
+import { Caption, Heading, Paragraph } from '../../../components/Typography';
 
 type ParallaxField = {
   label: string;
@@ -76,6 +77,7 @@ export default function ParallaxScreen() {
 
   return (
     <div className="space-y-5">
+      <Caption>Reminder! You need to enable Parallax on the Waterfall for this feature to work.</Caption>
       <div>
         Add Parallax to Selected: <SelectedElement />
       </div>

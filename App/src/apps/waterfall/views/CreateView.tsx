@@ -2,10 +2,22 @@ import { Heading, Paragraph } from '../../../components/Typography';
 import Button from '../../../components/UI/Button';
 import Card from '../../../components/UI/Card';
 import { useWebflow } from '../../../context/webflowContext';
-import { useWaterfall } from '../hooks/WaterfallContext';
+import ParallaxScreen from '../components/ParallaxScreen';
+import {
+  convertElementToNextButton,
+  convertElementToPaginationBullet,
+  convertElementToPaginationBulletActive,
+  convertElementToPaginationContainer,
+  convertElementToPrevButton,
+  convertElementToScrollbarContainer,
+  convertElementToScrollbarDrag,
+  convertElementToSlideCount,
+  createNavigation,
+  createPagination,
+  createScrollbar,
+} from '../lib/waterfallElements';
 
 export default function CreateView() {
-  const { createWaterfall } = useWaterfall();
   const { elementSelected } = useWebflow();
 
   if (!elementSelected)
@@ -19,27 +31,66 @@ export default function CreateView() {
     );
 
   return (
-    <div className="grid grid-cols-2 gap-4 items-stretch justify-stretch w-full h-80">
-      <button onClick={() => createWaterfall('cms')} className="cursor-pointer relative group">
-        <img
-          src="/images/waterfall.jpg"
-          className="transition-all duration-300 opacity-0 group-hover:opacity-100 z-0 absolute w-full h-full object-cover"
-        />
-        <div className="relative z-20 flex items-center justify-center h-full">
-          <Button size="lg">Create CMS Waterfall</Button>
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 group-hover:opacity-0 z-10"></div>
-        </div>
-      </button>
-      <button onClick={() => createWaterfall('static')} className="cursor-pointer relative group">
-        <img
-          src="/images/waterfall.jpg"
-          className="transition-all duration-300 opacity-0 group-hover:opacity-100 z-0 absolute w-full h-full object-cover"
-        />
-        <div className="relative z-20 flex items-center justify-center h-full">
-          <Button size="lg">Create Static Waterfall</Button>
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 group-hover:opacity-0 z-10"></div>
-        </div>
-      </button>
-    </div>
+    <>
+      <div>
+        <Heading level={3} className="mt-8">
+          Pagination
+        </Heading>
+        <Button onClick={() => createPagination()} size="lg" className="mt-4 w-full">
+          Create Pagination
+        </Button>
+        <Button onClick={() => convertElementToPaginationBullet()} size="lg" className="mt-4 w-full">
+          Convert to Pagination Bullet
+        </Button>
+        <Button onClick={() => convertElementToPaginationBulletActive()} size="lg" className="mt-4 w-full">
+          Convert to Pagination Bullet Active
+        </Button>
+        <Button onClick={() => convertElementToPaginationContainer()} size="lg" className="mt-4 w-full">
+          Convert to Pagination Container
+        </Button>
+      </div>
+      <div>
+        <Heading level={3} className="mt-8">
+          Navigation
+        </Heading>
+        <Button onClick={() => createNavigation()} size="lg" className="mt-4 w-full">
+          Create Navigation
+        </Button>
+        <Button onClick={() => convertElementToNextButton()} size="lg" className="mt-4 w-full">
+          Convert to Next Button
+        </Button>
+        <Button onClick={() => convertElementToPrevButton()} size="lg" className="mt-4 w-full">
+          Convert to Prev Button
+        </Button>
+      </div>
+      <div>
+        <Heading level={3} className="mt-8">
+          Scrollbar
+        </Heading>
+        <Button onClick={() => createScrollbar()} size="lg" className="mt-4 w-full">
+          Create Scrollbar
+        </Button>
+        <Button onClick={() => convertElementToScrollbarContainer()} size="lg" className="mt-4 w-full">
+          Convert to Scrollbar Container
+        </Button>
+        <Button onClick={() => convertElementToScrollbarDrag()} size="lg" className="mt-4 w-full">
+          Convert to Scrollbar Drag
+        </Button>
+      </div>
+      <div>
+        <Heading level={3} className="mt-8">
+          Slide Count
+        </Heading>
+        <Button onClick={() => convertElementToSlideCount()} size="lg" className="mt-4 w-full">
+          Convert to Slide Count
+        </Button>
+      </div>
+      <div>
+        <Heading level={3} className="mt-8">
+          Parallax
+        </Heading>
+        <ParallaxScreen />
+      </div>
+    </>
   );
 }

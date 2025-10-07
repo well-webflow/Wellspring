@@ -1,11 +1,10 @@
 import { Heading } from '../../../../components/Typography';
-import { EditNavbar } from '../../components/Navbar';
 import Setting from '../../components/Setting';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 import { WaterfallCategory } from '../../waterfall';
 
 export default function CategoryView() {
-  const { selectedCategory, waterfallConfig, loadedWaterfall } = useWaterfall();
+  const { selectedCategory, waterfallConfig } = useWaterfall();
 
   if (!selectedCategory || !waterfallConfig) return null;
 
@@ -20,7 +19,6 @@ export default function CategoryView() {
   if (category)
     return (
       <>
-        <EditNavbar onGoBack={() => {}} heading={`Editing ${loadedWaterfall?.name} / ${category.name}`} />
         <div className="p-5">
           <p className="mb-5 text-gray-300">{category.description}</p>
           {category.component && <SettingSection>{renderComponent(category)}</SettingSection>}

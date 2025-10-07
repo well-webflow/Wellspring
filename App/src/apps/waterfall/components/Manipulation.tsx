@@ -5,7 +5,7 @@ import Button from '../../../components/UI/Button';
 import { setAttribute } from '../../../utils/webflowHelpers';
 import { Select } from '../../../components/UI/Select';
 
-import { ATTR_MANIPULATION_PREPEND_SLIDE, ATTR_MANIPULATION_APPEND_SLIDE } from 'well-waterfall/src/lib/attributes';
+import { ATTR_MANIPULATION_PREPEND_SLIDE, ATTR_MANIPULATION_APPEND_SLIDE } from 'well-waterfall';
 import SelectedElement from '../../../components/SelectedElement';
 import { Caption, Heading } from '../../../components/Typography';
 

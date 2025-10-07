@@ -10,7 +10,7 @@ import {
   ATTR_SCROLLBAR_SCROLLBAR_DISABLED_CLASS,
   ATTR_SCROLLBAR_SNAP_ON_RELEASE,
   ATTR_SCROLLBAR_VERTICAL_CLASS,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 import ScrollbarScreen from '../components/Scrollbar';
 
 export default function scrollbarCategory() {

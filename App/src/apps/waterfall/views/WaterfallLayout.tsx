@@ -7,7 +7,8 @@ import { useEffect } from 'react';
 export default function WaterfallLayout() {
   useEffect(() => {
     webflow.setExtensionSize('large');
-  });
+  }, []);
+
   return (
     <WaterfallProvider>
       <WaterfallWrapper />

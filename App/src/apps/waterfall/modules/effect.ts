@@ -18,7 +18,7 @@ import {
   ATTR_EFFECT,
   ATTR_FLIP_LIMIT_ROTATION,
   ATTR_FLIP_SLIDE_SHADOWS,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function effectCategory() {
   let config: WaterfallCategory = {

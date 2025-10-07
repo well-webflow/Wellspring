@@ -8,7 +8,7 @@ import {
   ATTR_ZOOM_PAN_ON_MOUSE_MOVE,
   ATTR_ZOOM_TOGGLE,
   ATTR_ZOOMED_SLIDE_CLASS,
-} from 'well-waterfall/src/lib/attributes';
+} from 'well-waterfall';
 
 export default function zoomCategory() {
   let config: WaterfallCategory = {
