@@ -33,7 +33,7 @@ export default function CreateView() {
   return (
     <>
       <div>
-        <Heading level={3} className="mt-8">
+        <Heading level={3} className="">
           Pagination
         </Heading>
         <Button onClick={() => createPagination()} size="lg" className="mt-4 w-full">

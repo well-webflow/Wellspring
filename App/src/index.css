@@ -4,7 +4,7 @@
   --font-*: initial;
   --font-display: Inter;
   --font-body: Inter;
-  --font-brand: Radley, serif;
+  --font-brand: Erstoria, serif;
 
   --background-image-action-secondary-background: var(--actionSecondaryBackground);
   --background-image-action-secondary-background-hover: var(--actionSecondaryBackgroundHover);
@@ -47,4 +47,9 @@
 @font-face {
   font-family: 'Radley';
   src: url('../public/fonts/Radley-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Erstoria';
+  src: url('../public/fonts/Erstoria.woff2');
 }

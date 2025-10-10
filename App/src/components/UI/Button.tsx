@@ -39,7 +39,7 @@ export default function Button({
               color === 'secondary',
           },
           {
-            'px-2 h-8 text-sm rounded-xs ': size === 'sm',
+            'px-2 h-7 text-sm rounded-xs ': size === 'sm',
             'px-3 h-14 text-base': size === 'md',
             'px-5 h-16 text-lg': size === 'lg',
           },

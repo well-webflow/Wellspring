@@ -5,17 +5,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { useWaterfall } from '../hooks/WaterfallContext';
 import Button from '../../../components/UI/Button';
+import { useNavigate } from 'react-router';
 
 export default function SelectWaterfallView() {
-  const { waterfalls, waterfallNames, searchForWaterfalls, loadAndEditWaterfall } = useWaterfall();
+  const { waterfalls, waterfallNames, searchForWaterfalls, loadWaterfall, unloadWaterfall } = useWaterfall();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    unloadWaterfall();
     searchForWaterfalls();
   }, []);
 
-  function selectWaterfall(wtf: AnyElement) {
+  async function selectWaterfall(wtf: AnyElement) {
     webflow.setSelectedElement(wtf);
-    loadAndEditWaterfall();
+    const name = await loadWaterfall();
+    const routeName = name ?? 'unknown';
+    navigate(`/waterfall/edit/${routeName}`);
   }
 
   function search() {

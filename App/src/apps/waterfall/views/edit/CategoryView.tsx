@@ -2,9 +2,19 @@ import { Heading } from '../../../../components/Typography';
 import Setting from '../../components/Setting';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 import { WaterfallCategory } from '../../waterfall';
+import { useParams } from 'react-router';
+import { useEffect } from 'react';
 
 export default function CategoryView() {
-  const { selectedCategory, waterfallConfig } = useWaterfall();
+  const { categoryName } = useParams<{ categoryName: string }>();
+  const { selectedCategory, setSelectedCategory, waterfallConfig } = useWaterfall();
+
+  // Sync URL parameter with context state when navigating via browser buttons
+  useEffect(() => {
+    if (categoryName && categoryName !== selectedCategory) {
+      setSelectedCategory(categoryName);
+    }
+  }, [categoryName]);
 
   if (!selectedCategory || !waterfallConfig) return null;
 
@@ -18,9 +28,14 @@ export default function CategoryView() {
 
   if (category)
     return (
-      <>
-        <div className="p-5">
-          <p className="mb-5 text-gray-300">{category.description}</p>
+      <div className="">
+        <div className="">
+          <div>
+            <Heading level={3} className="mb-2">
+              {category.name}
+            </Heading>
+            <p className="text-sm text-text2 mb-5">{category.description}</p>
+          </div>
           {category.component && <SettingSection>{renderComponent(category)}</SettingSection>}
           {settings.length > 0 && (
             <SettingSection>
@@ -45,7 +60,7 @@ export default function CategoryView() {
             </SettingSection>
           ))}
         </div>
-      </>
+      </div>
     );
 }
 

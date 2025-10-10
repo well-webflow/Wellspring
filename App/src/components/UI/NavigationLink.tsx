@@ -5,7 +5,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 interface NavigationLinkProps {
   to: string;
   icon?: IconDefinition;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   onClick?: () => void;
   target?: string;

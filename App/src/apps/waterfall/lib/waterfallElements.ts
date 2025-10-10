@@ -10,12 +10,12 @@ import {
   EL_SLIDE_COUNT,
 } from 'well-waterfall';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
-import { WaterfallCategory, WaterfallMode } from '../waterfall';
+import { WaterfallCategory, WaterfallContentType } from '../waterfall';
 import { addDefaultSettings } from './waterfallHelpers';
 
 export const createWaterfallElement = async (
   defaultWaterfallSettings: WaterfallCategory[],
-  mode: WaterfallMode = 'static'
+  mode: WaterfallContentType = 'static'
 ) => {
   const parentEl = await webflow.getSelectedElement();
   if (!parentEl?.children) return false;

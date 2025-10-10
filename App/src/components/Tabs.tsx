@@ -11,6 +11,7 @@ type TabProps = {
   label: string;
   children?: React.ReactNode;
   icon?: IconProp;
+  className?: string;
 };
 
 type TabsProps = {
@@ -19,10 +20,13 @@ type TabsProps = {
   children: React.ReactNode;
 };
 
-export const Tab = ({ label, icon, active, onClick }: TabProps) => {
-  const tabStyles = clsx(
-    'cursor-pointer py-1 px-3 rounded-sm text-base',
-    active ? 'bg-white text-black hover:text-black font-semibold' : 'bg-none hover:bg-background2 text-text1'
+export const Tab = ({ label, icon, active, onClick, className }: TabProps) => {
+  const tabStyles = twMerge(
+    clsx(
+      'cursor-pointer py-1 px-3 rounded-sm text-base flex flex-row items-center',
+      active ? 'bg-white text-black hover:text-black font-semibold' : 'bg-none hover:bg-background2 text-text1'
+    ),
+    className
   );
 
   return (

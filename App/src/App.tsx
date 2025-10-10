@@ -11,8 +11,6 @@ import CreateView from './apps/waterfall/views/CreateView';
 import NewWaterfallView from './apps/waterfall/views/NewWaterfallView';
 import SelectWaterfallView from './apps/waterfall/views/SelectWaterfallView';
 import SetupView from './apps/waterfall/views/SetupView';
-import WaterfallEditLayout from './apps/waterfall/views/edit/WaterfallEditLayout';
-import WaterfallHomeLayout from './apps/waterfall/views/WaterfallHomeLayout';
 
 export default function App() {
   return (
@@ -23,15 +21,16 @@ export default function App() {
             <Route element={<Layout />}>
               <Route index element={<WellflowMainView />} />
               <Route path="/waterfall" element={<WaterfallLayout />}>
-                <Route element={<WaterfallHomeLayout />}>
-                  <Route index element={<NewWaterfallView />} />
-                  <Route path="create" element={<CreateView />} />
-                  <Route path="setup" element={<SetupView />} />
-                  <Route path="select" element={<SelectWaterfallView />} />
-                </Route>
-                <Route path="edit" element={<WaterfallEditLayout />}>
-                  <Route index element={<EditView />} />
+                <Route index element={<NewWaterfallView />} />
+                <Route path="create" element={<CreateView />} />
+                <Route path="new">
                   <Route path=":categoryName" element={<CategoryView />} />
+                </Route>
+                <Route path="setup" element={<SetupView />} />
+                <Route path="edit">
+                  <Route index element={<SelectWaterfallView />} />
+                  <Route path=":waterfallName" element={<EditView />} />
+                  <Route path=":waterfallName/:categoryName" element={<CategoryView />} />
                 </Route>
               </Route>
             </Route>

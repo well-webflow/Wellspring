@@ -1,6 +1,6 @@
-import { faBug, faCog, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faCog, faDatabase, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { ATTR_DEBUG_MODE, ATTR_ENABLED, ATTR_INIT, ATTR_WATERFALL } from 'well-waterfall';
+import { ATTR_DEBUG_MODE, ATTR_ENABLED, ATTR_INIT, ATTR_WATERFALL, ATTR_WATERFALL_CONTENT } from 'well-waterfall';
 
 export default function generalConfig() {
   let config: WaterfallCategory = {
@@ -44,7 +44,6 @@ export default function generalConfig() {
         swiperDefault: '-',
         value: 'New Waterfall',
         description: 'The name of the waterfall',
-
         icon: faNoteSticky,
         type: 'string',
       },
@@ -54,9 +53,18 @@ export default function generalConfig() {
         swiperDefault: 'false',
         value: '',
         description: 'Prints out debug statements to the browser console',
-
         icon: faBug,
         type: 'boolean',
+      },
+      {
+        name: 'Content Type',
+        attr: ATTR_WATERFALL_CONTENT,
+        swiperDefault: 'static',
+        value: 'static',
+        description: 'Choose between static content or CMS driven content',
+        type: 'select',
+        icon: faDatabase,
+        options: ['static', 'cms'],
       },
     ],
   };

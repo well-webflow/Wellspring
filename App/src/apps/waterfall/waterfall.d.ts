@@ -1,6 +1,7 @@
 import { BreakpointObject } from '../../wellflow';
 
-export type WaterfallMode = 'static' | 'cms';
+export type EditMode = 'new' | 'edit' | 'view';
+export type WaterfallContentType = 'static' | 'cms';
 
 export type WaterfallConfig = WaterfallCategory[];
 
@@ -57,21 +58,24 @@ export type LoadedWaterfall = {
 };
 
 interface WaterfallState {
+  mode: EditMode;
+  setMode: (value: EditMode) => void;
   waterfalls: AnyElement[];
   waterfallNames: string[];
   waterfallConfig: WaterfallCategory[] | null;
+  initNewWaterfall: () => void;
   setWaterfallConfig: (value: WaterfallCategory[]) => void;
   selectedCategory: string | null;
   setSelectedCategory: (value: string | null) => void;
-  createWaterfall: (mode: WaterfallMode) => void;
-  loadWaterfall: () => void;
-  loadAndEditWaterfall: () => void;
+  createWaterfall: () => void;
+  loadWaterfall: () => Promise<string | null | undefined>;
   loadedWaterfall: LoadedWaterfall | null;
   unloadWaterfall: () => void;
   updateWaterfall: (propAttrName: string, newValue: string, breakpoint?: string) => void;
   saveWaterfall: () => Promise<void>;
   searchForWaterfalls: () => void;
   getWaterfallName: (el: AnyElement) => Promise<string | null>;
+  findWaterfallByName: (name: string) => Promise<AnyElement | null>;
   waterfallSelected: string | null;
   isLoading: Boolean;
   setIsLoading: (value: Boolean) => void;

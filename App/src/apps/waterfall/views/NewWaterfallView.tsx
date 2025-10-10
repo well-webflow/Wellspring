@@ -1,12 +1,27 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Heading, Paragraph } from '../../../components/Typography';
 import Button from '../../../components/UI/Button';
 import Card from '../../../components/UI/Card';
 import { useWebflow } from '../../../context/webflowContext';
 import { useWaterfall } from '../hooks/WaterfallContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 export default function NewWaterfallView() {
-  const { createWaterfall } = useWaterfall();
+  const { initNewWaterfall, mode, waterfallConfig, setSelectedCategory } = useWaterfall();
+
   const { elementSelected } = useWebflow();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!waterfallConfig || mode === 'edit') initNewWaterfall();
+  }, []);
+
+  function goToCategory(selectedCategory: string) {
+    setSelectedCategory(selectedCategory);
+    navigate(`/waterfall/new/${selectedCategory}`);
+  }
 
   if (!elementSelected)
     return (
@@ -19,33 +34,23 @@ export default function NewWaterfallView() {
     );
 
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-4 items-stretch justify-stretch w-full h-80">
-        <button onClick={() => createWaterfall('cms')} className="cursor-pointer relative group">
-          <img
-            src="/images/waterfall.jpg"
-            className="transition-all duration-300 opacity-0 group-hover:opacity-100 z-0 absolute w-full h-full object-cover"
-          />
-          <div className="relative z-20 flex items-center justify-center h-full">
-            <Button size="lg">Create CMS Waterfall</Button>
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 group-hover:opacity-0 z-10"></div>
-          </div>
-        </button>
-        <button onClick={() => createWaterfall('static')} className="cursor-pointer relative group">
-          <img
-            src="/images/waterfall.jpg"
-            className="transition-all duration-300 opacity-0 group-hover:opacity-100 z-0 absolute w-full h-full object-cover"
-          />
-          <div className="relative z-20 flex items-center justify-center h-full">
-            <Button size="lg">Create Static Waterfall</Button>
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 group-hover:opacity-0 z-10"></div>
-          </div>
-        </button>
-      </div>
-      <div className="px-4 py-4 flex justify-end border-t border-border1 fixed bottom-0 left-0 w-full">
-        <Button size="sm" color="primary">
-          Create
-        </Button>
+    <div className="">
+      <div className="space-y-2">
+        {waterfallConfig?.map((category) => (
+          <Button size="lg" key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
+            <div className="flex flex-row items-center text-left gap-4">
+              {category.icon && (
+                <div className="bg-primary w-8 h-8 rounded-full flex items-center justify-center">
+                  <FontAwesomeIcon icon={category.icon} className="text-primary-dark" />
+                </div>
+              )}
+              <div className="">
+                <div className="text-base font-bold">{category.name}</div>
+                <div className="text-sm text-text2">{category.summary}</div>
+              </div>
+            </div>
+          </Button>
+        ))}
       </div>
     </div>
   );
