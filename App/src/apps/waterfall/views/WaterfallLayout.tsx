@@ -1,13 +1,11 @@
 import Loader from '../../../components/UI/Loader';
 import { useWaterfall, WaterfallProvider } from '../hooks/WaterfallContext';
-import { NavLink, Outlet, useLocation, useMatch } from 'react-router';
+import { NavLink, Outlet, useMatch } from 'react-router';
 import { Tab } from '../../../components/Tabs';
 import { faArrowsRotate, faBox, faCirclePlus, faGear, faPencil, faSave } from '@fortawesome/free-solid-svg-icons';
 import { WellflowHeader } from '../../../views/WellflowMainView';
 import Button from '../../../components/UI/Button';
-import { Toolbar } from '../../../components/UI/Toolbar';
 import { useEffect } from 'react';
-import HistoryNavigationButtons from '../../../components/UI/HistoryNavigationButtons';
 
 export default function WaterfallWrapper() {
   useEffect(() => {
@@ -31,50 +29,12 @@ export function WaterfallLayout() {
         <WellflowHeader />
         <div className="flex flex-1 overflow-hidden">
           <WaterfallSidebar />
-          <div className="flex-1 w-full min-w-0 overflow-hidden flex flex-col">
-            <ControlToolbar />
-            <div className="p-3 flex-1 overflow-y-auto">
-              <Outlet />
-            </div>
+          <div className="flex-1 w-full min-w-0 overflow-hidden flex flex-col overflow-y-auto">
+            <Outlet />
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-export function ControlToolbar() {
-  const { mode, createWaterfall, loadWaterfall, saveWaterfall, loadedWaterfall } = useWaterfall();
-
-  const location = useLocation();
-
-  return (
-    <Toolbar position="top">
-      <div className="flex flex-row gap-2 w-full justify-between">
-        <div className="flex gap-3 items-baseline">
-          <HistoryNavigationButtons minPath="/waterfall" />
-          {mode !== 'view' && <div className="font-mono text-center">{loadedWaterfall?.name}</div>}
-          <div className="text-sm text-text2">{location.pathname}</div>
-        </div>
-        <div className="flex gap-2 justify-end">
-          {mode === 'new' && (
-            <Button size="sm" color="primary" onClick={createWaterfall}>
-              Create Waterfall
-            </Button>
-          )}
-          {mode === 'edit' && (
-            <>
-              <Button size="sm" icon={faArrowsRotate} onClick={loadWaterfall} color="secondary">
-                Reload
-              </Button>
-              <Button size="sm" icon={faSave} onClick={saveWaterfall} color="primary">
-                Save
-              </Button>{' '}
-            </>
-          )}
-        </div>
-      </div>
-    </Toolbar>
   );
 }
 
@@ -122,7 +82,7 @@ function WaterfallSidebar() {
         )}
       </NavLink>
 
-      <NavLink to="/waterfall/edit" className="w-full">
+      <NavLink to="/waterfall/select" className="w-full">
         {({ isActive }) => (
           <Tab label="Edit" icon={faPencil} active={isActive || !!isEditMatch} className="w-full text-left" />
         )}

@@ -139,7 +139,6 @@ export default function playbackCategory() {
         swiperDefault: '300',
         value: '',
         description: 'Duration of transition between slides (in ms). Small number go fast.',
-
         type: 'number',
       },
       {
@@ -148,8 +147,7 @@ export default function playbackCategory() {
         swiperDefault: 'none',
         value: '',
         description: 'Choose between loop, rewind, and none',
-        options: ['none', 'loop', 'rewind', 'none'],
-
+        options: ['none', 'loop', 'rewind'],
         type: 'select',
       },
     ],

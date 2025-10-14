@@ -58,8 +58,6 @@ export type LoadedWaterfall = {
 };
 
 interface WaterfallState {
-  mode: EditMode;
-  setMode: (value: EditMode) => void;
   waterfalls: AnyElement[];
   waterfallNames: string[];
   waterfallConfig: WaterfallCategory[] | null;

@@ -1,35 +1,37 @@
-import { useNavigate, useParams } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../../../../components/UI/Button';
-import { useWaterfall } from '../../hooks/WaterfallContext';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import Card from '../../../../components/UI/Card';
+import { Heading, Paragraph } from '../../../../components/Typography';
+import Button from '../../../../components/UI/Button';
+import { useWebflow } from '../../../../context/webflowContext';
+import { useWaterfall } from '../../hooks/WaterfallContext';
 
-export default function EditView() {
-  const { waterfallName } = useParams<{ waterfallName: string }>();
-  const { setSelectedCategory, waterfallConfig, loadWaterfall, loadedWaterfall, findWaterfallByName } = useWaterfall();
+export default function NewWaterfallView() {
+  const { initNewWaterfall, waterfallConfig, setSelectedCategory } = useWaterfall();
+
+  const { elementSelected } = useWebflow();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Only load waterfall if config is null (coming from SelectWaterfallView)
-    // Skip if config already exists (coming from CategoryView)
-    if (waterfallName && waterfallConfig === null) {
-      findWaterfallByName(waterfallName).then((element) => {
-        if (element) {
-          console.log('Found waterfall element:', element);
-          webflow.setSelectedElement(element);
-          loadWaterfall();
-        } else {
-          console.log('Waterfall not found');
-        }
-      });
-    }
-  }, [waterfallName, waterfallConfig]);
+    if (!waterfallConfig) initNewWaterfall();
+  }, []);
 
   function goToCategory(selectedCategory: string) {
     setSelectedCategory(selectedCategory);
-    navigate(`/waterfall/edit/${loadedWaterfall?.name}/${selectedCategory}`);
+    navigate(`/waterfall/new/${selectedCategory}`);
   }
+
+  if (!elementSelected)
+    return (
+      <Card>
+        <Heading level={2}>Select An Element</Heading>
+        <Paragraph size="sm" className="text-text3 mb-0">
+          Please select an <span className="text-primary">Element</span> to begin.
+        </Paragraph>
+      </Card>
+    );
 
   return (
     <div className="space-y-2">

@@ -19,9 +19,9 @@ export function Heading({ level, children, className }: HeadingProps) {
   const defaultClassName = twMerge(
     clsx(
       {
-        'font-brand text-2xl': level === 1,
-        'text-xl': level === 2,
-        'text-lg': level === 3,
+        'font-brand text-4xl': level === 1,
+        'font-brand text-2xl': level === 2,
+        'font-brand text-xl': level === 3,
         'text-base font-bold': level === 4,
         'text-sm': level === 5,
         'text-xs': level === 6,

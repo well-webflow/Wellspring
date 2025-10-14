@@ -6,6 +6,7 @@ import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { useWaterfall } from '../hooks/WaterfallContext';
 import Button from '../../../components/UI/Button';
 import { useNavigate } from 'react-router';
+import { Toolbar } from '../../../components/UI/Toolbar';
 
 export default function SelectWaterfallView() {
   const { waterfalls, waterfallNames, searchForWaterfalls, loadWaterfall, unloadWaterfall } = useWaterfall();
@@ -30,22 +31,24 @@ export default function SelectWaterfallView() {
   }
 
   return (
-    <div className="">
-      <div className="w-full flex flex-row justify-between items-center">
+    <div>
+      <Toolbar>
         <Heading level={4}>Select a Waterfall to Edit</Heading>
         <FontAwesomeIcon icon={faRotateRight} className="text-text3 cursor-pointer" onClick={search}></FontAwesomeIcon>
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex flex-row items-center justify-between w-full"></div>
-        {waterfalls.length ? (
-          waterfalls.map((wtf, index) => (
-            <Button key={index} onClick={() => selectWaterfall(wtf)}>
-              {waterfallNames[index]}
-            </Button>
-          ))
-        ) : (
-          <Card>No Waterfalls found on this page.</Card>
-        )}
+      </Toolbar>
+      <div className="p-3">
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row items-center justify-between w-full"></div>
+          {waterfalls.length ? (
+            waterfalls.map((wtf, index) => (
+              <Button key={index} onClick={() => selectWaterfall(wtf)}>
+                {waterfallNames[index]}
+              </Button>
+            ))
+          ) : (
+            <Card>No Waterfalls found on this page.</Card>
+          )}
+        </div>
       </div>
     </div>
   );

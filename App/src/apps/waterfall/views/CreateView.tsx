@@ -3,19 +3,10 @@ import Button from '../../../components/UI/Button';
 import Card from '../../../components/UI/Card';
 import { useWebflow } from '../../../context/webflowContext';
 import ParallaxScreen from '../components/modules/ParallaxScreen';
-import {
-  convertElementToNextButton,
-  convertElementToPaginationBullet,
-  convertElementToPaginationBulletActive,
-  convertElementToPaginationContainer,
-  convertElementToPrevButton,
-  convertElementToScrollbarContainer,
-  convertElementToScrollbarDrag,
-  convertElementToSlideCount,
-  createNavigation,
-  createPagination,
-  createScrollbar,
-} from '../lib/waterfallElements';
+import { convertElementToSlideCount } from '../lib/waterfallElements';
+import PaginationScreen from '../components/modules/PaginationScreen';
+import NavigationScreen from '../components/modules/NavigationScreen';
+import ScrollbarScreen from '../components/modules/ScrollbarScreen';
 
 export default function CreateView() {
   const { elementSelected } = useWebflow();
@@ -31,54 +22,27 @@ export default function CreateView() {
     );
 
   return (
-    <>
+    <div className="p-3 flex-1 overflow-y-auto space-y-4">
       <div>
-        <Heading level={3} className="">
+        <Heading level={3} className="mb-3">
           Pagination
         </Heading>
-        <Button onClick={() => createPagination()} size="lg" className="mt-4 w-full">
-          Create Pagination
-        </Button>
-        <Button onClick={() => convertElementToPaginationBullet()} size="lg" className="mt-4 w-full">
-          Convert to Pagination Bullet
-        </Button>
-        <Button onClick={() => convertElementToPaginationBulletActive()} size="lg" className="mt-4 w-full">
-          Convert to Pagination Bullet Active
-        </Button>
-        <Button onClick={() => convertElementToPaginationContainer()} size="lg" className="mt-4 w-full">
-          Convert to Pagination Container
-        </Button>
+        <PaginationScreen />
       </div>
       <div>
-        <Heading level={3} className="mt-8">
+        <Heading level={3} className="mt-8 mb-3">
           Navigation
         </Heading>
-        <Button onClick={() => createNavigation()} size="lg" className="mt-4 w-full">
-          Create Navigation
-        </Button>
-        <Button onClick={() => convertElementToNextButton()} size="lg" className="mt-4 w-full">
-          Convert to Next Button
-        </Button>
-        <Button onClick={() => convertElementToPrevButton()} size="lg" className="mt-4 w-full">
-          Convert to Prev Button
-        </Button>
+        <NavigationScreen />
       </div>
       <div>
-        <Heading level={3} className="mt-8">
+        <Heading level={3} className="mt-8 mb-3">
           Scrollbar
         </Heading>
-        <Button onClick={() => createScrollbar()} size="lg" className="mt-4 w-full">
-          Create Scrollbar
-        </Button>
-        <Button onClick={() => convertElementToScrollbarContainer()} size="lg" className="mt-4 w-full">
-          Convert to Scrollbar Container
-        </Button>
-        <Button onClick={() => convertElementToScrollbarDrag()} size="lg" className="mt-4 w-full">
-          Convert to Scrollbar Drag
-        </Button>
+        <ScrollbarScreen />
       </div>
       <div>
-        <Heading level={3} className="mt-8">
+        <Heading level={3} className="mt-8 mb-3">
           Slide Count
         </Heading>
         <Button onClick={() => convertElementToSlideCount()} size="lg" className="mt-4 w-full">
@@ -86,11 +50,11 @@ export default function CreateView() {
         </Button>
       </div>
       <div>
-        <Heading level={3} className="mt-8">
+        <Heading level={3} className="mt-8 mb-3">
           Parallax
         </Heading>
         <ParallaxScreen />
       </div>
-    </>
+    </div>
   );
 }

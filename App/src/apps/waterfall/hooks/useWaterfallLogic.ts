@@ -19,7 +19,6 @@ import { ATTR_WATERFALL_CONTENT } from 'well-waterfall';
 
 export function useWaterfallLogic(): WaterfallState {
   const [waterfalls, setWaterfalls] = useState<AnyElement[]>([]);
-  const [mode, setMode] = useState<EditMode>('view');
   const [waterfallNames, setWaterfallNames] = useState<string[]>([]);
   const [waterfallConfig, setWaterfallConfig] = useState<WaterfallConfig | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -285,8 +284,6 @@ export function useWaterfallLogic(): WaterfallState {
 
   return {
     waterfalls,
-    mode,
-    setMode,
     waterfallNames,
     waterfallConfig,
     initNewWaterfall,
