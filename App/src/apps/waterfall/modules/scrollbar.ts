@@ -1,4 +1,5 @@
 import { faBarsProgress } from '@fortawesome/free-solid-svg-icons';
+import ScrollbarScreen from '../components/modules/ScrollbarScreen';
 import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_SCROLLBAR_DRAG_SIZE,
@@ -11,7 +12,6 @@ import {
   ATTR_SCROLLBAR_SNAP_ON_RELEASE,
   ATTR_SCROLLBAR_VERTICAL_CLASS,
 } from 'well-waterfall';
-import ScrollbarScreen from '../components/Scrollbar';
 
 export default function scrollbarCategory() {
   let config: WaterfallCategory = {

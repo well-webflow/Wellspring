@@ -10,9 +10,9 @@ import { useWellflow } from '../context/wellflowContext';
 import NavigationLink from '../components/UI/NavigationLink';
 
 export default function WellflowMainView() {
-  const { siteData } = useAuth();
+  //const { siteData } = useAuth();
 
-  const siteId = siteData?.siteId || '';
+  //const siteId = siteData?.siteId || '';
 
   useEffect(() => {
     webflow.setExtensionSize('comfortable');

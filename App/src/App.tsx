@@ -14,29 +14,29 @@ import SetupView from './apps/waterfall/views/SetupView';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <WebflowProvider>
-        <WellflowProvider>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route index element={<WellflowMainView />} />
-              <Route path="/waterfall" element={<WaterfallLayout />}>
-                <Route index element={<NewWaterfallView />} />
-                <Route path="create" element={<CreateView />} />
-                <Route path="new">
-                  <Route path=":categoryName" element={<CategoryView />} />
-                </Route>
-                <Route path="setup" element={<SetupView />} />
-                <Route path="edit">
-                  <Route index element={<SelectWaterfallView />} />
-                  <Route path=":waterfallName" element={<EditView />} />
-                  <Route path=":waterfallName/:categoryName" element={<CategoryView />} />
-                </Route>
+    // <AuthProvider>
+    <WebflowProvider>
+      <WellflowProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<WellflowMainView />} />
+            <Route path="/waterfall" element={<WaterfallLayout />}>
+              <Route index element={<NewWaterfallView />} />
+              <Route path="create" element={<CreateView />} />
+              <Route path="new">
+                <Route path=":categoryName" element={<CategoryView />} />
+              </Route>
+              <Route path="setup" element={<SetupView />} />
+              <Route path="edit">
+                <Route index element={<SelectWaterfallView />} />
+                <Route path=":waterfallName" element={<EditView />} />
+                <Route path=":waterfallName/:categoryName" element={<CategoryView />} />
               </Route>
             </Route>
-          </Routes>
-        </WellflowProvider>
-      </WebflowProvider>
-    </AuthProvider>
+          </Route>
+        </Routes>
+      </WellflowProvider>
+    </WebflowProvider>
+    // </AuthProvider>
   );
 }

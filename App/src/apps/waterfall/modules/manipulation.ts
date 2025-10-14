@@ -1,5 +1,5 @@
 import { faAddressBook } from '@fortawesome/free-solid-svg-icons';
-import ManipulationScreen from '../components/Manipulation';
+import ManipulationScreen from '../components/modules/ManipulationScreen';
 import { WaterfallCategory } from '../waterfall';
 
 export default function manipulationCategory() {

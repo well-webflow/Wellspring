@@ -1,11 +1,11 @@
 import { faArrowsLeftRightToLine, faPlusCircle, faSquare } from '@fortawesome/free-solid-svg-icons';
-import Button from '../../../components/UI/Button';
 import {
   convertElementToScrollbarContainer,
   convertElementToScrollbarDrag,
   createScrollbar,
-} from '../lib/waterfallElements';
-import SelectedElement from '../../../components/SelectedElement';
+} from '../../lib/waterfallElements';
+import SelectedElement from '../../../../components/SelectedElement';
+import Button from '../../../../components/UI/Button';
 
 export default function ScrollbarScreen() {
   return (

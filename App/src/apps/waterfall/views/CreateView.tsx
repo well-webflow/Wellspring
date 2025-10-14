@@ -2,7 +2,7 @@ import { Heading, Paragraph } from '../../../components/Typography';
 import Button from '../../../components/UI/Button';
 import Card from '../../../components/UI/Card';
 import { useWebflow } from '../../../context/webflowContext';
-import ParallaxScreen from '../components/ParallaxScreen';
+import ParallaxScreen from '../components/modules/ParallaxScreen';
 import {
   convertElementToNextButton,
   convertElementToPaginationBullet,

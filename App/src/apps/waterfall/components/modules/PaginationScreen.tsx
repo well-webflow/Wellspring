@@ -1,12 +1,12 @@
 import { faDotCircle, faPlusCircle, faSquare } from '@fortawesome/free-solid-svg-icons';
-import Button from '../../../components/UI/Button';
-import SelectedElement from '../../../components/SelectedElement';
+import Button from '../../../../components/UI/Button';
+import SelectedElement from '../../../../components/SelectedElement';
 import {
   convertElementToPaginationBullet,
   convertElementToPaginationBulletActive,
   convertElementToPaginationContainer,
   createPagination,
-} from '../lib/waterfallElements';
+} from '../../lib/waterfallElements';
 
 export default function PaginationScreen() {
   return (

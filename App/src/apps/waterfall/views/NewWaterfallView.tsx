@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
 export default function NewWaterfallView() {
-  const { initNewWaterfall, mode, waterfallConfig, setSelectedCategory } = useWaterfall();
+  const { initNewWaterfall, mode, setMode, waterfallConfig, setSelectedCategory } = useWaterfall();
 
   const { elementSelected } = useWebflow();
 
@@ -16,6 +16,7 @@ export default function NewWaterfallView() {
 
   useEffect(() => {
     if (!waterfallConfig || mode === 'edit') initNewWaterfall();
+    setMode('new');
   }, []);
 
   function goToCategory(selectedCategory: string) {

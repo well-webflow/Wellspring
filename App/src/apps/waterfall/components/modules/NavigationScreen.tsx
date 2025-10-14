@@ -1,8 +1,8 @@
-import Button from '../../../components/UI/Button';
-import SelectedElement from '../../../components/SelectedElement';
-import { convertElementToNextButton, convertElementToPrevButton, createNavigation } from '../lib/waterfallElements';
+import SelectedElement from '../../../../components/SelectedElement';
+import Button from '../../../../components/UI/Button';
+import { convertElementToNextButton, convertElementToPrevButton, createNavigation } from '../../lib/waterfallElements';
 
-export default function NavigationElements() {
+export default function NavigationScreen() {
   return (
     <div className="flex flex-col gap-3">
       <Button onClick={() => createNavigation()}>Create Navigation</Button>

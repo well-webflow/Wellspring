@@ -88,11 +88,11 @@ export function useWaterfallLogic(): WaterfallState {
    * Initialize a new Waterfall with default settings for editing in New Mode
    */
   async function initNewWaterfall() {
-    console.log('Initializing new waterfall...');
     setIsLoading(true);
-    setMode('new');
+
     setWaterfallConfig(defaultWaterfallConfig);
     setLoadedWaterfall({ name: 'New Waterfall', el: null });
+
     setIsLoading(false);
   }
 

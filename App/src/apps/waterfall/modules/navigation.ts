@@ -1,6 +1,6 @@
 import { faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import NavigationElements from '../components/Nav';
+import NavigationScreen from '../components/modules/NavigationScreen';
 
 import {
   ATTR_ALLOW_SLIDE_NEXT,
@@ -20,7 +20,7 @@ export default function navigationCategory() {
     icon: faArrowsLeftRight,
     summary: 'Add navigation buttons to the slider',
     description: 'Add navigation buttons to the slider',
-    component: NavigationElements,
+    component: NavigationScreen,
     groups: [
       {
         name: 'Classes',

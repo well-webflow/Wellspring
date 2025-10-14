@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import SelectedElement from '../../../components/SelectedElement';
-import Tooltip from '../../../components/UI/Tooltip';
-import { addAttributeToSelectedElement } from '../lib/waterfallElements';
 import {
   ATTR_PARALLAX,
   ATTR_PARALLAX_DURATION,
@@ -10,9 +7,12 @@ import {
   ATTR_PARALLAX_X,
   ATTR_PARALLAX_Y,
 } from 'well-waterfall';
-import { GenericSetting } from './UI/GenericSetting';
-import { InputWithButton } from '../../../components/UI/Input';
-import { Caption, Heading, Paragraph } from '../../../components/Typography';
+import { addAttributeToSelectedElement } from '../../lib/waterfallElements';
+import { Caption } from '../../../../components/Typography';
+import SelectedElement from '../../../../components/SelectedElement';
+import { GenericSetting } from '../UI/GenericSetting';
+import Tooltip from '../../../../components/UI/Tooltip';
+import { InputWithButton } from '../../../../components/UI/Input';
 
 type ParallaxField = {
   label: string;

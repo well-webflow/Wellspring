@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useWebflow } from '../../../context/webflowContext';
-import { useWaterfall } from '../hooks/WaterfallContext';
-import Button from '../../../components/UI/Button';
-import { setAttribute } from '../../../utils/webflowHelpers';
-import { Select } from '../../../components/UI/Select';
+import { useWebflow } from '../../../../context/webflowContext';
+import { useWaterfall } from '../../hooks/WaterfallContext';
+import Button from '../../../../components/UI/Button';
+import { setAttribute } from '../../../../utils/webflowHelpers';
+import { Select } from '../../../../components/UI/Select';
 
 import { ATTR_MANIPULATION_PREPEND_SLIDE, ATTR_MANIPULATION_APPEND_SLIDE } from 'well-waterfall';
-import SelectedElement from '../../../components/SelectedElement';
-import { Caption, Heading } from '../../../components/Typography';
+import SelectedElement from '../../../../components/SelectedElement';
+import { Caption, Heading } from '../../../../components/Typography';
 
 // FIXME The 'Add' method is currently broken, Swiper seems to add it as a string, instead of parsing the outerHTML.
 
