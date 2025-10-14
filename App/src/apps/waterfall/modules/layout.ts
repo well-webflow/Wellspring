@@ -213,21 +213,13 @@ export default function layoutConfig() {
         type: 'select',
       },
       {
-        name: 'Slides Per View',
-        attr: ATTR_SLIDES_PER_VIEW,
-        swiperDefault: '1',
+        name: 'Initial Slide #',
+        attr: ATTR_INITIAL_SLIDE,
+        swiperDefault: '0',
         value: '',
-        icon: faHashtag,
-        breakpoints: {
-          lmobile: '',
-          tablet: '',
-          desktop: '',
-          large: '',
-          xlarge: '',
-        },
-        description: "Number of slides per view (slides visible at the same time on slider's container).",
+        description: 'Index number of initial slide. (0 is the first slide, 1 is the 2nd and so on)',
 
-        type: 'string',
+        type: 'number',
       },
       {
         name: 'Space Between',
@@ -248,13 +240,21 @@ export default function layoutConfig() {
         type: 'string',
       },
       {
-        name: 'Initial Slide #',
-        attr: ATTR_INITIAL_SLIDE,
-        swiperDefault: '0',
+        name: 'Slides Per View',
+        attr: ATTR_SLIDES_PER_VIEW,
+        swiperDefault: '1',
         value: '',
-        description: 'Index number of initial slide. (0 is the first slide, 1 is the 2nd and so on)',
+        icon: faHashtag,
+        breakpoints: {
+          lmobile: '',
+          tablet: '',
+          desktop: '',
+          large: '',
+          xlarge: '',
+        },
+        description: "Number of slides per view (slides visible at the same time on slider's container).",
 
-        type: 'number',
+        type: 'string',
       },
     ],
   };

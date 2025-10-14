@@ -4,7 +4,9 @@ import {
   ATTR_BREAKPOINTS_BASE,
   ATTR_CREATE_ELEMENTS,
   ATTR_CSS_MODE,
+  ATTR_ENABLED,
   ATTR_FOCUSABLE_ELEMENTS,
+  ATTR_INIT,
   ATTR_LAZY_PRELOAD_PREV_NEXT,
   ATTR_LAZY_PRELOADER_CLASS,
   ATTR_MAX_BACKFACE_HIDDEN_SLIDES,
@@ -59,6 +61,16 @@ export default function advancedCategory() {
         type: 'boolean',
       },
       {
+        name: 'Enabled',
+        attr: ATTR_ENABLED,
+        swiperDefault: 'true',
+        value: '',
+        description:
+          "Whether Swiper initially enabled. When Swiper is disabled, it will hide all navigation elements and won't respond to any events and interactions",
+
+        type: 'boolean',
+      },
+      {
         name: 'Focusable Elements',
         attr: ATTR_FOCUSABLE_ELEMENTS,
         swiperDefault: 'input, select, option, textarea, button, video, label',
@@ -67,6 +79,16 @@ export default function advancedCategory() {
           'CSS selector for focusable elements. Swiping will be disabled on such elements if they are "focused"',
 
         type: 'string',
+      },
+      {
+        name: 'Init',
+        attr: ATTR_INIT,
+        swiperDefault: 'true',
+        value: '',
+        description:
+          'Whether Swiper should be initialised automatically when you create an instance. If disabled, then you need to init it manually by calling swiper.init()',
+
+        type: 'boolean',
       },
       {
         name: 'Lazy Load Prev Next',

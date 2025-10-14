@@ -110,7 +110,7 @@ export function WellflowHeader() {
         </div>
         <div className="flex flex-row gap-4">
           <NavigationLink to="https://wellflow-app.webflow.io/contact" target="_blank" icon={faBug}>
-            Report Bug
+            Bug Report
           </NavigationLink>
           <NavigationLink to="https://www.buymeacoffee.com/cactoid" target="_blank" icon={faCircleDollarToSlot}>
             Donate

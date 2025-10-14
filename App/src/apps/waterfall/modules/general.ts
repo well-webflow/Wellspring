@@ -1,6 +1,13 @@
 import { faBug, faCog, faDatabase, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { ATTR_DEBUG_MODE, ATTR_ENABLED, ATTR_INIT, ATTR_WATERFALL, ATTR_WATERFALL_CONTENT } from 'well-waterfall';
+import {
+  ATTR_DEBUG_MODE,
+  ATTR_ENABLED,
+  ATTR_INIT,
+  ATTR_SLIDE_ACTIVE_CLASS,
+  ATTR_WATERFALL,
+  ATTR_WATERFALL_CONTENT,
+} from 'well-waterfall';
 
 export default function generalConfig() {
   let config: WaterfallCategory = {
@@ -9,34 +16,6 @@ export default function generalConfig() {
     icon: faCog,
     description: 'Basic settings for all sliders',
     summary: 'Basic settings for all sliders',
-    groups: [
-      {
-        name: 'Enable/Disable (Advanced)',
-        id: 'enable-advanced',
-        items: [
-          {
-            name: 'Enabled',
-            attr: ATTR_ENABLED,
-            swiperDefault: 'true',
-            value: '',
-            description:
-              "Whether Swiper initially enabled. When Swiper is disabled, it will hide all navigation elements and won't respond to any events and interactions",
-
-            type: 'boolean',
-          },
-          {
-            name: 'Init',
-            attr: ATTR_INIT,
-            swiperDefault: 'true',
-            value: '',
-            description:
-              'Whether Swiper should be initialised automatically when you create an instance. If disabled, then you need to init it manually by calling swiper.init()',
-
-            type: 'boolean',
-          },
-        ],
-      },
-    ],
     items: [
       {
         name: 'Waterfall Name',

@@ -15,30 +15,11 @@ import {
 
 export default function classnamesCategory() {
   let config: WaterfallCategory = {
-    name: 'Class Names (Advanced)',
+    name: 'Class Names',
     id: 'class-names',
     icon: faFont,
     summary: 'Change the class names used by swiperjs. Not recommended to edit.',
     items: [
-      {
-        name: 'Container Modifier Class',
-        attr: ATTR_CONTAINER_MODIFIER_CLASS,
-        swiperDefault: 'swiper-',
-        value: '',
-        description:
-          'The beginning of the modifier CSS class that can be added to swiper container depending on different parameters',
-
-        type: 'string',
-      },
-      {
-        name: 'Events Prefix',
-        attr: ATTR_EVENTS_PREFIX,
-        swiperDefault: 'swiper',
-        value: '',
-        description: 'Event name prefix for all DOM events emitted by Swiper Element (web component)',
-
-        type: 'string',
-      },
       {
         name: 'Slide Active Class',
         attr: ATTR_SLIDE_ACTIVE_CLASS,
@@ -47,6 +28,23 @@ export default function classnamesCategory() {
         description:
           "CSS class name of currently active slide. By changing classes you will also need to change Swiper's CSS to reflect changed classes",
 
+        type: 'string',
+      },
+      {
+        name: 'Container Modifier Class',
+        attr: ATTR_CONTAINER_MODIFIER_CLASS,
+        swiperDefault: 'swiper-',
+        value: '',
+        description:
+          'The beginning of the modifier CSS class that can be added to swiper container depending on different parameters',
+        type: 'string',
+      },
+      {
+        name: 'Events Prefix',
+        attr: ATTR_EVENTS_PREFIX,
+        swiperDefault: 'swiper',
+        value: '',
+        description: 'Event name prefix for all DOM events emitted by Swiper Element (web component)',
         type: 'string',
       },
       {
@@ -114,7 +112,6 @@ export default function classnamesCategory() {
         value: '',
         description:
           "CSS class name of slides' wrapper. By changing classes you will also need to change Swiper's CSS to reflect changed classes",
-
         type: 'string',
       },
     ],
