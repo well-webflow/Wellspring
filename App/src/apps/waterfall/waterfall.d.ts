@@ -1,3 +1,4 @@
+import { FormEventHandler } from 'react';
 import { BreakpointObject } from '../../wellflow';
 
 export type EditMode = 'new' | 'edit' | 'view';
@@ -44,6 +45,9 @@ export interface WaterfallSetting {
   options?: string[];
   breakpoints?: BreakpointObject;
   icon?: IconDefinition;
+  submit?: FormEventHandler<HTMLButtonElement>;
+  onSubmit?: (val: string) => void;
+  onChange?: (val: string) => void;
 }
 
 // Actions

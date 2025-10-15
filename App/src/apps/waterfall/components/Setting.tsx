@@ -4,28 +4,26 @@ import Tooltip from '../../../components/UI/Tooltip';
 import { useWaterfall } from '../hooks/WaterfallContext';
 import { WaterfallSetting } from '../waterfall';
 import { BreakpointObject } from '../../../utils/breakpoints';
-import { GenericSetting } from './UI/GenericSetting';
 import { BreakpointInput } from './BreakpointInput';
 import { Input } from '../../../components/UI/Input';
+import Card from '../../../components/UI/Card';
+import { BooleanSwitch } from '../../../components/UI/BooleanSwitch';
 
 export default function Setting({ prop }: { prop: WaterfallSetting }) {
+  // Setting being used outside of WaterfallContext
   const { updateWaterfall, waterfallNames } = useWaterfall();
 
   function handleValueChange(value: string, breakpoint?: string) {
-    updateWaterfall(prop.attr, value, breakpoint);
+    if (prop.onChange) {
+      prop.onChange(value);
+    } else {
+      updateWaterfall(prop.attr, value, breakpoint);
+    }
   }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     handleValueChange(e.target.value);
   }
-
-  let header = (
-    <div className="flex flex-row items-center gap-3">
-      {prop.icon && <FontAwesomeIcon icon={prop.icon} className="text-primary" />}
-      <span>{prop.name}</span>
-      <Tooltip content={prop.description} defaultValue={prop.swiperDefault} />
-    </div>
-  );
 
   const renderInput = () => {
     const commonProps = {
@@ -36,12 +34,30 @@ export default function Setting({ prop }: { prop: WaterfallSetting }) {
 
     switch (prop.type) {
       case 'number':
-        return <Input type="number" {...commonProps} />;
+        return (
+          <Input
+            type="number"
+            {...commonProps}
+            {...(prop.onSubmit && { submit: () => prop.onSubmit!(commonProps.value) })}
+          />
+        );
 
       case 'string':
-        return <Input type="text" {...commonProps} />;
+        return (
+          <Input
+            type="text"
+            {...commonProps}
+            {...(prop.onSubmit && { submit: () => prop.onSubmit!(commonProps.value) })}
+          />
+        );
 
       case 'boolean':
+        return (
+          <BooleanSwitch
+            checked={prop.value === 'true'}
+            onChange={(e) => handleValueChange(e.target.checked ? 'true' : 'false')}
+          />
+        );
       case 'select':
         return (
           <Select
@@ -86,11 +102,21 @@ export default function Setting({ prop }: { prop: WaterfallSetting }) {
   }
 
   return (
-    <GenericSetting
-      header={header}
-      description={prop.attr}
-      input={renderInput()}
-      content={renderBreakpoints()}
-    ></GenericSetting>
+    <Card>
+      <div className="flex flex-row gap-5 justify-between items-start">
+        <div className="flex flex-col gap-2 mb-2">
+          <div className="flex flex-row items-center gap-3">
+            <div className="flex flex-row items-center gap-3">
+              {prop.icon && <FontAwesomeIcon icon={prop.icon} className="text-primary" />}
+              <span>{prop.name}</span>
+              <Tooltip content={prop.description} defaultValue={prop.swiperDefault} />
+            </div>
+          </div>
+          <span className="text-sm text-text3">{prop.attr}</span>
+        </div>
+        {renderInput()}
+      </div>
+      {renderBreakpoints()}
+    </Card>
   );
 }

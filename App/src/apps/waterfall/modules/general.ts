@@ -38,7 +38,7 @@ export default function generalConfig() {
       {
         name: 'Content Type',
         attr: ATTR_WATERFALL_CONTENT,
-        swiperDefault: 'static',
+        swiperDefault: '',
         value: 'static',
         description: 'Choose between static content or CMS driven content',
         type: 'select',
