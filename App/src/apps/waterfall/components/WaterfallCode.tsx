@@ -38,33 +38,47 @@ export function WaterfallCode({ version: propVersion = 'latest' }: WaterfallCode
     }
   }, [propVersion]);
 
-  const npmPackageCode = `<script src="https://cdn.jsdelivr.net/npm/well-waterfall@${version}"></script>`;
+  const npmPackageCode = `<script defer src="https://cdn.jsdelivr.net/npm/well-waterfall@${version}"></script>`;
   const highlightedCode = Prism.highlight(npmPackageCode, Prism.languages.markup, 'markup');
 
   const copyToClipboard = async () => {
+    // Create textarea for fallback
+    const textArea = document.createElement('textarea');
+    textArea.value = npmPackageCode;
+    textArea.style.position = 'absolute';
+    textArea.style.left = '-9999px';
+    textArea.style.top = '0';
+    document.body.appendChild(textArea);
+    textArea.select();
+    textArea.setSelectionRange(0, 99999); // For mobile devices
+
     try {
-      // Try modern clipboard API first
+      // Try modern API first, but catch if it fails
       if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(npmPackageCode);
-      } else {
-        // Fallback for environments where clipboard API is blocked
-        const textArea = document.createElement('textarea');
-        textArea.value = npmPackageCode;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        document.execCommand('copy');
-        textArea.remove();
+        try {
+          await navigator.clipboard.writeText(npmPackageCode);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+          document.body.removeChild(textArea);
+          return;
+        } catch (clipboardErr) {
+          // Clipboard API failed, fall through to execCommand
+          console.log('Clipboard API failed, using fallback:', clipboardErr);
+        }
+      }
+
+      // Use execCommand as fallback
+      const successful = document.execCommand('copy');
+      if (!successful) {
+        throw new Error('Copy command failed');
       }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy: ', err);
-      // Show user-friendly error message
       alert('Could not copy to clipboard. Please select and copy the text manually.');
+    } finally {
+      document.body.removeChild(textArea);
     }
   };
   return (
@@ -87,8 +101,8 @@ export function WaterfallCode({ version: propVersion = 'latest' }: WaterfallCode
       </div>
 
       <Paragraph size="sm" className="text-text3 mt-2 mb-0">
-        Add this script tag to before the &lt;/body&gt; on each page you want to use Waterfall, or in the global code
-        settings.
+        Add this script at the end of the &lt;head&gt; tag on each page you want to use Waterfall, or in the site-wide
+        Custom Code settings of your website.
       </Paragraph>
     </div>
   );
