@@ -4,7 +4,6 @@ import { NavLink, Outlet, useMatch } from 'react-router';
 import { Tab } from '../../../components/Tabs';
 import { faArrowsRotate, faBox, faCirclePlus, faGear, faPencil, faSave } from '@fortawesome/free-solid-svg-icons';
 import { WellflowHeader } from '../../../views/WellflowMainView';
-import Button from '../../../components/UI/Button';
 import { useEffect } from 'react';
 
 export default function WaterfallWrapper() {
@@ -34,32 +33,6 @@ export function WaterfallLayout() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-export function WaterfallFooter() {
-  const { createWaterfall, mode, loadWaterfall, saveWaterfall } = useWaterfall();
-  return (
-    <div className="sticky z-10 bg-background1 px-2 py-2 flex gap-3 items-center justify-end border-t border-border1 bottom-0 left-0 right-0 w-full">
-      <Button size="sm" onClick={() => window.history.back()} className="mb-5">
-        &larr; Back
-      </Button>
-      {mode === 'new' && (
-        <Button size="sm" color="primary" onClick={createWaterfall} icon={faSave}>
-          Create Waterfall
-        </Button>
-      )}
-      {mode === 'edit' && (
-        <div className="flex gap-2">
-          <Button size="sm" icon={faArrowsRotate} onClick={loadWaterfall} color="secondary">
-            Reload
-          </Button>
-          <Button size="sm" icon={faSave} onClick={saveWaterfall} color="primary">
-            Save
-          </Button>
-        </div>
-      )}
     </div>
   );
 }

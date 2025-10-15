@@ -9,7 +9,6 @@ import {
 } from 'well-waterfall';
 import { addAttributeToSelectedElement } from '../../lib/waterfallElements';
 import { Caption } from '../../../../components/Typography';
-import SelectedElement from '../../../../components/SelectedElement';
 import { WaterfallSetting } from '../../waterfall';
 import Setting from '../Setting';
 
@@ -22,7 +21,6 @@ export default function ParallaxScreen() {
   const [parallaxDuration, setParallaxDuration] = useState('');
 
   const handleSubmit = async (attr: string, value: string) => {
-    console.log('Adding Parallax:', value);
     await addAttributeToSelectedElement(attr, value);
   };
 
@@ -93,12 +91,8 @@ export default function ParallaxScreen() {
   return (
     <div className="space-y-5">
       <Caption>Reminder! You need to enable Parallax on the Waterfall for this feature to work.</Caption>
-      <div>
-        Add Parallax to Selected: <SelectedElement />
-      </div>
-
       {FIELDS.map((field) => (
-        <Setting key={field.attr} prop={field} />
+        <Setting size="lg" key={field.attr} prop={field} />
       ))}
     </div>
   );

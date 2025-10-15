@@ -9,7 +9,9 @@ import { Input } from '../../../components/UI/Input';
 import Card from '../../../components/UI/Card';
 import { BooleanSwitch } from '../../../components/UI/BooleanSwitch';
 
-export default function Setting({ prop }: { prop: WaterfallSetting }) {
+export type SettingSize = 'base' | 'lg' | 'full';
+
+export default function Setting({ prop, size }: { prop: WaterfallSetting; size: SettingSize }) {
   // Setting being used outside of WaterfallContext
   const { updateWaterfall, waterfallNames } = useWaterfall();
 
@@ -37,6 +39,7 @@ export default function Setting({ prop }: { prop: WaterfallSetting }) {
         return (
           <Input
             type="number"
+            inputSize={size}
             {...commonProps}
             {...(prop.onSubmit && { submit: () => prop.onSubmit!(commonProps.value) })}
           />
@@ -46,6 +49,7 @@ export default function Setting({ prop }: { prop: WaterfallSetting }) {
         return (
           <Input
             type="text"
+            inputSize={size}
             {...commonProps}
             {...(prop.onSubmit && { submit: () => prop.onSubmit!(commonProps.value) })}
           />

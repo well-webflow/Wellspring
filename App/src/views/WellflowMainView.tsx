@@ -5,7 +5,7 @@ import { Heading, Paragraph } from '../components/Typography';
 import WellflowAppList from '../components/WellflowAppList';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
-import { faBug, faChevronLeft, faCircleDollarToSlot } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faChevronLeft, faCircleDollarToSlot, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useWellflow } from '../context/wellflowContext';
 import NavigationLink from '../components/UI/NavigationLink';
 
@@ -112,7 +112,7 @@ export function WellflowHeader() {
           <NavigationLink to="https://wellflow-app.webflow.io/contact" target="_blank" icon={faBug}>
             Bug Report
           </NavigationLink>
-          <NavigationLink to="https://www.buymeacoffee.com/cactoid" target="_blank" icon={faCircleDollarToSlot}>
+          <NavigationLink to="https://www.buymeacoffee.com/cactoid" target="_blank" icon={faHeart}>
             Donate
           </NavigationLink>
         </div>

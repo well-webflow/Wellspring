@@ -18,7 +18,7 @@ export default function classnamesCategory() {
     name: 'Class Names',
     id: 'class-names',
     icon: faFont,
-    summary: 'Change the class names used by swiperjs. Not recommended to edit.',
+    summary: 'Change the class names used by SwiperJS.',
     items: [
       {
         name: 'Slide Active Class',

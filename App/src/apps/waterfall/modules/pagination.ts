@@ -20,7 +20,6 @@ import {
   ATTR_PAGINATION_TYPE,
   ATTR_PAGINATION_VERTICAL_CLASS,
 } from 'well-waterfall';
-import PaginationScreen from '../components/modules/PaginationScreen';
 
 export default function paginationCategory() {
   let config: WaterfallCategory = {
@@ -29,7 +28,6 @@ export default function paginationCategory() {
     icon: faEllipsis,
     summary: 'Add pagination bullets or progress bar to the slider',
     description: 'Add pagination bullets or progress bar to the slider',
-    component: PaginationScreen,
     groups: [
       {
         name: 'Dynamic',

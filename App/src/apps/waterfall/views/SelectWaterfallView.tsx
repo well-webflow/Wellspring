@@ -38,7 +38,6 @@ export default function SelectWaterfallView() {
       </Toolbar>
       <div className="p-3">
         <div className="flex flex-col gap-2">
-          <div className="flex flex-row items-center justify-between w-full"></div>
           {waterfalls.length ? (
             waterfalls.map((wtf, index) => (
               <Button key={index} onClick={() => selectWaterfall(wtf)}>

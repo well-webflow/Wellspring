@@ -1,28 +1,27 @@
-import { faDotCircle, faPlusCircle, faSquare } from '@fortawesome/free-solid-svg-icons';
-import Button from '../../../../components/UI/Button';
-import SelectedElement from '../../../../components/SelectedElement';
+import { faCircle, faDotCircle, faSquare } from '@fortawesome/free-solid-svg-icons';
 import {
   convertElementToPaginationBullet,
   convertElementToPaginationBulletActive,
   convertElementToPaginationContainer,
-  createPagination,
 } from '../../lib/waterfallElements';
+import Card from '../../../../components/UI/Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function PaginationScreen() {
   return (
-    <div className="flex flex-col gap-3">
-      <Button icon={faPlusCircle} onClick={createPagination}>
-        Create Pagination
-      </Button>
-      <Button icon={faSquare} onClick={convertElementToPaginationContainer}>
-        Convert <SelectedElement /> to Pagination Container
-      </Button>
-      <Button icon={faDotCircle} onClick={convertElementToPaginationBullet}>
-        Convert <SelectedElement /> to Bullet
-      </Button>
-      <Button icon={faDotCircle} onClick={convertElementToPaginationBulletActive}>
-        Convert <SelectedElement /> to Bullet Active
-      </Button>
+    <div className="grid grid-cols-3 gap-3">
+      <Card onClick={convertElementToPaginationContainer} className="flex flex-col text-center">
+        <FontAwesomeIcon icon={faSquare} className="mb-2 text-primary" size="1x" />
+        Pagination Container
+      </Card>
+      <Card onClick={convertElementToPaginationBullet} className="flex flex-col text-center">
+        <FontAwesomeIcon icon={faCircle} className="mb-2 text-primary" size="1x" />
+        Pagination Bullet
+      </Card>
+      <Card onClick={convertElementToPaginationBulletActive} className="flex flex-col text-center">
+        <FontAwesomeIcon icon={faDotCircle} className="mb-2 text-primary" size="1x" />
+        Pagination Bullet (Active)
+      </Card>
     </div>
   );
 }

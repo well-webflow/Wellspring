@@ -25,7 +25,6 @@ export default function freemodeCategory() {
         swiperDefault: 'false',
         value: '',
         description: "If 'true', users have full control over the slider with swipes",
-
         type: 'boolean',
       },
       {
@@ -34,7 +33,6 @@ export default function freemodeCategory() {
         swiperDefault: '0.02',
         value: '',
         description: 'Minimum touchmove-velocity required to trigger free mode momentum',
-
         type: 'number',
       },
       {
@@ -43,7 +41,6 @@ export default function freemodeCategory() {
         swiperDefault: 'true',
         value: '',
         description: 'If enabled, then slide will keep moving for a while after you release it',
-
         type: 'boolean',
       },
       {
@@ -61,8 +58,7 @@ export default function freemodeCategory() {
         swiperDefault: 'true',
         value: '',
         description: 'Set to false if you want to disable momentum bounce when reaching first/last slides in free mode',
-
-        type: 'number',
+        type: 'boolean',
       },
       {
         name: 'Momentum Bounce Ratio',

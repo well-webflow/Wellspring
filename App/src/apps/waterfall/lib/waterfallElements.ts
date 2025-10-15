@@ -160,6 +160,11 @@ export async function createScrollbar() {
   scrollbarDrag.setTag('button');
   scrollbarDrag.setStyles([scrollbarDragClass]);
   scrollbarDrag.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR_DRAG);
+
+  webflow.notify({
+    type: 'Success',
+    message: 'Added Scrollbar Elements',
+  });
 }
 
 export async function convertElementToScrollbarContainer() {
@@ -174,6 +179,23 @@ export async function convertElementToScrollbarDrag() {
 
 export async function convertElementToSlideCount() {
   convertElementTo(EL_SLIDE_COUNT, 'Slide Count');
+}
+
+export async function createSlideCount() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const slideCountClass = await getOrCreateStyle('Slide Count');
+
+  const slideCount = await parentEl.prepend(webflow.elementPresets.DOM);
+  slideCount.setTag('div');
+  slideCount.setStyles([slideCountClass]);
+  slideCount.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SLIDE_COUNT);
+
+  webflow.notify({
+    type: 'Success',
+    message: 'Added Slide Count',
+  });
 }
 
 export async function convertElementTo(elAttr: string, name: string) {
