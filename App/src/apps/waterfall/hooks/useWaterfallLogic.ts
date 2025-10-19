@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import {
-  EditMode,
   LoadedWaterfall,
   WaterfallCategory,
   WaterfallConfig,
@@ -61,6 +60,11 @@ export function useWaterfallLogic(): WaterfallState {
     setWaterfallNames(names);
   }
 
+  /**
+   * FIND WATERFALL BY NAME
+   * @param name The name of the waterfall to find
+   * @returns The Webflow AnyElement of the Waterfall, or null if not found
+   */
   async function findWaterfallByName(name: string) {
     const els = await webflow.getAllElements();
     for (const el of els) {

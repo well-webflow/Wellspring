@@ -30,9 +30,17 @@ export default function paginationCategory() {
     description: 'Add pagination bullets or progress bar to the slider',
     groups: [
       {
-        name: 'Dynamic',
+        name: 'Bullets',
         id: 'pagination-dynamic',
         items: [
+          {
+            name: 'Bullet Active Class',
+            attr: ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
+            type: 'string',
+            swiperDefault: 'swiper-pagination-bullet-active',
+            description: 'CSS class name of currently active pagination bullet',
+            value: '',
+          },
           {
             name: 'Dynamic Bullets',
             attr: ATTR_PAGINATION_DYNAMIC_BULLETS,
@@ -55,17 +63,41 @@ export default function paginationCategory() {
         ],
       },
       {
+        name: 'Progressbar',
+        id: 'pagination-progressbar',
+        items: [
+          {
+            name: 'Progressbar Opposite',
+            attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
+            swiperDefault: 'false',
+            value: '',
+            description:
+              "Makes pagination progressbar opposite to Swiper's direction parameter, means vertical progressbar for horizontal swiper direction and horizontal progressbar for vertical swiper direction",
+
+            type: 'boolean',
+          },
+          {
+            name: 'Progressbar Fill Class',
+            attr: ATTR_PAGINATION_PROGRESSBAR_FILL_CLASS,
+            swiperDefault: 'swiper-pagination-progressbar-fill',
+            value: '',
+            description: 'CSS class name of pagination progressbar fill element',
+            type: 'string',
+          },
+          {
+            name: 'Progressbar Opposite Class',
+            attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
+            swiperDefault: 'swiper-pagination-progressbar-opposite',
+            value: '',
+            description: 'CSS class name of pagination progressbar opposite',
+            type: 'string',
+          },
+        ],
+      },
+      {
         name: 'Class Names',
         id: 'pagination-class-names',
         items: [
-          {
-            name: 'Bullet Active Class',
-            attr: ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
-            type: 'string',
-            swiperDefault: 'swiper-pagination-bullet-active',
-            description: 'CSS class name of currently active pagination bullet',
-            value: '',
-          },
           {
             name: 'Clickable Class',
             attr: ATTR_PAGINATION_CLICKABLE_CLASS,
@@ -99,7 +131,6 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-horizontal',
             value: '',
             description: 'CSS class name set to pagination in horizontal Swiper',
-
             type: 'string',
           },
           {
@@ -108,7 +139,6 @@ export default function paginationCategory() {
             swiperDefault: 'swiper-pagination-lock',
             value: '',
             description: 'CSS class name added to navigation button when it is disabled',
-
             type: 'string',
           },
           {
@@ -118,7 +148,6 @@ export default function paginationCategory() {
             value: '',
             description:
               'The beginning of the modifier CSS class name that will be added to pagination depending on parameters',
-
             type: 'string',
           },
           {
@@ -128,25 +157,6 @@ export default function paginationCategory() {
             value: '',
             description:
               'CSS class name added on swiper container and pagination element when pagination is disabled by breakpoint',
-
-            type: 'string',
-          },
-          {
-            name: 'Progressbar Fill Class',
-            attr: ATTR_PAGINATION_PROGRESSBAR_FILL_CLASS,
-            swiperDefault: 'swiper-pagination-progressbar-fill',
-            value: '',
-            description: 'CSS class name of pagination progressbar fill element',
-
-            type: 'string',
-          },
-          {
-            name: 'Progressbar Opposite Class',
-            attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
-            swiperDefault: 'swiper-pagination-progressbar-opposite',
-            value: '',
-            description: 'CSS class name of pagination progressbar opposite',
-
             type: 'string',
           },
           {
@@ -205,16 +215,6 @@ export default function paginationCategory() {
         value: '',
         type: 'boolean',
         description: "Toggle (hide/show) pagination container visibility after click on Slider's container",
-      },
-      {
-        name: 'Progressbar Opposite',
-        attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
-        swiperDefault: 'false',
-        value: '',
-        description:
-          "Makes pagination progressbar opposite to Swiper's direction parameter, means vertical progressbar for horizontal swiper direction and horizontal progressbar for vertical swiper direction",
-
-        type: 'boolean',
       },
     ],
   };

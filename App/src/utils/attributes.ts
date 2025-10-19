@@ -19,12 +19,13 @@ export function getBaseAttr(attrName: string): {
   breakpoint: string | null;
   baseAttr: string;
 } {
-  const [firstWord, ...rest] = attrName.split('-');
-  // check if the first word is a breakpoint
-  const isBreakpoint = websiteBreakpoints.includes(firstWord as Breakpoints);
+  const parts = attrName.split('-');
+  const lastWord = parts[parts.length - 1];
+  // check if the last word is a breakpoint
+  const isBreakpoint = websiteBreakpoints.includes(lastWord as Breakpoints);
   // create the base attr (without the breakpoint)
-  const baseAttr = isBreakpoint ? rest.join('-') : attrName;
+  const baseAttr = isBreakpoint ? parts.slice(0, -1).join('-') : attrName;
   // get the breakpoint, or null
-  const breakpoint = isBreakpoint ? firstWord : null;
+  const breakpoint = isBreakpoint ? lastWord : null;
   return { breakpoint, baseAttr };
 }
