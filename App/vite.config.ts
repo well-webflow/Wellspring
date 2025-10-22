@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import fs from 'fs';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 type Manifest = {
   size: 'comfortable' | 'large' | 'default';
@@ -63,8 +64,35 @@ function webflowExtension(manifest: Manifest) {
 
 const webflowManifest = JSON.parse(fs.readFileSync('webflow.json', 'utf8'));
 export default defineConfig({
-  plugins: [react(), webflowExtension(webflowManifest), tailwindcss()],
+  plugins: [
+    react(),
+    webflowExtension(webflowManifest),
+    tailwindcss(),
+    visualizer({
+      open: false,
+      filename: 'bundle-analysis.html',
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ],
   server: {
     port: 1337,
+  },
+  build: {
+    assetsInlineLimit: 10000, // Inline assets smaller than 10KB as base64
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router'],
+          'fontawesome': [
+            '@fortawesome/fontawesome-svg-core',
+            '@fortawesome/free-solid-svg-icons',
+            '@fortawesome/react-fontawesome',
+          ],
+          'prism': ['prismjs'],
+          'waterfall': ['well-waterfall'],
+        },
+      },
+    },
   },
 });

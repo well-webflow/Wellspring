@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router';
 import Layout from './Layout';
-import { AuthProvider } from './context/authProvider';
 import WellflowMainView from './views/WellflowMainView';
 import WaterfallWrapper from './apps/waterfall/views/WaterfallLayout';
 import EditView from './apps/waterfall/views/edit/EditView';

@@ -101,7 +101,7 @@ export function useWaterfallLogic(): WaterfallState {
 
   /**
    * CREATE WATERFALL
-   * Create a new waterfall object with all of the default props
+   * Create a new waterfall with the configured settings
    */
   async function createWaterfall() {
     setIsLoading(true);
@@ -112,12 +112,18 @@ export function useWaterfallLogic(): WaterfallState {
       'static') as WaterfallContentType;
 
     const success = await createWaterfallElement(waterfallConfig, mode);
-    if (success) webflow.notify({ type: 'Success', message: 'Created new Waterfall' });
-
-    const waterfallName = await loadWaterfall();
+    if (!success) {
+      webflow.notify({
+        type: 'Error',
+        message: 'Failed to create Waterfall. Make sure you have an Element selected.',
+      });
+    } else {
+      webflow.notify({ type: 'Success', message: 'Created new Waterfall' });
+      const waterfallName = await loadWaterfall();
+      navigate(`/waterfall/edit/${waterfallName}`);
+    }
 
     setIsLoading(false);
-    navigate(`/waterfall/edit/${waterfallName}`);
   }
 
   /**

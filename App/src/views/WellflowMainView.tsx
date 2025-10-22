@@ -3,15 +3,14 @@ import HorizontalRule from '../components/UI/hr';
 import { Tab, Tabs } from '../components/Tabs';
 import { Heading, Paragraph } from '../components/Typography';
 import WellflowAppList from '../components/WellflowAppList';
-import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
-import { faBug, faChevronLeft, faCircleDollarToSlot, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faChevronLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useWellflow } from '../context/wellflowContext';
 import NavigationLink from '../components/UI/NavigationLink';
+import wellflowLogo from '../assets/wellflow-logo-white.svg';
 
 export default function WellflowMainView() {
   //const { siteData } = useAuth();
-
   //const siteId = siteData?.siteId || '';
 
   useEffect(() => {
@@ -105,7 +104,7 @@ export function WellflowHeader() {
               </span>
             </NavigationLink>
           ) : (
-            <img src="/wellflow-logo-white.svg" alt="Wellflow Logo" width={80} height={20} className="" />
+            <img src={wellflowLogo} alt="Wellflow Logo" width={80} height={20} className="" />
           )}
         </div>
         <div className="flex flex-row gap-4">

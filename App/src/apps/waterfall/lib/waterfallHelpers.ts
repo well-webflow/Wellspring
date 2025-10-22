@@ -1,4 +1,4 @@
-import { WaterfallCategory, WaterfallConfig, WaterfallSetting } from '../waterfall';
+import { WaterfallConfig, WaterfallSetting } from '../waterfall';
 
 /**
  * Find Waterfall Setting

@@ -2,7 +2,7 @@ import Loader from '../../../components/UI/Loader';
 import { useWaterfall, WaterfallProvider } from '../hooks/WaterfallContext';
 import { NavLink, Outlet, useMatch } from 'react-router';
 import { Tab } from '../../../components/Tabs';
-import { faArrowsRotate, faBox, faCirclePlus, faGear, faPencil, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faCirclePlus, faGear, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { WellflowHeader } from '../../../views/WellflowMainView';
 import { useEffect } from 'react';
 

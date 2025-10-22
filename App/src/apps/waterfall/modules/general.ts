@@ -1,13 +1,6 @@
 import { faBug, faCog, faDatabase, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import {
-  ATTR_DEBUG_MODE,
-  ATTR_ENABLED,
-  ATTR_INIT,
-  ATTR_SLIDE_ACTIVE_CLASS,
-  ATTR_WATERFALL,
-  ATTR_WATERFALL_CONTENT,
-} from 'well-waterfall';
+import { ATTR_DEBUG_MODE, ATTR_WATERFALL, ATTR_WATERFALL_CONTENT } from 'well-waterfall';
 
 export default function generalConfig() {
   let config: WaterfallCategory = {

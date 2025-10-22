@@ -18,22 +18,31 @@ export function WebflowProvider({ children }: { children: React.ReactNode }) {
 
   // Set the selected Element and a list of its styles
   const selectedElementCallback = async (element: AnyElement | null) => {
+    // Immediately set the element (this triggers render)
     setElementSelected(element);
-    if (element && element.styles) {
-      const styles = await element.getStyles();
+
+    if (element) {
       const t = element?.type || 'Unknown';
 
-      const styleDetails = (
-        await Promise.all(
-          styles?.map(async (style) => {
-            if (!style) return null;
-            const styleName = await style.getName();
-            return styleName;
-          }) ?? []
-        )
-      ).filter((name): name is string => !!name); // <- This ensures string[]
+      if (element.styles) {
+        const styles = await element.getStyles();
+        const styleDetails = (
+          await Promise.all(
+            styles?.map(async (style) => {
+              if (!style) return null;
+              const styleName = await style.getName();
+              return styleName;
+            }) ?? []
+          )
+        ).filter((name): name is string => !!name); // <- This ensures string[]
 
-      setElementInfo({ type: t, classes: styleDetails });
+        setElementInfo({ type: t, classes: styleDetails });
+      } else {
+        // Element has no styles, just set the type
+        setElementInfo({ type: t, classes: null });
+      }
+    } else {
+      setElementInfo(null);
     }
   };
 

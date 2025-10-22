@@ -15,6 +15,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
   children?: React.ReactNode;
   color?: ButtonColor;
+  disabledTooltip?: string;
 }
 
 export default function Button({
@@ -26,6 +27,8 @@ export default function Button({
   color = 'secondary',
   className,
   children,
+  disabledTooltip,
+  disabled,
   ...props
 }: ButtonProps) {
   return (
@@ -33,10 +36,14 @@ export default function Button({
       className={twMerge(
         clsx(
           {
-            'bg-action-primary-background text-action-primary-text hover:text-action-primary-text-hover hover:bg-action-primary-background-hover':
-              color === 'primary',
-            'bg-action-secondary-background box-shadow text-action-secondary-text hover:text-action-secondary-text-hover hover:bg-action-secondary-background-hover':
-              color === 'secondary',
+            'bg-action-primary-background text-action-primary-text ': color === 'primary',
+            'bg-action-secondary-background box-shadow text-action-secondary-text': color === 'secondary',
+          },
+          {
+            'hover:text-action-primary-text-hover hover:bg-action-primary-background-hover':
+              color === 'primary' && !disabled,
+            'hover:text-action-secondary-text-hover hover:bg-action-secondary-background-hover':
+              color === 'secondary' && !disabled,
           },
           {
             'px-2 h-7 text-sm rounded-xs ': size === 'sm',
@@ -45,10 +52,13 @@ export default function Button({
           },
           { 'h-full text-center': fillHeight },
           { 'w-full text-center': fillWidth },
-          'rounded-xs flex flex-row gap-3 items-center shadow-xs transition cursor-pointer',
+          'rounded-xs flex flex-row gap-2 items-center shadow-xs transition',
+          disabled ? 'cursor-not-allowed opacity-70' : 'cursor-pointer',
           className
         )
       )}
+      disabled={disabled}
+      title={disabled && disabledTooltip ? disabledTooltip : undefined}
       {...props}
     >
       {icon && <FontAwesomeIcon icon={icon} />}

@@ -14,7 +14,7 @@ import { WaterfallCategory, WaterfallContentType } from '../waterfall';
 import { addDefaultSettings } from './waterfallHelpers';
 
 export const createWaterfallElement = async (
-  defaultWaterfallSettings: WaterfallCategory[],
+  waterfallConfig: WaterfallCategory[],
   mode: WaterfallContentType = 'static'
 ) => {
   const parentEl = await webflow.getSelectedElement();
@@ -61,7 +61,7 @@ export const createWaterfallElement = async (
     waterfallSlide.setStyles([swiperSlide]);
   }
 
-  addDefaultSettings(defaultWaterfallSettings, waterfallDiv);
+  addDefaultSettings(waterfallConfig, waterfallDiv);
   webflow.setSelectedElement(waterfallDiv);
 
   return true;

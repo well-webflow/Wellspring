@@ -10,7 +10,7 @@ import { BooleanSwitch } from '../../../components/UI/BooleanSwitch';
 
 export type SettingSize = 'base' | 'lg' | 'full';
 
-export default function Setting({ prop, size }: { prop: WaterfallSetting; size: SettingSize }) {
+export default function Setting({ prop, size }: { prop: WaterfallSetting; size?: SettingSize }) {
   // Setting being used outside of WaterfallContext
   const { updateWaterfall, waterfallNames } = useWaterfall();
 
@@ -72,24 +72,14 @@ export default function Setting({ prop, size }: { prop: WaterfallSetting; size: 
       case 'select':
         return (
           <div className={wrapperClass}>
-            <Select
-              type={prop.type}
-              value={value || prop.swiperDefault}
-              options={prop.options}
-              onChange={onChange}
-            />
+            <Select type={prop.type} value={value || prop.swiperDefault} options={prop.options} onChange={onChange} />
           </div>
         );
 
       case 'waterfall':
         return (
           <div className={wrapperClass}>
-            <Select
-              type="select"
-              value={value || ''}
-              options={['--', ...waterfallNames]}
-              onChange={onChange}
-            />
+            <Select type="select" value={value || ''} options={['--', ...waterfallNames]} onChange={onChange} />
           </div>
         );
 

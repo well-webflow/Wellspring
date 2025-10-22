@@ -2,6 +2,7 @@ import { useWellflow } from '../context/wellflowContext';
 import { Heading, Paragraph } from './Typography';
 import { Link } from 'react-router';
 import Card from './UI/Card';
+import waterfallIcon from '../assets/waterfall.png';
 
 export default function WellflowAppList() {
   const { changeActiveApp } = useWellflow();
@@ -10,7 +11,7 @@ export default function WellflowAppList() {
     <div className="flex flex-col gap-2">
       <Link to="/waterfall" onClick={() => changeActiveApp('Waterfall')}>
         <Card size="sm" className="flex items-center gap-3">
-          <img src="/brand/waterfall.png" alt="Waterfall App" className="rounded-sm h-12 w-12" />
+          <img src={waterfallIcon} alt="Waterfall App" className="rounded-sm h-12 w-12" />
           <div className="">
             <Heading level={4}>Waterfall</Heading>
             <Paragraph size="sm" className="text-text2 mb-0">

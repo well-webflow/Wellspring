@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import waterfallIcon from '../assets/waterfall.png';
 
 interface WellflowApp {
   id: string;
@@ -10,7 +11,7 @@ const approvedApps: WellflowApp[] = [
   {
     id: 'waterfall',
     name: 'Waterfall',
-    imageSrc: '/brand/waterfall.png',
+    imageSrc: waterfallIcon,
   },
 ];
 
