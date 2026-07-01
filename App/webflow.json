@@ -2,5 +2,12 @@
   "name": "waterfall",
   "size": "default",
   "publicDir": "dist",
-  "apiVersion": "2"
+  "apiVersion": "2",
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1782930621238,
+      "version": "1.21.0"
+    }
+  }
 }
