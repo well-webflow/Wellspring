@@ -1,5 +1,32 @@
+<<<<<<< Updated upstream:App/src/utils/modules/advanced.ts
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../../../types/waterfall-types';
+=======
+import { faLock, faBug } from '@fortawesome/free-solid-svg-icons';
+import { WaterfallCategory } from '../waterfall';
+import {
+  ATTR_BREAKPOINTS_BASE,
+  ATTR_CREATE_ELEMENTS,
+  ATTR_CSS_MODE,
+  ATTR_DEBUG_MODE,
+  ATTR_ENABLED,
+  ATTR_FOCUSABLE_ELEMENTS,
+  ATTR_INIT,
+  ATTR_LAZY_PRELOAD_PREV_NEXT,
+  ATTR_LAZY_PRELOADER_CLASS,
+  ATTR_MAX_BACKFACE_HIDDEN_SLIDES,
+  ATTR_NORMALIZE_SLIDE_INDEX,
+  ATTR_PASSIVE_LISTENERS,
+  ATTR_ROUND_LENGTHS,
+  ATTR_RUN_CALLBACKS_ON_INIT,
+  ATTR_SET_WRAPPER_SIZE,
+  ATTR_SWIPER_ELEMENT_NODE_NAME,
+  ATTR_UNIQUE_NAV_ELEMENTS,
+  ATTR_URL,
+  ATTR_USER_AGENT,
+  ATTR_VIRTUAL_TRANSLATE,
+} from 'well-waterfall';
+>>>>>>> Stashed changes:App/src/apps/waterfall/modules/advanced.ts
 
 export default function advancedCategory() {
   let config: WaterfallCategory = {
@@ -9,6 +36,15 @@ export default function advancedCategory() {
     summary:
       "Settings you probably shouldn't touch unless you really know what you're doing",
     items: [
+      {
+        name: 'Debug',
+        attr: ATTR_DEBUG_MODE,
+        swiperDefault: 'false',
+        value: '',
+        description: 'Prints out debug statements to the browser console',
+        icon: faBug,
+        type: 'boolean',
+      },
       {
         name: 'Breakpoints Base',
         attr: 'breakpoints-base',
