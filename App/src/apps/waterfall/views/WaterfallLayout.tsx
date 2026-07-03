@@ -5,6 +5,7 @@ import { Tab } from '../../../components/Tabs';
 import { faBox, faCirclePlus, faGear, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { WellflowHeader } from '../../../views/WellflowMainView';
 import { useEffect } from 'react';
+import { useScrollRestoration } from '../../../hooks/useScrollRestoration';
 
 export default function WaterfallWrapper() {
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function WaterfallWrapper() {
 
 export function WaterfallLayout() {
   const { isLoading } = useWaterfall();
+  const scrollContainerRef = useScrollRestoration();
 
   return (
     <div>
@@ -28,7 +30,7 @@ export function WaterfallLayout() {
         <WellflowHeader />
         <div className="flex flex-1 overflow-hidden">
           <WaterfallSidebar />
-          <div className="flex-1 w-full min-w-0 overflow-hidden flex flex-col overflow-y-auto">
+          <div ref={scrollContainerRef} className="flex-1 w-full min-w-0 overflow-hidden flex flex-col overflow-y-auto">
             <Outlet />
           </div>
         </div>
