@@ -4,11 +4,9 @@ import classnamesCategory from '../modules/classNames';
 import controllerCategory from '../modules/controller';
 import effectCategory from '../modules/effect';
 import freemodeCategory from '../modules/freeMode';
-import generalConfig from '../modules/general';
-import keyboardCategory from '../modules/keyboard';
+import keyboardMouseCategory from '../modules/keyboardMouse';
 import layoutConfig from '../modules/layout';
 import memoryCategory from '../modules/memory';
-import mousewheelCategory from '../modules/mousewheel';
 import navigationCategory from '../modules/navigation';
 import ObserverCategory from '../modules/observer';
 import paginationCategory from '../modules/pagination';
@@ -22,7 +20,6 @@ import zoomCategory from '../modules/zoom';
 import parallaxConfig from '../modules/parallax';
 
 export const defaultWaterfallConfig: WaterfallConfig = [
-  generalConfig(),
   layoutConfig(),
   playbackCategory(),
   navigationCategory(),
@@ -33,8 +30,7 @@ export const defaultWaterfallConfig: WaterfallConfig = [
   effectCategory(),
   parallaxConfig(),
   thumbsCategory(),
-  keyboardCategory(),
-  mousewheelCategory(),
+  keyboardMouseCategory(),
   memoryCategory(),
   manipulationCategory(),
   controllerCategory(),

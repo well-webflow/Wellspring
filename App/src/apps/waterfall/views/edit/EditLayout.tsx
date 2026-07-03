@@ -24,12 +24,8 @@ export default function EditLayout() {
           inputSize="base"
         />
         <div className="flex gap-2">
-          <Button size="sm" icon={faArrowsRotate} onClick={loadWaterfall} color="secondary">
-            Reload
-          </Button>
-          <Button size="sm" icon={faSave} onClick={saveWaterfall} color="primary">
-            Save
-          </Button>
+          <Button size="sm" icon={faArrowsRotate} onClick={loadWaterfall} color="secondary"></Button>
+          <Button size="sm" icon={faSave} onClick={saveWaterfall} color="primary"></Button>
         </div>
       </Toolbar>
       <div className="p-3">

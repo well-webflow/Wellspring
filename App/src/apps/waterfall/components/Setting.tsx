@@ -103,9 +103,9 @@ export default function Setting({ prop, size }: { prop: WaterfallSetting; size?:
     if (!prop.breakpoints) return null;
     const breakpointEntries = Object.entries(prop.breakpoints as BreakpointObject);
     return (
-      <div className="flex flex-row gap-3 py-10 w-full overflow-x-scroll border-border2 border-t">
+      <div className="flex flex-row gap-3 mt-3 py-5 w-full overflow-x-scroll border-border2 border-t">
         {breakpointEntries.map(([breakpoint, value]) => (
-          <div className="flex-shrink-0 min-w-0" key={breakpoint}>
+          <div className="shrink-0 min-w-0" key={breakpoint}>
             <div className="flex flex-row items-center gap-2 mb-2">
               <span className="text-sm font-medium capitalize">{breakpoint}</span>
             </div>
@@ -118,16 +118,15 @@ export default function Setting({ prop, size }: { prop: WaterfallSetting; size?:
 
   return (
     <Card>
-      <div className="flex flex-row gap-5 justify-between items-start">
-        <div className="flex flex-col gap-2 mb-2 shrink-0">
+      <div className="flex flex-row gap-5 justify-between items-center">
+        <div className="flex flex-col gap-2 shrink-0">
           <div className="flex flex-row items-center gap-3">
             <div className="flex flex-row items-center gap-3">
               {prop.icon && <FontAwesomeIcon icon={prop.icon} className="text-primary" />}
               <span>{prop.name}</span>
-              <Tooltip content={prop.description} defaultValue={prop.swiperDefault} />
+              <Tooltip content={prop.description} attrName={prop.attr} defaultValue={prop.swiperDefault} />
             </div>
           </div>
-          <span className="text-sm text-text3">{prop.attr}</span>
         </div>
         {renderInput()}
       </div>

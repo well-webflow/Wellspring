@@ -33,21 +33,23 @@ export default function EditView() {
 
   return (
     <div className="space-y-2">
-      {waterfallConfig?.map((category) => (
-        <Button size="lg" key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
-          <div className="flex flex-row items-center text-left gap-4">
-            {category.icon && (
-              <div className="bg-primary w-8 h-8 rounded-full flex items-center justify-center">
-                <FontAwesomeIcon icon={category.icon} className="text-primary-dark" />
+      {waterfallConfig
+        ?.filter((category) => category.id !== 'general')
+        .map((category) => (
+          <Button size="lg" key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
+            <div className="flex flex-row items-center text-left gap-4">
+              {category.icon && (
+                <div className="bg-primary w-8 h-8 rounded-full flex items-center justify-center">
+                  <FontAwesomeIcon icon={category.icon} className="text-primary-dark" />
+                </div>
+              )}
+              <div className="">
+                <div className="text-base font-bold">{category.name}</div>
+                <div className="text-sm text-text2">{category.summary}</div>
               </div>
-            )}
-            <div className="">
-              <div className="text-base font-bold">{category.name}</div>
-              <div className="text-sm text-text2">{category.summary}</div>
             </div>
-          </div>
-        </Button>
-      ))}
+          </Button>
+        ))}
     </div>
   );
 }

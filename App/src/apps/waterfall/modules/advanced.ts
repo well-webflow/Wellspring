@@ -1,9 +1,10 @@
-import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faLock } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_BREAKPOINTS_BASE,
   ATTR_CREATE_ELEMENTS,
   ATTR_CSS_MODE,
+  ATTR_DEBUG_MODE,
   ATTR_ENABLED,
   ATTR_FOCUSABLE_ELEMENTS,
   ATTR_INIT,
@@ -30,6 +31,15 @@ export default function advancedCategory() {
     description:
       "Settings you probably shouldn't touch unless you really know what you're doing. Certain features like Creative Effect, Virtual Slides, and Custom Events can be managed with custom code by accessing the global waterfalls object. It is in the form [{name, swiper}] so you can lookup swipers by name.",
     items: [
+      {
+        name: 'Debug',
+        attr: ATTR_DEBUG_MODE,
+        swiperDefault: 'false',
+        value: '',
+        description: 'Prints out debug statements to the browser console',
+        icon: faBug,
+        type: 'boolean',
+      },
       {
         name: 'Breakpoints Base',
         attr: ATTR_BREAKPOINTS_BASE,

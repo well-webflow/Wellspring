@@ -25,7 +25,7 @@ export default function NewWaterfallLayout() {
           type="text"
           value={loadedWaterfall?.name || ''}
           onChange={handleNameChange}
-          placeholder="Waterfall Name (required)"
+          placeholder="Slider Name"
           inputSize="base"
           required
         />
@@ -49,12 +49,12 @@ export default function NewWaterfallLayout() {
                 }
                 position="left"
               ></Tooltip>
-              Create Waterfall
+              Create
             </Button>
           </div>
         ) : (
           <Button size="sm" color="primary" onClick={createWaterfall}>
-            Create Waterfall
+            Create
           </Button>
         )}
       </Toolbar>

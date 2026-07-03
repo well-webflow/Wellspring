@@ -26,18 +26,18 @@ export default function WellflowMainView() {
         </Tab>
         <Tab label="About">
           <div className="flex flex-row gap-2 items-baseline">
-            <Heading level={4}>Wellflow</Heading>
+            <Heading level={4}>Wellspring</Heading>
             <Paragraph size="sm" className="text-text2">
               v1.0.0
             </Paragraph>
           </div>
           <Paragraph size="sm">
-            Thank you for installing <span className="text-primary">Wellflow</span>! My goal with this package is to
-            provide an affordable solution for common Webflow problems, starting with sliders. I am a solo developer
+            Thank you for installing <span className="text-primary">Wellspring</span>! My goal with this package is to
+            provide an affordable solution for common no-code problems, starting with sliders. I am a solo developer
             creating these apps in my free time. If you appreciate the work, please consider donating.
           </Paragraph>
           <Paragraph size="sm">
-            <a href="https://wellflow-app.webflow.io" target="_blank" className="text-primary">
+            <a href="https://wellspring-app.webflow.io" target="_blank" className="text-primary">
               Visit our Website
             </a>
           </Paragraph>

@@ -38,7 +38,7 @@ export function WaterfallCode({ version: propVersion = 'latest' }: WaterfallCode
     }
   }, [propVersion]);
 
-  const npmPackageCode = `<script defer src="https://cdn.jsdelivr.net/npm/well-waterfall@${version}"></script>`;
+  const npmPackageCode = `<script type="module" src="https://cdn.jsdelivr.net/npm/well-waterfall@${version}"></script>`;
   const highlightedCode = Prism.highlight(npmPackageCode, Prism.languages.markup, 'markup');
 
   const copyToClipboard = async () => {
@@ -92,7 +92,7 @@ export function WaterfallCode({ version: propVersion = 'latest' }: WaterfallCode
         <pre className="bg-gray-100 p-3 flex-1 min-w-0 rounded font-mono text-sm overflow-x-auto whitespace-nowrap">
           <code className="language-markup" dangerouslySetInnerHTML={{ __html: highlightedCode }} />
         </pre>
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <Button onClick={copyToClipboard}>
             <FontAwesomeIcon icon={copied ? faCheck : faCopy} />
             {copied ? 'Copied!' : 'Copy'}
