@@ -24,11 +24,19 @@ export function findWaterfallSetting(waterfallConfig: WaterfallConfig, baseAttr:
 export function addDefaultSettings(defaultWaterfallSettings: WaterfallConfig, waterfallDiv: DOMElement) {
   defaultWaterfallSettings.forEach((group) => {
     group.items?.forEach((prop) => {
-      waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+      // Only set attribute if value exists and is different from default
+      const shouldSet = prop.value && prop.value !== prop.swiperDefault;
+      if (shouldSet) {
+        waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+      }
     });
     group.groups?.forEach((group) => {
       group.items?.forEach((prop) => {
-        waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+        // Only set attribute if value exists and is different from default
+        const shouldSet = prop.value && prop.value !== prop.swiperDefault;
+        if (shouldSet) {
+          waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+        }
       });
     });
   });

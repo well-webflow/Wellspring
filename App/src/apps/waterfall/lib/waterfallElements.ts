@@ -15,7 +15,8 @@ import { addDefaultSettings } from './waterfallHelpers';
 
 export const createWaterfallElement = async (
   waterfallConfig: WaterfallCategory[],
-  mode: WaterfallContentType = 'static'
+  mode: WaterfallContentType = 'static',
+  waterfallName?: string
 ) => {
   const parentEl = await webflow.getSelectedElement();
   if (!parentEl?.children) return false;
@@ -62,6 +63,12 @@ export const createWaterfallElement = async (
   }
 
   addDefaultSettings(waterfallConfig, waterfallDiv);
+
+  // Set the waterfall name if provided
+  if (waterfallName) {
+    waterfallDiv.setAttribute('waterfall', waterfallName);
+  }
+
   webflow.setSelectedElement(waterfallDiv);
 
   return true;

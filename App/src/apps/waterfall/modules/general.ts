@@ -1,6 +1,6 @@
-import { faBug, faCog, faDatabase, faNoteSticky } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faCog, faDatabase } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { ATTR_DEBUG_MODE, ATTR_WATERFALL, ATTR_WATERFALL_CONTENT } from 'well-waterfall';
+import { ATTR_DEBUG_MODE, ATTR_WATERFALL_CONTENT } from 'well-waterfall';
 
 export default function generalConfig() {
   let config: WaterfallCategory = {
@@ -10,15 +10,6 @@ export default function generalConfig() {
     description: 'Basic settings for all sliders',
     summary: 'Basic settings for all sliders',
     items: [
-      {
-        name: 'Waterfall Name',
-        attr: ATTR_WATERFALL,
-        swiperDefault: '-',
-        value: 'New Waterfall',
-        description: 'The name of the waterfall',
-        icon: faNoteSticky,
-        type: 'string',
-      },
       {
         name: 'Debug',
         attr: ATTR_DEBUG_MODE,

@@ -19,7 +19,7 @@ export function Input({ submit, inputSize = 'base', classNames, ...props }: Inpu
 
   const classes = twMerge(
     clsx(
-      'h-11 bg-background1 flex shrink-0 border-2 border-border1 rounded-xs focus-within:border-primary p-2 overflow-hidden',
+      'h-9 bg-background1 flex shrink-0 border-2 border-border1 rounded-xs focus-within:border-primary px-2 overflow-hidden',
       sizeClasses[inputSize],
       classNames
     )

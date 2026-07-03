@@ -111,7 +111,7 @@ export function useWaterfallLogic(): WaterfallState {
     const mode = (findWaterfallSetting(waterfallConfig, ATTR_WATERFALL_CONTENT)?.value ||
       'static') as WaterfallContentType;
 
-    const success = await createWaterfallElement(waterfallConfig, mode);
+    const success = await createWaterfallElement(waterfallConfig, mode, loadedWaterfall?.name || undefined);
     if (!success) {
       webflow.notify({
         type: 'Error',
@@ -234,6 +234,12 @@ export function useWaterfallLogic(): WaterfallState {
     });
 
     setWaterfallConfig(updatedData);
+
+    // Update the loaded waterfall name if the waterfall attribute is being updated
+    if (propAttrName === 'waterfall' && loadedWaterfall) {
+      setLoadedWaterfall({ ...loadedWaterfall, name: newValue });
+    }
+
     return updatedData;
   }
 
@@ -250,6 +256,11 @@ export function useWaterfallLogic(): WaterfallState {
       ]) ?? [];
 
     try {
+      // Save the waterfall name separately (since it's no longer in the config)
+      if (loadedWaterfall?.name) {
+        await setAttribute(el, 'waterfall', loadedWaterfall.name);
+      }
+
       await Promise.all(
         allSettings.map(async (setting) => {
           if (!setting.attr) {

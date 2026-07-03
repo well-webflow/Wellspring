@@ -15,7 +15,7 @@ export default function NewWaterfallView() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!waterfallConfig) initNewWaterfall();
+    initNewWaterfall();
   }, []);
 
   function goToCategory(selectedCategory: string) {
