@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 export default function CategoryView() {
   const { categoryName } = useParams<{ categoryName: string }>();
-  const { selectedCategory, setSelectedCategory, waterfallConfig } = useWaterfall();
+  const { selectedCategory, setSelectedCategory, waterfallConfig, updateWaterfall } = useWaterfall();
 
   // Sync URL parameter with context state when navigating via browser buttons
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function CategoryView() {
             <SettingSection>
               <div className="flex flex-col gap-4">
                 {settings.map((setting) => (
-                  <Setting key={setting.name} prop={setting} />
+                  <Setting key={setting.name} prop={setting} update={updateWaterfall} />
                 ))}
               </div>
             </SettingSection>
@@ -54,7 +54,7 @@ export default function CategoryView() {
                   <p className="text-sm mb-5 text-gray-300">{group.description}</p>
                 </div>
                 {group.items?.map((item) => (
-                  <Setting key={item.name} prop={item} />
+                  <Setting key={item.name} prop={item} update={updateWaterfall} />
                 ))}
               </div>
             </SettingSection>

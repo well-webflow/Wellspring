@@ -20,7 +20,7 @@ export default function thumbsCategory() {
         name: 'Thumbs Swiper',
         attr: ATTR_THUMBS,
         swiperDefault: '--',
-        type: 'waterfall',
+        type: 'instance',
         description: 'Select the Waterfall this slider will use as Thumbnails',
         value: '',
       },

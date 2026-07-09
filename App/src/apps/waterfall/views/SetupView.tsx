@@ -17,7 +17,7 @@ export default function SetupView() {
       </p>
       <Card>
         {/* <WaterfallCode /> */}
-        <WaterfallCode version="1.2.9" />
+        <WaterfallCode version="1.2.10" />
       </Card>
     </div>
   );

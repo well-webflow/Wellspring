@@ -1,6 +1,5 @@
 import a11yConfig from '../modules/a11y';
 import advancedCategory from '../modules/advanced';
-import classnamesCategory from '../modules/classNames';
 import controllerCategory from '../modules/controller';
 import effectCategory from '../modules/effect';
 import freemodeCategory from '../modules/freeMode';
@@ -37,7 +36,6 @@ export const defaultWaterfallConfig: WaterfallConfig = [
   a11yConfig(),
   ObserverCategory(),
   zoomCategory(),
-  classnamesCategory(),
   advancedCategory(),
   // VIRTUAL (NOT IMPLEMENTED)
 ];

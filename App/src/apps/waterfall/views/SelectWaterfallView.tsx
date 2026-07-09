@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import Card from '../../../components/UI/Card';
 import { Heading } from '../../../components/Typography';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { useWaterfall } from '../hooks/WaterfallContext';
 import Button from '../../../components/UI/Button';
@@ -34,7 +33,7 @@ export default function SelectWaterfallView() {
     <div>
       <Toolbar>
         <Heading level={4}>Select a Waterfall to Edit</Heading>
-        <FontAwesomeIcon icon={faRotateRight} className="text-text3 cursor-pointer" onClick={search}></FontAwesomeIcon>
+        <Button size="sm" onClick={search} icon={faRotateRight}></Button>
       </Toolbar>
       <div className="p-3">
         <div className="flex flex-col gap-2">
@@ -45,7 +44,10 @@ export default function SelectWaterfallView() {
               </Button>
             ))
           ) : (
-            <Card>No Waterfalls found on this page.</Card>
+            <Card>
+              No Waterfalls found on this page. If your waterfall is inside a Component, double-click into the Component
+              and click refresh.
+            </Card>
           )}
         </div>
       </div>

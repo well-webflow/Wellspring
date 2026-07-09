@@ -41,7 +41,7 @@ function Tooltip({ content, defaultValue, attrName, position = 'right' }: Toolti
           {/* Triangle */}
           <div className={`absolute ${arrowClasses[position]}`} />
           {content}
-          <hr className="my-2" />
+          {(attrName || defaultValue) && <hr className="my-2" />}
           <div className="flex flex-row gap-2">
             {attrName && <div className="text-primary">{attrName}</div>}
             {defaultValue && (

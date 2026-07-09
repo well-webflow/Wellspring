@@ -1,7 +1,7 @@
 // context/authContext.tsx
 import { createContext } from 'react';
 import { SessionUser } from '../utils/tokenManager';
-import { WebflowSiteInfo } from '../wellflow';
+import { WebflowSiteInfo } from '../types/wellflow';
 
 interface AuthContextType {
   idToken: string;

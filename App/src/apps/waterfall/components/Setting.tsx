@@ -1,24 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Select } from '../../../components/UI/Select';
 import Tooltip from '../../../components/UI/Tooltip';
-import { useWaterfall } from '../hooks/WaterfallContext';
 import { WaterfallSetting } from '../waterfall';
-import { BreakpointObject } from '../../../utils/breakpoints';
+import { BreakpointObject, breakpointConfigs, Breakpoints } from '../../../utils/breakpoints';
 import { Input } from '../../../components/UI/Input';
 import Card from '../../../components/UI/Card';
 import { BooleanSwitch } from '../../../components/UI/BooleanSwitch';
 
 export type SettingSize = 'base' | 'lg' | 'full';
 
-export default function Setting({ prop, size }: { prop: WaterfallSetting; size?: SettingSize }) {
-  // Setting being used outside of WaterfallContext
-  const { updateWaterfall, waterfallNames } = useWaterfall();
+interface SettingProps {
+  prop: WaterfallSetting;
+  size?: SettingSize;
+  update: (attr: string, value: string, breakpoint?: string) => void;
+}
 
+export default function Setting({ prop, size, update }: SettingProps) {
   function handleValueChange(value: string, breakpoint?: string) {
     if (prop.onChange) {
       prop.onChange(value);
     } else {
-      updateWaterfall(prop.attr, value, breakpoint);
+      update(prop.attr, value, breakpoint);
     }
   }
 
@@ -76,10 +78,15 @@ export default function Setting({ prop, size }: { prop: WaterfallSetting; size?:
           </div>
         );
 
-      case 'waterfall':
+      case 'instance':
         return (
           <div className={wrapperClass}>
-            <Select type="select" value={value || ''} options={['--', ...waterfallNames]} onChange={onChange} />
+            <Select
+              type="select"
+              value={value || ''}
+              options={['--', ...(prop.instanceNames || [])]}
+              onChange={onChange}
+            />
           </div>
         );
 
@@ -103,15 +110,22 @@ export default function Setting({ prop, size }: { prop: WaterfallSetting; size?:
     if (!prop.breakpoints) return null;
     const breakpointEntries = Object.entries(prop.breakpoints as BreakpointObject);
     return (
-      <div className="flex flex-row gap-3 mt-3 py-5 w-full overflow-x-scroll border-border2 border-t">
-        {breakpointEntries.map(([breakpoint, value]) => (
-          <div className="shrink-0 min-w-0" key={breakpoint}>
-            <div className="flex flex-row items-center gap-2 mb-2">
-              <span className="text-sm font-medium capitalize">{breakpoint}</span>
+      <div className="flex flex-row gap-2 mt-3 py-5 w-full overflow-x-scroll border-border2 border-t">
+        {breakpointEntries.map(([breakpoint, value]) => {
+          const config = breakpointConfigs[breakpoint as Breakpoints];
+          return (
+            <div className="shrink-0 min-w-0" key={breakpoint}>
+              <div className="flex flex-row items-center gap-1 mb-2">
+                <img src={config.icon} alt={config.displayName} className="w-4 h-4 brightness-0 invert" />
+                <div className="w-full flex flex-row items-center justify-between gap-1 pr-2">
+                  <span className="text-sm font-medium">{config.displayName}</span>
+                  <span className="text-xs text-gray-300">{config.size}</span>
+                </div>
+              </div>
+              {renderInputControl(value.toString(), breakpoint)}
             </div>
-            {renderInputControl(value.toString(), breakpoint)}
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   }

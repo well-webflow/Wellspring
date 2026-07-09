@@ -6,27 +6,26 @@ import { Heading, Paragraph } from '../../../../components/Typography';
 import Button from '../../../../components/UI/Button';
 import { useWebflow } from '../../../../context/webflowContext';
 import { useWaterfall } from '../../hooks/WaterfallContext';
-import Setting from '../../components/Setting';
-import { findWaterfallSetting } from '../../lib/waterfallHelpers';
-import { ATTR_WATERFALL_CONTENT } from 'well-waterfall';
+import ContentTypeSetting from '../../components/ContentTypeSetting';
 
 export default function NewWaterfallView() {
-  const { initNewWaterfall, waterfallConfig, setSelectedCategory } = useWaterfall();
+  const { initNewWaterfall, waterfallConfig, setSelectedCategory, contentType, setContentType } = useWaterfall();
 
   const { elementSelected } = useWebflow();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    initNewWaterfall();
+    // Only initialize if config doesn't exist yet
+    if (!waterfallConfig) {
+      initNewWaterfall();
+    }
   }, []);
 
   function goToCategory(selectedCategory: string) {
     setSelectedCategory(selectedCategory);
     navigate(`/waterfall/new/${selectedCategory}`);
   }
-
-  const contentTypeSetting = waterfallConfig ? findWaterfallSetting(waterfallConfig, ATTR_WATERFALL_CONTENT) : null;
 
   if (!elementSelected)
     return (
@@ -40,7 +39,7 @@ export default function NewWaterfallView() {
 
   return (
     <div className="space-y-2">
-      {contentTypeSetting && <Setting prop={contentTypeSetting} size="lg" />}
+      <ContentTypeSetting value={contentType} onChange={setContentType} />
 
       {waterfallConfig
         ?.filter((category) => category.id !== 'general')

@@ -1,3 +1,5 @@
+/// <reference types="@webflow/designer-extension-typings" />
+
 export interface AuthContextType {
   idToken: string;
   sessionToken: string;

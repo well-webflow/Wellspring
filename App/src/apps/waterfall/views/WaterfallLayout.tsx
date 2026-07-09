@@ -3,7 +3,7 @@ import { useWaterfall, WaterfallProvider } from '../hooks/WaterfallContext';
 import { NavLink, Outlet, useMatch } from 'react-router';
 import { Tab } from '../../../components/Tabs';
 import { faBox, faCirclePlus, faGear, faPencil } from '@fortawesome/free-solid-svg-icons';
-import { WellflowHeader } from '../../../views/WellflowMainView';
+import { WellflowHeader } from '../../../views/WellspringMainView';
 import { useEffect } from 'react';
 import { useScrollRestoration } from '../../../hooks/useScrollRestoration';
 

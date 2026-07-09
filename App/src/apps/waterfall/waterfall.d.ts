@@ -1,5 +1,5 @@
 import { FormEventHandler } from 'react';
-import { BreakpointObject } from '../../wellflow';
+import { BreakpointObject } from '../../types/wellflow';
 
 export type EditMode = 'new' | 'edit' | 'view';
 export type WaterfallContentType = 'static' | 'cms';
@@ -33,7 +33,7 @@ export interface WaterfallGroup {
 }
 
 // Settings
-export type SettingType = 'boolean' | 'string' | 'number' | 'select' | 'waterfall' | 'waterfall-multiple';
+export type SettingType = 'boolean' | 'string' | 'number' | 'select' | 'instance' | 'instances';
 
 export interface WaterfallSetting {
   name: string;
@@ -43,6 +43,7 @@ export interface WaterfallSetting {
   description: string;
   value: string;
   options?: string[];
+  instanceNames?: string[];
   breakpoints?: BreakpointObject;
   icon?: IconDefinition;
   submit?: FormEventHandler<HTMLButtonElement>;
@@ -69,6 +70,8 @@ interface WaterfallState {
   setWaterfallConfig: (value: WaterfallCategory[]) => void;
   selectedCategory: string | null;
   setSelectedCategory: (value: string | null) => void;
+  contentType: WaterfallContentType;
+  setContentType: (value: WaterfallContentType) => void;
   createWaterfall: () => void;
   loadWaterfall: () => Promise<string | null | undefined>;
   loadedWaterfall: LoadedWaterfall | null;

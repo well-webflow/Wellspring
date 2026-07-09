@@ -2,12 +2,12 @@ import { useLocation } from 'react-router';
 import HorizontalRule from '../components/UI/hr';
 import { Tab, Tabs } from '../components/Tabs';
 import { Heading, Paragraph } from '../components/Typography';
-import WellflowAppList from '../components/WellflowAppList';
+import WellspringAppList from '../components/AppList';
 import { useEffect } from 'react';
 import { faBug, faChevronLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useWellflow } from '../context/wellflowContext';
 import NavigationLink from '../components/UI/NavigationLink';
-import wellflowLogo from '../assets/wellflow-logo-white.svg';
+import wellspringLogo from '../assets/wellspring.png';
 
 export default function WellflowMainView() {
   //const { siteData } = useAuth();
@@ -22,7 +22,7 @@ export default function WellflowMainView() {
       <WellflowHeader />
       <Tabs headerClasses="" contentClasses="p-3">
         <Tab label="Apps">
-          <WellflowAppList />
+          <WellspringAppList />
         </Tab>
         <Tab label="About">
           <div className="flex flex-row gap-2 items-baseline">
@@ -55,29 +55,6 @@ export default function WellflowMainView() {
           <li className="list-none">
             <ul className="text-sm text-text2">- Initial Release</ul>
           </li>
-          {/* <Heading level={4} className="mt-3">
-            1. Authorize
-          </Heading>
-          <Paragraph size="sm">Wellflow needs permission to access your site before working.</Paragraph>
-          {!sessionToken ? (
-            <Button onClick={openAuthWindow} size="sm" color="primary">
-              Authorize App
-            </Button>
-          ) : (
-            <Button onClick={() => {}} size="sm" color="secondary">
-              Logout
-            </Button>
-          )}
-          <HorizontalRule />
-          <Heading level={4} className="mt-3">
-            2. Install Code
-          </Heading>
-          <Paragraph size="sm">
-            In order to run, install the code snippet on your site. The Wellflow code package includes: SwiperJS
-          </Paragraph>
-          <Button onClick={() => addWellflowScript(siteId, sessionToken)} color="primary" size="sm">
-            Add Code
-          </Button> */}
         </Tab>
       </Tabs>
     </div>
@@ -104,11 +81,11 @@ export function WellflowHeader() {
               </span>
             </NavigationLink>
           ) : (
-            <img src={wellflowLogo} alt="Wellflow Logo" width={80} height={20} className="" />
+            <img src={wellspringLogo} alt="Wellspring Logo" width={80} height={20} className="" />
           )}
         </div>
         <div className="flex flex-row gap-4">
-          <NavigationLink to="https://wellflow-app.webflow.io/contact" target="_blank" icon={faBug}>
+          <NavigationLink to="https://wellspring-app.webflow.io/contact" target="_blank" icon={faBug}>
             Bug Report
           </NavigationLink>
           <NavigationLink to="https://www.buymeacoffee.com/cactoid" target="_blank" icon={faHeart}>

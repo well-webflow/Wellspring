@@ -19,6 +19,7 @@ import {
   ATTR_SPACE_BETWEEN,
   ATTR_WIDTH,
 } from 'well-waterfall';
+import { createBreakpoints } from '../../../utils/breakpoints';
 
 export default function layoutConfig() {
   let config: WaterfallCategory = {
@@ -37,13 +38,7 @@ export default function layoutConfig() {
             attr: ATTR_SLIDES_PER_GROUP,
             swiperDefault: '1',
             value: '',
-            breakpoints: {
-              lmobile: '',
-              tablet: '',
-              desktop: '',
-              large: '',
-              xlarge: '',
-            },
+            breakpoints: createBreakpoints(),
             description:
               'Set numbers of slides to define and enable group sliding (sliding more than 1 slide at a time). Useful to use with slidesPerView > 1',
 
@@ -79,13 +74,7 @@ export default function layoutConfig() {
             attr: ATTR_CENTERED_SLIDES,
             swiperDefault: 'false',
             value: '',
-            breakpoints: {
-              lmobile: '',
-              tablet: '',
-              desktop: '',
-              large: '',
-              xlarge: '',
-            },
+            breakpoints: createBreakpoints(),
             description: 'If true, then active slide will be centered, not always on the left side.',
 
             type: 'boolean',
@@ -226,13 +215,7 @@ export default function layoutConfig() {
         attr: ATTR_SPACE_BETWEEN,
         swiperDefault: '0',
         value: '',
-        breakpoints: {
-          lmobile: '',
-          tablet: '',
-          desktop: '',
-          large: '',
-          xlarge: '',
-        },
+        breakpoints: createBreakpoints(),
         description:
           'Distance between slides in px. NOTE: If you add margin to elements inside the Waterfall, navigation might not work properly.',
 
@@ -245,13 +228,7 @@ export default function layoutConfig() {
         swiperDefault: '1',
         value: '',
         icon: faHashtag,
-        breakpoints: {
-          lmobile: '',
-          tablet: '',
-          desktop: '',
-          large: '',
-          xlarge: '',
-        },
+        breakpoints: createBreakpoints(),
         description: "Number of slides per view (slides visible at the same time on slider's container).",
 
         type: 'string',

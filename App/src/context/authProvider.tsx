@@ -2,7 +2,7 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { AuthContext } from './authContext';
 import { fetchSessionToken, getStoredSession, isTokenValid, SessionUser, storeSession } from '../utils/tokenManager';
-import { WebflowSiteInfo } from '../wellflow';
+import { WebflowSiteInfo } from '../types/wellflow';
 
 const SESSION_TOKEN_NAME = 'wf_hybrid_user';
 

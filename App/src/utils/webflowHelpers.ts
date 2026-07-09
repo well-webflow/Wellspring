@@ -1,4 +1,4 @@
-import { WebflowSiteInfo } from '../wellflow';
+import { WebflowSiteInfo } from '../types/wellflow';
 import axiosInstance from './axios';
 
 /**

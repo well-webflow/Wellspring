@@ -79,7 +79,7 @@ export default defineConfig({
     port: 1337,
   },
   build: {
-    assetsInlineLimit: 10000, // Inline assets smaller than 10KB as base64
+    assetsInlineLimit: 100000, // Inline assets smaller than 100KB as base64
     rollupOptions: {
       output: {
         manualChunks: {

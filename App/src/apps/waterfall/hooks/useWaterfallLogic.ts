@@ -14,16 +14,46 @@ import { defaultWaterfallConfig } from '../lib/waterfallConfig';
 import { getBaseAttr, getBreakpointAttr } from '../../../utils/attributes';
 import { Breakpoints } from '../../../utils/breakpoints';
 import { deepCloneWithFunctions } from '../utils/categoryParser';
-import { ATTR_WATERFALL_CONTENT } from 'well-waterfall';
+
+/**
+ * Populate instanceNames for all settings with type 'instance'
+ */
+function populateInstanceNames(config: WaterfallConfig, instanceNames: string[]): WaterfallConfig {
+  return config.map((category) => ({
+    ...category,
+    items: category.items?.map((item) =>
+      item.type === 'instance'
+        ? { ...item, instanceNames }
+        : { ...item, breakpoints: item.breakpoints ? { ...item.breakpoints } : undefined }
+    ),
+    groups: category.groups?.map((group) => ({
+      ...group,
+      items: group.items?.map((item) =>
+        item.type === 'instance'
+          ? { ...item, instanceNames }
+          : { ...item, breakpoints: item.breakpoints ? { ...item.breakpoints } : undefined }
+      ),
+    })),
+  }));
+}
 
 export function useWaterfallLogic(): WaterfallState {
   const [waterfalls, setWaterfalls] = useState<AnyElement[]>([]);
   const [waterfallNames, setWaterfallNames] = useState<string[]>([]);
-  const [waterfallConfig, setWaterfallConfig] = useState<WaterfallConfig | null>(null);
+  const [waterfallConfig, _setWaterfallConfig] = useState<WaterfallConfig | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [contentType, setContentType] = useState<WaterfallContentType>('static');
   const [waterfallSelected, setWaterfallSelected] = useState<string | null>(null);
   const [loadedWaterfall, setLoadedWaterfall] = useState<LoadedWaterfall | null>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [lastPopulatedNames, setLastPopulatedNames] = useState<string[]>([]);
+
+  // Wrapper to use the actual setter
+  const setWaterfallConfig = (
+    config: WaterfallConfig | null | ((prev: WaterfallConfig | null) => WaterfallConfig | null)
+  ) => {
+    _setWaterfallConfig(config);
+  };
 
   const navigate = useNavigate();
 
@@ -43,6 +73,17 @@ export function useWaterfallLogic(): WaterfallState {
     return () => unsubscribeSelectedElement();
   }, []);
 
+  // Update instance names in config whenever waterfallNames changes
+  useEffect(() => {
+    if (waterfallConfig && JSON.stringify(waterfallNames) !== JSON.stringify(lastPopulatedNames)) {
+      setWaterfallConfig((currentConfig) => {
+        if (!currentConfig) return currentConfig;
+        return populateInstanceNames(currentConfig, waterfallNames);
+      });
+      setLastPopulatedNames(waterfallNames);
+    }
+  }, [waterfallNames]);
+
   async function searchForWaterfalls() {
     const els = await webflow.getAllElements();
     const waterfalls: AnyElement[] = [];
@@ -58,6 +99,7 @@ export function useWaterfallLogic(): WaterfallState {
     );
     setWaterfalls(waterfalls);
     setWaterfallNames(names);
+    return names;
   }
 
   /**
@@ -93,7 +135,7 @@ export function useWaterfallLogic(): WaterfallState {
   async function initNewWaterfall() {
     setIsLoading(true);
 
-    setWaterfallConfig(defaultWaterfallConfig);
+    setWaterfallConfig(populateInstanceNames(defaultWaterfallConfig, waterfallNames));
     setLoadedWaterfall({ name: 'New Waterfall', el: null });
 
     setIsLoading(false);
@@ -107,11 +149,7 @@ export function useWaterfallLogic(): WaterfallState {
     setIsLoading(true);
     if (!waterfallConfig) return;
 
-    // Find the content mode (CMS or Static)
-    const mode = (findWaterfallSetting(waterfallConfig, ATTR_WATERFALL_CONTENT)?.value ||
-      'static') as WaterfallContentType;
-
-    const success = await createWaterfallElement(waterfallConfig, mode, loadedWaterfall?.name || undefined);
+    const success = await createWaterfallElement(waterfallConfig, contentType, loadedWaterfall?.name || undefined);
     if (!success) {
       webflow.notify({
         type: 'Error',
@@ -164,8 +202,8 @@ export function useWaterfallLogic(): WaterfallState {
       }
     });
 
-    setWaterfallConfig(updatedProps); // Update state with transformed data
-    await searchForWaterfalls();
+    const names = await searchForWaterfalls();
+    setWaterfallConfig(populateInstanceNames(updatedProps, names)); // Update state with transformed data
     setIsLoading(false);
     return waterfallName;
   }
@@ -233,14 +271,15 @@ export function useWaterfallLogic(): WaterfallState {
       };
     });
 
-    setWaterfallConfig(updatedData);
+    const configWithInstances = populateInstanceNames(updatedData, waterfallNames);
+    setWaterfallConfig(configWithInstances);
 
     // Update the loaded waterfall name if the waterfall attribute is being updated
     if (propAttrName === 'waterfall' && loadedWaterfall) {
       setLoadedWaterfall({ ...loadedWaterfall, name: newValue });
     }
 
-    return updatedData;
+    return configWithInstances;
   }
 
   async function saveWaterfall() {
@@ -311,6 +350,8 @@ export function useWaterfallLogic(): WaterfallState {
     setWaterfallConfig,
     selectedCategory,
     setSelectedCategory,
+    contentType,
+    setContentType,
     waterfallSelected,
     loadedWaterfall,
     isLoading,

@@ -1,4 +1,6 @@
 import { WaterfallConfig, WaterfallSetting } from '../waterfall';
+import { getBreakpointAttr } from '../../../utils/attributes';
+import { Breakpoints } from '../../../utils/breakpoints';
 
 /**
  * Find Waterfall Setting
@@ -22,22 +24,28 @@ export function findWaterfallSetting(waterfallConfig: WaterfallConfig, baseAttr:
 
 // Load and add Waterfall Settings as attributes
 export function addDefaultSettings(defaultWaterfallSettings: WaterfallConfig, waterfallDiv: DOMElement) {
-  defaultWaterfallSettings.forEach((group) => {
-    group.items?.forEach((prop) => {
-      // Only set attribute if value exists and is different from default
-      const shouldSet = prop.value && prop.value !== prop.swiperDefault;
-      if (shouldSet) {
-        waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
-      }
-    });
-    group.groups?.forEach((group) => {
-      group.items?.forEach((prop) => {
-        // Only set attribute if value exists and is different from default
-        const shouldSet = prop.value && prop.value !== prop.swiperDefault;
-        if (shouldSet) {
-          waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+  const processItem = (prop: WaterfallSetting) => {
+    // Only set attribute if value exists and is different from default
+    const shouldSet = prop.value && prop.value !== prop.swiperDefault;
+    if (shouldSet) {
+      waterfallDiv.setAttribute(prop.attr, prop.value?.toString());
+    }
+
+    // Also set breakpoint attributes if they exist
+    if (prop.breakpoints) {
+      Object.entries(prop.breakpoints).forEach(([breakpoint, value]) => {
+        if (value) {
+          const attr = getBreakpointAttr(prop.attr, breakpoint as Breakpoints);
+          waterfallDiv.setAttribute(attr, value.toString());
         }
       });
+    }
+  };
+
+  defaultWaterfallSettings.forEach((group) => {
+    group.items?.forEach(processItem);
+    group.groups?.forEach((subgroup) => {
+      subgroup.items?.forEach(processItem);
     });
   });
   return waterfallDiv;

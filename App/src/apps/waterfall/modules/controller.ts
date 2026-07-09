@@ -16,7 +16,7 @@ export default function controllerCategory() {
         description:
           'Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper. Also accepts string with CSS selector of Swiper element, or HTMLElement of Swiper element',
         value: '',
-        type: 'waterfall',
+        type: 'instance',
       },
       {
         name: 'By',

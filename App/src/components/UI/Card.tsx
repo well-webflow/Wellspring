@@ -13,8 +13,8 @@ interface CardProps {
 
 export default function Card({ children, href, onClick, size = 'lg', disabled = false, className }: CardProps) {
   const baseClass = clsx(
-    'rounded-md transition-all duration-200 min-w-0',
-    size === 'sm' ? 'p-2' : 'p-5',
+    'rounded-md transition-all duration-200 min-w-0 p-4',
+    size === 'sm' ? 'py-2' : 'py-5',
     disabled ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90',
     onClick && !disabled && 'hover:scale-[1.02] hover:shadow-md',
     (href || onClick) && 'cursor-pointer',

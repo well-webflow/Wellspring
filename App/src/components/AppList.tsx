@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import Card from './UI/Card';
 import waterfallIcon from '../assets/waterfall.png';
 
-export default function WellflowAppList() {
+export default function WellspringAppList() {
   const { changeActiveApp } = useWellflow();
 
   return (

@@ -59,7 +59,6 @@ export function WaterfallCode({ version: propVersion = 'latest' }: WaterfallCode
           await navigator.clipboard.writeText(npmPackageCode);
           setCopied(true);
           setTimeout(() => setCopied(false), 2000);
-          document.body.removeChild(textArea);
           return;
         } catch (clipboardErr) {
           // Clipboard API failed, fall through to execCommand
