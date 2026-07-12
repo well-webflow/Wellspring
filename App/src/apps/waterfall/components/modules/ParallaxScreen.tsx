@@ -92,7 +92,10 @@ export default function ParallaxScreen() {
 
   return (
     <div className="space-y-5">
-      <Caption>Reminder! You need to enable Parallax on the Waterfall for this feature to work.</Caption>
+      <Caption>
+        Add to elements inside the Waterfall to make them parallax. Remember! You need to enable Parallax on the
+        Waterfall for this feature to work.
+      </Caption>
       {FIELDS.map((field) => (
         <Setting size="lg" key={field.attr} prop={field} update={noopUpdate} />
       ))}

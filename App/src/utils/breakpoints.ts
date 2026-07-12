@@ -1,3 +1,5 @@
+import { breakpointIcons } from '../assets/breakpoint-icons';
+
 // Breakpoints
 export const websiteBreakpoints = ['mobile', 'lmobile', 'tablet', 'desktop', 'desktop-small', 'desktop-large'] as const;
 
@@ -17,37 +19,37 @@ export const breakpointConfigs: Record<Breakpoints, BreakpointConfig> = {
     id: 'mobile',
     displayName: 'Mobile',
     size: '479px',
-    icon: '/src/assets/breakpoint-icons/mobile-portrait.svg',
+    icon: breakpointIcons.mobilePortrait,
   },
   lmobile: {
     id: 'lmobile',
     displayName: 'Mobile Large',
     size: '767px',
-    icon: '/src/assets/breakpoint-icons/mobile-landscape.svg',
+    icon: breakpointIcons.mobileLandscape,
   },
   tablet: {
     id: 'tablet',
     displayName: 'Tablet',
     size: '991px',
-    icon: '/src/assets/breakpoint-icons/tablet.svg',
+    icon: breakpointIcons.tablet,
   },
   desktop: {
     id: 'desktop',
     displayName: 'Desktop',
     size: '1024px',
-    icon: '/src/assets/breakpoint-icons/desktop.svg',
+    icon: breakpointIcons.desktop,
   },
   'desktop-small': {
     id: 'desktop-small',
     displayName: 'Desktop Small',
     size: '1280px',
-    icon: '/src/assets/breakpoint-icons/desktop-small.svg',
+    icon: breakpointIcons.desktopSmall,
   },
   'desktop-large': {
     id: 'desktop-large',
     displayName: 'Desktop Large',
     size: '1440px',
-    icon: '/src/assets/breakpoint-icons/desktop-large.svg',
+    icon: breakpointIcons.desktopLarge,
   },
 };
 

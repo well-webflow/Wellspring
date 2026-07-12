@@ -16,7 +16,6 @@ import touchClickCategory from '../modules/touchClick';
 import manipulationCategory from '../modules/manipulation';
 import { WaterfallConfig } from '../waterfall';
 import zoomCategory from '../modules/zoom';
-import parallaxConfig from '../modules/parallax';
 
 export const defaultWaterfallConfig: WaterfallConfig = [
   layoutConfig(),
@@ -27,7 +26,6 @@ export const defaultWaterfallConfig: WaterfallConfig = [
   freemodeCategory(),
   touchClickCategory(),
   effectCategory(),
-  parallaxConfig(),
   thumbsCategory(),
   keyboardMouseCategory(),
   memoryCategory(),

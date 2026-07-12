@@ -56,86 +56,78 @@ export default function CreateView() {
           <>
             <div>
               <Heading level={3} className="mb-3">
-                Create New
+                Pagination
               </Heading>
               <div className="grid grid-cols-2 gap-3">
                 <Card onClick={createPagination} className="flex flex-col text-center">
                   <FontAwesomeIcon icon={faEllipsis} className="mb-2 text-primary" size="1x" />
-                  Pagination
+                  Create New Pagination
                 </Card>
-                <Card onClick={createNavigation} className="flex flex-col text-center">
-                  <FontAwesomeIcon icon={faArrowsLeftRight} className="mb-2 text-primary" size="1x" />
-                  Navigation
-                </Card>
-                <Card onClick={createScrollbar} className="flex flex-col text-center">
-                  <FontAwesomeIcon icon={faArrowsLeftRight} className="mb-2 text-primary" size="1x" />
-                  Scrollbar
-                </Card>
-                <Card onClick={createSlideCount} className="flex flex-col text-center">
-                  <FontAwesomeIcon icon={faHashtag} className="mb-2 text-primary" size="1x" />
-                  Slide Count
-                </Card>
-              </div>
-            </div>
-            <div>
-              <Heading level={3} className="mb-3">
-                Convert Selected
-              </Heading>
-              <Heading level={4} className="mb-3">
-                Pagination
-              </Heading>
-              <div className="grid grid-cols-3 gap-3">
                 <Card onClick={convertElementToPaginationContainer} className="flex flex-col text-center">
                   <FontAwesomeIcon icon={faSquare} className="mb-2 text-primary" size="1x" />
-                  Pagination Container
+                  Convert to Pagination Container
                 </Card>
                 <Card onClick={convertElementToPaginationBullet} className="flex flex-col text-center">
                   <FontAwesomeIcon icon={faCircle} className="mb-2 text-primary" size="1x" />
-                  Pagination Bullet
+                  Convert to Pagination Bullet
                 </Card>
                 <Card onClick={convertElementToPaginationBulletActive} className="flex flex-col text-center">
                   <FontAwesomeIcon icon={faDotCircle} className="mb-2 text-primary" size="1x" />
-                  Pagination Bullet (Active)
+                  Convert to Pagination Bullet (Active)
                 </Card>
               </div>
               <div>
-                <Heading level={4} className="mt-8 mb-3">
+                <Heading level={3} className="mt-8 mb-3">
                   Navigation
                 </Heading>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
+                  <Card onClick={createNavigation} className="flex flex-col text-center">
+                    <FontAwesomeIcon icon={faArrowsLeftRight} className="mb-2 text-primary" size="1x" />
+                    Create Navigation
+                  </Card>
                   <Card onClick={convertElementToNextButton} className="flex flex-col text-center">
                     <FontAwesomeIcon icon={faArrowRight} className="mb-2 text-primary" size="1x" />
-                    Next Button
+                    Convert to Next Button
                   </Card>
                   <Card onClick={convertElementToPrevButton} className="flex flex-col text-center">
                     <FontAwesomeIcon icon={faArrowLeft} className="mb-2 text-primary" size="1x" />
-                    Prev Button
+                    Convert to Prev Button
                   </Card>
                 </div>
               </div>
               <div>
-                <Heading level={4} className="mt-8 mb-3">
+                <Heading level={3} className="mt-8 mb-3">
                   Scrollbar
                 </Heading>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
+                  <Card onClick={createScrollbar} className="flex flex-col text-center">
+                    <FontAwesomeIcon icon={faArrowsLeftRight} className="mb-2 text-primary" size="1x" />
+                    Create New Scrollbar
+                  </Card>
                   <Card onClick={convertElementToScrollbarContainer} className="flex flex-col text-center">
                     <FontAwesomeIcon icon={faSquare} className="mb-2 text-primary" size="1x" />
-                    Scrollbar Container
+                    Convert to Scrollbar Container
                   </Card>
                   <Card onClick={convertElementToScrollbarDrag} className="flex flex-col text-center">
                     <FontAwesomeIcon icon={faArrowsLeftRight} className="mb-2 text-primary" size="1x" />
-                    Scrollbar Drag
+                    Convert to Scrollbar Drag
                   </Card>
                 </div>
               </div>
               <div>
-                <Heading level={4} className="mt-8 mb-3">
+                <Heading level={3} className="mt-8 mb-3">
                   Slide Count
                 </Heading>
-                <Card onClick={convertElementToSlideCount} className="flex flex-col text-center">
-                  <FontAwesomeIcon icon={faHashtag} className="mb-2 text-primary" size="1x" />
-                  Slide Count
-                </Card>
+                <div className="grid grid-cols-2 gap-3">
+                  <Card onClick={createSlideCount} className="flex flex-col text-center">
+                    <FontAwesomeIcon icon={faHashtag} className="mb-2 text-primary" size="1x" />
+                    Create New Slide Count
+                  </Card>
+                  <Card onClick={convertElementToSlideCount} className="flex flex-col text-center">
+                    <FontAwesomeIcon icon={faHashtag} className="mb-2 text-primary" size="1x" />
+                    Convert to Slide Count
+                  </Card>
+                </div>
               </div>
               <div>
                 <Heading level={3} className="mt-8 mb-3">

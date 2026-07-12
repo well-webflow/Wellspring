@@ -114,9 +114,9 @@ export async function createPagination() {
   const parentEl = await webflow.getSelectedElement();
   if (!parentEl?.children) return;
 
-  const paginationClass = await getOrCreateStyle('Pagination');
-  const paginationBulletActiveClass = await getOrCreateStyle('Pagination Bullet Active');
-  const paginationBulletClass = await getOrCreateStyle('Pagination Bullet');
+  const paginationClass = await getOrCreateStyle('waterfall-pagination');
+  const paginationBulletActiveClass = await getOrCreateStyle('waterfall-pagination-bullet-active');
+  const paginationBulletClass = await getOrCreateStyle('waterfall-pagination-bullet');
 
   const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
   pagination.setTag('div');

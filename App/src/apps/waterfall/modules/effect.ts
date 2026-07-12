@@ -18,16 +18,32 @@ import {
   ATTR_EFFECT,
   ATTR_FLIP_LIMIT_ROTATION,
   ATTR_FLIP_SLIDE_SHADOWS,
+  ATTR_PARALLAX_ENABLED,
 } from 'well-waterfall';
 
 export default function effectCategory() {
   let config: WaterfallCategory = {
-    name: 'Effect',
+    name: 'Effects & Parallax',
     id: 'effect',
     icon: faBolt,
     summary: 'Set the slide transition effect',
     description: 'Set the slide transition effect',
     groups: [
+      {
+        name: 'Parallax',
+        id: 'parallax',
+        description: 'Enable parallax. Use the Elements tab to set parallax values on elements inside the Waterfall',
+        items: [
+          {
+            name: 'Parallax Enabled',
+            attr: ATTR_PARALLAX_ENABLED,
+            type: 'boolean',
+            swiperDefault: 'false',
+            description: 'Enable, if you want to use "parallaxed" elements inside of slider',
+            value: '',
+          },
+        ],
+      },
       {
         name: 'Coverflow',
         id: 'coverflow',
