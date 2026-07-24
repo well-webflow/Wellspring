@@ -10,9 +10,3 @@ export interface AuthContextType {
   refetchAuth: () => void;
   openAuthWindow: () => void;
 }
-
-export interface WebflowSiteInfo {
-  siteId: string;
-  siteName: string;
-  shortName: string;
-}

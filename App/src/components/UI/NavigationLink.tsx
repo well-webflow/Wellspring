@@ -19,8 +19,11 @@ export default function NavigationLink({
   onClick,
   target,
 }: NavigationLinkProps) {
+  // Automatically add rel="noopener noreferrer" for external links
+  const rel = target === '_blank' ? 'noopener noreferrer' : undefined;
+
   return (
-    <Link to={to} onClick={onClick} className={className} target={target}>
+    <Link to={to} onClick={onClick} className={className} target={target} rel={rel}>
       {icon && <FontAwesomeIcon icon={icon} size="sm" />}
       {children}
     </Link>

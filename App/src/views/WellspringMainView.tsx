@@ -37,13 +37,13 @@ export default function WellflowMainView() {
             creating these apps in my free time. If you appreciate the work, please consider donating.
           </Paragraph>
           <Paragraph size="sm">
-            <a href="https://wellspring-app.webflow.io" target="_blank" className="text-primary">
+            <a href="https://wellspring-app.webflow.io" target="_blank" rel="noopener noreferrer" className="text-primary">
               Visit our Website
             </a>
           </Paragraph>
           <Paragraph size="sm">
             Created by{' '}
-            <a href="https://kevingerstner.com" target="_blank" className="text-primary">
+            <a href="https://kevingerstner.com" target="_blank" rel="noopener noreferrer" className="text-primary">
               Kevin Gerstner
             </a>
           </Paragraph>

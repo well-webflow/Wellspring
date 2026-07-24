@@ -15,7 +15,6 @@ import CreateView from './apps/waterfall/views/CreateView';
 
 export default function App() {
   return (
-    // <AuthProvider>
     <WebflowProvider>
       <WellflowProvider>
         <Routes>
@@ -39,6 +38,5 @@ export default function App() {
         </Routes>
       </WellflowProvider>
     </WebflowProvider>
-    // </AuthProvider>
   );
 }

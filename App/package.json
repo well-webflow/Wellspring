@@ -1,11 +1,12 @@
 {
-  "name": "new-webflow-app",
+  "name": "wellspring",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "concurrently -r \"webflow extension serve\" \"vite\"",
-    "build": "tsc && vite build && node postbuild.js && webflow extension bundle",
+    "build": "node clean-webflow.js && tsc && vite build && webflow extension bundle && node clean-webflow.js",
+    "build:prod": "node clean-webflow.js && tsc && vite build --mode prod && webflow extension bundle && node clean-webflow.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format": "prettier --write ."
@@ -18,7 +19,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@tailwindcss/vite": "^4.1.11",
     "@types/prismjs": "^1.26.5",
-    "axios": "^1.9.0",
+    "chokidar": "^5.0.0",
     "clsx": "^2.1.1",
     "prismjs": "^1.30.0",
     "react": "^18.2.0",

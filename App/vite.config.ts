@@ -1,96 +1,109 @@
-import { defineConfig } from 'vite';
+import { defineConfig, Plugin } from 'vite';
+import chokidar from 'chokidar';
 import fs from 'fs';
+import path from 'path';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
-import { visualizer } from 'rollup-plugin-visualizer';
 
-type Manifest = {
-  size: 'comfortable' | 'large' | 'default';
-  name: string;
-  publicDir?: string;
-};
-
-function webflowExtension(manifest: Manifest) {
+function webflowExtension(watchPatterns: string[] = []): Plugin {
   const domain = 'webflow-ext.com';
-  const templatePromise = fetch(`https://${domain}/template/v2?name=${manifest.name}`)
-    .then((res) => res.text())
-    .catch(() => console.log('Failed retrieving template'));
-
-  const headRegex = /<head[^>]*>([\s\S]*?)<\/head>/i;
-  const bodyRegex = /<body[^>]*>([\s\S]*?)<\/body>/i;
+  let webflowHTML = '';
+  const configPath = path.join('./webflow.json');
+  const configContent = fs.readFileSync(configPath, 'utf-8');
+  const webflowConfig = JSON.parse(configContent);
 
   return {
-    name: 'webflow-extension',
+    name: 'wellspring',
+    transformIndexHtml: {
+      order: 'pre',
+      handler: async (html: string, ctx) => {
+        // Only apply Webflow wrapper in development mode
+        if (ctx.server) {
+          console.log('\x1b[36m%s\x1b[0m', 'Development mode');
+          if (!webflowHTML) {
+            const { name, apiVersion, featureFlags } = webflowConfig;
+            const template = apiVersion === '2' ? '/template/v2' : '/template';
+            const flagQuery = buildFlagQuery(featureFlags);
+            const url = `https://webflow-ext.com${template}?name=${name}${flagQuery}`;
+            webflowHTML = await fetch(url).then((res) => res.text());
+          }
 
-    /**
-     * Intercept manifest requests.
-     */
+          // Extract script tags from webflowHTML
+          const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gi;
+          let match;
+          let scripts = '';
+          while ((match = scriptRegex.exec(webflowHTML)) !== null) {
+            scripts += match[0] + '\n';
+          }
+
+          // Insert extracted scripts at the end of the head tag
+          const finalHTML = html.replace('</head>', `${scripts}</head>`);
+          return finalHTML;
+        }
+      },
+    },
+
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         if (req.url === '/__webflow') {
-          const manifestJSON = JSON.stringify(manifest);
-
           res.writeHead(200, {
-            'Content-Length': Buffer.byteLength(manifestJSON),
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Headers': '*',
           });
-
-          return res.end(manifestJSON);
+          res.end(configContent);
+        } else {
+          next();
         }
-
-        next();
       });
-    },
 
-    /**
-     * Transform entry index.html.
-     */
-    async transformIndexHtml(html, { path }) {
-      if (path !== '/index.html') return html;
+      // Watch for changes in specified patterns
+      const watcher = chokidar.watch(watchPatterns, {
+        ignoreInitial: true,
+        persistent: true,
+      });
 
-      const template = await templatePromise;
-      if (!template) return html;
+      watcher.on('all', (event, filePath) => {
+        console.log('\x1b[33m%s\x1b[0m', `File ${filePath} has been ${event}, restarting server...`);
 
-      const headMatch = html.match(headRegex)?.[1] || '';
-      const bodyMatch = html.match(bodyRegex)?.[1] || '';
+        server.restart();
+      });
 
-      const extensionHtml = template.replace('{{ui}}', headMatch + bodyMatch);
-      return extensionHtml;
+      // Close the watcher when the server is closed
+      server?.httpServer?.on('close', () => {
+        watcher.close();
+      });
     },
   };
 }
 
-const webflowManifest = JSON.parse(fs.readFileSync('webflow.json', 'utf8'));
+const buildFlagQuery = (featureFlags?: Record<string, boolean>): string =>
+  !featureFlags
+    ? ''
+    : Object.entries(featureFlags)
+        .map(([key, value]) => `&ff_${value ? 'on' : 'off'}=${key}`)
+        .join('');
+
 export default defineConfig({
-  plugins: [
-    react(),
-    webflowExtension(webflowManifest),
-    tailwindcss(),
-    visualizer({
-      open: false,
-      filename: 'bundle-analysis.html',
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  ],
+  plugins: [react(), webflowExtension(['../nextjs-app/app/api/**/*.ts']), tailwindcss()],
   server: {
     port: 1337,
   },
+  root: './',
+  base: './',
   build: {
-    assetsInlineLimit: 100000, // Inline assets smaller than 100KB as base64
+    assetsInlineLimit: 10000, // Inline assets smaller than 10KB as base64
     rollupOptions: {
       output: {
         manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router'],
-          'fontawesome': [
+          'react-vendor': ['react', 'react-dom'],
+          fontawesome: [
             '@fortawesome/fontawesome-svg-core',
             '@fortawesome/free-solid-svg-icons',
             '@fortawesome/react-fontawesome',
           ],
-          'prism': ['prismjs'],
-          'waterfall': ['well-waterfall'],
+          prism: ['prismjs'],
+          waterfall: ['well-waterfall'],
         },
       },
     },

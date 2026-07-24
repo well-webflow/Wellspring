@@ -1,31 +1,3 @@
-import { WebflowSiteInfo } from '../types/wellflow';
-import axiosInstance from './axios';
-
-/**
- * Check if the Wellflow script is installed for the given site.
- * @param siteData Webflow site info
- * @param sessionToken Auth token
- * @returns `true` if installed, otherwise `false`
- */
-export const isWellflowScriptInstalled = async (
-  siteData: WebflowSiteInfo | null,
-  sessionToken: string
-): Promise<boolean> => {
-  if (!siteData?.siteId) return false;
-
-  try {
-    const response = await axiosInstance.get('/custom-code/installed', {
-      headers: { Authorization: `Bearer ${sessionToken}` },
-      params: { siteId: siteData.siteId },
-    });
-
-    return Boolean(response.data.installed);
-  } catch (error) {
-    console.error('Error checking if Wellflow script is installed:', error);
-    return false;
-  }
-};
-
 /**
  * Get or Create Style
  * Gets a Webflow Style by name. If it doesn't exist, creates one and returns it.
