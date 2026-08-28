@@ -1,0 +1,58 @@
+{
+  "name": "wellspring",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -r \"webflow extension serve\" \"vite\"",
+    "build": "node clean-webflow.js && tsc && vite build && webflow extension bundle && node clean-webflow.js",
+    "build:prod": "node clean-webflow.js && tsc && vite build --mode prod && webflow extension bundle && node clean-webflow.js",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/prismjs": "^1.26.5",
+    "chokidar": "^5.0.0",
+    "clsx": "^2.1.1",
+    "prismjs": "^1.30.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-loader-spinner": "^6.1.6",
+    "react-router": "^7.1.5",
+    "tailwind-merge": "^3.0.2",
+    "well-waterfall": "file:../../Waterfall"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react-swc": "^3.3.2",
+    "@webflow/designer-extension-typings": "^2.2.2",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "postcss": "^8.4.31",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "rollup-plugin-visualizer": "^6.0.5",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.0.2",
+    "vite": "^7.0.6"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "@swc/core@1.15.43": true,
+    "fsevents": true
+  }
+}
