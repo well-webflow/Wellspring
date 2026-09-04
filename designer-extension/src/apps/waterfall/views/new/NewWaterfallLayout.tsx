@@ -6,6 +6,7 @@ import { useWebflow } from '../../../../context/webflowContext';
 import Tooltip from '../../../../components/UI/Tooltip';
 import { Input } from '../../../../components/UI/Input';
 import { ATTR_WATERFALL } from 'well-waterfall';
+import BreakpointSelector from '../../components/BreakpointSelector';
 
 export default function NewWaterfallLayout() {
   const { createWaterfall, loadedWaterfall, updateWaterfall } = useWaterfall();
@@ -29,6 +30,7 @@ export default function NewWaterfallLayout() {
           inputSize="base"
           required
         />
+        <BreakpointSelector />
         {!canCreate ? (
           <div className="flex items-center gap-2">
             <Button

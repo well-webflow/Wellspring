@@ -1,7 +1,7 @@
 import { breakpointIcons } from '../assets/breakpoint-icons';
 
 // Breakpoints
-export const websiteBreakpoints = ['mobile', 'lmobile', 'tablet', 'desktop', 'desktop-small', 'desktop-large'] as const;
+export const websiteBreakpoints = ['desktop-large', 'desktop-small', 'desktop', 'tablet', 'lmobile', 'mobile'] as const;
 
 export type Breakpoints = 'mobile' | 'lmobile' | 'tablet' | 'desktop' | 'desktop-small' | 'desktop-large';
 

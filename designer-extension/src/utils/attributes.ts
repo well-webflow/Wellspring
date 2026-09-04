@@ -1,4 +1,4 @@
-import { Breakpoints, websiteBreakpoints } from './breakpoints';
+import { websiteBreakpoints } from './breakpoints';
 
 /**
  * Prefixes a breakpoint to an attribute
@@ -19,13 +19,16 @@ export function getBaseAttr(attrName: string): {
   breakpoint: string | null;
   baseAttr: string;
 } {
-  const parts = attrName.split('-');
-  const lastWord = parts[parts.length - 1];
-  // check if the last word is a breakpoint
-  const isBreakpoint = websiteBreakpoints.includes(lastWord as Breakpoints);
-  // create the base attr (without the breakpoint)
-  const baseAttr = isBreakpoint ? parts.slice(0, -1).join('-') : attrName;
-  // get the breakpoint, or null
-  const breakpoint = isBreakpoint ? lastWord : null;
-  return { breakpoint, baseAttr };
+  // Check each breakpoint from longest to shortest to handle multi-word breakpoints
+  const sortedBreakpoints = [...websiteBreakpoints].sort((a, b) => b.length - a.length);
+
+  for (const bp of sortedBreakpoints) {
+    if (attrName.endsWith(`-${bp}`)) {
+      const baseAttr = attrName.slice(0, -(bp.length + 1)); // +1 for the dash
+      return { breakpoint: bp, baseAttr };
+    }
+  }
+
+  // No breakpoint found
+  return { breakpoint: null, baseAttr: attrName };
 }

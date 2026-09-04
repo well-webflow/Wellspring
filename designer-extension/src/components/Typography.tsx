@@ -22,8 +22,8 @@ export function Heading({ level, children, className }: HeadingProps) {
         'font-brand text-4xl': level === 1,
         'font-brand text-2xl': level === 2,
         'font-brand text-xl': level === 3,
-        'font-bold text-lg': level === 4,
-        'text-sm': level === 5,
+        'font-brand text-lg': level === 4,
+        'text-md font-bold': level === 5,
         'text-xs': level === 6,
       },
       className

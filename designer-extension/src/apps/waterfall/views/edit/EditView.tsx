@@ -1,9 +1,8 @@
 import { useNavigate, useParams } from 'react-router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../../../../components/UI/Button';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 import { useEffect } from 'react';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import CategoryList from '../../components/CategoryList';
 
 export default function EditView() {
   const { waterfallName } = useParams<{ waterfallName: string }>();
@@ -45,25 +44,7 @@ export default function EditView() {
 
   return (
     <ErrorBoundary>
-      <div className="space-y-2">
-        {waterfallConfig
-          ?.filter((category) => category.id !== 'general')
-          .map((category) => (
-            <Button size="lg" key={category.id} onClick={() => goToCategory(category.id)} className="w-full">
-              <div className="flex flex-row items-center text-left gap-4">
-                {category.icon && (
-                  <div className="bg-primary w-8 h-8 rounded-full flex items-center justify-center">
-                    <FontAwesomeIcon icon={category.icon} className="text-primary-dark" />
-                  </div>
-                )}
-                <div className="">
-                  <div className="text-base font-bold">{category.name}</div>
-                  <div className="text-sm text-text2">{category.summary}</div>
-                </div>
-              </div>
-            </Button>
-          ))}
-      </div>
+      <CategoryList categories={waterfallConfig} onCategoryClick={goToCategory} />
     </ErrorBoundary>
   );
 }

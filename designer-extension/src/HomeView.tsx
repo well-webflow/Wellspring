@@ -14,7 +14,7 @@ import Card from './components/UI/Card';
 import { AuthorizationStatus } from './apps/waterfall/views/WaterfallLayout';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
-export default function WellflowMainView() {
+export default function HomeView() {
   const { changeActiveApp } = useWellflow();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function WellflowMainView() {
                   <Card size="sm" className="flex items-center gap-3">
                     <img src={waterfallIcon} alt="Waterfall App" className="rounded-sm h-12 w-12" />
                     <div className="">
-                      <Heading level={4}>Waterfall</Heading>
+                      <Heading level={5}>Waterfall</Heading>
                       <Paragraph size="sm" className="text-text2 mb-0">
                         Create custom sliders
                       </Paragraph>
@@ -43,7 +43,7 @@ export default function WellflowMainView() {
                 <Card size="sm" className="flex items-center gap-3" disabled>
                   <img src={petalIcon} alt="Petal App" className="rounded-sm h-12 w-12" />
                   <div className="">
-                    <Heading level={4}>Petal</Heading>
+                    <Heading level={5}>Petal</Heading>
                     <Paragraph size="sm" className="text-text2 mb-0">
                       Tabs, Accordions, Dropdowns
                     </Paragraph>
@@ -52,7 +52,7 @@ export default function WellflowMainView() {
                 <Card size="sm" className="flex items-center gap-3" disabled>
                   <img src={chamomileIcon} alt="Chamomile App" className="rounded-sm h-12 w-12" />
                   <div className="">
-                    <Heading level={4}>Chamomile</Heading>
+                    <Heading level={5}>Chamomile</Heading>
                     <Paragraph size="sm" className="text-text2 mb-0">
                       Validate Form inputs
                     </Paragraph>
@@ -65,22 +65,22 @@ export default function WellflowMainView() {
                 >
                   <div className="h-12 w-12 rounded-sm bg-background5"></div>
                   <div className="">
-                    <Heading level={4}>More Coming Soon</Heading>
+                    <Heading level={5}>More Coming Soon</Heading>
                   </div>
                 </Card>
               </div>
             </Tab>
             <Tab label="About">
               <div className="flex flex-row gap-2 items-baseline">
-                <Heading level={4}>Wellspring</Heading>
+                <Heading level={5}>Wellspring</Heading>
                 <Paragraph size="sm" className="text-text2">
                   v1.0.0
                 </Paragraph>
               </div>
               <Paragraph size="sm">
-                Thank you for installing <span className="text-primary">Wellspring</span>! My goal with this package is to
-                provide an affordable solution for common no-code problems, starting with sliders. I am a solo developer
-                creating these apps in my free time. If you appreciate the work, please consider donating.
+                Thank you for installing <span className="text-primary">Wellspring</span>! My goal with this package is
+                to provide an affordable solution for common no-code problems, starting with sliders. I am a solo
+                developer creating these apps in my free time. If you appreciate the work, please consider donating.
               </Paragraph>
               <Paragraph size="sm">
                 <a

@@ -9,9 +9,10 @@ interface CardProps {
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  title?: string;
 }
 
-export default function Card({ children, href, onClick, size = 'lg', disabled = false, className }: CardProps) {
+export default function Card({ children, href, onClick, size = 'lg', disabled = false, className, title }: CardProps) {
   const baseClass = clsx(
     'rounded-md transition-all duration-200 min-w-0 p-4',
     size === 'sm' ? 'py-2' : 'py-5',
@@ -23,7 +24,7 @@ export default function Card({ children, href, onClick, size = 'lg', disabled = 
   );
 
   const content = (
-    <div className={baseClass} onClick={disabled ? undefined : onClick} aria-disabled={disabled}>
+    <div className={baseClass} onClick={disabled ? undefined : onClick} aria-disabled={disabled} title={title}>
       {children}
     </div>
   );

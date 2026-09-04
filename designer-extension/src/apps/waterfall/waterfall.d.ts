@@ -1,6 +1,6 @@
 import { FormEventHandler } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { BreakpointObject } from '../../types/wellflow';
+import { BreakpointObject, Breakpoints } from '../../utils/breakpoints';
 
 export type EditMode = 'new' | 'edit' | 'view';
 export type WaterfallContentType = 'static' | 'cms';
@@ -85,4 +85,6 @@ interface WaterfallState {
   waterfallSelected: string | null;
   isLoading: Boolean;
   setIsLoading: (value: Boolean) => void;
+  activeBreakpoint: Breakpoints | null;
+  setActiveBreakpoint: (value: Breakpoints | null) => void;
 }

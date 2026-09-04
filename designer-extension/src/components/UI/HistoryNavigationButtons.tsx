@@ -54,22 +54,24 @@ export default function HistoryNavigationButtons({ minPath }: HistoryNavigationB
       <button
         onClick={handleBack}
         disabled={!canGoBack}
-        className={`text-lg ${
-          canGoBack ? 'opacity-100 cursor-pointer text-text2 hover:text-white' : 'opacity-30 cursor-not-allowed text-text3'
+        className={`text-lg flex flex-col justify-center ${
+          canGoBack
+            ? 'opacity-100 cursor-pointer text-text2 hover:text-white'
+            : 'opacity-30 cursor-not-allowed text-text3'
         }`}
       >
-        <FontAwesomeIcon icon={faChevronLeft} />
+        <FontAwesomeIcon icon={faChevronLeft} className="text-base" />
       </button>
       <button
         onClick={handleForward}
         disabled={!canGoForward}
-        className={`text-lg ${
+        className={`text-lg flex flex-col justify-center ${
           canGoForward
             ? 'opacity-100 cursor-pointer text-text2 hover:text-white'
             : 'opacity-30 cursor-not-allowed text-text3'
         }`}
       >
-        <FontAwesomeIcon icon={faChevronRight} />
+        <FontAwesomeIcon icon={faChevronRight} className="text-base" />
       </button>
     </div>
   );

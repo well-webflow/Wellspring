@@ -5,6 +5,7 @@ import { useWaterfall } from '../../hooks/WaterfallContext';
 import { Toolbar } from '../../../../components/UI/Toolbar';
 import { Input } from '../../../../components/UI/Input';
 import { ATTR_WATERFALL } from 'well-waterfall';
+import BreakpointSelector from '../../components/BreakpointSelector';
 
 export default function EditLayout() {
   const { loadWaterfall, loadedWaterfall, saveWaterfall, updateWaterfall } = useWaterfall();
@@ -23,6 +24,7 @@ export default function EditLayout() {
           placeholder="Waterfall Name"
           inputSize="base"
         />
+        <BreakpointSelector />
         <div className="flex gap-2">
           <Button size="sm" icon={faArrowsRotate} onClick={loadWaterfall} color="secondary"></Button>
           <Button size="sm" icon={faSave} onClick={saveWaterfall} color="primary"></Button>

@@ -2,10 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Select } from '../../../components/UI/Select';
 import Tooltip from '../../../components/UI/Tooltip';
 import { WaterfallSetting } from '../waterfall';
-import { BreakpointObject, breakpointConfigs, Breakpoints } from '../../../utils/breakpoints';
 import { Input } from '../../../components/UI/Input';
 import Card from '../../../components/UI/Card';
 import { BooleanSwitch } from '../../../components/UI/BooleanSwitch';
+import { useWaterfall } from '../hooks/WaterfallContext';
+import { getCascadedBreakpointValue, isBreakpointOverridden } from '../lib/breakpointHelpers';
+import clsx from 'clsx';
+import { faBan } from '@fortawesome/free-solid-svg-icons';
 
 export type SettingSize = 'base' | 'lg' | 'full';
 
@@ -16,25 +19,49 @@ interface SettingProps {
 }
 
 export default function Setting({ prop, size, update }: SettingProps) {
-  function handleValueChange(value: string, breakpoint?: string) {
+  const { activeBreakpoint } = useWaterfall();
+
+  // Determine if this setting supports breakpoints
+  const supportsBreakpoints = !!prop.breakpoints;
+
+  // Get the actual value for the current breakpoint (what's actually stored)
+  const actualValue = activeBreakpoint && prop.breakpoints
+    ? prop.breakpoints[activeBreakpoint] || ''
+    : prop.value;
+
+  // Get the cascaded value (for display when no actual value exists)
+  const cascadedValue = activeBreakpoint
+    ? getCascadedBreakpointValue(prop.breakpoints, activeBreakpoint, prop.value)
+    : prop.value;
+
+  // Check if this breakpoint value is overridden
+  const isOverridden = isBreakpointOverridden(prop.breakpoints, activeBreakpoint);
+
+  // Is the setting disabled (when on a breakpoint but setting doesn't support breakpoints)
+  const isDisabled = activeBreakpoint !== null && !supportsBreakpoints;
+
+  function handleValueChange(value: string) {
     if (prop.onChange) {
       prop.onChange(value);
     } else {
-      update(prop.attr, value, breakpoint);
+      // Pass the active breakpoint to update if we're on a breakpoint and it supports it
+      const breakpointParam = activeBreakpoint && supportsBreakpoints ? activeBreakpoint : undefined;
+      update(prop.attr, value, breakpointParam);
     }
   }
 
-  const renderInputControl = (value: string, breakpoint?: string) => {
+  const renderInputControl = () => {
     const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-      handleValueChange(e.target.value, breakpoint);
+      handleValueChange(e.target.value);
 
-    const commonProps = {
-      value: value || '',
-      placeholder: prop.swiperDefault,
-      onChange,
-    };
+    // For inputs: use actual value, show cascaded as placeholder
+    const inputValue = actualValue;
+    const inputPlaceholder = actualValue ? prop.swiperDefault : (cascadedValue || prop.swiperDefault);
 
-    const wrapperClass = breakpoint ? 'w-full min-w-[200px]' : 'w-full min-w-[200px] flex justify-end';
+    // For selects/booleans: use cascaded value for display
+    const displayValue = cascadedValue || prop.swiperDefault;
+
+    const wrapperClass = 'w-full min-w-[200px] flex justify-end';
 
     switch (prop.type) {
       case 'number':
@@ -43,8 +70,11 @@ export default function Setting({ prop, size, update }: SettingProps) {
             <Input
               type="number"
               inputSize={size}
-              {...commonProps}
-              {...(!breakpoint && prop.onSubmit && { submit: () => prop.onSubmit!(commonProps.value) })}
+              value={inputValue}
+              placeholder={inputPlaceholder}
+              onChange={onChange}
+              disabled={isDisabled}
+              {...(!activeBreakpoint && prop.onSubmit && { submit: () => prop.onSubmit!(inputValue) })}
             />
           </div>
         );
@@ -55,8 +85,11 @@ export default function Setting({ prop, size, update }: SettingProps) {
             <Input
               type="text"
               inputSize={size}
-              {...commonProps}
-              {...(!breakpoint && prop.onSubmit && { submit: () => prop.onSubmit!(commonProps.value) })}
+              value={inputValue}
+              placeholder={inputPlaceholder}
+              onChange={onChange}
+              disabled={isDisabled}
+              {...(!activeBreakpoint && prop.onSubmit && { submit: () => prop.onSubmit!(inputValue) })}
             />
           </div>
         );
@@ -65,8 +98,9 @@ export default function Setting({ prop, size, update }: SettingProps) {
         return (
           <div className={wrapperClass}>
             <BooleanSwitch
-              checked={(value || prop.swiperDefault) === 'true'}
-              onChange={(e) => handleValueChange(e.target.checked ? 'true' : 'false', breakpoint)}
+              checked={(displayValue) === 'true'}
+              onChange={(e) => handleValueChange(e.target.checked ? 'true' : 'false')}
+              disabled={isDisabled}
             />
           </div>
         );
@@ -74,7 +108,13 @@ export default function Setting({ prop, size, update }: SettingProps) {
       case 'select':
         return (
           <div className={wrapperClass}>
-            <Select type={prop.type} value={value || prop.swiperDefault} options={prop.options} onChange={onChange} />
+            <Select
+              type={prop.type}
+              value={displayValue}
+              options={prop.options}
+              onChange={onChange}
+              disabled={isDisabled}
+            />
           </div>
         );
 
@@ -83,68 +123,56 @@ export default function Setting({ prop, size, update }: SettingProps) {
           <div className={wrapperClass}>
             <Select
               type="select"
-              value={value || ''}
+              value={displayValue}
               options={['--', ...(prop.instanceNames || [])]}
               onChange={onChange}
+              disabled={isDisabled}
             />
           </div>
         );
 
       default:
-        if (!breakpoint) {
-          console.warn(`Unknown setting type: ${prop.type}`);
-        }
+        console.warn(`Unknown setting type: ${prop.type}`);
         return (
           <div className={wrapperClass}>
-            <Input type="text" {...commonProps} />
+            <Input
+              type="text"
+              value={inputValue}
+              placeholder={inputPlaceholder}
+              onChange={onChange}
+              disabled={isDisabled}
+            />
           </div>
         );
     }
   };
 
-  const renderInput = () => {
-    return renderInputControl(prop.value || '');
-  };
-
-  function renderBreakpoints() {
-    if (!prop.breakpoints) return null;
-    const breakpointEntries = Object.entries(prop.breakpoints as BreakpointObject);
-    return (
-      <div className="flex flex-row gap-2 mt-3 py-5 w-full overflow-x-scroll border-border2 border-t">
-        {breakpointEntries.map(([breakpoint, value]) => {
-          const config = breakpointConfigs[breakpoint as Breakpoints];
-          return (
-            <div className="shrink-0 min-w-0" key={breakpoint}>
-              <div className="flex flex-row items-center gap-1 mb-2">
-                <img src={config.icon} alt={config.displayName} className="w-4 h-4 brightness-0 invert" />
-                <div className="w-full flex flex-row items-center justify-between gap-1 pr-2">
-                  <span className="text-sm font-medium">{config.displayName}</span>
-                  <span className="text-xs text-gray-300">{config.size}</span>
-                </div>
-              </div>
-              {renderInputControl(value.toString(), breakpoint)}
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-
   return (
-    <Card>
+    <Card
+      className={clsx(
+        'border border-transparent',
+        isOverridden && 'bg-blue-500/10 !border-blue-500/30'
+      )}
+      disabled={isDisabled}
+      title={isDisabled ? 'This setting cannot be edited per breakpoint' : undefined}
+    >
       <div className="flex flex-row gap-5 justify-between items-center">
         <div className="flex flex-col gap-2 shrink-0">
           <div className="flex flex-row items-center gap-3">
             <div className="flex flex-row items-center gap-3">
               {prop.icon && <FontAwesomeIcon icon={prop.icon} className="text-primary" />}
               <span>{prop.name}</span>
-              <Tooltip content={prop.description} attrName={prop.attr} defaultValue={prop.swiperDefault} />
+              {isDisabled && (
+                <div className="flex items-center gap-1 text-text2 text-xs">
+                  <FontAwesomeIcon icon={faBan} />
+                </div>
+              )}
+              {!isDisabled && <Tooltip content={prop.description} attrName={prop.attr} defaultValue={prop.swiperDefault} />}
             </div>
           </div>
         </div>
-        {renderInput()}
+        {renderInputControl()}
       </div>
-      {renderBreakpoints()}
     </Card>
   );
 }

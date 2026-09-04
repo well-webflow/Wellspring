@@ -48,6 +48,7 @@ export function useWaterfallLogic(): WaterfallState {
   const [loadedWaterfall, setLoadedWaterfall] = useState<LoadedWaterfall | null>(null);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [lastPopulatedNames, setLastPopulatedNames] = useState<string[]>([]);
+  const [activeBreakpoint, setActiveBreakpoint] = useState<Breakpoints | null>(null);
 
   // Wrapper to use the actual setter
   const setWaterfallConfig = (
@@ -390,5 +391,7 @@ export function useWaterfallLogic(): WaterfallState {
     searchForWaterfalls,
     getWaterfallName,
     findWaterfallByName,
+    activeBreakpoint,
+    setActiveBreakpoint,
   };
 }
