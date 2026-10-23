@@ -27,7 +27,10 @@ const SCOPES = [
 const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
 	version: '1.3.1',
-	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.3.1',
+	// Exact file, not the bare package URL: jsDelivr generates that response dynamically, so SRI can't be pinned to it.
+	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.3.1/dist/well-waterfall.umd.js',
+	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.3.1 tarball.
+	integrityHash: 'sha256-5Y92BFkrm06vQ+A7OpB00tNuyaKVHNko3KAHqXIAj2I=',
 	location: 'footer' as const,
 };
 

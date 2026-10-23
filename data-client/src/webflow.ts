@@ -55,15 +55,6 @@ export interface AppliedScript {
 	attributes?: Record<string, string>;
 }
 
-/** Fetches the script and computes its SRI hash. */
-export async function computeIntegrityHash(url: string): Promise<string> {
-	const res = await fetch(url);
-	if (!res.ok) throw new Error(`Could not fetch script at ${url}: ${res.status}`);
-
-	const digest = await crypto.subtle.digest('SHA-256', await res.arrayBuffer());
-	return `sha256-${btoa(String.fromCharCode(...new Uint8Array(digest)))}`;
-}
-
 export async function listRegisteredScripts(token: string, siteId: string): Promise<RegisteredScript[]> {
 	const { registeredScripts } = await wf<{ registeredScripts?: RegisteredScript[] }>(token, `/sites/${siteId}/registered_scripts`);
 	return registeredScripts ?? [];
@@ -71,6 +62,7 @@ export async function listRegisteredScripts(token: string, siteId: string): Prom
 
 interface RegisterOptions {
 	hostedLocation: string;
+	integrityHash: string;
 	displayName: string;
 	version: string;
 	canCopy?: boolean;
@@ -83,14 +75,12 @@ export async function ensureScriptRegistered(token: string, siteId: string, opts
 	const existing = (await listRegisteredScripts(token, siteId)).find(matches);
 	if (existing) return existing;
 
-	const integrityHash = await computeIntegrityHash(opts.hostedLocation);
-
 	try {
 		return await wf<RegisteredScript>(token, `/sites/${siteId}/registered_scripts/hosted`, {
 			method: 'POST',
 			body: JSON.stringify({
 				hostedLocation: opts.hostedLocation,
-				integrityHash,
+				integrityHash: opts.integrityHash,
 				displayName: opts.displayName,
 				version: opts.version,
 				canCopy: opts.canCopy ?? true,
