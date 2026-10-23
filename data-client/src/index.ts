@@ -3,7 +3,15 @@ import { cors } from 'hono/cors';
 import type { AppEnv } from './types';
 import { requireDesignerAuth } from './auth';
 import { getToken, saveInstall, consumeState, deleteInstall } from './db';
-import { ensureScriptRegistered, applyScript, publishSite, WebflowError, TokenRevokedError, removeScriptEverywhere } from './webflow';
+import {
+	ensureScriptRegistered,
+	applyScript,
+	getAppliedScripts,
+	publishSite,
+	WebflowError,
+	TokenRevokedError,
+	removeScriptEverywhere,
+} from './webflow';
 
 interface TokenResponse {
 	access_token: string;
@@ -59,22 +67,18 @@ app.get('/sites/:siteId/status', async (c) => {
 
 	try {
 		// Check if Waterfall is installed by fetching applied scripts
-		const customCodeRes = await fetch(`https://api.webflow.com/v2/sites/${siteId}/custom_code`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-				accept: 'application/json',
-			},
-		});
-
-		let installed = false;
-		if (customCodeRes.ok) {
-			const { scripts } = await customCodeRes.json<{ scripts?: Array<{ id: string }> }>();
-			installed = scripts?.some((s) => s.id.includes('waterfall')) ?? false;
-		}
+		const scripts = await getAppliedScripts(token, { type: 'site', id: siteId });
+		const installed = scripts.some((s) => s.id.includes('waterfall'));
 
 		return c.json({ authorized: true, installed });
 	} catch (err) {
+		// If token was revoked, stop using it and report the site as unauthorized
+		if (err instanceof TokenRevokedError) {
+			console.log(`Token revoked for site ${siteId} during status check, cleaning up`);
+			await deleteInstall(c.env, siteId);
+			return c.json({ authorized: false, installed: false });
+		}
+
 		console.error('Status check error:', err);
 		return c.json({ authorized: true, installed: false });
 	}

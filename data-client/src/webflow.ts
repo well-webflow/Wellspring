@@ -37,6 +37,17 @@ async function wf<T>(token: string, path: string, init: RequestInit = {}): Promi
 	return res.json() as Promise<T>;
 }
 
+/**
+ * Checks whether an access token is still valid. Only a 401 counts as revoked;
+ * any other failure is treated as transient so we never drop a working install.
+ */
+export async function isTokenRevoked(token: string): Promise<boolean> {
+	const res = await fetch(`${API}/token/introspect`, {
+		headers: { Authorization: `Bearer ${token}`, accept: 'application/json' },
+	});
+	return res.status === 401;
+}
+
 export type ScriptLocation = 'header' | 'footer';
 
 export interface RegisteredScript {
@@ -100,7 +111,7 @@ type Target = { type: 'site' | 'page'; id: string };
 
 const customCodePath = (t: Target) => (t.type === 'site' ? `/sites/${t.id}/custom_code` : `/pages/${t.id}/custom_code`);
 
-async function getAppliedScripts(token: string, target: Target): Promise<AppliedScript[]> {
+export async function getAppliedScripts(token: string, target: Target): Promise<AppliedScript[]> {
 	try {
 		const body = await wf<{ scripts?: AppliedScript[] }>(token, customCodePath(target));
 		return body.scripts ?? [];
@@ -202,6 +213,8 @@ export async function removeScriptEverywhere(token: string, siteId: string, scri
 				removedCount += pageMatches.length;
 			}
 		} catch (err) {
+			// A revoked token means stop calling the API entirely
+			if (err instanceof TokenRevokedError) throw err;
 			// Continue if a page fails (might be deleted, etc.)
 			console.warn(`Failed to check/clean page ${page.id}:`, err);
 		}

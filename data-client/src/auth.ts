@@ -1,6 +1,7 @@
 import type { MiddlewareHandler } from 'hono';
 import type { AppEnv, ResolvedUser } from './types';
-import { getToken } from './db';
+import { getToken, deleteInstall } from './db';
+import { isTokenRevoked } from './webflow';
 
 export const requireDesignerAuth: MiddlewareHandler<AppEnv> = async (c, next) => {
 	const siteId = c.req.param('siteId');
@@ -22,6 +23,16 @@ export const requireDesignerAuth: MiddlewareHandler<AppEnv> = async (c, next) =>
 
 	if (!res.ok) {
 		console.error('Token resolve failed', res.status, await res.text());
+
+		// A 401 here can mean a bad ID token (client-controlled) or a revoked access token.
+		// Confirm against the access token alone before dropping the install, so a forged
+		// ID token can't delete someone else's install.
+		if (res.status === 401 && (await isTokenRevoked(accessToken))) {
+			console.log(`Token revoked for site ${siteId}, removing stored install`);
+			await deleteInstall(c.env, siteId);
+			return c.json({ error: 'Site not authorized' }, 404);
+		}
+
 		return c.json({ error: 'Invalid ID token' }, 401);
 	}
 
