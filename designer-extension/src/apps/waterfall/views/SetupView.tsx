@@ -75,7 +75,7 @@ export default function SetupView() {
   }
 
   async function handleAuthorize() {
-    launchWebflowAuth();
+    const authWindow = launchWebflowAuth();
     await webflow.notify({ type: 'Info', message: 'Please complete authorization in the opened window.' });
 
     // Clear any existing polling
@@ -83,7 +83,15 @@ export default function SetupView() {
 
     // Start polling for authorization status
     pollingIntervalRef.current = window.setInterval(async () => {
-      await checkAuthStatus();
+      const { authorized } = await checkAuthStatus();
+
+      // The authorization window closed without connecting: the user denied access or gave up
+      if (!authorized && authWindow?.closed) {
+        stopPolling();
+        setIsInstalling(false);
+        setAutoInstallAfterAuth(false);
+        await webflow.notify({ type: 'Info', message: 'Authorization was cancelled. Click Install to try again.' });
+      }
     }, 2000);
 
     // Stop polling after 2 minutes with timeout notification

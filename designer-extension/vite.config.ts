@@ -77,6 +77,18 @@ function webflowExtension(watchPatterns: string[] = []): Plugin {
   };
 }
 
+// Links the stylesheet that build-css.js writes after vite build. Vite doesn't emit CSS source maps
+// in production, so the Tailwind CLI builds the CSS instead and renames app.css to its hashed name.
+function productionStylesheet(): Plugin {
+  return {
+    name: 'production-stylesheet',
+    apply: 'build',
+    transformIndexHtml: () => [
+      { tag: 'link', attrs: { rel: 'stylesheet', href: './assets/app.css' }, injectTo: 'head' },
+    ],
+  };
+}
+
 const buildFlagQuery = (featureFlags?: Record<string, boolean>): string =>
   !featureFlags
     ? ''
@@ -85,15 +97,20 @@ const buildFlagQuery = (featureFlags?: Record<string, boolean>): string =>
         .join('');
 
 export default defineConfig({
-  plugins: [react(), webflowExtension(['../nextjs-app/app/api/**/*.ts']), tailwindcss()],
+  plugins: [react(), webflowExtension(['../nextjs-app/app/api/**/*.ts']), tailwindcss(), productionStylesheet()],
   server: {
     port: 1337,
   },
   root: './',
   base: './',
   build: {
-    sourcemap: true, // Generate source maps for review submission
+    // Hidden maps: generated for the private review upload, but not referenced from the bundled JS.
+    // extract-sourcemaps.js moves them out of dist/ into sourcemaps.zip before bundling.
+    sourcemap: 'hidden',
     minify: 'terser', // Use terser for safer minification (no eval)
+    // The Designer's browsers all support <link rel=modulepreload>, so skip Vite's polyfill;
+    // it fetch()es preload URLs at runtime, which review scanners report as a network call.
+    modulePreload: { polyfill: false },
     assetsInlineLimit: 10000, // Inline assets smaller than 10KB as base64
     rollupOptions: {
       output: {

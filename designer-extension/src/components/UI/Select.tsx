@@ -1,6 +1,5 @@
 import { SelectHTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { twMerge } from 'tailwind-merge';
 import { FormFieldBaseProps, useAutoSize, getFormFieldClasses, MeasuringSpan } from './FormFieldBase';
 
 export function Select({

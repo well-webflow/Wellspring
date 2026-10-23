@@ -11,7 +11,7 @@ interface WebflowContextType {
   elementInfo: SelectedElementInfo | null;
   isAuthorized: boolean | null;
   isCodeInstalled: boolean | null;
-  checkAuthStatus: () => Promise<void>;
+  checkAuthStatus: () => Promise<{ authorized: boolean; installed: boolean }>;
 }
 
 export const WebflowContext = createContext<WebflowContextType | undefined>(undefined);
@@ -28,6 +28,7 @@ export function WebflowProvider({ children }: { children: React.ReactNode }) {
     console.log('Status check:', { authorized, installed });
     setIsAuthorized(authorized);
     setIsCodeInstalled(installed);
+    return { authorized, installed };
   };
 
   // Set the selected Element and a list of its styles

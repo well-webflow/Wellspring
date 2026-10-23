@@ -43,8 +43,9 @@ export async function checkStatus(): Promise<{ authorized: boolean; installed: b
   }
 }
 
-export async function launchWebflowAuth() {
-  window.open(`${API_BASE}/auth`, '_blank');
+/** Opens Webflow authorization in a new window. Returns the window so callers can tell when it closes. */
+export function launchWebflowAuth(): Window | null {
+  return window.open(`${API_BASE}/auth`, '_blank');
 }
 
 export class NotAuthorizedError extends Error {}

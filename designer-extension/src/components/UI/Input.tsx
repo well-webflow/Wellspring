@@ -5,7 +5,8 @@ import Button from './Button';
 import { SettingSize } from '../../apps/waterfall/components/Setting';
 import { FormFieldBaseProps, useAutoSize, getFormFieldClasses, MeasuringSpan } from './FormFieldBase';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement>, FormFieldBaseProps {
+// FormFieldBaseProps.height is a size token, so drop the native numeric height attribute
+interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'height'>, FormFieldBaseProps {
   inputSize?: SettingSize;
   classNames?: string;
   submit?: () => void;

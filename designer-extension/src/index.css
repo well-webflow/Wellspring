@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+/* Font Awesome icon styles, loaded here instead of injected at runtime (see main.tsx) */
+@import '@fortawesome/fontawesome-svg-core/styles.css';
 
 @theme {
   --font-*: initial;
@@ -48,10 +50,10 @@
 
 @font-face {
   font-family: 'Radley';
-  src: url('../public/fonts/Radley-Regular.ttf');
+  src: url('../fonts/Radley-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Erstoria';
-  src: url('../public/fonts/Erstoria.woff2');
+  src: url('../fonts/Erstoria.woff2');
 }

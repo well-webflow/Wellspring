@@ -14,7 +14,6 @@ import {
   ATTR_MANIPULATION_REMOVE_INDEX,
 } from 'well-waterfall';
 import SelectedElement from '../../../../components/SelectedElement';
-import { Caption, Heading } from '../../../../components/Typography';
 
 type ManipulationMethod = 'append' | 'prepend' | 'add' | 'remove';
 

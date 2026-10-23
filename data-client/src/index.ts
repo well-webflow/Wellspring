@@ -193,12 +193,54 @@ app.get('/auth', async (c) => {
 	return c.redirect(url.toString());
 });
 
+/** The page shown in the authorization window. It closes itself so the App can pick up the result. */
+const authPage = (title: string, message: string) => `<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>${title} · Wellspring</title>
+		<style>
+			body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1e1e1e; color: #f5f5f5; display: grid; place-items: center; min-height: 100vh; margin: 0; }
+			main { max-width: 420px; padding: 24px; text-align: center; }
+			h1 { font-size: 18px; margin: 0 0 8px; }
+			p { font-size: 14px; line-height: 1.5; color: #bdbdbd; margin: 0; }
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1>${title}</h1>
+			<p>${message}</p>
+		</main>
+		<script>
+			setTimeout(() => window.close(), 3000);
+		</script>
+	</body>
+</html>`;
+
 app.get('/oauth/callback', async (c) => {
 	const code = c.req.query('code');
 	const state = c.req.query('state');
 
-	if (!code || !state) return c.text('Missing code or state', 400);
-	if (!(await consumeState(c.env, state))) return c.text('Invalid or expired state', 400);
+	// The user denied access (or Webflow reported another error): nothing to exchange
+	if (c.req.query('error')) {
+		if (state) await consumeState(c.env, state);
+		return c.html(
+			authPage(
+				'Authorization cancelled',
+				'Wellspring was not connected to your site. You can close this window and click Install in the Wellspring App to try again.',
+			),
+		);
+	}
+
+	if (!code || !state) {
+		return c.html(authPage('Authorization incomplete', 'Close this window and start again from the Wellspring App.'), 400);
+	}
+	if (!(await consumeState(c.env, state))) {
+		return c.html(
+			authPage('Authorization expired', 'This authorization link has expired or was already used. Close this window and start again from the Wellspring App.'),
+			400,
+		);
+	}
 
 	const redirectUri = new URL('/oauth/callback', c.req.url).toString();
 
@@ -216,7 +258,7 @@ app.get('/oauth/callback', async (c) => {
 
 	if (!tokenRes.ok) {
 		console.error('Token exchange failed', tokenRes.status, await tokenRes.text());
-		return c.text('Authorization failed', 502);
+		return c.html(authPage('Authorization failed', "Webflow couldn't complete the authorization. Close this window and try again."), 502);
 	}
 
 	const { access_token } = await tokenRes.json<TokenResponse>();
@@ -224,23 +266,19 @@ app.get('/oauth/callback', async (c) => {
 	const sitesRes = await fetch('https://api.webflow.com/v2/sites', {
 		headers: { Authorization: `Bearer ${access_token}`, accept: 'application/json' },
 	});
+	if (!sitesRes.ok) {
+		console.error('Listing authorized sites failed', sitesRes.status, await sitesRes.text());
+		return c.html(authPage('Authorization failed', "Webflow couldn't complete the authorization. Close this window and try again."), 502);
+	}
 	const { sites } = await sitesRes.json<SitesResponse>();
 
 	for (const site of sites) {
 		await saveInstall(c.env, { siteId: site.id, accessToken: access_token, scopes: SCOPES });
 	}
 
-	return c.html(`
-		<html>
-			<head><title>Authorization Complete</title></head>
-			<body>
-				<p>Wellspring connected to ${sites.length} site(s). This window will close automatically.</p>
-				<script>
-					setTimeout(() => window.close(), 2000);
-				</script>
-			</body>
-		</html>
-	`);
+	return c.html(
+		authPage('Wellspring connected', `Connected to ${sites.length} site(s). This window will close automatically.`),
+	);
 });
 
 app.onError((err, c) => {

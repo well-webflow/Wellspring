@@ -67,7 +67,7 @@ export function useAutoSize(config: AutoSizeConfig) {
  */
 export function getFormFieldClasses(
   baseClasses: string,
-  autoSize: boolean,
+  _autoSize: boolean,
   height: 'sm' | 'md' | 'lg' = 'md',
   className?: string
 ): string {

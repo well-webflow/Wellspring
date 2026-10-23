@@ -100,3 +100,38 @@ describe('uninstall', () => {
 		expect(await getToken(env, SITE)).toBeNull();
 	});
 });
+
+describe('oauth callback', () => {
+	const saveState = (state: string, createdAt = Date.now()) =>
+		env.DB.prepare('INSERT INTO oauth_states (state, created_at) VALUES (?, ?)').bind(state, createdAt).run();
+	const stateExists = async (state: string) =>
+		!!(await env.DB.prepare('SELECT 1 FROM oauth_states WHERE state = ?').bind(state).first());
+	const callback = (query: string) => app.request(`/oauth/callback?${query}`, {}, env);
+
+	it('shows a cancelled page when the user denies access', async () => {
+		await saveState('s1');
+
+		// No interceptors: with net connect disabled, any Webflow call would fail the test
+		const res = await callback('error=access_denied&state=s1');
+
+		expect(res.status).toBe(200);
+		expect(await res.text()).toContain('Authorization cancelled');
+		expect(await stateExists('s1')).toBe(false);
+	});
+
+	it('rejects a callback with no code', async () => {
+		const res = await callback('state=s1');
+
+		expect(res.status).toBe(400);
+		expect(await res.text()).toContain('Authorization incomplete');
+	});
+
+	it('rejects an expired state', async () => {
+		await saveState('old', Date.now() - 16 * 60 * 1000);
+
+		const res = await callback('code=abc&state=old');
+
+		expect(res.status).toBe(400);
+		expect(await res.text()).toContain('Authorization expired');
+	});
+});
