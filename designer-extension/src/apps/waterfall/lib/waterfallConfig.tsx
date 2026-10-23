@@ -5,12 +5,14 @@ import effectCategory from '../modules/effect';
 import freemodeCategory from '../modules/freeMode';
 import keyboardMouseCategory from '../modules/keyboardMouse';
 import layoutConfig from '../modules/layout';
+import manipulationCategory from '../modules/manipulation';
 import memoryCategory from '../modules/memory';
 import navigationCategory from '../modules/navigation';
 import ObserverCategory from '../modules/observer';
 import paginationCategory from '../modules/pagination';
 import playbackCategory from '../modules/playback';
 import scrollbarCategory from '../modules/scrollbar';
+import slideCountCategory from '../modules/slideCount';
 import thumbsCategory from '../modules/thumbs';
 import touchClickCategory from '../modules/touchClick';
 import { WaterfallConfig } from '../waterfall';
@@ -22,6 +24,8 @@ export const defaultWaterfallConfig: WaterfallConfig = [
   navigationCategory(),
   paginationCategory(),
   scrollbarCategory(),
+  slideCountCategory(),
+  manipulationCategory(),
   freemodeCategory(),
   touchClickCategory(),
   effectCategory(),

@@ -42,3 +42,7 @@ export async function consumeState(env: Env, state: string): Promise<boolean> {
 	await env.DB.prepare('DELETE FROM oauth_states WHERE state = ?').bind(state).run();
 	return Date.now() - row.created_at < 15 * 60 * 1000;
 }
+
+export async function deleteInstall(env: Env, siteId: string): Promise<void> {
+	await env.DB.prepare('DELETE FROM installs WHERE site_id = ?').bind(siteId).run();
+}

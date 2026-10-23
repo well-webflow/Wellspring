@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { checkStatus } from '../lib/api';
 
 export type SelectedElementInfo = {
   type: string;
@@ -23,36 +24,10 @@ export function WebflowProvider({ children }: { children: React.ReactNode }) {
 
   // Check authorization and installation status
   const checkAuthStatus = async () => {
-    try {
-      const siteInfo = await webflow.getSiteInfo();
-
-      const res = await fetch(`https://wellspring.sirkevinicus.workers.dev/sites/${siteInfo.siteId}/status`, {
-        method: 'GET',
-      });
-
-      console.log('Status check response:', res.status);
-
-      if (res.status === 404) {
-        setIsAuthorized(false);
-        setIsCodeInstalled(false);
-        return;
-      }
-
-      if (res.ok) {
-        const data = await res.json() as { authorized: boolean; installed: boolean };
-        console.log('Status data:', data);
-        setIsAuthorized(data.authorized);
-        setIsCodeInstalled(data.installed);
-      } else {
-        console.error('Status check failed:', res.status);
-        setIsAuthorized(false);
-        setIsCodeInstalled(false);
-      }
-    } catch (err) {
-      console.error('Status check error:', err);
-      setIsAuthorized(false);
-      setIsCodeInstalled(false);
-    }
+    const { authorized, installed } = await checkStatus();
+    console.log('Status check:', { authorized, installed });
+    setIsAuthorized(authorized);
+    setIsCodeInstalled(installed);
   };
 
   // Set the selected Element and a list of its styles

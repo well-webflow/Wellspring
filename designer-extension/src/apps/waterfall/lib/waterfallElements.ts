@@ -8,6 +8,9 @@ import {
   EL_SCROLLBAR,
   EL_SCROLLBAR_DRAG,
   EL_SLIDE_COUNT,
+  EL_AUTOPLAY_CONTROL,
+  EL_AUTOPLAY_CONTROL_PAUSE,
+  EL_AUTOPLAY_CONTROL_PLAY,
 } from 'well-waterfall';
 import { getOrCreateStyle } from '../../../utils/webflowHelpers';
 import { WaterfallCategory, WaterfallContentType } from '../waterfall';
@@ -229,4 +232,49 @@ export async function addAttributeToSelectedElement(attr: string, value: string)
     type: 'Success',
     message: `Added ${attr} = ${value} to the Selected Element.`,
   });
+}
+
+/** AUTOPLAY CONTROL */
+
+export async function createAutoplayControl() {
+  const parentEl = await webflow.getSelectedElement();
+  if (!parentEl?.children) return;
+
+  const buttonClass = await getOrCreateStyle('Autoplay Button');
+  const playIconClass = await getOrCreateStyle('Play Icon');
+  const pauseIconClass = await getOrCreateStyle('Pause Icon');
+
+  const button = await parentEl.prepend(webflow.elementPresets.DOM);
+  button.setTag('button');
+  button.setStyles([buttonClass]);
+  button.setAttribute(ATTR_WATERFALL_ELEMENT, EL_AUTOPLAY_CONTROL);
+
+  const pauseIcon = await button.prepend(webflow.elementPresets.DOM);
+  pauseIcon.setTag('div');
+  pauseIcon.setStyles([pauseIconClass]);
+  pauseIcon.setAttribute(ATTR_WATERFALL_ELEMENT, EL_AUTOPLAY_CONTROL_PAUSE);
+  pauseIcon.setTextContent('⏸');
+
+  const playIcon = await button.prepend(webflow.elementPresets.DOM);
+  playIcon.setTag('div');
+  playIcon.setStyles([playIconClass]);
+  playIcon.setAttribute(ATTR_WATERFALL_ELEMENT, EL_AUTOPLAY_CONTROL_PLAY);
+  playIcon.setTextContent('▶');
+
+  webflow.notify({
+    type: 'Success',
+    message: 'Added Autoplay Control',
+  });
+}
+
+export async function convertElementToAutoplayButton() {
+  convertElementTo(EL_AUTOPLAY_CONTROL, 'Autoplay Button');
+}
+
+export async function convertElementToAutoplayPlayIcon() {
+  convertElementTo(EL_AUTOPLAY_CONTROL_PLAY, 'Play Icon');
+}
+
+export async function convertElementToAutoplayPauseIcon() {
+  convertElementTo(EL_AUTOPLAY_CONTROL_PAUSE, 'Pause Icon');
 }

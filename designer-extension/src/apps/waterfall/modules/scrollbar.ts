@@ -1,5 +1,6 @@
 import { faBarsProgress } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
+import ScrollbarScreen from '../components/modules/ScrollbarScreen';
 import {
   ATTR_SCROLLBAR_DRAG_SIZE,
   ATTR_SCROLLBAR_DRAGGABLE,
@@ -20,6 +21,13 @@ export default function scrollbarCategory() {
     summary: 'Add a scrollbar to the slider',
     description: 'Add a scrollbar to the slider',
     groups: [
+      {
+        name: 'Elements',
+        id: 'scrollbar-elements',
+        description: 'Create and configure scrollbar elements',
+        component: ScrollbarScreen,
+        items: [],
+      },
       {
         name: 'Class Names',
         id: 'scroll-classes',

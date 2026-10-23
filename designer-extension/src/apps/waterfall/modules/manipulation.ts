@@ -1,4 +1,4 @@
-import { faAddressBook } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import ManipulationScreen from '../components/modules/ManipulationScreen';
 import { WaterfallCategory } from '../waterfall';
 
@@ -6,9 +6,9 @@ export default function manipulationCategory() {
   let config: WaterfallCategory = {
     name: 'Manipulation',
     id: 'manipulation',
-    summary: 'Add slides at runtime',
-    description: 'Add slides at runtime. If you want to set this up to CMS, set the attribute value to a CMS field.',
-    icon: faAddressBook,
+    summary: 'Add, remove, insert slides at runtime',
+    description: 'Add, remove, insert slides at runtime',
+    icon: faPlusSquare,
     component: ManipulationScreen,
   };
 

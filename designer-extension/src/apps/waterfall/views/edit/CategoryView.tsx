@@ -1,7 +1,7 @@
 import { Heading } from '../../../../components/Typography';
 import Setting from '../../components/Setting';
 import { useWaterfall } from '../../hooks/WaterfallContext';
-import { WaterfallCategory } from '../../waterfall';
+import { WaterfallCategory, WaterfallGroup } from '../../waterfall';
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
@@ -55,6 +55,7 @@ export default function CategoryView() {
                     <Heading level={4}>{group.name}</Heading>
                     <p className="text-sm mb-5 text-gray-300">{group.description}</p>
                   </div>
+                  {group.component && renderGroupComponent(group)}
                   {group.items?.map((item) => (
                     <Setting key={item.name} prop={item} update={updateWaterfall} />
                   ))}
@@ -70,6 +71,13 @@ export default function CategoryView() {
 function renderComponent(category: WaterfallCategory) {
   if (category.component) {
     const Component = category.component;
+    return <Component />;
+  }
+}
+
+function renderGroupComponent(group: WaterfallGroup) {
+  if (group.component) {
+    const Component = group.component;
     return <Component />;
   }
 }

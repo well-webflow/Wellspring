@@ -27,7 +27,7 @@ export default function ManipulationScreen() {
 
   useEffect(() => {
     searchForWaterfalls();
-  }, []);
+  }, [searchForWaterfalls]);
 
   useEffect(() => {
     if (waterfallNames.length > 0) {
@@ -69,31 +69,23 @@ export default function ManipulationScreen() {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <Caption>This element will be added/removed/appended/prepended to a Waterfall during runtime.</Caption>
-      </div>
-      <div className="space-y-1">
-        <Heading level={4}>Action:</Heading>
+      <div className="flex flex-row gap-1 items-center">
         <Select
           onChange={(e) => onMethodChange(e)}
           options={['add', 'append', 'prepend', 'remove']}
           type="select"
-        ></Select>
-      </div>
-      <div className="space-y-1">
-        <Heading level={4}>Element:</Heading>
+          autoSize
+        />
         <SelectedElement />
+        <div className="px-1">to</div>
+        <Select onChange={(e) => onWaterfallSelectChange(e)} type="select" options={waterfallNames} autoSize></Select>
+        {(manipulationMethod === 'add' || manipulationMethod === 'remove') && (
+          <>
+            <div>at index</div>
+            <Input type="number" value={index} onChange={onIndexChange} min="0" />
+          </>
+        )}
       </div>
-      <div className="space-y-1">
-        <Heading level={4}>To Waterfall:</Heading>
-        <Select onChange={(e) => onWaterfallSelectChange(e)} type="select" options={waterfallNames}></Select>
-      </div>
-      {(manipulationMethod === 'add' || manipulationMethod === 'remove') && (
-        <div className="space-y-1">
-          <Heading level={4}>At Index:</Heading>
-          <Input type="number" value={index} onChange={onIndexChange} min="0" />
-        </div>
-      )}
       <Button size="sm" onClick={submit}>
         Convert
       </Button>

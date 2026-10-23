@@ -92,6 +92,8 @@ export default defineConfig({
   root: './',
   base: './',
   build: {
+    sourcemap: true, // Generate source maps for review submission
+    minify: 'terser', // Use terser for safer minification (no eval)
     assetsInlineLimit: 10000, // Inline assets smaller than 10KB as base64
     rollupOptions: {
       output: {
@@ -105,6 +107,15 @@ export default defineConfig({
           prism: ['prismjs'],
           waterfall: ['well-waterfall'],
         },
+      },
+    },
+    terserOptions: {
+      compress: {
+        drop_console: false, // Keep console logs for debugging
+        drop_debugger: true, // Remove debugger statements
+      },
+      format: {
+        comments: false, // Remove comments from production build
       },
     },
   },

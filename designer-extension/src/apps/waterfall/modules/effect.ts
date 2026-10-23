@@ -1,5 +1,6 @@
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
+import ParallaxScreen from '../components/modules/ParallaxScreen';
 import {
   ATTR_CARDS_PER_SLIDE_OFFSET,
   ATTR_CARDS_PER_SLIDE_ROTATE,
@@ -32,7 +33,8 @@ export default function effectCategory() {
       {
         name: 'Parallax',
         id: 'parallax',
-        description: 'Enable parallax. Use the Elements tab to set parallax values on elements inside the Waterfall',
+        description: 'Enable parallax and add parallax attributes to elements inside the Waterfall',
+        component: ParallaxScreen,
         items: [
           {
             name: 'Parallax Enabled',

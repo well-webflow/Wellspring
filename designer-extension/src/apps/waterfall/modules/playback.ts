@@ -2,6 +2,8 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_AUTOPLAY,
+  ATTR_AUTOPLAY_CONTROL_DEFAULT_STATE,
+  ATTR_AUTOPLAY_CONTROL_ENABLED,
   ATTR_DELAY,
   ATTR_DISABLE_ON_INTERACTION,
   ATTR_LOOP_ADD_ADDITIONAL_SLIDES,
@@ -15,6 +17,7 @@ import {
   ATTR_STOP_ON_LAST_SLIDE,
   ATTR_WAIT_FOR_TRANSITION,
 } from 'well-waterfall';
+import AutoplayControlScreen from '../components/modules/AutoplayControlScreen';
 
 export default function playbackCategory() {
   let config: WaterfallCategory = {
@@ -29,7 +32,7 @@ export default function playbackCategory() {
         id: 'autoplay',
         items: [
           {
-            name: 'AutoPlay',
+            name: 'Autoplay',
             attr: ATTR_AUTOPLAY,
             swiperDefault: 'false',
             value: '',
@@ -128,6 +131,31 @@ export default function playbackCategory() {
             description: 'If enabled then slideNext/Prev will do nothing while slider is animating in loop mode',
 
             type: 'boolean',
+          },
+        ],
+      },
+      {
+        name: 'Autoplay Control Button',
+        id: 'autoplay-control',
+        description: 'Add a button to control autoplay with play and pause icons.',
+        component: AutoplayControlScreen,
+        items: [
+          {
+            name: 'Enabled',
+            attr: ATTR_AUTOPLAY_CONTROL_ENABLED,
+            swiperDefault: 'false',
+            value: '',
+            description: 'Enable autoplay control button',
+            type: 'boolean',
+          },
+          {
+            name: 'Default State',
+            attr: ATTR_AUTOPLAY_CONTROL_DEFAULT_STATE,
+            swiperDefault: 'playing',
+            value: '',
+            description: 'Default autoplay state when page loads',
+            type: 'select',
+            options: ['playing', 'paused'],
           },
         ],
       },

@@ -31,6 +31,7 @@ export interface WaterfallGroup {
   description?: string;
   actions?: Action[];
   items: WaterfallSetting[];
+  component?: React.ComponentType;
 }
 
 // Settings

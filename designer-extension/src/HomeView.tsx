@@ -11,7 +11,6 @@ import wellspringLogo from './assets/wellspring.png';
 import petalIcon from './assets/petal.png';
 import chamomileIcon from './assets/chamomile.png';
 import Card from './components/UI/Card';
-import { AuthorizationStatus } from './apps/waterfall/views/WaterfallLayout';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 export default function HomeView() {
@@ -145,7 +144,6 @@ export function WellflowHeader() {
             <img src={wellspringLogo} alt="Wellspring Logo" width={80} height={20} className="" />
           )}
         </div>
-        {activeApp && <AuthorizationStatus />}
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
+import PaginationScreen from '../components/modules/PaginationScreen';
 import {
   ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
   ATTR_PAGINATION_CLICKABLE,
@@ -29,6 +30,13 @@ export default function paginationCategory() {
     summary: 'Add pagination bullets or progress bar to the slider',
     description: 'Add pagination bullets or progress bar to the slider',
     groups: [
+      {
+        name: 'Elements',
+        id: 'pagination-elements',
+        description: 'Create and configure pagination elements',
+        component: PaginationScreen,
+        items: [],
+      },
       {
         name: 'Bullets',
         id: 'pagination-dynamic',

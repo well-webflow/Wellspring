@@ -2,8 +2,8 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import type { AppEnv } from './types';
 import { requireDesignerAuth } from './auth';
-import { getToken, saveInstall, consumeState } from './db';
-import { ensureScriptRegistered, applyScript, publishSite, WebflowError } from './webflow';
+import { getToken, saveInstall, consumeState, deleteInstall } from './db';
+import { ensureScriptRegistered, applyScript, publishSite, WebflowError, TokenRevokedError, removeScriptEverywhere } from './webflow';
 
 interface TokenResponse {
 	access_token: string;
@@ -26,8 +26,8 @@ const SCOPES = [
 
 const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
-	version: '1.2.12',
-	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.2.12',
+	version: '1.3.1',
+	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.3.1',
 	location: 'footer' as const,
 };
 
@@ -42,10 +42,13 @@ app.use(
 	}),
 );
 
-// Status endpoint doesn't require Designer auth - it checks authorization differently
+// All /sites/:siteId/* routes require Designer auth
+app.use('/sites/:siteId/*', requireDesignerAuth);
+
+// Status endpoint - protected by requireDesignerAuth middleware
 app.get('/sites/:siteId/status', async (c) => {
 	const siteId = c.req.param('siteId');
-	const token = await getToken(c.env, siteId);
+	const token = c.get('accessToken'); // Retrieved from middleware after auth
 
 	if (!token) {
 		return c.json({ authorized: false, installed: false });
@@ -74,13 +77,9 @@ app.get('/sites/:siteId/status', async (c) => {
 	}
 });
 
-// All other /sites/:siteId/* routes require Designer auth
-app.use('/sites/:siteId/*', requireDesignerAuth);
-
 app.post('/sites/:siteId/install-waterfall', async (c) => {
 	const siteId = c.req.param('siteId');
-	const token = await getToken(c.env, siteId);
-	if (!token) return c.json({ error: 'Site not authorized' }, 404);
+	const token = c.get('accessToken'); // Retrieved from middleware after auth
 
 	try {
 		const script = await ensureScriptRegistered(token, siteId, WELL_WATERFALL);
@@ -101,6 +100,13 @@ app.post('/sites/:siteId/install-waterfall', async (c) => {
 			message: 'Waterfall script installed successfully. Please publish your site to apply changes.',
 		});
 	} catch (err) {
+		// If token was revoked, clean up and return 401
+		if (err instanceof TokenRevokedError) {
+			console.log(`Token revoked for site ${siteId} during install, cleaning up`);
+			await deleteInstall(c.env, siteId);
+			return c.json({ error: 'Authorization has been revoked. Please re-authorize.' }, 401);
+		}
+
 		if (err instanceof WebflowError) {
 			console.error(err.message);
 			return c.json({ error: 'Webflow API error', status: err.status }, 502);
@@ -111,11 +117,57 @@ app.post('/sites/:siteId/install-waterfall', async (c) => {
 
 app.post('/sites/:siteId/publish', async (c) => {
 	const siteId = c.req.param('siteId');
-	const token = await getToken(c.env, siteId);
-	if (!token) return c.json({ error: 'Site not authorized' }, 404);
+	const token = c.get('accessToken'); // Retrieved from middleware after auth
 
-	await publishSite(token, siteId);
-	return c.json({ ok: true });
+	try {
+		await publishSite(token, siteId);
+		return c.json({ ok: true });
+	} catch (err) {
+		// If token was revoked, clean up and return 401
+		if (err instanceof TokenRevokedError) {
+			console.log(`Token revoked for site ${siteId} during publish, cleaning up`);
+			await deleteInstall(c.env, siteId);
+			return c.json({ error: 'Authorization has been revoked' }, 401);
+		}
+		throw err;
+	}
+});
+
+app.post('/sites/:siteId/uninstall', async (c) => {
+	const siteId = c.req.param('siteId');
+	const token = c.get('accessToken'); // Retrieved from middleware after auth
+
+	try {
+		// Remove Waterfall scripts from site and all pages
+		const scriptsRemoved = await removeScriptEverywhere(token, siteId, 'waterfall');
+
+		// Delete the stored OAuth token
+		await deleteInstall(c.env, siteId);
+
+		return c.json({
+			ok: true,
+			scriptsRemoved,
+			message: scriptsRemoved > 0 ? 'Waterfall uninstalled. Please publish your site to remove scripts from the live site.' : 'Waterfall was not installed on this site.',
+		});
+	} catch (err) {
+		// If token was revoked (401), just clean up the database
+		if (err instanceof TokenRevokedError) {
+			console.log(`Token already revoked for site ${siteId}, cleaning up database`);
+			await deleteInstall(c.env, siteId);
+			return c.json({
+				ok: true,
+				scriptsRemoved: 0,
+				message: 'Authorization was already revoked. Database cleaned up.',
+			});
+		}
+
+		if (err instanceof WebflowError) {
+			console.error('Uninstall error:', err.message);
+			return c.json({ error: 'Failed to uninstall', details: err.message }, 502);
+		}
+
+		throw err;
+	}
 });
 
 app.get('/auth', async (c) => {

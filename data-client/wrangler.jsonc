@@ -12,7 +12,6 @@
 
 	"vars": {
 		"WEBFLOW_CLIENT_ID": "63d6f60208cfe09e0232f8bd6bc89c8567b1420e07b87998dea0c0628552d2f8",
-		"WEBFLOW_CLIENT_SECRET": "***REMOVED***",
 	},
 
 	"upload_source_maps": true,

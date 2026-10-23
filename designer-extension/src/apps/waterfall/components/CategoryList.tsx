@@ -15,10 +15,7 @@ export default function CategoryList({ categories, onCategoryClick }: CategoryLi
   const isCategoryDisabled = (category: WaterfallCategory): boolean => {
     if (!activeBreakpoint) return false;
 
-    const allSettings = [
-      ...(category.items || []),
-      ...(category.groups?.flatMap((g) => g.items) || []),
-    ];
+    const allSettings = [...(category.items || []), ...(category.groups?.flatMap((g) => g.items) || [])];
 
     // If no settings, don't disable
     if (allSettings.length === 0) return false;
@@ -45,8 +42,8 @@ export default function CategoryList({ categories, onCategoryClick }: CategoryLi
             >
               <div className="flex flex-row items-center text-left gap-4">
                 {category.icon && (
-                  <div className="bg-primary w-5 h-5 rounded-full flex items-center justify-center shrink-0">
-                    <FontAwesomeIcon icon={category.icon} className="text-primary-dark text-[10px]" />
+                  <div className="bg-primary w-8 h-8 rounded-full flex items-center justify-center shrink-0">
+                    <FontAwesomeIcon icon={category.icon} className="text-primary-dark text-[16px]" />
                   </div>
                 )}
                 <div className="">

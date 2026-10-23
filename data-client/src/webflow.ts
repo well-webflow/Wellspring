@@ -10,6 +10,13 @@ export class WebflowError extends Error {
 	}
 }
 
+export class TokenRevokedError extends Error {
+	constructor() {
+		super('OAuth token has been revoked');
+		this.name = 'TokenRevokedError';
+	}
+}
+
 async function wf<T>(token: string, path: string, init: RequestInit = {}): Promise<T> {
 	const res = await fetch(`${API}${path}`, {
 		...init,
@@ -21,6 +28,10 @@ async function wf<T>(token: string, path: string, init: RequestInit = {}): Promi
 	});
 
 	if (!res.ok) {
+		// 401 on a previously valid token means it's been revoked
+		if (res.status === 401) {
+			throw new TokenRevokedError();
+		}
 		throw new WebflowError(res.status, `${init.method ?? 'GET'} ${path} → ${res.status}: ${await res.text()}`);
 	}
 	return res.json() as Promise<T>;
@@ -156,4 +167,55 @@ export async function publishSite(token: string, siteId: string): Promise<void> 
 		method: 'POST',
 		body: JSON.stringify({ publishToWebflowSubdomain: true }),
 	});
+}
+
+interface Page {
+	id: string;
+	siteId: string;
+	title: string;
+}
+
+/** Get all pages for a site */
+export async function listPages(token: string, siteId: string): Promise<Page[]> {
+	const { pages } = await wf<{ pages: Page[] }>(token, `/sites/${siteId}/pages`);
+	return pages;
+}
+
+/**
+ * Remove a script from the site and all its pages.
+ * This is the cleanup function for uninstall/revocation.
+ */
+export async function removeScriptEverywhere(token: string, siteId: string, scriptIdPattern: string): Promise<number> {
+	let removedCount = 0;
+
+	// Remove from site-level
+	const siteScripts = await getAppliedScripts(token, { type: 'site', id: siteId });
+	const siteMatches = siteScripts.filter((s) => s.id.includes(scriptIdPattern));
+	if (siteMatches.length > 0) {
+		console.log(`Removing ${siteMatches.length} script(s) from site ${siteId}`);
+		await removeScript(token, { type: 'site', id: siteId }, siteMatches[0].id);
+		removedCount += siteMatches.length;
+	}
+
+	// Remove from all pages
+	const pages = await listPages(token, siteId);
+	console.log(`Checking ${pages.length} pages for Waterfall scripts...`);
+
+	for (const page of pages) {
+		try {
+			const pageScripts = await getAppliedScripts(token, { type: 'page', id: page.id });
+			const pageMatches = pageScripts.filter((s) => s.id.includes(scriptIdPattern));
+
+			if (pageMatches.length > 0) {
+				console.log(`Removing ${pageMatches.length} script(s) from page ${page.id} (${page.title})`);
+				await removeScript(token, { type: 'page', id: page.id }, pageMatches[0].id);
+				removedCount += pageMatches.length;
+			}
+		} catch (err) {
+			// Continue if a page fails (might be deleted, etc.)
+			console.warn(`Failed to check/clean page ${page.id}:`, err);
+		}
+	}
+
+	return removedCount;
 }

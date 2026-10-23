@@ -1,9 +1,43 @@
 import { SelectHTMLAttributes } from 'react';
+import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { FormFieldBaseProps, useAutoSize, getFormFieldClasses, MeasuringSpan } from './FormFieldBase';
 
-export function Select({ type, options, value, ...props }: SelectProps) {
+export function Select({
+  type,
+  options,
+  value,
+  autoSize = false,
+  maxWidth,
+  height = 'md',
+  className,
+  ...props
+}: SelectProps) {
+  // Get the display value - either the controlled value or the first option
+  const displayValue = value !== undefined ? String(value) : (options?.[0] || '');
+
+  const { width, measureRef, targetRef } = useAutoSize({
+    enabled: autoSize,
+    maxWidth,
+    currentValue: displayValue,
+    extraSpace: 40, // padding + border + dropdown arrow
+  });
+
+  const containerClasses = getFormFieldClasses(
+    clsx({
+      'w-55': !autoSize,
+    }),
+    autoSize,
+    height,
+    className
+  );
+
+  const containerStyle = autoSize ? { width: `${width}px` } : undefined;
+
   return (
-    <div className="border-2 border-border1 w-[220px] h-9 rounded-xs overflow-hidden">
+    <div className={containerClasses} style={containerStyle}>
       <select
+        ref={targetRef as React.RefObject<HTMLSelectElement>}
         className="bg-background1 text-action-primary-text rounded-xs w-full h-full px-1"
         value={value}
         {...props}
@@ -21,10 +55,12 @@ export function Select({ type, options, value, ...props }: SelectProps) {
             </option>
           ))}
       </select>
+      <MeasuringSpan measureRef={measureRef} />
     </div>
   );
 }
-export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+
+export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement>, FormFieldBaseProps {
   type: 'boolean' | 'select';
   options: string[] | undefined;
 }

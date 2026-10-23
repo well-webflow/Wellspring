@@ -4,7 +4,7 @@ import { useWebflow } from '../context/webflowContext';
 
 export default function SelectedElement({ classNames }: { classNames?: string }) {
   const styles = twMerge(clsx('bg-action-primary-background p-1 px-2 rounded-xs text-sm'));
-  const wrapperStyles = twMerge(clsx('p-1 bg-background3 flex-row gap-2 flex-wrap inline-flex', classNames));
+  const wrapperStyles = twMerge(clsx('h-9 p-1 bg-background3 flex-row gap-2 flex-wrap inline-flex', classNames));
 
   const { elementSelected, elementInfo } = useWebflow();
   if (!elementSelected) {

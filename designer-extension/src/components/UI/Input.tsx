@@ -3,36 +3,66 @@ import { InputHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from './Button';
 import { SettingSize } from '../../apps/waterfall/components/Setting';
+import { FormFieldBaseProps, useAutoSize, getFormFieldClasses, MeasuringSpan } from './FormFieldBase';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement>, FormFieldBaseProps {
   inputSize?: SettingSize;
   classNames?: string;
   submit?: () => void;
 }
 
-export function Input({ submit, inputSize = 'base', classNames, ...props }: InputProps) {
+export function Input({
+  submit,
+  inputSize = 'base',
+  classNames,
+  autoSize = false,
+  maxWidth,
+  height = 'md',
+  className,
+  value,
+  ...props
+}: InputProps) {
+  const { width, measureRef, targetRef } = useAutoSize({
+    enabled: autoSize,
+    maxWidth,
+    currentValue: String(value || ''),
+    extraSpace: 40, // padding + border
+  });
+
   const sizeClasses = {
     base: 'w-[220px]',
     lg: 'w-[330px]',
     full: 'flex-1',
   };
 
-  const classes = twMerge(
+  const containerClasses = twMerge(
     clsx(
-      'h-9 bg-background1 flex shrink-0 border-2 border-border1 rounded-xs focus-within:border-primary pl-2 pr-1 py-1 overflow-hidden',
-      sizeClasses[inputSize],
-      classNames
+      'bg-background1 flex shrink-0 focus-within:border-primary pl-2 pr-1 py-1',
+      {
+        [sizeClasses[inputSize]]: !autoSize,
+      },
+      classNames,
+      className
     )
   );
 
+  const formFieldClasses = getFormFieldClasses(containerClasses, autoSize, height);
+  const containerStyle = autoSize ? { width: `${width}px` } : undefined;
+
   return (
-    <div className={classes}>
-      <input {...props} className="text-action-primary-text w-full h-full outline-none" />
+    <div className={formFieldClasses} style={containerStyle}>
+      <input
+        ref={targetRef as React.RefObject<HTMLInputElement>}
+        value={value}
+        {...props}
+        className="text-action-primary-text w-full h-full outline-none bg-transparent"
+      />
       {submit && (
         <Button size="sm" fillHeight onClick={submit}>
           Submit
         </Button>
       )}
+      <MeasuringSpan measureRef={measureRef} />
     </div>
   );
 }
