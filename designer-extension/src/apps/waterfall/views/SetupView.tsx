@@ -4,7 +4,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { useWebflow } from '../../../context/webflowContext';
 import Button from '../../../components/UI/Button';
 import { installWaterfall, launchWebflowAuth, NotAuthorizedError, uninstallWaterfall } from '../../../lib/api';
-import { faCheck, faCircleInfo, faLock, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCircleInfo, faLinkSlash, faLock, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useRef, useState } from 'react';
 import HorizontalRule from '../../../components/UI/hr';
@@ -22,7 +22,7 @@ export default function SetupView() {
     setIsInstalling(true);
     try {
       await installWaterfall();
-      await webflow.notify({ type: 'Success', message: `Waterfall installed! Publish your site to apply changes.` });
+      await webflow.notify({ type: 'Success', message: 'Waterfall installed. Publish your site to make the changes live.' });
       await checkAuthStatus();
     } catch (err) {
       if (err instanceof NotAuthorizedError) {
@@ -37,7 +37,7 @@ export default function SetupView() {
 
   async function handleUninstall() {
     const confirmed = confirm(
-      'Are you sure you want to uninstall Waterfall?\n\nThis will remove all Waterfall scripts from your site and pages. You will need to publish your site to complete the removal.'
+      'Are you sure you want to uninstall Waterfall?\n\nThis will remove all Waterfall scripts from your site and pages. Publish your site afterwards to remove them from the live site.'
     );
 
     if (!confirmed) return;
@@ -49,6 +49,27 @@ export default function SetupView() {
         type: 'Success',
         message: `${result.message} (${result.scriptsRemoved} script(s) removed)`,
       });
+      await checkAuthStatus();
+    } catch (err) {
+      await webflow.notify({ type: 'Error', message: (err as Error).message });
+    } finally {
+      setIsUninstalling(false);
+    }
+  }
+
+  // Deletes the authorization stored for this site when Waterfall isn't installed (the uninstall
+  // endpoint also removes any scripts it finds, so it's safe to reuse here)
+  async function handleDisconnect() {
+    const confirmed = confirm(
+      'Disconnect Wellspring from this site?\n\nThis deletes the authorization Wellspring stored for this site. To remove Wellspring\'s access completely, also uninstall the App from your Webflow site settings.'
+    );
+
+    if (!confirmed) return;
+
+    setIsUninstalling(true);
+    try {
+      await uninstallWaterfall();
+      await webflow.notify({ type: 'Success', message: 'Wellspring was disconnected from this site.' });
       await checkAuthStatus();
     } catch (err) {
       await webflow.notify({ type: 'Error', message: (err as Error).message });
@@ -141,7 +162,7 @@ export default function SetupView() {
 
         <Paragraph size="sm" className="text-text2 mb-5">
           Waterfall is a Javascript library for Webflow that enables developers to build sliders based on SwiperJS with
-          attributes. The Wellflow app helps you create, edit, and manage Waterfalls with an easy-to-use interface.
+          attributes. The Wellspring app helps you create, edit, and manage Waterfalls with an easy-to-use interface.
         </Paragraph>
 
         <HorizontalRule className="my-4" />
@@ -181,9 +202,14 @@ export default function SetupView() {
               </Button>
             </div>
           ) : !isCodeInstalled ? (
-            <Button onClick={handleInstall} size="sm" disabled={isInstalling}>
-              {isInstalling ? 'Installing...' : 'Install Code'}
-            </Button>
+            <div className="flex flex-row gap-2">
+              <Button onClick={handleDisconnect} icon={faLinkSlash} size="sm" disabled={isInstalling || isUninstalling}>
+                {isUninstalling ? 'Disconnecting...' : 'Disconnect'}
+              </Button>
+              <Button onClick={handleInstall} size="sm" disabled={isInstalling || isUninstalling}>
+                {isInstalling ? 'Installing...' : 'Install Code'}
+              </Button>
+            </div>
           ) : (
             <div className="">
               <Button onClick={handleUninstall} icon={faTrash} size="sm" disabled={isUninstalling}>
@@ -192,6 +218,15 @@ export default function SetupView() {
             </div>
           )}
         </div>
+
+        {isAuthorized === false && (
+          <Paragraph size="sm" className="text-text2 mt-3">
+            Removed Wellspring's access to this site earlier? The Waterfall script may still be on your published
+            site, and Wellspring can't remove it without access. Click Install to reconnect: if the script is still
+            there, Wellspring won't add it again and will show an Uninstall button instead. Uninstall, then publish
+            your site to remove it.
+          </Paragraph>
+        )}
       </div>
     </ErrorBoundary>
   );

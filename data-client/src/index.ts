@@ -7,7 +7,6 @@ import {
 	ensureScriptRegistered,
 	applyScript,
 	getAppliedScripts,
-	publishSite,
 	WebflowError,
 	TokenRevokedError,
 	removeScriptEverywhere,
@@ -24,9 +23,7 @@ interface SitesResponse {
 
 const SCOPES = [
 	'sites:read',
-	'sites:write',
 	'pages:read',
-	'pages:write',
 	'authorized_user:read',
 	'custom_code:read',
 	'custom_code:write',
@@ -44,10 +41,18 @@ const WELL_WATERFALL = {
 
 const app = new Hono<AppEnv>();
 
+// The production Designer Extension origin. For local development, list extra origins
+// (e.g. http://localhost:1337) in CORS_DEV_ORIGINS in .dev.vars; never set it in production.
+const EXTENSION_ORIGINS = ['https://6a5e8b1540168e9c517f1e0b.webflow-ext.com'];
+
 app.use(
 	'/sites/*',
 	cors({
-		origin: ['http://localhost:1337', 'https://6a5e8b1540168e9c517f1e0b.webflow-ext.com'],
+		origin: (origin, c) => {
+			const env = c.env as AppEnv['Bindings'];
+			const devOrigins = env.CORS_DEV_ORIGINS?.split(',').map((o) => o.trim()) ?? [];
+			return [...EXTENSION_ORIGINS, ...devOrigins].includes(origin) ? origin : null;
+		},
 		allowHeaders: ['Content-Type', 'X-Webflow-Id-Token'],
 		allowMethods: ['GET', 'POST', 'OPTIONS'],
 	}),
@@ -104,7 +109,7 @@ app.post('/sites/:siteId/install-waterfall', async (c) => {
 			ok: true,
 			scriptId: script.id,
 			needsPublish: true,
-			message: 'Waterfall script installed successfully. Please publish your site to apply changes.',
+			message: 'Waterfall installed. Publish your site to make the changes live.',
 		});
 	} catch (err) {
 		// If token was revoked, clean up and return 401
@@ -117,24 +122,6 @@ app.post('/sites/:siteId/install-waterfall', async (c) => {
 		if (err instanceof WebflowError) {
 			console.error(err.message);
 			return c.json({ error: 'Webflow API error', status: err.status }, 502);
-		}
-		throw err;
-	}
-});
-
-app.post('/sites/:siteId/publish', async (c) => {
-	const siteId = c.req.param('siteId');
-	const token = c.get('accessToken'); // Retrieved from middleware after auth
-
-	try {
-		await publishSite(token, siteId);
-		return c.json({ ok: true });
-	} catch (err) {
-		// If token was revoked, clean up and return 401
-		if (err instanceof TokenRevokedError) {
-			console.log(`Token revoked for site ${siteId} during publish, cleaning up`);
-			await deleteInstall(c.env, siteId);
-			return c.json({ error: 'Authorization has been revoked' }, 401);
 		}
 		throw err;
 	}
@@ -154,7 +141,7 @@ app.post('/sites/:siteId/uninstall', async (c) => {
 		return c.json({
 			ok: true,
 			scriptsRemoved,
-			message: scriptsRemoved > 0 ? 'Waterfall uninstalled. Please publish your site to remove scripts from the live site.' : 'Waterfall was not installed on this site.',
+			message: scriptsRemoved > 0 ? 'Waterfall uninstalled. Publish your site to make the changes live.' : 'Waterfall was not installed on this site.',
 		});
 	} catch (err) {
 		// If token was revoked (401), just clean up the database

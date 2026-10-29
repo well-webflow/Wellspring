@@ -8,8 +8,6 @@ import { faBug, faChevronLeft, faHeart } from '@fortawesome/free-solid-svg-icons
 import { useWellflow } from './context/wellspringContext';
 import NavigationLink from './components/UI/NavigationLink';
 import wellspringLogo from './assets/wellspring.png';
-import petalIcon from './assets/petal.png';
-import chamomileIcon from './assets/chamomile.png';
 import Card from './components/UI/Card';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
@@ -22,9 +20,9 @@ export default function HomeView() {
 
   return (
     <ErrorBoundary>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-screen">
         <WellflowHeader />
-        <div className="flex-1">
+        <div className="flex-1 min-h-0 overflow-y-auto">
           <Tabs headerClasses="" contentClasses="p-3">
             <Tab label="Apps">
               <div className="flex flex-col gap-2">
@@ -39,7 +37,7 @@ export default function HomeView() {
                     </div>
                   </Card>
                 </Link>
-                <Card size="sm" className="flex items-center gap-3" disabled>
+                {/* <Card size="sm" className="flex items-center gap-3" disabled>
                   <img src={petalIcon} alt="Petal App" className="rounded-sm h-12 w-12" />
                   <div className="">
                     <Heading level={5}>Petal</Heading>
@@ -56,7 +54,7 @@ export default function HomeView() {
                       Validate Form inputs
                     </Paragraph>
                   </div>
-                </Card>
+                </Card> */}
                 <Card
                   disabled
                   size="sm"
@@ -108,7 +106,7 @@ export default function HomeView() {
             </Tab>
           </Tabs>
         </div>
-        <div className="fixed bottom-0 left-0 right-0 bg-background5 w-full border-t border-t-border1 p-3 flex flex-row justify-center gap-4">
+        <div className="shrink-0 bg-background5 w-full border-t border-t-border1 p-3 flex flex-row justify-center gap-4">
           <NavigationLink to="https://wellspring-app.webflow.io/contact" target="_blank" icon={faBug}>
             Bug Report
           </NavigationLink>

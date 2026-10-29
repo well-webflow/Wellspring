@@ -68,7 +68,7 @@ export default function ManipulationScreen() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-row gap-1 items-center">
+      <div className="flex flex-row flex-wrap gap-1 items-center">
         <Select
           onChange={(e) => onMethodChange(e)}
           options={['add', 'append', 'prepend', 'remove']}
@@ -80,8 +80,8 @@ export default function ManipulationScreen() {
         <Select onChange={(e) => onWaterfallSelectChange(e)} type="select" options={waterfallNames} autoSize></Select>
         {(manipulationMethod === 'add' || manipulationMethod === 'remove') && (
           <>
-            <div>at index</div>
-            <Input type="number" value={index} onChange={onIndexChange} min="0" />
+            <div className="px-1 whitespace-nowrap">at index</div>
+            <Input type="number" value={index} onChange={onIndexChange} min="0" classNames="w-20" />
           </>
         )}
       </div>

@@ -11,7 +11,7 @@ import { getAttribute, getAttributes, removeAttribute, setAttribute } from '../.
 import { createWaterfallElement } from '../lib/waterfallElements';
 import { findWaterfallSetting } from '../lib/waterfallHelpers';
 import { defaultWaterfallConfig } from '../lib/waterfallConfig';
-import { getBaseAttr, getBreakpointAttr } from '../../../utils/attributes';
+import { getBaseAttr, getBreakpointAttr, legacyBreakpoints } from '../../../utils/attributes';
 import { Breakpoints } from '../../../utils/breakpoints';
 import { deepCloneWithFunctions } from '../utils/categoryParser';
 import { useWebflow } from '../../../context/webflowContext';
@@ -349,6 +349,12 @@ export function useWaterfallLogic(): WaterfallState {
                   await removeAttribute(el, attr);
                 }
               })
+            );
+            // Legacy suffixes were read into their new breakpoint on load, so drop the old attribute
+            await Promise.all(
+              Object.keys(legacyBreakpoints).map((suffix) =>
+                removeAttribute(el, getBreakpointAttr(setting.attr, suffix))
+              )
             );
           }
         })

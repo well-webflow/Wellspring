@@ -2,7 +2,7 @@ import Loader from '../../../components/UI/Loader';
 import { useWaterfall, WaterfallProvider } from '../hooks/WaterfallContext';
 import { NavLink, Outlet, useMatch } from 'react-router';
 import { Tab } from '../../../components/Tabs';
-import { faBox, faCirclePlus, faGear, faPencil, faCheck, faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faGear, faPencil, faCheck, faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { WellflowHeader } from '../../../HomeView';
 import { useEffect, useRef } from 'react';
@@ -68,10 +68,6 @@ function WaterfallSidebar() {
           )}
         </NavLink>
 
-        <NavLink to="/waterfall/create" className="w-full">
-          {({ isActive }) => <Tab label="Elements" icon={faBox} active={isActive} className="w-full text-left" />}
-        </NavLink>
-
         <NavLink to="/waterfall/setup" className="w-full">
           {({ isActive }) => <Tab label="Setup" icon={faGear} active={isActive} className="w-full text-left" />}
         </NavLink>
@@ -86,8 +82,8 @@ export function AuthorizationStatus() {
 
   async function handleSetup() {
     try {
-      const result = await installWaterfall();
-      await webflow.notify({ type: 'Success', message: `Applied ${result.scriptId}. Publish to go live.` });
+      await installWaterfall();
+      await webflow.notify({ type: 'Success', message: 'Waterfall installed. Publish your site to make the changes live.' });
       await checkAuthStatus();
     } catch (err) {
       if (err instanceof NotAuthorizedError) {

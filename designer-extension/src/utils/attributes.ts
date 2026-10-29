@@ -1,4 +1,7 @@
-import { websiteBreakpoints } from './breakpoints';
+import { Breakpoints, websiteBreakpoints } from './breakpoints';
+
+// Breakpoint suffixes earlier versions wrote, mapped to the breakpoint that replaced them
+export const legacyBreakpoints: Record<string, Breakpoints> = { lmobile: 'mobile-large' };
 
 /**
  * Prefixes a breakpoint to an attribute
@@ -16,16 +19,16 @@ export function getBreakpointAttr(attrName: string, device: string) {
  * @returns This attribute's breakpoint, or null
  */
 export function getBaseAttr(attrName: string): {
-  breakpoint: string | null;
+  breakpoint: Breakpoints | null;
   baseAttr: string;
 } {
-  // Check each breakpoint from longest to shortest to handle multi-word breakpoints
-  const sortedBreakpoints = [...websiteBreakpoints].sort((a, b) => b.length - a.length);
+  // Check each suffix from longest to shortest so "-mobile-large" isn't read as "-mobile"
+  const suffixes = [...websiteBreakpoints, ...Object.keys(legacyBreakpoints)].sort((a, b) => b.length - a.length);
 
-  for (const bp of sortedBreakpoints) {
-    if (attrName.endsWith(`-${bp}`)) {
-      const baseAttr = attrName.slice(0, -(bp.length + 1)); // +1 for the dash
-      return { breakpoint: bp, baseAttr };
+  for (const suffix of suffixes) {
+    if (attrName.endsWith(`-${suffix}`)) {
+      const baseAttr = attrName.slice(0, -(suffix.length + 1)); // +1 for the dash
+      return { breakpoint: legacyBreakpoints[suffix] ?? (suffix as Breakpoints), baseAttr };
     }
   }
 

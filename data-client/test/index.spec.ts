@@ -54,7 +54,7 @@ describe('auth middleware', () => {
 
 		const res = await request(`/sites/${SITE}/status`);
 
-		expect(res.status).toBe(404);
+		expect(res.status).toBe(401);
 		expect(await getToken(env, SITE)).toBeNull();
 	});
 
@@ -63,7 +63,29 @@ describe('auth middleware', () => {
 
 		const res = await request(`/sites/${SITE}/status`);
 
-		expect(res.status).toBe(404);
+		expect(res.status).toBe(401);
+	});
+
+	it('gives the same response for every auth failure', async () => {
+		const bodies = [];
+
+		// No ID token
+		bodies.push(await (await app.request(`/sites/${SITE}/status`, {}, env)).json());
+
+		// ID token for a different site
+		webflow()
+			.intercept({ path: '/beta/token/resolve', method: 'POST' })
+			.reply(200, { id: 'u1', email: 'a@b.c', firstName: 'A', lastName: 'B', siteId: 'other-site' });
+		const mismatch = await request(`/sites/${SITE}/status`);
+		expect(mismatch.status).toBe(401);
+		bodies.push(await mismatch.json());
+
+		// Site with no install
+		const unknown = await request('/sites/unknown-site/status');
+		expect(unknown.status).toBe(401);
+		bodies.push(await unknown.json());
+
+		expect(new Set(bodies.map((b) => JSON.stringify(b))).size).toBe(1);
 	});
 });
 
@@ -133,5 +155,24 @@ describe('oauth callback', () => {
 
 		expect(res.status).toBe(400);
 		expect(await res.text()).toContain('Authorization expired');
+	});
+});
+
+describe('cors', () => {
+	const preflight = (origin: string) =>
+		app.request(
+			`/sites/${SITE}/status`,
+			{ method: 'OPTIONS', headers: { Origin: origin, 'Access-Control-Request-Method': 'GET' } },
+			env,
+		);
+
+	it('allows the production extension origin', async () => {
+		const res = await preflight('https://6a5e8b1540168e9c517f1e0b.webflow-ext.com');
+		expect(res.headers.get('Access-Control-Allow-Origin')).toBe('https://6a5e8b1540168e9c517f1e0b.webflow-ext.com');
+	});
+
+	it('does not allow localhost unless CORS_DEV_ORIGINS lists it', async () => {
+		const res = await preflight('http://localhost:1337');
+		expect(res.headers.get('Access-Control-Allow-Origin')).toBeNull();
 	});
 });

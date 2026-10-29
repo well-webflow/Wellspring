@@ -163,13 +163,6 @@ export async function removeScript(token: string, target: Target, scriptId: stri
 	});
 }
 
-export async function publishSite(token: string, siteId: string): Promise<void> {
-	await wf(token, `/sites/${siteId}/publish`, {
-		method: 'POST',
-		body: JSON.stringify({ publishToWebflowSubdomain: true }),
-	});
-}
-
 interface Page {
 	id: string;
 	siteId: string;

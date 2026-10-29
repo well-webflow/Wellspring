@@ -1,9 +1,16 @@
 import { breakpointIcons } from '../assets/breakpoint-icons';
 
-// Breakpoints
-export const websiteBreakpoints = ['desktop-large', 'desktop-small', 'desktop', 'tablet', 'lmobile', 'mobile'] as const;
+// Breakpoints, in the order Webflow's breakpoint bar shows them
+export const websiteBreakpoints = [
+  'desktop-large',
+  'desktop-small',
+  'desktop',
+  'tablet',
+  'mobile-large',
+  'mobile',
+] as const;
 
-export type Breakpoints = 'mobile' | 'lmobile' | 'tablet' | 'desktop' | 'desktop-small' | 'desktop-large';
+export type Breakpoints = (typeof websiteBreakpoints)[number];
 
 export type BreakpointObject = Partial<Record<Breakpoints, string>>;
 
@@ -12,54 +19,56 @@ export interface BreakpointConfig {
   displayName: string;
   size: string;
   icon: string;
+  // Breakpoints this one inherits from, nearest first, before falling back to the base value.
+  // Matches the Waterfall runtime: like Webflow styles, values cascade outward from Desktop.
+  fallbacks: Breakpoints[];
 }
 
 export const breakpointConfigs: Record<Breakpoints, BreakpointConfig> = {
   mobile: {
     id: 'mobile',
-    displayName: 'Mobile',
-    size: '479px',
+    displayName: 'Mobile Portrait',
+    size: '479px and below',
     icon: breakpointIcons.mobilePortrait,
+    fallbacks: ['mobile-large', 'tablet'],
   },
-  lmobile: {
-    id: 'lmobile',
-    displayName: 'Mobile Large',
-    size: '767px',
+  'mobile-large': {
+    id: 'mobile-large',
+    displayName: 'Mobile Landscape',
+    size: '480px - 767px',
     icon: breakpointIcons.mobileLandscape,
+    fallbacks: ['tablet'],
   },
   tablet: {
     id: 'tablet',
     displayName: 'Tablet',
-    size: '991px',
+    size: '768px - 991px',
     icon: breakpointIcons.tablet,
+    fallbacks: [],
   },
   desktop: {
     id: 'desktop',
     displayName: 'Desktop',
-    size: '1024px',
+    size: '992px and up',
     icon: breakpointIcons.desktop,
+    fallbacks: [],
   },
   'desktop-small': {
     id: 'desktop-small',
     displayName: 'Desktop Small',
-    size: '1280px',
+    size: '1280px and up',
     icon: breakpointIcons.desktopSmall,
+    fallbacks: ['desktop'],
   },
   'desktop-large': {
     id: 'desktop-large',
     displayName: 'Desktop Large',
-    size: '1440px',
+    size: '1440px and up',
     icon: breakpointIcons.desktopLarge,
+    fallbacks: ['desktop-small', 'desktop'],
   },
 };
 
 export function createBreakpoints(): BreakpointObject {
-  return {
-    mobile: '',
-    lmobile: '',
-    tablet: '',
-    desktop: '',
-    'desktop-small': '',
-    'desktop-large': '',
-  };
+  return Object.fromEntries(websiteBreakpoints.map((bp) => [bp, '']));
 }

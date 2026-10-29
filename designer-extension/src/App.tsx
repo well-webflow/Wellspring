@@ -11,7 +11,6 @@ import SetupView from './apps/waterfall/views/SetupView';
 import EditLayout from './apps/waterfall/views/edit/EditLayout';
 import NewWaterfallLayout from './apps/waterfall/views/new/NewWaterfallLayout';
 import NewWaterfallView from './apps/waterfall/views/new/NewWaterfallView';
-import CreateView from './apps/waterfall/views/CreateView';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 export default function App() {
@@ -27,8 +26,6 @@ export default function App() {
                   <Route index element={<NewWaterfallView />} />
                   <Route path="new/:categoryName" element={<CategoryView />} />
                 </Route>
-                <Route path="create" element={<CreateView />} />
-                <Route path="new"></Route>
                 <Route path="setup" element={<SetupView />} />
                 <Route path="select" element={<SelectWaterfallView />} />
                 <Route path="edit" element={<EditLayout />}>

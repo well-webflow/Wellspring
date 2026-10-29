@@ -1,13 +1,8 @@
-import { Breakpoints, BreakpointObject, websiteBreakpoints } from '../../../utils/breakpoints';
-
-/**
- * Get the breakpoint order from smallest to largest
- */
-export const breakpointOrder: Breakpoints[] = [...websiteBreakpoints];
+import { Breakpoints, BreakpointObject, breakpointConfigs } from '../../../utils/breakpoints';
 
 /**
  * Get the cascaded value for a breakpoint
- * If the current breakpoint has no value, cascade from larger breakpoints
+ * If the current breakpoint has no value, use the nearest breakpoint it inherits from, then the base value
  * @param breakpoints The breakpoint values object
  * @param currentBreakpoint The current breakpoint to get value for
  * @param baseValue The base value (non-breakpoint)
@@ -18,34 +13,14 @@ export function getCascadedBreakpointValue(
   currentBreakpoint: Breakpoints | null,
   baseValue: string
 ): string {
-  // If no active breakpoint, return base value
-  if (!currentBreakpoint) {
+  if (!currentBreakpoint || !breakpoints) {
     return baseValue;
   }
 
-  // If no breakpoints object, return base value
-  if (!breakpoints) {
-    return baseValue;
-  }
-
-  // Get the index of the current breakpoint
-  const currentIndex = breakpointOrder.indexOf(currentBreakpoint);
-
-  // Look for a value in current breakpoint first
-  if (breakpoints[currentBreakpoint]) {
-    return breakpoints[currentBreakpoint]!;
-  }
-
-  // Cascade from larger breakpoints (from smallest to largest after current)
-  for (let i = currentIndex + 1; i < breakpointOrder.length; i++) {
-    const bp = breakpointOrder[i];
-    if (breakpoints[bp]) {
-      return breakpoints[bp]!;
-    }
-  }
-
-  // If no larger breakpoint has a value, return base value
-  return baseValue;
+  const inherited = [currentBreakpoint, ...breakpointConfigs[currentBreakpoint].fallbacks].find(
+    (bp) => breakpoints[bp]
+  );
+  return inherited ? breakpoints[inherited]! : baseValue;
 }
 
 /**

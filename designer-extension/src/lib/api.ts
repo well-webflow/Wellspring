@@ -8,7 +8,7 @@ async function call<T>(path: string): Promise<T> {
     headers: { 'X-Webflow-Id-Token': idToken },
   });
 
-  if (res.status === 404) throw new NotAuthorizedError();
+  if (res.status === 401) throw new NotAuthorizedError();
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -26,7 +26,7 @@ export async function checkStatus(): Promise<{ authorized: boolean; installed: b
       headers: { 'X-Webflow-Id-Token': idToken },
     });
 
-    if (res.status === 404 || res.status === 401) {
+    if (res.status === 401) {
       return { authorized: false, installed: false };
     }
 
@@ -51,7 +51,5 @@ export function launchWebflowAuth(): Window | null {
 export class NotAuthorizedError extends Error {}
 
 export const installWaterfall = () => call<{ ok: true; scriptId: string; needsPublish: boolean }>('/install-waterfall');
-
-export const publishSite = () => call<{ ok: true }>('/publish');
 
 export const uninstallWaterfall = () => call<{ ok: true; scriptsRemoved: number; message: string }>('/uninstall');
