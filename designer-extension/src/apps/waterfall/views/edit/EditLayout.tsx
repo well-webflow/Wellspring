@@ -4,7 +4,7 @@ import { faArrowsRotate, faSave } from '@fortawesome/free-solid-svg-icons';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 import { Toolbar } from '../../../../components/UI/Toolbar';
 import { Input } from '../../../../components/UI/Input';
-import { ATTR_WATERFALL } from 'well-waterfall';
+import { ATTR_WATERFALL } from 'well-waterfall/attributes';
 import BreakpointSelector from '../../components/BreakpointSelector';
 
 export default function EditLayout() {

@@ -25,7 +25,6 @@ export function WebflowProvider({ children }: { children: React.ReactNode }) {
   // Check authorization and installation status
   const checkAuthStatus = async () => {
     const { authorized, installed } = await checkStatus();
-    console.log('Status check:', { authorized, installed });
     setIsAuthorized(authorized);
     setIsCodeInstalled(installed);
     return { authorized, installed };

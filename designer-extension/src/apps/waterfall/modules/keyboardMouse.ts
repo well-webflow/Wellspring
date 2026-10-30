@@ -1,6 +1,10 @@
 import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { ATTR_KEYBOARD_ENABLED, ATTR_KEYBOARD_ONLY_IN_VIEWPORT, ATTR_KEYBOARD_PAGE_UP_DOWN } from 'well-waterfall';
+import {
+  ATTR_KEYBOARD_ENABLED,
+  ATTR_KEYBOARD_ONLY_IN_VIEWPORT,
+  ATTR_KEYBOARD_PAGE_UP_DOWN,
+} from 'well-waterfall/attributes';
 import {
   ATTR_MOUSE_ENABLED,
   ATTR_MOUSE_EVENTS_TARGET,
@@ -11,10 +15,10 @@ import {
   ATTR_MOUSE_SENSITIVITY,
   ATTR_MOUSE_THRESHOLD_DELTA,
   ATTR_MOUSE_THRESHOLD_TIME,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function keyboardMouseCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Keyboard & Mouse',
     id: 'keyboard-mouse',
     icon: faKeyboard,

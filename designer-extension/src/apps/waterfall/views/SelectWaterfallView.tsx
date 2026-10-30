@@ -24,18 +24,12 @@ export default function SelectWaterfallView() {
     navigate(`/waterfall/edit/${routeName}`);
   }
 
-  function search() {
-    searchForWaterfalls();
-    console.log(waterfalls);
-    console.log(waterfallNames);
-  }
-
   return (
     <ErrorBoundary>
       <div>
         <Toolbar>
           <Heading level={4}>Select a Waterfall to Edit</Heading>
-          <Button size="sm" onClick={search} icon={faRotateRight}></Button>
+          <Button size="sm" onClick={searchForWaterfalls} icon={faRotateRight}></Button>
         </Toolbar>
         <div className="p-3">
           <div className="flex flex-col gap-2">

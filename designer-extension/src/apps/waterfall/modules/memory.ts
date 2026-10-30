@@ -1,9 +1,9 @@
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { ATTR_HASH_REPLACE_STATE, ATTR_HASH_WATCH_STATE } from 'well-waterfall';
+import { ATTR_HASH_REPLACE_STATE, ATTR_HASH_WATCH_STATE } from 'well-waterfall/attributes';
 
 export default function memoryCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Memory',
     id: 'hash',
     icon: faRotateRight,

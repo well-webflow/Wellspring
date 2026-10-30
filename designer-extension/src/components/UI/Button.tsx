@@ -7,7 +7,6 @@ import { twMerge } from 'tailwind-merge';
 type ButtonColor = 'primary' | 'secondary';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  text?: string;
   icon?: IconDefinition;
   size?: 'sm' | 'md' | 'lg';
   fillHeight?: boolean;
@@ -19,7 +18,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function Button({
-  text,
   icon,
   size = 'md',
   fillHeight = false,

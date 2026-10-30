@@ -20,10 +20,10 @@ import {
   ATTR_PAGINATION_TOTAL_CLASS,
   ATTR_PAGINATION_TYPE,
   ATTR_PAGINATION_VERTICAL_CLASS,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function paginationCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Pagination',
     id: 'pagination',
     icon: faEllipsis,

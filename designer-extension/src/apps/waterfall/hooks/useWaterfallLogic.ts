@@ -11,7 +11,7 @@ import { getAttribute, getAttributes, removeAttribute, setAttribute } from '../.
 import { createWaterfallElement } from '../lib/waterfallElements';
 import { findWaterfallSetting } from '../lib/waterfallHelpers';
 import { defaultWaterfallConfig } from '../lib/waterfallConfig';
-import { getBaseAttr, getBreakpointAttr, legacyBreakpoints } from '../../../utils/attributes';
+import { getBaseAttr, getBreakpointAttr } from '../../../utils/attributes';
 import { Breakpoints } from '../../../utils/breakpoints';
 import { deepCloneWithFunctions } from '../utils/categoryParser';
 import { useWebflow } from '../../../context/webflowContext';
@@ -44,9 +44,8 @@ export function useWaterfallLogic(): WaterfallState {
   const [waterfallConfig, _setWaterfallConfig] = useState<WaterfallConfig | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [contentType, setContentType] = useState<WaterfallContentType>('static');
-  const [waterfallSelected, setWaterfallSelected] = useState<string | null>(null);
   const [loadedWaterfall, setLoadedWaterfall] = useState<LoadedWaterfall | null>(null);
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lastPopulatedNames, setLastPopulatedNames] = useState<string[]>([]);
   const [activeBreakpoint, setActiveBreakpoint] = useState<Breakpoints | null>(null);
 
@@ -59,22 +58,6 @@ export function useWaterfallLogic(): WaterfallState {
 
   const navigate = useNavigate();
   const { isAuthorized, isCodeInstalled } = useWebflow();
-
-  // Check if a Waterfall has been selected
-  const selectedElementCallback = async (element: AnyElement | null) => {
-    if (!element) return;
-
-    let waterfallName = await getAttribute(element, 'waterfall');
-
-    if (waterfallName) setWaterfallSelected(waterfallName);
-    else setWaterfallSelected(null);
-  };
-
-  // Subscribe to the selected element event
-  useEffect(() => {
-    const unsubscribeSelectedElement = webflow.subscribe('selectedelement', selectedElementCallback);
-    return () => unsubscribeSelectedElement();
-  }, []);
 
   // Update instance names in config whenever waterfallNames changes
   useEffect(() => {
@@ -93,7 +76,7 @@ export function useWaterfallLogic(): WaterfallState {
     const names: string[] = [];
     await Promise.all(
       els.map(async (el) => {
-        let wtf = await getWaterfallName(el);
+        const wtf = await getWaterfallName(el);
         if (wtf) {
           waterfalls.push(el);
           names.push(wtf);
@@ -113,7 +96,7 @@ export function useWaterfallLogic(): WaterfallState {
   async function findWaterfallByName(name: string) {
     const els = await webflow.getAllElements();
     for (const el of els) {
-      let wtf = await getWaterfallName(el);
+      const wtf = await getWaterfallName(el);
       if (wtf === name) return el;
     }
     return null;
@@ -149,7 +132,6 @@ export function useWaterfallLogic(): WaterfallState {
    * Create a new waterfall with the configured settings
    */
   async function createWaterfall() {
-    setIsLoading(true);
     if (!waterfallConfig) return;
 
     // Check authorization status
@@ -158,7 +140,6 @@ export function useWaterfallLogic(): WaterfallState {
         type: 'Error',
         message: 'Please authorize your Webflow account before creating a Waterfall.',
       });
-      setIsLoading(false);
       return;
     }
 
@@ -168,23 +149,28 @@ export function useWaterfallLogic(): WaterfallState {
         type: 'Error',
         message: 'Please install the Waterfall code on your site before creating a Waterfall.',
       });
-      setIsLoading(false);
       return;
     }
 
-    const success = await createWaterfallElement(waterfallConfig, contentType, loadedWaterfall?.name || undefined);
-    if (!success) {
-      webflow.notify({
-        type: 'Error',
-        message: 'Failed to create Waterfall. Make sure you have an Element selected.',
-      });
-    } else {
-      webflow.notify({ type: 'Success', message: 'Created new Waterfall' });
-      const waterfallName = await loadWaterfall();
-      navigate(`/waterfall/edit/${waterfallName}`);
+    setIsLoading(true);
+    try {
+      const success = await createWaterfallElement(waterfallConfig, contentType, loadedWaterfall?.name || undefined);
+      if (!success) {
+        webflow.notify({
+          type: 'Error',
+          message: 'Failed to create Waterfall. Make sure you have an Element selected.',
+        });
+      } else {
+        webflow.notify({ type: 'Success', message: 'Created new Waterfall' });
+        const waterfallName = await loadWaterfall();
+        navigate(`/waterfall/edit/${waterfallName}`);
+      }
+    } catch (error) {
+      console.error(error);
+      webflow.notify({ type: 'Error', message: `Failed to create Waterfall: ${(error as Error).message}` });
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   }
 
   /**
@@ -211,7 +197,7 @@ export function useWaterfallLogic(): WaterfallState {
       // Takes an attribute and breaks apart the breakpoint from the baseAttr
       const { baseAttr, breakpoint } = getBaseAttr(attr.name);
 
-      let item = findWaterfallSetting(updatedProps, baseAttr);
+      const item = findWaterfallSetting(updatedProps, baseAttr);
       if (item) {
         if (breakpoint) {
           // ✅ Directly assign value in the breakpoints object
@@ -236,7 +222,6 @@ export function useWaterfallLogic(): WaterfallState {
    * Clear out all waterfall data from state
    */
   async function unloadWaterfall() {
-    setWaterfallSelected(null);
     setWaterfallConfig(null);
     setSelectedCategory(null);
     setLoadedWaterfall(null);
@@ -350,17 +335,16 @@ export function useWaterfallLogic(): WaterfallState {
                 }
               })
             );
-            // Legacy suffixes were read into their new breakpoint on load, so drop the old attribute
-            await Promise.all(
-              Object.keys(legacyBreakpoints).map((suffix) =>
-                removeAttribute(el, getBreakpointAttr(setting.attr, suffix))
-              )
-            );
           }
         })
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      await webflow.notify({
+        type: 'Error',
+        message: `${loadedWaterfall?.name ?? 'Waterfall'} could not be saved: ${(error as Error).message}`,
+      });
+      return;
     }
 
     // Update the name
@@ -385,7 +369,6 @@ export function useWaterfallLogic(): WaterfallState {
     setSelectedCategory,
     contentType,
     setContentType,
-    waterfallSelected,
     loadedWaterfall,
     isLoading,
     setIsLoading,

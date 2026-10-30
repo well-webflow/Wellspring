@@ -1,39 +1,27 @@
 import { Heading, Paragraph } from '../../../components/Typography';
 import waterfallIcon from '../../../assets/waterfall.png';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { useWebflow } from '../../../context/webflowContext';
 import Button from '../../../components/UI/Button';
-import { installWaterfall, launchWebflowAuth, NotAuthorizedError, uninstallWaterfall } from '../../../lib/api';
+import { uninstallWaterfall } from '../../../lib/api';
 import { faCheck, faCircleInfo, faLinkSlash, faLock, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import { useWaterfallInstall } from '../hooks/useWaterfallInstall';
 import HorizontalRule from '../../../components/UI/hr';
 
 export default function SetupView() {
-  const { isAuthorized, isCodeInstalled, checkAuthStatus } = useWebflow();
+  const {
+    isAuthorized,
+    isCodeInstalled,
+    checkAuthStatus,
+    isInstalling,
+    isWaitingForAuth,
+    install,
+    authorizeAndInstall,
+    cancelAuthorize,
+  } = useWaterfallInstall();
 
-  const pollingIntervalRef = useRef<number | null>(null);
-  const pollingTimeoutRef = useRef<number | null>(null);
-  const [isInstalling, setIsInstalling] = useState(false);
   const [isUninstalling, setIsUninstalling] = useState(false);
-  const [autoInstallAfterAuth, setAutoInstallAfterAuth] = useState(false);
-
-  async function handleInstall() {
-    setIsInstalling(true);
-    try {
-      await installWaterfall();
-      await webflow.notify({ type: 'Success', message: 'Waterfall installed. Publish your site to make the changes live.' });
-      await checkAuthStatus();
-    } catch (err) {
-      if (err instanceof NotAuthorizedError) {
-        await checkAuthStatus();
-        return;
-      }
-      await webflow.notify({ type: 'Error', message: (err as Error).message });
-    } finally {
-      setIsInstalling(false);
-    }
-  }
 
   async function handleUninstall() {
     const confirmed = confirm(
@@ -61,7 +49,7 @@ export default function SetupView() {
   // endpoint also removes any scripts it finds, so it's safe to reuse here)
   async function handleDisconnect() {
     const confirmed = confirm(
-      'Disconnect Wellspring from this site?\n\nThis deletes the authorization Wellspring stored for this site. To remove Wellspring\'s access completely, also uninstall the App from your Webflow site settings.'
+      "Disconnect Wellspring from this site?\n\nThis deletes the authorization Wellspring stored for this site. To remove Wellspring's access completely, also uninstall the App from your Webflow site settings."
     );
 
     if (!confirmed) return;
@@ -77,80 +65,6 @@ export default function SetupView() {
       setIsUninstalling(false);
     }
   }
-
-  async function handleAuthorizeAndInstall() {
-    setAutoInstallAfterAuth(true);
-    setIsInstalling(true);
-    await handleAuthorize();
-  }
-
-  function stopPolling() {
-    if (pollingIntervalRef.current) {
-      clearInterval(pollingIntervalRef.current);
-      pollingIntervalRef.current = null;
-    }
-    if (pollingTimeoutRef.current) {
-      clearTimeout(pollingTimeoutRef.current);
-      pollingTimeoutRef.current = null;
-    }
-  }
-
-  async function handleAuthorize() {
-    const authWindow = launchWebflowAuth();
-    await webflow.notify({ type: 'Info', message: 'Please complete authorization in the opened window.' });
-
-    // Clear any existing polling
-    stopPolling();
-
-    // Start polling for authorization status
-    pollingIntervalRef.current = window.setInterval(async () => {
-      const { authorized } = await checkAuthStatus();
-
-      // The authorization window closed without connecting: the user denied access or gave up
-      if (!authorized && authWindow?.closed) {
-        stopPolling();
-        setIsInstalling(false);
-        setAutoInstallAfterAuth(false);
-        await webflow.notify({ type: 'Info', message: 'Authorization was cancelled. Click Install to try again.' });
-      }
-    }, 2000);
-
-    // Stop polling after 2 minutes with timeout notification
-    pollingTimeoutRef.current = window.setTimeout(async () => {
-      stopPolling();
-
-      // If still not authorized after 2 minutes, reset state and notify
-      if (!isAuthorized) {
-        setIsInstalling(false);
-        setAutoInstallAfterAuth(false);
-        await webflow.notify({
-          type: 'Error',
-          message: 'Authorization timed out. Please try again and complete the authorization in the opened window.'
-        });
-      }
-    }, 120000);
-  }
-
-  // Stop polling when authorized or component unmounts, and auto-install if needed
-  useEffect(() => {
-    if (isAuthorized && pollingIntervalRef.current) {
-      stopPolling();
-
-      // Auto-install if this was triggered by handleAuthorizeAndInstall
-      if (autoInstallAfterAuth && !isCodeInstalled) {
-        setAutoInstallAfterAuth(false);
-        handleInstall();
-      } else if (autoInstallAfterAuth) {
-        // Already installed, just clear the flag
-        setAutoInstallAfterAuth(false);
-        setIsInstalling(false);
-      }
-    }
-
-    return () => {
-      stopPolling();
-    };
-  }, [isAuthorized, autoInstallAfterAuth, isCodeInstalled]);
 
   return (
     <ErrorBoundary>
@@ -196,17 +110,24 @@ export default function SetupView() {
               Checking Authorization...
             </div>
           ) : !isAuthorized ? (
-            <div className="">
-              <Button onClick={handleAuthorizeAndInstall} icon={faLock} size="sm" disabled={isInstalling}>
-                {isInstalling ? 'Installing...' : 'Install'}
+            <div className="flex flex-row gap-2">
+              {isWaitingForAuth && (
+                <Button onClick={cancelAuthorize} size="sm">
+                  Cancel
+                </Button>
+              )}
+              <Button onClick={authorizeAndInstall} icon={faLock} size="sm" disabled={isInstalling}>
+                {isWaitingForAuth ? 'Waiting for authorization...' : isInstalling ? 'Installing...' : 'Install'}
               </Button>
             </div>
           ) : !isCodeInstalled ? (
             <div className="flex flex-row gap-2">
-              <Button onClick={handleDisconnect} icon={faLinkSlash} size="sm" disabled={isInstalling || isUninstalling}>
-                {isUninstalling ? 'Disconnecting...' : 'Disconnect'}
-              </Button>
-              <Button onClick={handleInstall} size="sm" disabled={isInstalling || isUninstalling}>
+              {!isInstalling && (
+                <Button onClick={handleDisconnect} icon={faLinkSlash} size="sm" disabled={isUninstalling}>
+                  {isUninstalling ? 'Disconnecting...' : 'Disconnect'}
+                </Button>
+              )}
+              <Button onClick={install} size="sm" disabled={isInstalling || isUninstalling}>
                 {isInstalling ? 'Installing...' : 'Install Code'}
               </Button>
             </div>
@@ -221,10 +142,10 @@ export default function SetupView() {
 
         {isAuthorized === false && (
           <Paragraph size="sm" className="text-text2 mt-3">
-            Removed Wellspring's access to this site earlier? The Waterfall script may still be on your published
-            site, and Wellspring can't remove it without access. Click Install to reconnect: if the script is still
-            there, Wellspring won't add it again and will show an Uninstall button instead. Uninstall, then publish
-            your site to remove it.
+            Removed Wellspring's access to this site earlier? The Waterfall script may still be on your published site,
+            and Wellspring can't remove it without access. Click Install to reconnect: if the script is still there,
+            Wellspring won't add it again and will show an Uninstall button instead. Uninstall, then publish your site
+            to remove it.
           </Paragraph>
         )}
       </div>

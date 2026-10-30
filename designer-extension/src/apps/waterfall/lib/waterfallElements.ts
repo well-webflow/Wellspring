@@ -11,8 +11,8 @@ import {
   EL_AUTOPLAY_CONTROL,
   EL_AUTOPLAY_CONTROL_PAUSE,
   EL_AUTOPLAY_CONTROL_PLAY,
-} from 'well-waterfall';
-import { getOrCreateStyle } from '../../../utils/webflowHelpers';
+} from 'well-waterfall/attributes';
+import { getOrCreateStyle, hasAttributes, setAttribute } from '../../../utils/webflowHelpers';
 import { WaterfallCategory, WaterfallContentType } from '../waterfall';
 import { addDefaultSettings } from './waterfallHelpers';
 
@@ -89,12 +89,12 @@ export async function createNavigation() {
   navigation.setTag('div');
   navigation.setStyles([navigationClass]);
 
-  const prevButton = await navigation.prepend(webflow.elementPresets.DOM);
+  const prevButton = await navigation.append(webflow.elementPresets.DOM);
   prevButton.setTag('button');
   prevButton.setAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_PREV);
   prevButton.setStyles([prevClass]);
 
-  const nextButton = await navigation.prepend(webflow.elementPresets.DOM);
+  const nextButton = await navigation.append(webflow.elementPresets.DOM);
   nextButton.setTag('button');
   nextButton.setAttribute(ATTR_WATERFALL_ELEMENT, EL_NAVIGATION_NEXT);
   nextButton.setStyles([nextClass]);
@@ -126,12 +126,12 @@ export async function createPagination() {
   pagination.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION);
   pagination.setStyles([paginationClass]);
 
-  const paginationBulletActive = await pagination.prepend(webflow.elementPresets.DOM);
+  const paginationBulletActive = await pagination.append(webflow.elementPresets.DOM);
   paginationBulletActive.setTag('button');
   paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET_ACTIVE);
   paginationBulletActive.setStyles([paginationBulletActiveClass]);
 
-  const paginationBullet = await pagination.prepend(webflow.elementPresets.DOM);
+  const paginationBullet = await pagination.append(webflow.elementPresets.DOM);
   paginationBullet.setTag('button');
   paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET);
   paginationBullet.setStyles([paginationBulletClass]);
@@ -166,7 +166,7 @@ export async function createScrollbar() {
   scrollbar.setStyles([scrollbarClass]);
   scrollbar.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR);
 
-  const scrollbarDrag = await scrollbar.prepend(webflow.elementPresets.DOM);
+  const scrollbarDrag = await scrollbar.append(webflow.elementPresets.DOM);
   scrollbarDrag.setTag('button');
   scrollbarDrag.setStyles([scrollbarDragClass]);
   scrollbarDrag.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR_DRAG);
@@ -210,24 +210,26 @@ export async function createSlideCount() {
 
 export async function convertElementTo(elAttr: string, name: string) {
   const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(ATTR_WATERFALL_ELEMENT, elAttr);
-    webflow.notify({
-      type: 'Success',
-      message: `Element successfully converted to ${name}.`,
-    });
+  if (!el || !(await hasAttributes(el))) {
+    webflow.notify({ type: 'Error', message: `Select an element that can hold attributes to convert it to ${name}.` });
+    return;
   }
+
+  await setAttribute(el, ATTR_WATERFALL_ELEMENT, elAttr);
+  webflow.notify({
+    type: 'Success',
+    message: `Element successfully converted to ${name}.`,
+  });
 }
 
 export async function addAttributeToSelectedElement(attr: string, value: string) {
   const el = await webflow.getSelectedElement();
-  if (el?.customAttributes) {
-    el.setCustomAttribute(attr, value);
-  } else if (el?.type === 'DOM') {
-    el.setAttribute(attr, value);
-  } else {
+  if (!el || !(await hasAttributes(el))) {
+    webflow.notify({ type: 'Error', message: `Select an element that can hold attributes to add ${attr}.` });
     return false;
   }
+
+  await setAttribute(el, attr, value);
   webflow.notify({
     type: 'Success',
     message: `Added ${attr} = ${value} to the Selected Element.`,
@@ -249,13 +251,13 @@ export async function createAutoplayControl() {
   button.setStyles([buttonClass]);
   button.setAttribute(ATTR_WATERFALL_ELEMENT, EL_AUTOPLAY_CONTROL);
 
-  const pauseIcon = await button.prepend(webflow.elementPresets.DOM);
+  const pauseIcon = await button.append(webflow.elementPresets.DOM);
   pauseIcon.setTag('div');
   pauseIcon.setStyles([pauseIconClass]);
   pauseIcon.setAttribute(ATTR_WATERFALL_ELEMENT, EL_AUTOPLAY_CONTROL_PAUSE);
   pauseIcon.setTextContent('⏸');
 
-  const playIcon = await button.prepend(webflow.elementPresets.DOM);
+  const playIcon = await button.append(webflow.elementPresets.DOM);
   playIcon.setTag('div');
   playIcon.setStyles([playIconClass]);
   playIcon.setAttribute(ATTR_WATERFALL_ELEMENT, EL_AUTOPLAY_CONTROL_PLAY);

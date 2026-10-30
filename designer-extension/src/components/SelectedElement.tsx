@@ -25,7 +25,6 @@ export default function SelectedElement({ classNames }: { classNames?: string })
   }
 
   let typeText = elementSelected.type.toString();
-  console.log(elementSelected);
   if (elementSelected.type === 'Block') typeText = 'Div Block';
 
   return (

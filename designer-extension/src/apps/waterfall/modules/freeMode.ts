@@ -9,10 +9,10 @@ import {
   ATTR_FREE_MODE_MOMENTUM_RATIO,
   ATTR_FREE_MODE_MOMENTUM_VELOCITY_RATIO,
   ATTR_FREE_MODE_STICKY,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function freemodeCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Free Mode',
     id: 'free-mode',
     icon: faRoadSpikes,

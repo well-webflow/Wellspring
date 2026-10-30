@@ -3,14 +3,7 @@ import { cors } from 'hono/cors';
 import type { AppEnv } from './types';
 import { requireDesignerAuth } from './auth';
 import { getToken, saveInstall, consumeState, deleteInstall } from './db';
-import {
-	ensureScriptRegistered,
-	applyScript,
-	getAppliedScripts,
-	WebflowError,
-	TokenRevokedError,
-	removeScriptEverywhere,
-} from './webflow';
+import { ensureScriptRegistered, applyScript, getAppliedScripts, WebflowError, TokenRevokedError, removeScriptEverywhere } from './webflow';
 
 interface TokenResponse {
 	access_token: string;
@@ -21,21 +14,15 @@ interface SitesResponse {
 	sites: Array<{ id: string; displayName: string }>;
 }
 
-const SCOPES = [
-	'sites:read',
-	'pages:read',
-	'authorized_user:read',
-	'custom_code:read',
-	'custom_code:write',
-].join(' ');
+const SCOPES = ['sites:read', 'pages:read', 'authorized_user:read', 'custom_code:read', 'custom_code:write'].join(' ');
 
 const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
-	version: '1.3.1',
+	version: '1.4.1',
 	// Exact file, not the bare package URL: jsDelivr generates that response dynamically, so SRI can't be pinned to it.
-	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.3.1/dist/well-waterfall.umd.js',
-	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.3.1 tarball.
-	integrityHash: 'sha256-5Y92BFkrm06vQ+A7OpB00tNuyaKVHNko3KAHqXIAj2I=',
+	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.4.1/dist/well-waterfall.umd.js',
+	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.4.1 tarball.
+	integrityHash: 'sha256-6MYPnG2WuTzqGvbhzcdfW2i/ZCJpT8BfAyUCFIo4RWU=',
 	location: 'footer' as const,
 };
 
@@ -141,7 +128,10 @@ app.post('/sites/:siteId/uninstall', async (c) => {
 		return c.json({
 			ok: true,
 			scriptsRemoved,
-			message: scriptsRemoved > 0 ? 'Waterfall uninstalled. Publish your site to make the changes live.' : 'Waterfall was not installed on this site.',
+			message:
+				scriptsRemoved > 0
+					? 'Waterfall uninstalled. Publish your site to make the changes live.'
+					: 'Waterfall was not installed on this site.',
 		});
 	} catch (err) {
 		// If token was revoked (401), just clean up the database
@@ -224,7 +214,10 @@ app.get('/oauth/callback', async (c) => {
 	}
 	if (!(await consumeState(c.env, state))) {
 		return c.html(
-			authPage('Authorization expired', 'This authorization link has expired or was already used. Close this window and start again from the Wellspring App.'),
+			authPage(
+				'Authorization expired',
+				'This authorization link has expired or was already used. Close this window and start again from the Wellspring App.',
+			),
 			400,
 		);
 	}
@@ -263,9 +256,7 @@ app.get('/oauth/callback', async (c) => {
 		await saveInstall(c.env, { siteId: site.id, accessToken: access_token, scopes: SCOPES });
 	}
 
-	return c.html(
-		authPage('Wellspring connected', `Connected to ${sites.length} site(s). This window will close automatically.`),
-	);
+	return c.html(authPage('Wellspring connected', `Connected to ${sites.length} site(s). This window will close automatically.`));
 });
 
 app.onError((err, c) => {

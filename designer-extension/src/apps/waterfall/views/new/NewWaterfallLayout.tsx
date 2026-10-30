@@ -5,7 +5,7 @@ import { Toolbar } from '../../../../components/UI/Toolbar';
 import { useWebflow } from '../../../../context/webflowContext';
 import Tooltip from '../../../../components/UI/Tooltip';
 import { Input } from '../../../../components/UI/Input';
-import { ATTR_WATERFALL } from 'well-waterfall';
+import { ATTR_WATERFALL } from 'well-waterfall/attributes';
 import BreakpointSelector from '../../components/BreakpointSelector';
 
 export default function NewWaterfallLayout() {

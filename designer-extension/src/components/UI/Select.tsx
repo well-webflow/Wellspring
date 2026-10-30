@@ -13,7 +13,7 @@ export function Select({
   ...props
 }: SelectProps) {
   // Get the display value - either the controlled value or the first option
-  const displayValue = value !== undefined ? String(value) : (options?.[0] || '');
+  const displayValue = value !== undefined ? String(value) : options?.[0] || '';
 
   const { width, measureRef, targetRef } = useAutoSize({
     enabled: autoSize,
@@ -26,7 +26,6 @@ export function Select({
     clsx({
       'w-55': !autoSize,
     }),
-    autoSize,
     height,
     className
   );

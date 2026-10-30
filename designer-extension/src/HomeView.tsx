@@ -37,24 +37,6 @@ export default function HomeView() {
                     </div>
                   </Card>
                 </Link>
-                {/* <Card size="sm" className="flex items-center gap-3" disabled>
-                  <img src={petalIcon} alt="Petal App" className="rounded-sm h-12 w-12" />
-                  <div className="">
-                    <Heading level={5}>Petal</Heading>
-                    <Paragraph size="sm" className="text-text2 mb-0">
-                      Tabs, Accordions, Dropdowns
-                    </Paragraph>
-                  </div>
-                </Card>
-                <Card size="sm" className="flex items-center gap-3" disabled>
-                  <img src={chamomileIcon} alt="Chamomile App" className="rounded-sm h-12 w-12" />
-                  <div className="">
-                    <Heading level={5}>Chamomile</Heading>
-                    <Paragraph size="sm" className="text-text2 mb-0">
-                      Validate Form inputs
-                    </Paragraph>
-                  </div>
-                </Card> */}
                 <Card
                   disabled
                   size="sm"

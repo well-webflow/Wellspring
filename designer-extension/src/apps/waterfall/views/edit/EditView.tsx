@@ -22,11 +22,8 @@ export default function EditView() {
         if (isCancelled) return;
 
         if (element) {
-          console.log('Found waterfall element:', element);
           webflow.setSelectedElement(element);
           loadWaterfall();
-        } else {
-          console.log('Waterfall not found');
         }
       });
     }

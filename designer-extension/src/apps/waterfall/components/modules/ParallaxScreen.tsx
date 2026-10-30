@@ -6,7 +6,7 @@ import {
   ATTR_PARALLAX_SCALE,
   ATTR_PARALLAX_X,
   ATTR_PARALLAX_Y,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 import { addAttributeToSelectedElement } from '../../lib/waterfallElements';
 import { Caption } from '../../../../components/Typography';
 import { WaterfallSetting } from '../../waterfall';

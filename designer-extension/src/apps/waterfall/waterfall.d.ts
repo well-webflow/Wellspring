@@ -83,9 +83,8 @@ interface WaterfallState {
   searchForWaterfalls: () => void;
   getWaterfallName: (el: AnyElement) => Promise<string | null>;
   findWaterfallByName: (name: string) => Promise<AnyElement | null>;
-  waterfallSelected: string | null;
-  isLoading: Boolean;
-  setIsLoading: (value: Boolean) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
   activeBreakpoint: Breakpoints | null;
   setActiveBreakpoint: (value: Breakpoints | null) => void;
 }

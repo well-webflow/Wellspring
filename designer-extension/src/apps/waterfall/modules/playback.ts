@@ -16,11 +16,11 @@ import {
   ATTR_SPEED,
   ATTR_STOP_ON_LAST_SLIDE,
   ATTR_WAIT_FOR_TRANSITION,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 import AutoplayControlScreen from '../components/modules/AutoplayControlScreen';
 
 export default function playbackCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Playback',
     id: 'playback',
     icon: faPlay,

@@ -3,7 +3,7 @@ import { WaterfallCategory } from '../waterfall';
 import SlideCountScreen from '../components/modules/SlideCountScreen';
 
 export default function slideCountCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Slide Count',
     id: 'slide-count',
     icon: faHashtag,

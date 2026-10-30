@@ -18,11 +18,11 @@ import {
   ATTR_SLIDES_PER_VIEW,
   ATTR_SPACE_BETWEEN,
   ATTR_WIDTH,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 import { createBreakpoints } from '../../../utils/breakpoints';
 
 export default function layoutConfig() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Layout',
     id: 'layout',
     icon: faTable,

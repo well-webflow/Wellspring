@@ -47,7 +47,7 @@ export function Input({
     )
   );
 
-  const formFieldClasses = getFormFieldClasses(containerClasses, autoSize, height);
+  const formFieldClasses = getFormFieldClasses(containerClasses, height);
   const containerStyle = autoSize ? { width: `${width}px` } : undefined;
 
   return (

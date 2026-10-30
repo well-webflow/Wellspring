@@ -5,11 +5,10 @@ import { Tab } from '../../../components/Tabs';
 import { faCirclePlus, faGear, faPencil, faCheck, faLock, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { WellflowHeader } from '../../../HomeView';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useScrollRestoration } from '../../../hooks/useScrollRestoration';
-import { useWebflow } from '../../../context/webflowContext';
 import Button from '../../../components/UI/Button';
-import { installWaterfall, launchWebflowAuth, NotAuthorizedError } from '../../../lib/api';
+import { useWaterfallInstall } from '../hooks/useWaterfallInstall';
 
 export default function WaterfallWrapper() {
   useEffect(() => {
@@ -77,58 +76,15 @@ function WaterfallSidebar() {
 }
 
 export function AuthorizationStatus() {
-  const { isAuthorized, isCodeInstalled, checkAuthStatus } = useWebflow();
-  const pollingIntervalRef = useRef<number | null>(null);
-
-  async function handleSetup() {
-    try {
-      await installWaterfall();
-      await webflow.notify({ type: 'Success', message: 'Waterfall installed. Publish your site to make the changes live.' });
-      await checkAuthStatus();
-    } catch (err) {
-      if (err instanceof NotAuthorizedError) {
-        await checkAuthStatus();
-        return;
-      }
-      await webflow.notify({ type: 'Error', message: (err as Error).message });
-    }
-  }
-
-  async function handleAuthorize() {
-    launchWebflowAuth();
-    await webflow.notify({ type: 'Info', message: 'Please complete authorization in the opened window.' });
-
-    // Start polling for authorization status
-    if (pollingIntervalRef.current) {
-      clearInterval(pollingIntervalRef.current);
-    }
-
-    pollingIntervalRef.current = window.setInterval(async () => {
-      await checkAuthStatus();
-    }, 2000);
-
-    // Stop polling after 2 minutes
-    setTimeout(() => {
-      if (pollingIntervalRef.current) {
-        clearInterval(pollingIntervalRef.current);
-        pollingIntervalRef.current = null;
-      }
-    }, 120000);
-  }
-
-  // Stop polling when authorized or component unmounts
-  useEffect(() => {
-    if (isAuthorized && pollingIntervalRef.current) {
-      clearInterval(pollingIntervalRef.current);
-      pollingIntervalRef.current = null;
-    }
-
-    return () => {
-      if (pollingIntervalRef.current) {
-        clearInterval(pollingIntervalRef.current);
-      }
-    };
-  }, [isAuthorized]);
+  const {
+    isAuthorized,
+    isCodeInstalled,
+    isInstalling,
+    isWaitingForAuth,
+    install,
+    authorizeAndInstall,
+    cancelAuthorize,
+  } = useWaterfallInstall();
 
   return (
     <>
@@ -138,12 +94,19 @@ export function AuthorizationStatus() {
           Checking...
         </div>
       ) : !isAuthorized ? (
-        <Button onClick={handleAuthorize} icon={faLock} size="sm">
-          Authorize
-        </Button>
+        <div className="flex flex-row gap-2">
+          {isWaitingForAuth && (
+            <Button onClick={cancelAuthorize} size="sm">
+              Cancel
+            </Button>
+          )}
+          <Button onClick={authorizeAndInstall} icon={faLock} size="sm" disabled={isInstalling}>
+            {isWaitingForAuth ? 'Waiting for authorization...' : 'Install'}
+          </Button>
+        </div>
       ) : !isCodeInstalled ? (
-        <Button onClick={handleSetup} size="sm">
-          Install Code
+        <Button onClick={install} size="sm" disabled={isInstalling}>
+          {isInstalling ? 'Installing...' : 'Install Code'}
         </Button>
       ) : (
         <div className="flex items-center gap-2 text-xs text-green-600">

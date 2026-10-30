@@ -11,10 +11,10 @@ import {
   ATTR_NAVIGATION_HIDE_ON_CLICK,
   ATTR_NAVIGATION_LOCK_CLASS,
   ATTR_NAVIGATION_NAVIGATION_DISABLED_CLASS,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function navigationCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Navigation',
     id: 'nav',
     icon: faArrowsLeftRight,

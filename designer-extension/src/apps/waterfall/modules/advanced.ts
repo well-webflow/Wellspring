@@ -31,10 +31,10 @@ import {
   ATTR_USER_AGENT,
   ATTR_VIRTUAL_TRANSLATE,
   ATTR_WRAPPER_CLASS,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function advancedCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Advanced',
     id: 'other-advanced',
     icon: faLock,

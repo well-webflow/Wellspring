@@ -31,10 +31,10 @@ import {
   ATTR_TOUCH_RELEASE_ON_EDGES,
   ATTR_TOUCH_START_FORCE_PREVENT_DEFAULT,
   ATTR_TOUCH_START_PREVENT_DEFAULT,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function touchClickCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Touch & Click',
     id: 'touch',
     icon: faICursor,

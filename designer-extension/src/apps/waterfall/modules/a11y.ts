@@ -16,10 +16,10 @@ import {
   ATTR_A11Y_SCROLL_ON_FOCUS,
   ATTR_A11Y_SLIDE_LABEL_MESSAGE,
   ATTR_A11Y_SLIDE_ROLE,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function a11yConfig() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Accessibility (a11y)',
     id: 'accessibility',
     description: 'Set a11y messages, roles, and tags',

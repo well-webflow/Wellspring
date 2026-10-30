@@ -6,10 +6,10 @@ import {
   ATTR_THUMBS_MULTIPLE_ACTIVE_THUMBS,
   ATTR_THUMBS,
   ATTR_THUMBS_SLIDE_THUMB_ACTIVE_CLASS,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function thumbsCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Thumbs',
     id: 'thumbs',
     icon: faFileImage,

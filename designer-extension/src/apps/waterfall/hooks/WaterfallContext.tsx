@@ -39,7 +39,6 @@ export const useWaterfall = (): WaterfallState => {
         searchForWaterfalls: () => {},
         getWaterfallName: async () => null,
         findWaterfallByName: async () => null,
-        waterfallSelected: null,
         isLoading: false,
         setIsLoading: () => {},
         activeBreakpoint: null,

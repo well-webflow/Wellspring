@@ -12,7 +12,7 @@ import {
   ATTR_MANIPULATION_ADD_INDEX,
   ATTR_MANIPULATION_REMOVE_SLIDE,
   ATTR_MANIPULATION_REMOVE_INDEX,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 import SelectedElement from '../../../../components/SelectedElement';
 
 type ManipulationMethod = 'append' | 'prepend' | 'add' | 'remove';
@@ -58,7 +58,7 @@ export default function ManipulationScreen() {
   }
 
   function onMethodChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    let method = e.target.value as ManipulationMethod;
+    const method = e.target.value as ManipulationMethod;
     setManipulationMethod(method);
   }
 

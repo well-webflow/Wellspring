@@ -20,10 +20,10 @@ import {
   ATTR_FLIP_LIMIT_ROTATION,
   ATTR_FLIP_SLIDE_SHADOWS,
   ATTR_PARALLAX_ENABLED,
-} from 'well-waterfall';
+} from 'well-waterfall/attributes';
 
 export default function effectCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Effects & Parallax',
     id: 'effect',
     icon: faBolt,

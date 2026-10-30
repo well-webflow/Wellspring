@@ -3,7 +3,7 @@ import ManipulationScreen from '../components/modules/ManipulationScreen';
 import { WaterfallCategory } from '../waterfall';
 
 export default function manipulationCategory() {
-  let config: WaterfallCategory = {
+  const config: WaterfallCategory = {
     name: 'Manipulation',
     id: 'manipulation',
     summary: 'Add, remove, insert slides at runtime',
