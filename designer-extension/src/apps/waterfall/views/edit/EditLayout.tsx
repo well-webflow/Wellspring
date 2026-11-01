@@ -26,8 +26,22 @@ export default function EditLayout() {
         />
         <BreakpointSelector />
         <div className="flex gap-2">
-          <Button size="sm" icon={faArrowsRotate} onClick={loadWaterfall} color="secondary"></Button>
-          <Button size="sm" icon={faSave} onClick={saveWaterfall} color="primary"></Button>
+          <Button
+            size="sm"
+            icon={faArrowsRotate}
+            onClick={loadWaterfall}
+            color="secondary"
+            tooltip="Reload settings from the canvas"
+            tooltipAlign="end"
+          />
+          <Button
+            size="sm"
+            icon={faSave}
+            onClick={saveWaterfall}
+            color="primary"
+            tooltip="Save changes"
+            tooltipAlign="end"
+          />
         </div>
       </Toolbar>
       <div className="p-3">

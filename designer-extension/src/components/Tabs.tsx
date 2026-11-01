@@ -12,6 +12,8 @@ type TabProps = {
   children?: React.ReactNode;
   icon?: IconProp;
   className?: string;
+  /** 'span' when the tab sits inside a link, which is then the interactive element */
+  as?: 'button' | 'span';
 };
 
 type TabsProps = {
@@ -20,7 +22,7 @@ type TabsProps = {
   children: React.ReactNode;
 };
 
-export const Tab = ({ label, icon, active, onClick, className }: TabProps) => {
+export const Tab = ({ label, icon, active, onClick, className, as = 'button' }: TabProps) => {
   const tabStyles = twMerge(
     clsx(
       'cursor-pointer py-1 px-3 rounded-sm text-base flex flex-row items-center',
@@ -29,10 +31,18 @@ export const Tab = ({ label, icon, active, onClick, className }: TabProps) => {
     className
   );
 
-  return (
-    <button onClick={onClick} className={tabStyles}>
+  const content = (
+    <>
       {icon && <FontAwesomeIcon icon={icon} className="mr-2" />}
       {label}
+    </>
+  );
+
+  if (as === 'span') return <span className={tabStyles}>{content}</span>;
+
+  return (
+    <button type="button" onClick={onClick} className={tabStyles} aria-pressed={active}>
+      {content}
     </button>
   );
 };

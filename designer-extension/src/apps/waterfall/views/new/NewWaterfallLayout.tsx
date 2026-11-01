@@ -3,7 +3,6 @@ import Button from '../../../../components/UI/Button';
 import { useWaterfall } from '../../hooks/WaterfallContext';
 import { Toolbar } from '../../../../components/UI/Toolbar';
 import { useWebflow } from '../../../../context/webflowContext';
-import Tooltip from '../../../../components/UI/Tooltip';
 import { Input } from '../../../../components/UI/Input';
 import { ATTR_WATERFALL } from 'well-waterfall/attributes';
 import BreakpointSelector from '../../components/BreakpointSelector';
@@ -17,7 +16,7 @@ export default function NewWaterfallLayout() {
   };
 
   const hasName = loadedWaterfall?.name && loadedWaterfall.name.trim() !== '';
-  const canCreate = elementSelected?.children && hasName;
+  const canCreate = Boolean(elementSelected?.children && hasName);
 
   return (
     <div>
@@ -31,34 +30,20 @@ export default function NewWaterfallLayout() {
           required
         />
         <BreakpointSelector />
-        {!canCreate ? (
-          <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              color="secondary"
-              disabled
-              disabledTooltip={
-                !elementSelected?.children
-                  ? 'Select an Element to create a Waterfall'
-                  : 'Enter a waterfall name to continue'
-              }
-            >
-              <Tooltip
-                content={
-                  !elementSelected?.children
-                    ? 'Select an Element to create a Waterfall'
-                    : 'Enter a waterfall name to continue'
-                }
-                position="left"
-              ></Tooltip>
-              Create
-            </Button>
-          </div>
-        ) : (
-          <Button size="sm" color="primary" onClick={createWaterfall}>
-            Create
-          </Button>
-        )}
+        <Button
+          size="sm"
+          color={canCreate ? 'primary' : 'secondary'}
+          onClick={createWaterfall}
+          disabled={!canCreate}
+          disabledTooltip={
+            !elementSelected?.children
+              ? 'Select an element to create a Waterfall'
+              : 'Enter a Waterfall name to continue'
+          }
+          tooltipAlign="end"
+        >
+          Create
+        </Button>
       </Toolbar>
       <div className="p-3">
         <Outlet />

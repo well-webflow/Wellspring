@@ -50,9 +50,14 @@ function WaterfallSidebar() {
   return (
     <div className="flex flex-col h-full border-b border-r border-border1">
       <div className="flex flex-col gap-2 px-3 py-4">
-        <NavLink to="/waterfall" end className="w-full">
+        <NavLink
+          to="/waterfall"
+          end
+          className="w-full rounded-sm focus-visible:outline-2 focus-visible:outline-primary"
+        >
           {({ isActive }) => (
             <Tab
+              as="span"
               label="New"
               icon={faCirclePlus}
               active={isActive || !!isWaterfallRoot || !!isNewMatch}
@@ -61,14 +66,28 @@ function WaterfallSidebar() {
           )}
         </NavLink>
 
-        <NavLink to="/waterfall/select" className="w-full">
+        <NavLink
+          to="/waterfall/select"
+          className="w-full rounded-sm focus-visible:outline-2 focus-visible:outline-primary"
+        >
           {({ isActive }) => (
-            <Tab label="Edit" icon={faPencil} active={isActive || !!isEditMatch} className="w-full text-left" />
+            <Tab
+              as="span"
+              label="Edit"
+              icon={faPencil}
+              active={isActive || !!isEditMatch}
+              className="w-full text-left"
+            />
           )}
         </NavLink>
 
-        <NavLink to="/waterfall/setup" className="w-full">
-          {({ isActive }) => <Tab label="Setup" icon={faGear} active={isActive} className="w-full text-left" />}
+        <NavLink
+          to="/waterfall/setup"
+          className="w-full rounded-sm focus-visible:outline-2 focus-visible:outline-primary"
+        >
+          {({ isActive }) => (
+            <Tab as="span" label="Setup" icon={faGear} active={isActive} className="w-full text-left" />
+          )}
         </NavLink>
       </div>
     </div>

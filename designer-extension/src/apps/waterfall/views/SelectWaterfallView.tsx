@@ -29,7 +29,13 @@ export default function SelectWaterfallView() {
       <div>
         <Toolbar>
           <Heading level={4}>Select a Waterfall to Edit</Heading>
-          <Button size="sm" onClick={searchForWaterfalls} icon={faRotateRight}></Button>
+          <Button
+            size="sm"
+            onClick={searchForWaterfalls}
+            icon={faRotateRight}
+            tooltip="Find Waterfalls on this page"
+            tooltipAlign="end"
+          />
         </Toolbar>
         <div className="p-3">
           <div className="flex flex-col gap-2">
@@ -41,8 +47,8 @@ export default function SelectWaterfallView() {
               ))
             ) : (
               <Card>
-                No Waterfalls found on this page. If your waterfall is inside a Component, double-click into the Component
-                and click refresh.
+                No Waterfalls found on this page. If your waterfall is inside a Component, double-click into the
+                Component and click refresh.
               </Card>
             )}
           </div>

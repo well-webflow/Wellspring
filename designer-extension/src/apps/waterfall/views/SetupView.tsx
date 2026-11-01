@@ -104,12 +104,8 @@ export default function SetupView() {
             )}
           </div>
 
-          {isAuthorized === null ? (
-            <div className="flex items-center gap-2 text-sm text-text2 bg-background5 p-3 rounded">
-              <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
-              Checking Authorization...
-            </div>
-          ) : !isAuthorized ? (
+          {/* The status badge shows the spinner while checking, so there's nothing to offer here yet */}
+          {isAuthorized === null ? null : !isAuthorized ? (
             <div className="flex flex-row gap-2">
               {isWaitingForAuth && (
                 <Button onClick={cancelAuthorize} size="sm">

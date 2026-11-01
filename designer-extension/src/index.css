@@ -57,3 +57,50 @@
   font-family: 'Erstoria';
   src: url('../fonts/Erstoria.woff2');
 }
+
+/*
+ * Hover and focus label for any element with a data-tooltip attribute (see Button's tooltip prop).
+ * The label only exists while shown, so it never adds hidden overflow to scroll containers.
+ */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  translate: -50% 0;
+  z-index: 50;
+  width: max-content;
+  max-width: 220px;
+  padding: 4px 8px;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.4);
+  background: #111827;
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: normal;
+  line-height: 1.3;
+  text-align: left;
+  white-space: normal;
+  pointer-events: none;
+  animation: tooltip-in 120ms ease-out 300ms both;
+}
+
+/* Right-align the label for buttons at the right edge so it stays inside the extension */
+[data-tooltip-align='end']:hover::after,
+[data-tooltip-align='end']:focus-visible::after {
+  left: auto;
+  right: 0;
+  translate: none;
+}
+
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+  }
+}

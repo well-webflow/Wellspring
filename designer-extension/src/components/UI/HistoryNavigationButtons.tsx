@@ -53,6 +53,8 @@ export default function HistoryNavigationButtons({ minPath }: HistoryNavigationB
     <div className="flex gap-2">
       <button
         onClick={handleBack}
+        aria-label="Back"
+        data-tooltip="Back"
         disabled={!canGoBack}
         className={`text-lg flex flex-col justify-center ${
           canGoBack
@@ -64,6 +66,8 @@ export default function HistoryNavigationButtons({ minPath }: HistoryNavigationB
       </button>
       <button
         onClick={handleForward}
+        aria-label="Forward"
+        data-tooltip="Forward"
         disabled={!canGoForward}
         className={`text-lg flex flex-col justify-center ${
           canGoForward

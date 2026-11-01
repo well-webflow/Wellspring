@@ -16,7 +16,7 @@ export default function HomeView() {
 
   useEffect(() => {
     webflow.setExtensionSize('comfortable');
-  });
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -82,9 +82,9 @@ export default function HomeView() {
                 Release Notes
               </Heading>
               <Heading level={5}>1.0.0</Heading>
-              <li className="list-none">
-                <ul className="text-sm text-text2">- Initial Release</ul>
-              </li>
+              <ul className="list-none text-sm text-text2">
+                <li>- Initial Release</li>
+              </ul>
             </Tab>
           </Tabs>
         </div>

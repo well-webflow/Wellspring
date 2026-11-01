@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,6 +11,7 @@ interface TooltipProps {
 
 function Tooltip({ content, defaultValue, attrName, position = 'right' }: TooltipProps) {
   const [visible, setVisible] = useState(false);
+  const tooltipId = useId();
 
   const positionClasses = {
     right: 'left-5 top-1/2 transform -translate-y-1/2 ml-2',
@@ -33,25 +34,38 @@ function Tooltip({ content, defaultValue, attrName, position = 'right' }: Toolti
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
-      <FontAwesomeIcon icon={faQuestionCircle} className="text-gray-500 cursor-pointer" />
-      {visible && (
-        <div
-          className={`absolute z-10 bg-gray-900 text-white text-sm py-2 px-2 rounded-sm shadow-lg whitespace-normal max-w-xs w-max transition-opacity duration-200 ease-in-out opacity-100 ${positionClasses[position]}`}
-        >
-          {/* Triangle */}
-          <div className={`absolute ${arrowClasses[position]}`} />
-          {content}
-          {(attrName || defaultValue) && <hr className="my-2" />}
-          <div className="flex flex-row gap-2">
-            {attrName && <div className="text-primary">{attrName}</div>}
-            {defaultValue && (
-              <div>
-                <b>Default:</b> <em>{defaultValue}</em>
-              </div>
-            )}
-          </div>
+      {/* A button so keyboard users can reach the tooltip too: focus shows it, Escape or blur hides it */}
+      <button
+        type="button"
+        aria-label="More info"
+        aria-describedby={tooltipId}
+        className="flex rounded-full text-gray-500 cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+        onFocus={() => setVisible(true)}
+        onBlur={() => setVisible(false)}
+        onKeyDown={(e) => e.key === 'Escape' && setVisible(false)}
+      >
+        <FontAwesomeIcon icon={faQuestionCircle} />
+      </button>
+      {/* Always rendered (hidden when closed) so aria-describedby can always find the text */}
+      <div
+        id={tooltipId}
+        role="tooltip"
+        hidden={!visible}
+        className={`absolute z-10 bg-gray-900 text-white text-sm py-2 px-2 rounded-sm shadow-lg whitespace-normal max-w-xs w-max transition-opacity duration-200 ease-in-out opacity-100 ${positionClasses[position]}`}
+      >
+        {/* Triangle */}
+        <div className={`absolute ${arrowClasses[position]}`} />
+        {content}
+        {(attrName || defaultValue) && <hr className="my-2" />}
+        <div className="flex flex-row gap-2">
+          {attrName && <div className="text-primary">{attrName}</div>}
+          {defaultValue && (
+            <div>
+              <b>Default:</b> <em>{defaultValue}</em>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
