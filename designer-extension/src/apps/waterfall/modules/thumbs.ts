@@ -2,9 +2,9 @@ import { faFileImage } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
 import {
   ATTR_THUMBS_AUTO_SCROLL_OFFSET,
-  ATTR_THUMBS_CONTAINER_CLASS,
+  ATTR_THUMBS_THUMBS_CONTAINER_CLASS,
   ATTR_THUMBS_MULTIPLE_ACTIVE_THUMBS,
-  ATTR_THUMBS,
+  ATTR_THUMBS_SWIPER,
   ATTR_THUMBS_SLIDE_THUMB_ACTIVE_CLASS,
 } from 'well-waterfall/attributes';
 
@@ -18,7 +18,7 @@ export default function thumbsCategory() {
     items: [
       {
         name: 'Thumbs Swiper',
-        attr: ATTR_THUMBS,
+        attr: ATTR_THUMBS_SWIPER,
         swiperDefault: '--',
         type: 'instance',
         description: 'Select the Waterfall this slider will use as Thumbnails',
@@ -53,7 +53,7 @@ export default function thumbsCategory() {
       },
       {
         name: 'Thumbs Container Class',
-        attr: ATTR_THUMBS_CONTAINER_CLASS,
+        attr: ATTR_THUMBS_THUMBS_CONTAINER_CLASS,
         swiperDefault: 'swiper-thumbs',
         description: 'Additional class that will be added to thumbs swiper',
         value: '',

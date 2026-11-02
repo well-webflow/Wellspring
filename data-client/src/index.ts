@@ -18,11 +18,11 @@ const SCOPES = ['sites:read', 'pages:read', 'authorized_user:read', 'custom_code
 
 const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
-	version: '1.4.2',
+	version: '1.5.0',
 	// Exact file, not the bare package URL: jsDelivr generates that response dynamically, so SRI can't be pinned to it.
-	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.4.2/dist/well-waterfall.umd.js',
-	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.4.2 tarball.
-	integrityHash: 'sha256-+iWoxvHBWjZFifcF/jB2Su3ptXG5s3Y8HA7SExXI0L8=',
+	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.5.0/dist/well-waterfall.umd.js',
+	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.5.0 tarball.
+	integrityHash: 'sha256-DRnouEVJWIJgAeSNKYruB8HK/k3W5nr1Y6A5upIDnnI=',
 	location: 'footer' as const,
 };
 

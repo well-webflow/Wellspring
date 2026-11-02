@@ -101,6 +101,47 @@ describe('status', () => {
 	});
 });
 
+describe('install', () => {
+	it('recovers when the version turns out to be registered already', async () => {
+		const registered = { id: 'well_waterfall', displayName: 'Well Waterfall', version: '1.5.0' };
+		resolveOk();
+
+		// Nothing registered on the first read...
+		webflow().intercept({ path: `/v2/sites/${SITE}/registered_scripts` }).reply(200, { registeredScripts: [] });
+		// ...but Webflow rejects the registration, and doesn't document a status for "already there"
+		webflow()
+			.intercept({ path: `/v2/sites/${SITE}/registered_scripts/hosted`, method: 'POST' })
+			.reply(400, 'already registered');
+		// Re-reading finds it, so the install carries on
+		webflow()
+			.intercept({ path: `/v2/sites/${SITE}/registered_scripts` })
+			.reply(200, { registeredScripts: [registered] });
+
+		webflow().intercept({ path: `/v2/sites/${SITE}/custom_code` }).reply(200, { scripts: [] });
+		webflow().intercept({ path: `/v2/sites/${SITE}/custom_code`, method: 'PUT' }).reply(200, {});
+		webflow()
+			.intercept({ path: `/v2/sites/${SITE}/custom_code` })
+			.reply(200, { scripts: [{ id: 'well_waterfall', location: 'footer', version: '1.5.0' }] });
+
+		const res = await request(`/sites/${SITE}/install-waterfall`, 'POST');
+
+		expect(await res.json()).toMatchObject({ ok: true, scriptId: 'well_waterfall' });
+	});
+
+	it('still fails when registration fails and nothing is there', async () => {
+		resolveOk();
+		webflow().intercept({ path: `/v2/sites/${SITE}/registered_scripts` }).reply(200, { registeredScripts: [] });
+		webflow()
+			.intercept({ path: `/v2/sites/${SITE}/registered_scripts/hosted`, method: 'POST' })
+			.reply(400, 'bad integrity hash');
+		webflow().intercept({ path: `/v2/sites/${SITE}/registered_scripts` }).reply(200, { registeredScripts: [] });
+
+		const res = await request(`/sites/${SITE}/install-waterfall`, 'POST');
+
+		expect(res.status).toBe(502);
+	});
+});
+
 describe('uninstall', () => {
 	it('stops calling pages after a 401', async () => {
 		resolveOk();

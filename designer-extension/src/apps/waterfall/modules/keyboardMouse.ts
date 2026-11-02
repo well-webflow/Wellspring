@@ -6,15 +6,15 @@ import {
   ATTR_KEYBOARD_PAGE_UP_DOWN,
 } from 'well-waterfall/attributes';
 import {
-  ATTR_MOUSE_ENABLED,
-  ATTR_MOUSE_EVENTS_TARGET,
-  ATTR_MOUSE_FORCE_TO_AXIS,
-  ATTR_MOUSE_INVERT,
-  ATTR_MOUSE_NO_MOUSE_WHEEL_CLASS,
-  ATTR_MOUSE_RELEASE_ON_EDGES,
-  ATTR_MOUSE_SENSITIVITY,
-  ATTR_MOUSE_THRESHOLD_DELTA,
-  ATTR_MOUSE_THRESHOLD_TIME,
+  ATTR_MOUSEWHEEL_ENABLED,
+  ATTR_MOUSEWHEEL_EVENTS_TARGET,
+  ATTR_MOUSEWHEEL_FORCE_TO_AXIS,
+  ATTR_MOUSEWHEEL_INVERT,
+  ATTR_MOUSEWHEEL_NO_MOUSEWHEEL_CLASS,
+  ATTR_MOUSEWHEEL_RELEASE_ON_EDGES,
+  ATTR_MOUSEWHEEL_SENSITIVITY,
+  ATTR_MOUSEWHEEL_THRESHOLD_DELTA,
+  ATTR_MOUSEWHEEL_THRESHOLD_TIME,
 } from 'well-waterfall/attributes';
 
 export default function keyboardMouseCategory() {
@@ -64,7 +64,7 @@ export default function keyboardMouseCategory() {
         items: [
           {
             name: 'Mouse Enabled',
-            attr: ATTR_MOUSE_ENABLED,
+            attr: ATTR_MOUSEWHEEL_ENABLED,
             swiperDefault: 'false',
             description: 'Set to true to enable mousewheel control',
             type: 'boolean',
@@ -72,7 +72,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'Events Target',
-            attr: ATTR_MOUSE_EVENTS_TARGET,
+            attr: ATTR_MOUSEWHEEL_EVENTS_TARGET,
             swiperDefault: 'container',
             description:
               'String with CSS selector or HTML element of the container accepting mousewheel events. By default it is swiper',
@@ -82,7 +82,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'Force to Axis',
-            attr: ATTR_MOUSE_FORCE_TO_AXIS,
+            attr: ATTR_MOUSEWHEEL_FORCE_TO_AXIS,
             swiperDefault: 'false',
             description:
               'Set to true to force mousewheel swipes to axis. So in horizontal mode mousewheel will work only with horizontal mousewheel scrolling, and only with vertical scrolling in vertical mode.',
@@ -91,7 +91,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'Invert',
-            attr: ATTR_MOUSE_INVERT,
+            attr: ATTR_MOUSEWHEEL_INVERT,
             swiperDefault: 'false',
             description: 'Set to true to invert sliding direction',
             value: '',
@@ -99,7 +99,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'No Mousewheel Class',
-            attr: ATTR_MOUSE_NO_MOUSE_WHEEL_CLASS,
+            attr: ATTR_MOUSEWHEEL_NO_MOUSEWHEEL_CLASS,
             swiperDefault: 'swiper-no-mousewheel',
             description: 'Scrolling on elements with this class will be ignored',
             value: '',
@@ -108,7 +108,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'Release on Edges',
-            attr: ATTR_MOUSE_RELEASE_ON_EDGES,
+            attr: ATTR_MOUSEWHEEL_RELEASE_ON_EDGES,
             swiperDefault: 'false',
             description:
               'Set to true and swiper will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end)',
@@ -117,7 +117,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'Sensitivity',
-            attr: ATTR_MOUSE_SENSITIVITY,
+            attr: ATTR_MOUSEWHEEL_SENSITIVITY,
             swiperDefault: '1',
             description: 'Multiplier of mousewheel data, allows to tweak mouse wheel sensitivity',
             value: '',
@@ -126,7 +126,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'Threshold Delta',
-            attr: ATTR_MOUSE_THRESHOLD_DELTA,
+            attr: ATTR_MOUSEWHEEL_THRESHOLD_DELTA,
             swiperDefault: 'null',
             description: 'Minimum mousewheel scroll delta to trigger swiper slide change',
             value: '',
@@ -135,7 +135,7 @@ export default function keyboardMouseCategory() {
           },
           {
             name: 'Threshold Time',
-            attr: ATTR_MOUSE_THRESHOLD_TIME,
+            attr: ATTR_MOUSEWHEEL_THRESHOLD_TIME,
             swiperDefault: 'null',
             description: 'Minimum mousewheel scroll time delta (in ms) to trigger swiper slide change',
             value: '',

@@ -45,6 +45,13 @@ export interface WaterfallSetting {
   description: string;
   value: string;
   options?: string[];
+  /**
+   * For a `select` that drives several mutually-exclusive boolean attributes.
+   * Maps each option to the attribute set to 'true' when that option is chosen;
+   * the others are removed. An option with no entry here (e.g. 'none') removes
+   * them all. `attr` should be one of these, since it's what the UI updates by.
+   */
+  exclusiveAttrs?: Record<string, string>;
   instanceNames?: string[];
   breakpoints?: BreakpointObject;
   icon?: IconDefinition;

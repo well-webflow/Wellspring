@@ -17,7 +17,9 @@ export function findWaterfallSetting(waterfallConfig: WaterfallConfig, baseAttr:
     ...(category.groups?.flatMap((g) => g.items) ?? []),
   ]);
 
-  const setting = allSettings.find((item) => item.attr === baseAttr);
+  const setting = allSettings.find(
+    (item) => item.attr === baseAttr || Object.values(item.exclusiveAttrs ?? {}).includes(baseAttr)
+  );
 
   return setting;
 }
@@ -25,6 +27,13 @@ export function findWaterfallSetting(waterfallConfig: WaterfallConfig, baseAttr:
 // Load and add Waterfall Settings as attributes
 export function addDefaultSettings(defaultWaterfallSettings: WaterfallConfig, waterfallDiv: DOMElement) {
   const processItem = (prop: WaterfallSetting) => {
+    // Mutually-exclusive group: only the attribute the chosen option names is set
+    if (prop.exclusiveAttrs) {
+      const attr = prop.exclusiveAttrs[prop.value];
+      if (attr) waterfallDiv.setAttribute(attr, 'true');
+      return;
+    }
+
     // Only set attribute if value exists and is different from default
     const shouldSet = prop.value && prop.value !== prop.swiperDefault;
     if (shouldSet) {

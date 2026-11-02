@@ -79,7 +79,14 @@ interface RegisterOptions {
 	canCopy?: boolean;
 }
 
-/** Registers a hosted script, or returns the existing registration if it's already there. */
+/**
+ * Registers a hosted script, or returns the existing registration if it's already there.
+ *
+ * Webflow keys a registration on displayName + version and won't overwrite one, so a new
+ * version registers alongside the old rather than replacing it. The derived `id` comes from
+ * the display name, so every version of a script shares one id — which is what lets
+ * applyScript swap an old version out for a new one.
+ */
 export async function ensureScriptRegistered(token: string, siteId: string, opts: RegisterOptions): Promise<RegisteredScript> {
 	const matches = (s: RegisteredScript) => s.displayName === opts.displayName && s.version === opts.version;
 
@@ -98,8 +105,9 @@ export async function ensureScriptRegistered(token: string, siteId: string, opts
 			}),
 		});
 	} catch (err) {
-		// Lost a race, or the derived ID collides — re-read and use what's there.
-		if (err instanceof WebflowError && err.status === 409) {
+		// Webflow doesn't document a status for "already registered", so re-read on any API
+		// error: if the registration is there we lost a race, and anything else still throws.
+		if (err instanceof WebflowError) {
 			const found = (await listRegisteredScripts(token, siteId)).find(matches);
 			if (found) return found;
 		}
@@ -135,9 +143,7 @@ export async function applyScript(
 		...(script.attributes ? { attributes: script.attributes } : {}),
 	};
 
-	console.log('applyScript entry:', JSON.stringify(entry));
-	console.log('existing before:', JSON.stringify(existing));
-
+	// The PUT replaces the whole list, so everything that should stay applied is resent
 	const merged = [...existing.filter((s) => s.id !== script.id), entry];
 
 	await wf(token, customCodePath(target), {
@@ -146,7 +152,6 @@ export async function applyScript(
 	});
 
 	const after = await getAppliedScripts(token, target);
-	console.log('after PUT:', JSON.stringify(after));
 
 	if (!after.some((s) => s.id === script.id)) {
 		throw new Error(`PUT succeeded but ${script.id} is not in the applied list`);

@@ -7,7 +7,7 @@ import {
   ATTR_ZOOM_MIN_RATIO,
   ATTR_ZOOM_PAN_ON_MOUSE_MOVE,
   ATTR_ZOOM_TOGGLE,
-  ATTR_ZOOMED_SLIDE_CLASS,
+  ATTR_ZOOM_ZOOMED_SLIDE_CLASS,
 } from 'well-waterfall/attributes';
 
 export default function zoomCategory() {
@@ -69,7 +69,7 @@ export default function zoomCategory() {
       },
       {
         name: 'Zoomed Slide Class',
-        attr: ATTR_ZOOMED_SLIDE_CLASS,
+        attr: ATTR_ZOOM_ZOOMED_SLIDE_CLASS,
         type: 'string',
         swiperDefault: 'swiper-slide-zoomed',
         description: 'CSS class name of zoomed in container',

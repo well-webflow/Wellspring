@@ -2,6 +2,7 @@ import { faBarsProgress } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
 import ScrollbarScreen from '../components/modules/ScrollbarScreen';
 import {
+  ATTR_SCROLLBAR_DRAG_CLASS,
   ATTR_SCROLLBAR_DRAG_SIZE,
   ATTR_SCROLLBAR_DRAGGABLE,
   ATTR_SCROLLBAR_ENABLED,
@@ -32,6 +33,14 @@ export default function scrollbarCategory() {
         name: 'Class Names',
         id: 'scroll-classes',
         items: [
+          {
+            name: 'Drag Class',
+            attr: ATTR_SCROLLBAR_DRAG_CLASS,
+            swiperDefault: 'swiper-scrollbar-drag',
+            value: '',
+            type: 'string',
+            description: 'CSS class name given to the drag handle Swiper builds inside the scrollbar',
+          },
           {
             name: 'Horizontal Class',
             attr: ATTR_SCROLLBAR_HORIZONTAL_CLASS,

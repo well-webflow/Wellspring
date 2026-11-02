@@ -199,7 +199,11 @@ export function useWaterfallLogic(): WaterfallState {
 
       const item = findWaterfallSetting(updatedProps, baseAttr);
       if (item) {
-        if (breakpoint) {
+        if (item.exclusiveAttrs) {
+          // The attribute that's present names the option, so 'waterfall-loop="true"' reads back as 'loop'
+          const option = Object.keys(item.exclusiveAttrs).find((key) => item.exclusiveAttrs![key] === baseAttr);
+          if (option && attr.value === 'true') item.value = option;
+        } else if (breakpoint) {
           // ✅ Directly assign value in the breakpoints object
           if (item.breakpoints && breakpoint in item.breakpoints) {
             item.breakpoints[breakpoint as keyof typeof item.breakpoints] = attr.value;
@@ -312,6 +316,18 @@ export function useWaterfallLogic(): WaterfallState {
         allSettings.map(async (setting) => {
           if (!setting.attr) {
             console.warn(`Skipping invalid setting (missing attr):`, setting);
+            return;
+          }
+
+          // Mutually-exclusive group: write the attribute the chosen option names, clear the rest
+          if (setting.exclusiveAttrs) {
+            await Promise.all(
+              Object.entries(setting.exclusiveAttrs).map(async ([option, attrName]) =>
+                setting.value === option
+                  ? setAttribute(el, attrName, 'true')
+                  : removeAttribute(el, attrName)
+              )
+            );
             return;
           }
 

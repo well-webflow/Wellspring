@@ -4,18 +4,19 @@ import {
   ATTR_AUTOPLAY,
   ATTR_AUTOPLAY_CONTROL_DEFAULT_STATE,
   ATTR_AUTOPLAY_CONTROL_ENABLED,
-  ATTR_DELAY,
-  ATTR_DISABLE_ON_INTERACTION,
+  ATTR_AUTOPLAY_DELAY,
+  ATTR_AUTOPLAY_DISABLE_ON_INTERACTION,
+  ATTR_LOOP,
   ATTR_LOOP_ADD_ADDITIONAL_SLIDES,
   ATTR_LOOP_ADD_BLANK_SLIDES,
   ATTR_LOOP_PREVENTS_SLIDING,
-  ATTR_PAUSE_ON_MOUSE_ENTER,
-  ATTR_PLAYBACK_MODE,
-  ATTR_REVERSE_DIRECTION,
+  ATTR_AUTOPLAY_PAUSE_ON_MOUSE_ENTER,
+  ATTR_REWIND,
+  ATTR_AUTOPLAY_REVERSE_DIRECTION,
   ATTR_SMOOTH_AUTOPLAY,
   ATTR_SPEED,
-  ATTR_STOP_ON_LAST_SLIDE,
-  ATTR_WAIT_FOR_TRANSITION,
+  ATTR_AUTOPLAY_STOP_ON_LAST_SLIDE,
+  ATTR_AUTOPLAY_WAIT_FOR_TRANSITION,
 } from 'well-waterfall/attributes';
 import AutoplayControlScreen from '../components/modules/AutoplayControlScreen';
 
@@ -49,7 +50,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Autoplay Delay',
-            attr: ATTR_DELAY,
+            attr: ATTR_AUTOPLAY_DELAY,
             swiperDefault: '',
             value: '',
             type: 'number',
@@ -58,7 +59,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Disable Autoplay on Interaction',
-            attr: ATTR_DISABLE_ON_INTERACTION,
+            attr: ATTR_AUTOPLAY_DISABLE_ON_INTERACTION,
             swiperDefault: 'false', // documentation says default is true, doesn't appear to be true
             value: '',
             type: 'boolean',
@@ -66,7 +67,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Pause Autoplay on Hover',
-            attr: ATTR_PAUSE_ON_MOUSE_ENTER,
+            attr: ATTR_AUTOPLAY_PAUSE_ON_MOUSE_ENTER,
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
@@ -74,7 +75,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Reverse Autoplay Direction',
-            attr: ATTR_REVERSE_DIRECTION,
+            attr: ATTR_AUTOPLAY_REVERSE_DIRECTION,
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
@@ -82,7 +83,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Stop Autoplay on Last Slide',
-            attr: ATTR_STOP_ON_LAST_SLIDE,
+            attr: ATTR_AUTOPLAY_STOP_ON_LAST_SLIDE,
             swiperDefault: 'false',
             value: '',
             type: 'boolean',
@@ -90,7 +91,7 @@ export default function playbackCategory() {
           },
           {
             name: 'Autoplay Wait for Transition',
-            attr: ATTR_WAIT_FOR_TRANSITION,
+            attr: ATTR_AUTOPLAY_WAIT_FOR_TRANSITION,
             swiperDefault: 'true',
             value: '',
             type: 'boolean',
@@ -171,10 +172,12 @@ export default function playbackCategory() {
       },
       {
         name: 'Playback Mode',
-        attr: ATTR_PLAYBACK_MODE,
+        attr: ATTR_LOOP,
+        exclusiveAttrs: { loop: ATTR_LOOP, rewind: ATTR_REWIND },
         swiperDefault: 'none',
         value: '',
-        description: 'Choose between loop, rewind, and none',
+        description:
+          'Choose between loop, rewind, and none. Loop and rewind are mutually exclusive, so this writes whichever single attribute applies.',
         options: ['none', 'loop', 'rewind'],
         type: 'select',
       },

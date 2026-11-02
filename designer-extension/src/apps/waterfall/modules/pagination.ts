@@ -3,6 +3,7 @@ import { WaterfallCategory } from '../waterfall';
 import PaginationScreen from '../components/modules/PaginationScreen';
 import {
   ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
+  ATTR_PAGINATION_BULLET_CLASS,
   ATTR_PAGINATION_CLICKABLE,
   ATTR_PAGINATION_CLICKABLE_CLASS,
   ATTR_PAGINATION_CURRENT_CLASS,
@@ -41,6 +42,14 @@ export default function paginationCategory() {
         name: 'Bullets',
         id: 'pagination-dynamic',
         items: [
+          {
+            name: 'Bullet Class',
+            attr: ATTR_PAGINATION_BULLET_CLASS,
+            type: 'string',
+            swiperDefault: 'swiper-pagination-bullet',
+            description: 'CSS class name given to each generated pagination bullet',
+            value: '',
+          },
           {
             name: 'Bullet Active Class',
             attr: ATTR_PAGINATION_BULLET_ACTIVE_CLASS,

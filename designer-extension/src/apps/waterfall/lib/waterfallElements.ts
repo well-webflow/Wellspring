@@ -4,9 +4,7 @@ import {
   EL_NAVIGATION_PREV,
   EL_PAGINATION,
   EL_PAGINATION_BULLET,
-  EL_PAGINATION_BULLET_ACTIVE,
   EL_SCROLLBAR,
-  EL_SCROLLBAR_DRAG,
   EL_SLIDE_COUNT,
   EL_AUTOPLAY_CONTROL,
   EL_AUTOPLAY_CONTROL_PAUSE,
@@ -118,19 +116,18 @@ export async function createPagination() {
   if (!parentEl?.children) return;
 
   const paginationClass = await getOrCreateStyle('waterfall-pagination');
-  const paginationBulletActiveClass = await getOrCreateStyle('waterfall-pagination-bullet-active');
-  const paginationBulletClass = await getOrCreateStyle('waterfall-pagination-bullet');
+  // Swiper generates the bullets and names them itself, so these styles match its
+  // defaults for pagination.bulletClass / bulletActiveClass. Override either with
+  // the Bullet Class / Bullet Active Class settings.
+  await getOrCreateStyle('swiper-pagination-bullet-active');
+  const paginationBulletClass = await getOrCreateStyle('swiper-pagination-bullet');
 
   const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
   pagination.setTag('div');
   pagination.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION);
   pagination.setStyles([paginationClass]);
 
-  const paginationBulletActive = await pagination.append(webflow.elementPresets.DOM);
-  paginationBulletActive.setTag('button');
-  paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET_ACTIVE);
-  paginationBulletActive.setStyles([paginationBulletActiveClass]);
-
+  // Donates its tag name to the generated bullets
   const paginationBullet = await pagination.append(webflow.elementPresets.DOM);
   paginationBullet.setTag('button');
   paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET);
@@ -150,26 +147,19 @@ export async function convertElementToPaginationBullet() {
   convertElementTo(EL_PAGINATION_BULLET, 'Pagination Bullet');
 }
 
-export async function convertElementToPaginationBulletActive() {
-  convertElementTo(EL_PAGINATION_BULLET_ACTIVE, 'Pagination Bullet Active');
-}
-
 export async function createScrollbar() {
   const parentEl = await webflow.getSelectedElement();
   if (!parentEl?.children) return;
 
   const scrollbarClass = await getOrCreateStyle('Scrollbar');
-  const scrollbarDragClass = await getOrCreateStyle('Scrollbar Drag');
+  // Swiper builds the drag handle itself, so this style just matches its default
+  // for scrollbar.dragClass. Override it with the Drag Class setting.
+  await getOrCreateStyle('swiper-scrollbar-drag');
 
   const scrollbar = await parentEl.prepend(webflow.elementPresets.DOM);
   scrollbar.setTag('div');
   scrollbar.setStyles([scrollbarClass]);
   scrollbar.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR);
-
-  const scrollbarDrag = await scrollbar.append(webflow.elementPresets.DOM);
-  scrollbarDrag.setTag('button');
-  scrollbarDrag.setStyles([scrollbarDragClass]);
-  scrollbarDrag.setAttribute(ATTR_WATERFALL_ELEMENT, EL_SCROLLBAR_DRAG);
 
   webflow.notify({
     type: 'Success',
@@ -179,10 +169,6 @@ export async function createScrollbar() {
 
 export async function convertElementToScrollbarContainer() {
   convertElementTo(EL_SCROLLBAR, 'Scrollbar');
-}
-
-export async function convertElementToScrollbarDrag() {
-  convertElementTo(EL_SCROLLBAR_DRAG, 'Scrollbar Drag');
 }
 
 /** SLIDE COUNT */

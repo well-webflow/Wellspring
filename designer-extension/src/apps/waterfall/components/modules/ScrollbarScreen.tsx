@@ -1,9 +1,5 @@
-import { faArrowsLeftRightToLine, faBarsProgress, faSquare } from '@fortawesome/free-solid-svg-icons';
-import {
-  convertElementToScrollbarContainer,
-  convertElementToScrollbarDrag,
-  createScrollbar,
-} from '../../lib/waterfallElements';
+import { faBarsProgress, faSquare } from '@fortawesome/free-solid-svg-icons';
+import { convertElementToScrollbarContainer, createScrollbar } from '../../lib/waterfallElements';
 import SelectedElement from '../../../../components/SelectedElement';
 import Card from '../../../../components/UI/Card';
 import { Heading } from '../../../../components/Typography';
@@ -32,10 +28,6 @@ export default function ScrollbarScreen() {
           <Card onClick={convertElementToScrollbarContainer} className="flex flex-col text-center">
             <FontAwesomeIcon icon={faSquare} className="mb-2 text-primary" size="1x" />
             Scrollbar Container
-          </Card>
-          <Card onClick={convertElementToScrollbarDrag} className="flex flex-col text-center">
-            <FontAwesomeIcon icon={faArrowsLeftRightToLine} className="mb-2 text-primary" size="1x" />
-            Scrollbar Drag
           </Card>
         </div>
       </div>

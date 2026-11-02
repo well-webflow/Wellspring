@@ -1,6 +1,6 @@
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
-import { ATTR_CONTROLLER, ATTR_CONTROLLER_BY, ATTR_CONTROLLER_INVERSE } from 'well-waterfall/attributes';
+import { ATTR_CONTROLLER_CONTROL, ATTR_CONTROLLER_BY, ATTR_CONTROLLER_INVERSE } from 'well-waterfall/attributes';
 
 export default function controllerCategory() {
   const config: WaterfallCategory = {
@@ -11,7 +11,7 @@ export default function controllerCategory() {
     items: [
       {
         name: 'Control',
-        attr: ATTR_CONTROLLER,
+        attr: ATTR_CONTROLLER_CONTROL,
         swiperDefault: '--',
         description:
           'Pass here another Swiper instance or array with Swiper instances that should be controlled by this Swiper. Also accepts string with CSS selector of Swiper element, or HTMLElement of Swiper element',
