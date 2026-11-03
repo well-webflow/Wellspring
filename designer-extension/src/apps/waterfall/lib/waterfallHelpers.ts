@@ -59,3 +59,19 @@ export function addDefaultSettings(defaultWaterfallSettings: WaterfallConfig, wa
   });
   return waterfallDiv;
 }
+
+/**
+ * Waterfall Name To Class
+ * Converts a waterfall's name into the kebab-case class that identifies its
+ * swiper, swiper-wrapper and swiper-slide elements, so each slider on a page can
+ * be styled on its own (`.swiper.my-slider`, `.swiper-slide.my-slider`, ...).
+ * @param name The waterfall name, as stored in the `waterfall` attribute
+ * @returns The class name, or '' when the name has no usable characters
+ */
+export function waterfallNameToClass(name: string): string {
+  return name
+    .replace(/(\p{Ll}|\p{N})(\p{Lu})/gu, '$1-$2') // split camelCase before lowercasing
+    .replace(/[^\p{L}\p{N}]+/gu, '-') // keep accented letters rather than dropping them
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase();
+}

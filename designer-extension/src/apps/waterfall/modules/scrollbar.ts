@@ -36,10 +36,14 @@ export default function scrollbarCategory() {
           {
             name: 'Drag Class',
             attr: ATTR_SCROLLBAR_DRAG_CLASS,
-            swiperDefault: 'swiper-scrollbar-drag',
+            // Left empty on purpose: the default is whatever the Scrollbar Drag element
+            // donates, so there is no literal to compare against. A swiperDefault here would
+            // make typing that literal remove the attribute instead of setting it.
+            swiperDefault: '',
             value: '',
             type: 'string',
-            description: 'CSS class name given to the drag handle Swiper builds inside the scrollbar',
+            description:
+              'CSS class name given to the scrollbar drag handle. Overrides the classes donated by the Scrollbar Drag element; leave empty to use them. Setting this removes the Scrollbar Drag element from the published site.',
           },
           {
             name: 'Horizontal Class',

@@ -16,13 +16,13 @@ interface SitesResponse {
 
 const SCOPES = ['sites:read', 'pages:read', 'authorized_user:read', 'custom_code:read', 'custom_code:write'].join(' ');
 
-const WELL_WATERFALL = {
+export const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
-	version: '1.5.0',
+	version: '1.5.1',
 	// Exact file, not the bare package URL: jsDelivr generates that response dynamically, so SRI can't be pinned to it.
-	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.5.0/dist/well-waterfall.umd.js',
-	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.5.0 tarball.
-	integrityHash: 'sha256-DRnouEVJWIJgAeSNKYruB8HK/k3W5nr1Y6A5upIDnnI=',
+	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.5.1/dist/well-waterfall.umd.js',
+	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.5.1 tarball.
+	integrityHash: 'sha256-BhEru28bxY6HaXXT1X/eZ74izHcAA4/n2+k9uwFQdew=',
 	location: 'footer' as const,
 };
 

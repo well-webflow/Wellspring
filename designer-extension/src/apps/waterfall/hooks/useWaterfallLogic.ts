@@ -8,7 +8,7 @@ import {
   WaterfallState,
 } from '../waterfall';
 import { getAttribute, getAttributes, removeAttribute, setAttribute } from '../../../utils/webflowHelpers';
-import { createWaterfallElement } from '../lib/waterfallElements';
+import { createWaterfallElement, syncWaterfallNameClass } from '../lib/waterfallElements';
 import { findWaterfallSetting } from '../lib/waterfallHelpers';
 import { defaultWaterfallConfig } from '../lib/waterfallConfig';
 import { getBaseAttr, getBreakpointAttr } from '../../../utils/attributes';
@@ -309,7 +309,11 @@ export function useWaterfallLogic(): WaterfallState {
     try {
       // Save the waterfall name separately (since it's no longer in the config)
       if (loadedWaterfall?.name) {
+        // Read the stored name before overwriting it, so a rename can carry the
+        // name class on the swiper elements over to the new name
+        const storedName = await getAttribute(el, 'waterfall');
         await setAttribute(el, 'waterfall', loadedWaterfall.name);
+        await syncWaterfallNameClass(el, storedName ?? null, loadedWaterfall.name);
       }
 
       await Promise.all(

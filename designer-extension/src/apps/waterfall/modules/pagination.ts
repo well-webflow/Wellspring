@@ -46,8 +46,12 @@ export default function paginationCategory() {
             name: 'Bullet Class',
             attr: ATTR_PAGINATION_BULLET_CLASS,
             type: 'string',
-            swiperDefault: 'swiper-pagination-bullet',
-            description: 'CSS class name given to each generated pagination bullet',
+            // Left empty on purpose: the default is whatever the Pagination Bullet element
+            // donates, so there is no literal to compare against. A swiperDefault here would
+            // make typing that literal remove the attribute instead of setting it.
+            swiperDefault: '',
+            description:
+              'CSS class name given to each generated pagination bullet. Overrides the classes donated by the Pagination Bullet element; leave empty to use them.',
             value: '',
           },
           {

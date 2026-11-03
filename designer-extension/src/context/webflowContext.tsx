@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { checkStatus } from '../lib/api';
+import { SKIP_AUTH } from '../lib/devMode';
 
 export type SelectedElementInfo = {
   type: string;
@@ -24,6 +25,14 @@ export function WebflowProvider({ children }: { children: React.ReactNode }) {
 
   // Check authorization and installation status
   const checkAuthStatus = async () => {
+    // Dev only: report the site as ready without calling the API, so the Designer-side
+    // features can be used in a test environment that cannot complete authorization
+    if (SKIP_AUTH) {
+      setIsAuthorized(true);
+      setIsCodeInstalled(true);
+      return { authorized: true, installed: true };
+    }
+
     const { authorized, installed } = await checkStatus();
     setIsAuthorized(authorized);
     setIsCodeInstalled(installed);

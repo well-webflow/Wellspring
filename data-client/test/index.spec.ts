@@ -1,6 +1,6 @@
 import { env, fetchMock } from 'cloudflare:test';
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import app from '../src/index';
+import app, { WELL_WATERFALL } from '../src/index';
 import { getToken, saveInstall } from '../src/db';
 
 const SITE = 'site123';
@@ -103,7 +103,7 @@ describe('status', () => {
 
 describe('install', () => {
 	it('recovers when the version turns out to be registered already', async () => {
-		const registered = { id: 'well_waterfall', displayName: 'Well Waterfall', version: '1.5.0' };
+		const registered = { id: 'well_waterfall', displayName: WELL_WATERFALL.displayName, version: WELL_WATERFALL.version };
 		resolveOk();
 
 		// Nothing registered on the first read...
@@ -121,7 +121,7 @@ describe('install', () => {
 		webflow().intercept({ path: `/v2/sites/${SITE}/custom_code`, method: 'PUT' }).reply(200, {});
 		webflow()
 			.intercept({ path: `/v2/sites/${SITE}/custom_code` })
-			.reply(200, { scripts: [{ id: 'well_waterfall', location: 'footer', version: '1.5.0' }] });
+			.reply(200, { scripts: [{ id: 'well_waterfall', location: 'footer', version: WELL_WATERFALL.version }] });
 
 		const res = await request(`/sites/${SITE}/install-waterfall`, 'POST');
 
