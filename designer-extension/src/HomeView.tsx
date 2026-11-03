@@ -63,7 +63,7 @@ export default function HomeView() {
               </Paragraph>
               <Paragraph size="sm">
                 <a
-                  href="https://wellspring-app.webflow.io"
+                  href="https://wellspring-dev.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary"
@@ -89,7 +89,7 @@ export default function HomeView() {
           </Tabs>
         </div>
         <div className="shrink-0 bg-background5 w-full border-t border-t-border1 p-3 flex flex-row justify-center gap-4">
-          <NavigationLink to="https://wellspring-app.webflow.io/contact" target="_blank" icon={faBug}>
+          <NavigationLink to="https://wellspring-dev.com/contact" target="_blank" icon={faBug}>
             Bug Report
           </NavigationLink>
           <NavigationLink to="https://www.buymeacoffee.com/cactoid" target="_blank" icon={faHeart}>
