@@ -1,4 +1,4 @@
-const API_BASE = 'https://api.wellspring-dev.com';
+const API_BASE = 'https://api.heywellspring.com';
 
 async function call<T>(path: string): Promise<T> {
   const [idToken, siteInfo] = await Promise.all([webflow.getIdToken(), webflow.getSiteInfo()]);

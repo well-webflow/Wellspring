@@ -11,7 +11,7 @@
 	"observability": { "enabled": true },
 
 	// Production custom domain. Webflow requires a non-workers.dev OAuth callback host.
-	"routes": [{ "pattern": "api.wellspring-dev.com", "custom_domain": true }],
+	"routes": [{ "pattern": "api.heywellspring.com", "custom_domain": true }],
 
 	"vars": {
 		"WEBFLOW_CLIENT_ID": "63d6f60208cfe09e0232f8bd6bc89c8567b1420e07b87998dea0c0628552d2f8",

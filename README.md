@@ -20,7 +20,7 @@ Webflow Dashboard > Workspace > Apps & Integrations > Develop. Create a New App.
 App Name: Wellspring. 
 App Description: Add placeholder text.
 App Icon: Use the icon included in the ZIP.
-App homepage URL: https://wellspring-dev.com
+App homepage URL: https://heywellspring.com
 Building Blocks: turn Designer Extension On.
 
 Click Create App, then Install. Select your Site and Authorize. In the Designer, select the Wellflow App and click 'Launch development App'. 
