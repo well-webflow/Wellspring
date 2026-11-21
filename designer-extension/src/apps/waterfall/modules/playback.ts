@@ -144,7 +144,7 @@ export default function playbackCategory() {
           {
             name: 'Enabled',
             attr: ATTR_AUTOPLAY_CONTROL_ENABLED,
-            swiperDefault: 'false',
+            swiperDefault: 'true',
             value: '',
             description: 'Enable autoplay control button',
             type: 'boolean',

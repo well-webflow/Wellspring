@@ -90,14 +90,71 @@ describe('auth middleware', () => {
 });
 
 describe('status', () => {
+	// Returns the status body for a site whose applied Waterfall script is at `version`.
+	const statusWithVersion = async (version: string | undefined) => {
+		resolveOk();
+		webflow()
+			.intercept({ path: `/v2/sites/${SITE}/custom_code` })
+			.reply(200, { scripts: [{ id: 'well_waterfall', location: 'footer', ...(version ? { version } : {}) }] });
+
+		return (await request(`/sites/${SITE}/status`)).json() as Promise<Record<string, unknown>>;
+	};
+
 	it('treats a 401 from custom code as revocation', async () => {
 		resolveOk();
 		webflow().intercept({ path: `/v2/sites/${SITE}/custom_code` }).reply(401, 'revoked');
 
 		const res = await request(`/sites/${SITE}/status`);
 
-		expect(await res.json()).toEqual({ authorized: false, installed: false });
+		expect(await res.json()).toMatchObject({ authorized: false, installed: false, updateKind: 'none' });
 		expect(await getToken(env, SITE)).toBeNull();
+	});
+
+	it('reports no update when the site is on the pinned version', async () => {
+		expect(await statusWithVersion(WELL_WATERFALL.version)).toMatchObject({
+			installed: true,
+			installedVersion: WELL_WATERFALL.version,
+			updateKind: 'none',
+			updateReleases: [],
+		});
+	});
+
+	it('reports a routine update within the 1.5 line', async () => {
+		const body = await statusWithVersion('1.5.1');
+
+		expect(body).toMatchObject({ installed: true, installedVersion: '1.5.1', updateKind: 'routine' });
+		// Everything above 1.5.1, and nothing at or below it.
+		expect((body.updateReleases as Array<{ version: string }>).map((r) => r.version)).toEqual(['1.5.4', '1.5.3', '1.5.2']);
+	});
+
+	it('reports a breaking update when the hop crosses 1.5.0', async () => {
+		const body = await statusWithVersion('1.4.2');
+
+		expect(body).toMatchObject({ updateKind: 'breaking' });
+		expect((body.updateReleases as Array<{ version: string; breaking?: boolean }>).some((r) => r.breaking)).toBe(true);
+	});
+
+	it('does not nag when the version cannot be read', async () => {
+		expect(await statusWithVersion(undefined)).toMatchObject({ installed: true, updateKind: 'none' });
+	});
+
+	it('does not offer a downgrade when the site is ahead of the pin', async () => {
+		expect(await statusWithVersion('9.9.9')).toMatchObject({ updateKind: 'none', updateReleases: [] });
+	});
+});
+
+describe('releases', () => {
+	it('serves the changelog for the Setup tab', async () => {
+		resolveOk();
+
+		const body = (await (await request(`/sites/${SITE}/releases`)).json()) as {
+			latestVersion: string;
+			releases: Array<{ version: string; summary: string }>;
+		};
+
+		expect(body.latestVersion).toBe(WELL_WATERFALL.version);
+		expect(body.releases[0].version).toBe(WELL_WATERFALL.version);
+		expect(body.releases.every((r) => r.summary.length > 0)).toBe(true);
 	});
 });
 

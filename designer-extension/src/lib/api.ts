@@ -1,10 +1,36 @@
 const API_BASE = 'https://api.heywellspring.com';
 
-async function call<T>(path: string): Promise<T> {
+/** A Waterfall release, as the Worker's src/releases.ts describes it. */
+export interface Release {
+  version: string;
+  date: string;
+  breaking?: boolean;
+  summary: string;
+  changes?: string[];
+  migrationUrl?: string;
+}
+
+/**
+ * How the version on the site compares to the one the app pins.
+ * 'breaking' means the upgrade crosses a release that can change an existing slider.
+ */
+export type UpdateKind = 'none' | 'routine' | 'breaking';
+
+export interface SiteStatus {
+  authorized: boolean;
+  installed: boolean;
+  installedVersion: string | null;
+  latestVersion: string | null;
+  updateKind: UpdateKind;
+  /** Releases between the installed version and the pinned one. Newest first. */
+  updateReleases: Release[];
+}
+
+async function call<T>(path: string, method: 'GET' | 'POST' = 'POST'): Promise<T> {
   const [idToken, siteInfo] = await Promise.all([webflow.getIdToken(), webflow.getSiteInfo()]);
 
   const res = await fetch(`${API_BASE}/sites/${siteInfo.siteId}${path}`, {
-    method: 'POST',
+    method,
     headers: { 'X-Webflow-Id-Token': idToken },
   });
 
@@ -17,7 +43,20 @@ async function call<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-export async function checkStatus(): Promise<{ authorized: boolean; installed: boolean }> {
+/**
+ * Anything that isn't a clean answer reads as "not connected, no update to offer",
+ * so a failed check never produces an update prompt.
+ */
+const UNKNOWN_STATUS: SiteStatus = {
+  authorized: false,
+  installed: false,
+  installedVersion: null,
+  latestVersion: null,
+  updateKind: 'none',
+  updateReleases: [],
+};
+
+export async function checkStatus(): Promise<SiteStatus> {
   try {
     const [idToken, siteInfo] = await Promise.all([webflow.getIdToken(), webflow.getSiteInfo()]);
 
@@ -27,19 +66,21 @@ export async function checkStatus(): Promise<{ authorized: boolean; installed: b
     });
 
     if (res.status === 401) {
-      return { authorized: false, installed: false };
+      return UNKNOWN_STATUS;
     }
 
     if (res.ok) {
-      return await res.json();
+      // An older Worker won't send the version fields, so fill in the gaps rather
+      // than letting undefined reach the UI.
+      return { ...UNKNOWN_STATUS, ...((await res.json()) as Partial<SiteStatus>) };
     }
 
     // Any other error
     console.error('Status check failed:', res.status);
-    return { authorized: false, installed: false };
+    return UNKNOWN_STATUS;
   } catch (err) {
     console.error('Status check error:', err);
-    return { authorized: false, installed: false };
+    return UNKNOWN_STATUS;
   }
 }
 
@@ -53,6 +94,16 @@ export function launchWebflowAuth() {
 
 export class NotAuthorizedError extends Error {}
 
-export const installWaterfall = () => call<{ ok: true; scriptId: string; needsPublish: boolean }>('/install-waterfall');
+/**
+ * Registers the pinned Waterfall version on the site and applies it.
+ *
+ * This is also the *update* path: every version of the script shares one id, so
+ * applying a new one replaces whatever was there. See applyScript in the Worker.
+ */
+export const installWaterfall = () =>
+  call<{ ok: true; scriptId: string; version: string; needsPublish: boolean; message: string }>('/install-waterfall');
+
+/** The full changelog, for the Setup tab. Served by the Worker so releases ship without an extension rebuild. */
+export const fetchReleases = () => call<{ latestVersion: string; releases: Release[] }>('/releases', 'GET');
 
 export const uninstallWaterfall = () => call<{ ok: true; scriptsRemoved: number; message: string }>('/uninstall');

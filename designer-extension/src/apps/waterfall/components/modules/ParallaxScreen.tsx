@@ -3,6 +3,7 @@ import {
   ATTR_PARALLAX,
   ATTR_PARALLAX_DURATION,
   ATTR_PARALLAX_OPACITY,
+  ATTR_PARALLAX_ROTATE,
   ATTR_PARALLAX_SCALE,
   ATTR_PARALLAX_X,
   ATTR_PARALLAX_Y,
@@ -18,6 +19,7 @@ export default function ParallaxScreen() {
   const [parallaxYValue, setParallaxYValue] = useState('');
   const [parallaxScaleValue, setParallaxScaleValue] = useState('');
   const [parallaxOpacityValue, setParallaxOpacityValue] = useState('');
+  const [parallaxRotateValue, setParallaxRotateValue] = useState('');
   const [parallaxDuration, setParallaxDuration] = useState('');
 
   const handleSubmit = async (attr: string, value: string) => {
@@ -75,6 +77,17 @@ export default function ParallaxScreen() {
       value: parallaxOpacityValue,
       onChange: setParallaxOpacityValue,
       onSubmit: () => handleSubmit(ATTR_PARALLAX_OPACITY, parallaxOpacityValue),
+    },
+    {
+      name: 'Parallax Rotate',
+      attr: ATTR_PARALLAX_ROTATE,
+      type: 'string',
+      swiperDefault: '',
+      description:
+        'Rotation in degrees of the parallax element when it is in "inactive" (not on active slide) state. Only applies to elements inside a slide.',
+      value: parallaxRotateValue,
+      onChange: setParallaxRotateValue,
+      onSubmit: () => handleSubmit(ATTR_PARALLAX_ROTATE, parallaxRotateValue),
     },
     {
       name: 'Parallax Duration',

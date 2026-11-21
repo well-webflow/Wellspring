@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { checkStatus } from '../lib/api';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { checkStatus, type Release, type SiteStatus, type UpdateKind } from '../lib/api';
 import { SKIP_AUTH } from '../lib/devMode';
 
 export type SelectedElementInfo = {
@@ -12,7 +12,15 @@ interface WebflowContextType {
   elementInfo: SelectedElementInfo | null;
   isAuthorized: boolean | null;
   isCodeInstalled: boolean | null;
-  checkAuthStatus: () => Promise<{ authorized: boolean; installed: boolean }>;
+  /** The Waterfall version on the site. null until the status check answers. */
+  installedVersion: string | null;
+  /** The version this app pins. null until the status check answers. */
+  latestVersion: string | null;
+  /** null while unknown, matching the isAuthorized/isCodeInstalled convention. */
+  updateKind: UpdateKind | null;
+  /** Releases between the installed version and the pinned one. Newest first. */
+  updateReleases: Release[];
+  checkAuthStatus: () => Promise<SiteStatus>;
 }
 
 export const WebflowContext = createContext<WebflowContextType | undefined>(undefined);
@@ -22,22 +30,43 @@ export function WebflowProvider({ children }: { children: React.ReactNode }) {
   const [elementInfo, setElementInfo] = useState<SelectedElementInfo | null>(null);
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const [isCodeInstalled, setIsCodeInstalled] = useState<boolean | null>(null);
+  const [installedVersion, setInstalledVersion] = useState<string | null>(null);
+  const [latestVersion, setLatestVersion] = useState<string | null>(null);
+  const [updateKind, setUpdateKind] = useState<UpdateKind | null>(null);
+  const [updateReleases, setUpdateReleases] = useState<Release[]>([]);
+
+  const lastCheckedAt = useRef(0);
+
+  // Only touches setState and a ref, so it never needs to change identity.
+  const applyStatus = useCallback((status: SiteStatus) => {
+    setIsAuthorized(status.authorized);
+    setIsCodeInstalled(status.installed);
+    setInstalledVersion(status.installedVersion);
+    setLatestVersion(status.latestVersion);
+    setUpdateKind(status.updateKind);
+    setUpdateReleases(status.updateReleases);
+    lastCheckedAt.current = Date.now();
+    return status;
+  }, []);
 
   // Check authorization and installation status
-  const checkAuthStatus = async () => {
+  const checkAuthStatus = useCallback(async () => {
     // Dev only: report the site as ready without calling the API, so the Designer-side
-    // features can be used in a test environment that cannot complete authorization
+    // features can be used in a test environment that cannot complete authorization.
+    // The version fields have to be filled in too, or dev mode reports a phantom update.
     if (SKIP_AUTH) {
-      setIsAuthorized(true);
-      setIsCodeInstalled(true);
-      return { authorized: true, installed: true };
+      return applyStatus({
+        authorized: true,
+        installed: true,
+        installedVersion: null,
+        latestVersion: null,
+        updateKind: 'none',
+        updateReleases: [],
+      });
     }
 
-    const { authorized, installed } = await checkStatus();
-    setIsAuthorized(authorized);
-    setIsCodeInstalled(installed);
-    return { authorized, installed };
-  };
+    return applyStatus(await checkStatus());
+  }, [applyStatus]);
 
   // Set the selected Element and a list of its styles
   const selectedElementCallback = async (element: AnyElement | null) => {
@@ -75,13 +104,43 @@ export function WebflowProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribeSelectedElement();
   }, []);
 
-  // Check auth status on initialization
+  // Check auth status on initialization. checkAuthStatus is stable, so this runs once.
   useEffect(() => {
     checkAuthStatus();
-  }, []);
+  }, [checkAuthStatus]);
+
+  // Re-check when the user comes back to the Designer, so a publish made in another
+  // tab clears the "publish to go live" reminder without reopening the panel.
+  // Throttled, because focus fires often and the check costs a Webflow API call.
+  useEffect(() => {
+    const recheckIfStale = () => {
+      if (document.visibilityState === 'hidden') return;
+      if (Date.now() - lastCheckedAt.current < 30_000) return;
+      checkAuthStatus();
+    };
+
+    window.addEventListener('focus', recheckIfStale);
+    document.addEventListener('visibilitychange', recheckIfStale);
+    return () => {
+      window.removeEventListener('focus', recheckIfStale);
+      document.removeEventListener('visibilitychange', recheckIfStale);
+    };
+  }, [checkAuthStatus]);
 
   return (
-    <WebflowContext.Provider value={{ elementSelected, elementInfo, isAuthorized, isCodeInstalled, checkAuthStatus }}>
+    <WebflowContext.Provider
+      value={{
+        elementSelected,
+        elementInfo,
+        isAuthorized,
+        isCodeInstalled,
+        installedVersion,
+        latestVersion,
+        updateKind,
+        updateReleases,
+        checkAuthStatus,
+      }}
+    >
       {children}
     </WebflowContext.Provider>
   );

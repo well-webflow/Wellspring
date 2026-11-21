@@ -3,10 +3,23 @@ import waterfallIcon from '../../../assets/waterfall.png';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import Button from '../../../components/UI/Button';
 import { uninstallWaterfall } from '../../../lib/api';
-import { faCheck, faCircleInfo, faLinkSlash, faLock, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowUp,
+  faCheck,
+  faCircleInfo,
+  faLinkSlash,
+  faLock,
+  faSpinner,
+  faTrash,
+  faTriangleExclamation,
+  faUpload,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useWaterfallInstall } from '../hooks/useWaterfallInstall';
+import { usePendingPublish } from '../hooks/useWaterfallUpdate';
+import { useWebflow } from '../../../context/webflowContext';
+import Changelog from '../components/Changelog';
 import HorizontalRule from '../../../components/UI/hr';
 
 export default function SetupView() {
@@ -17,11 +30,17 @@ export default function SetupView() {
     isInstalling,
     isWaitingForAuth,
     install,
+    update,
     authorizeAndInstall,
     cancelAuthorize,
   } = useWaterfallInstall();
 
+  const { installedVersion, latestVersion, updateKind } = useWebflow();
+  const pendingPublish = usePendingPublish();
+
   const [isUninstalling, setIsUninstalling] = useState(false);
+
+  const hasUpdate = Boolean(isCodeInstalled) && updateKind !== null && updateKind !== 'none';
 
   async function handleUninstall() {
     const confirmed = confirm(
@@ -68,7 +87,11 @@ export default function SetupView() {
 
   return (
     <ErrorBoundary>
-      <div className="p-3 w-full min-w-0 overflow-hidden">
+      {/* shrink-0 matters: the scroll container in WaterfallLayout is a column flex, so a
+          shrinkable child gets squeezed to the viewport height instead of keeping its natural
+          height — and anything clipped that way never counts toward the scroller's scrollHeight,
+          so the overflow becomes unreachable. Clip the x axis only. */}
+      <div className="p-3 w-full min-w-0 shrink-0 overflow-x-hidden">
         <div className="flex items-center gap-3 mb-3">
           <img src={waterfallIcon} width={36} className="relative -top-0.75 rounded-sm"></img>
           <Heading level={2}>Waterfall</Heading>
@@ -96,10 +119,25 @@ export default function SetupView() {
                 <FontAwesomeIcon icon={faCircleInfo} />
                 Complete Setup
               </div>
+            ) : updateKind === 'breaking' ? (
+              <div className="flex items-center gap-2 text-sm text-red-400 bg-background5 p-3 rounded">
+                <FontAwesomeIcon icon={faTriangleExclamation} />
+                Update needs review
+              </div>
+            ) : updateKind === 'routine' ? (
+              <div className="flex items-center gap-2 text-sm text-primary bg-background5 p-3 rounded">
+                <FontAwesomeIcon icon={faArrowUp} />
+                Update available
+              </div>
+            ) : pendingPublish ? (
+              <div className="flex items-center gap-2 text-sm text-primary bg-background5 p-3 rounded">
+                <FontAwesomeIcon icon={faUpload} />
+                Publish to go live
+              </div>
             ) : (
               <div className="flex items-center gap-2 text-sm text-green-600 bg-background5 p-3 rounded">
                 <FontAwesomeIcon icon={faCheck} />
-                Connected
+                Connected{installedVersion ? ` · ${installedVersion}` : ''}
               </div>
             )}
           </div>
@@ -128,8 +166,26 @@ export default function SetupView() {
               </Button>
             </div>
           ) : (
-            <div className="">
-              <Button onClick={handleUninstall} icon={faTrash} size="sm" disabled={isUninstalling}>
+            <div className="flex flex-row gap-2">
+              {hasUpdate && (
+                <Button
+                  onClick={update}
+                  icon={faArrowUp}
+                  size="sm"
+                  color="primary"
+                  disabled={isInstalling || isUninstalling}
+                  tooltip={latestVersion ? `Update to ${latestVersion}` : undefined}
+                >
+                  {isInstalling ? 'Updating...' : 'Update'}
+                </Button>
+              )}
+              <Button
+                onClick={handleUninstall}
+                icon={faTrash}
+                size="sm"
+                disabled={isUninstalling || isInstalling}
+                tooltipAlign="end"
+              >
                 {isUninstalling ? 'Uninstalling...' : 'Uninstall'}
               </Button>
             </div>
@@ -144,6 +200,35 @@ export default function SetupView() {
             to remove it.
           </Paragraph>
         )}
+
+        {updateKind === 'breaking' && (
+          <Paragraph size="sm" className="text-text2 mt-3">
+            This site runs Waterfall {installedVersion}, and {latestVersion} contains breaking changes. Waterfall
+            ignores attribute names it no longer recognises, so sliders built on the older version keep working but
+            fall back to their default settings until their attributes are updated. The changelog below marks what
+            changed — review it before updating.
+          </Paragraph>
+        )}
+
+        {updateKind === 'routine' && (
+          <Paragraph size="sm" className="text-text2 mt-3">
+            Waterfall {latestVersion} is available. The changelog below lists what changed since {installedVersion}.
+            Updating replaces the script on your site; publish afterwards to make it live.
+          </Paragraph>
+        )}
+
+        {updateKind === 'none' && pendingPublish && (
+          <Paragraph size="sm" className="text-text2 mt-3">
+            Waterfall {pendingPublish} is on this site but hasn't gone live yet. Publish your site to make it live.
+          </Paragraph>
+        )}
+
+        <HorizontalRule className="my-4" />
+
+        <Heading level={4} className="mb-3">
+          Changelog
+        </Heading>
+        <Changelog installedVersion={installedVersion} />
       </div>
     </ErrorBoundary>
   );

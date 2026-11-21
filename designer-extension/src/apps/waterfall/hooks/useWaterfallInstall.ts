@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useWebflow } from '../../../context/webflowContext';
 import { installWaterfall, launchWebflowAuth, NotAuthorizedError } from '../../../lib/api';
+import { markUpdated } from '../../../lib/updateState';
 
 /**
  * Authorizes Wellspring for the current site and installs the Waterfall script.
  * Shared by every view that offers an Install button so they all behave the same.
  */
 export function useWaterfallInstall() {
-  const { isAuthorized, isCodeInstalled, checkAuthStatus } = useWebflow();
+  const { isAuthorized, isCodeInstalled, installedVersion, latestVersion, updateKind, checkAuthStatus } = useWebflow();
 
   const pollingIntervalRef = useRef<number | null>(null);
   const pollingTimeoutRef = useRef<number | null>(null);
@@ -15,14 +16,26 @@ export function useWaterfallInstall() {
   // True from clicking Install until authorization lands (then the install starts) or is cancelled
   const [isWaitingForAuth, setIsWaitingForAuth] = useState(false);
 
-  async function install() {
+  /**
+   * Applies the pinned Waterfall version. Shared by the first install and by updates,
+   * which hit the same endpoint: every version of the script shares one id, so applying
+   * a new one replaces whatever was there.
+   */
+  async function applyWaterfall(describeSuccess: (version: string) => string) {
     setIsInstalling(true);
     try {
-      await installWaterfall();
-      await webflow.notify({
-        type: 'Success',
-        message: 'Waterfall installed. Publish your site to make the changes live.',
-      });
+      const result = await installWaterfall();
+
+      // Custom code only reaches the live site on publish, so remember that one is owed.
+      // Advisory only: a failure here costs the reminder, not the install.
+      try {
+        const { siteId } = await webflow.getSiteInfo();
+        markUpdated(siteId, result.version);
+      } catch (err) {
+        console.error('Could not record the pending publish:', err);
+      }
+
+      await webflow.notify({ type: 'Success', message: describeSuccess(result.version) });
       await checkAuthStatus();
     } catch (err) {
       if (err instanceof NotAuthorizedError) {
@@ -37,6 +50,33 @@ export function useWaterfallInstall() {
     } finally {
       setIsInstalling(false);
     }
+  }
+
+  async function install() {
+    await applyWaterfall(() => 'Waterfall installed. Publish your site to make the changes live.');
+  }
+
+  /**
+   * Moves the site to the pinned version.
+   *
+   * A breaking update asks first, naming the consequence: Waterfall ignores attribute
+   * names it doesn't recognise, so an existing slider doesn't error — it quietly falls
+   * back to defaults. That is worth a confirmation the user has to read.
+   */
+  async function update() {
+    if (updateKind === 'breaking') {
+      const confirmed = confirm(
+        `Update Waterfall from ${installedVersion} to ${latestVersion}?\n\n` +
+          'This update contains breaking changes. Attribute names changed, and Waterfall ignores ' +
+          'names it no longer recognises, so sliders built on the older version will fall back to ' +
+          'their default settings until their attributes are updated.\n\n' +
+          'The changelog in Setup lists what changed. Publish your site afterwards to make the update live.'
+      );
+
+      if (!confirmed) return;
+    }
+
+    await applyWaterfall((version) => `Waterfall updated to ${version}. Publish your site to make the update live.`);
   }
 
   function stopPolling() {
@@ -109,6 +149,7 @@ export function useWaterfallInstall() {
     isInstalling,
     isWaitingForAuth,
     install,
+    update,
     authorizeAndInstall,
     cancelAuthorize,
   };

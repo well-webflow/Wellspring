@@ -4,6 +4,7 @@ import type { AppEnv } from './types';
 import { requireDesignerAuth } from './auth';
 import { getToken, saveInstall, consumeState, deleteInstall } from './db';
 import { ensureScriptRegistered, applyScript, getAppliedScripts, WebflowError, TokenRevokedError, removeScriptEverywhere } from './webflow';
+import { RELEASES, describeUpdate } from './releases';
 
 interface TokenResponse {
 	access_token: string;
@@ -16,13 +17,20 @@ interface SitesResponse {
 
 const SCOPES = ['sites:read', 'pages:read', 'authorized_user:read', 'custom_code:read', 'custom_code:write'].join(' ');
 
+// Bumping this is the whole upgrade: the CDN URL is built from it, and the Designer
+// Extension compares it against what each site has applied. Two things have to move
+// with it by hand — `integrityHash` below, and a new entry in src/releases.ts.
+const WATERFALL_VERSION = '1.5.4';
+
 export const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
-	version: '1.5.1',
+	version: WATERFALL_VERSION,
 	// Exact file, not the bare package URL: jsDelivr generates that response dynamically, so SRI can't be pinned to it.
-	hostedLocation: 'https://cdn.jsdelivr.net/npm/well-waterfall@1.5.1/dist/well-waterfall.umd.js',
-	// SHA-256 of dist/well-waterfall.umd.js in the published well-waterfall@1.5.1 tarball.
-	integrityHash: 'sha256-BhEru28bxY6HaXXT1X/eZ74izHcAA4/n2+k9uwFQdew=',
+	hostedLocation: `https://cdn.jsdelivr.net/npm/well-waterfall@${WATERFALL_VERSION}/dist/well-waterfall.umd.js`,
+	// SHA-256 of dist/well-waterfall.umd.js in the published tarball for the version above.
+	// Recompute on every bump: npm pack well-waterfall@<version>, then
+	// openssl dgst -sha256 -binary dist/well-waterfall.umd.js | openssl base64 -A
+	integrityHash: 'sha256-JFKgfjwvpKWUzZ2SjMWc3tDmiakSpWYmhhiCKyAoZdw=',
 	location: 'footer' as const,
 };
 
@@ -53,27 +61,64 @@ app.get('/sites/:siteId/status', async (c) => {
 	const siteId = c.req.param('siteId');
 	const token = c.get('accessToken'); // Retrieved from middleware after auth
 
+	// Every exit below carries the same shape, so the Designer Extension never has to
+	// tell "no update" apart from "we couldn't tell".
+	const unknown = (authorized: boolean) =>
+		c.json({
+			authorized,
+			installed: false,
+			installedVersion: null as string | null,
+			latestVersion: WELL_WATERFALL.version,
+			updateKind: 'none' as const,
+			updateReleases: [] as typeof RELEASES,
+		});
+
 	if (!token) {
-		return c.json({ authorized: false, installed: false });
+		return unknown(false);
 	}
 
 	try {
 		// Check if Waterfall is installed by fetching applied scripts
 		const scripts = await getAppliedScripts(token, { type: 'site', id: siteId });
-		const installed = scripts.some((s) => s.id.includes('waterfall'));
+		const waterfall = scripts.find((s) => s.id.includes('waterfall'));
 
-		return c.json({ authorized: true, installed });
+		if (!waterfall) return unknown(true);
+
+		// Note: this only sees site-level custom code. A stale copy applied to an
+		// individual page is invisible here, because checking pages costs one API
+		// call each and this runs on every panel open.
+		const update = describeUpdate(waterfall.version ?? null, WELL_WATERFALL.version);
+
+		return c.json({
+			authorized: true,
+			installed: true,
+			installedVersion: update.from,
+			latestVersion: update.to,
+			updateKind: update.kind,
+			updateReleases: update.releases,
+		});
 	} catch (err) {
 		// If token was revoked, stop using it and report the site as unauthorized
 		if (err instanceof TokenRevokedError) {
 			console.log(`Token revoked for site ${siteId} during status check, cleaning up`);
 			await deleteInstall(c.env, siteId);
-			return c.json({ authorized: false, installed: false });
+			return unknown(false);
 		}
 
 		console.error('Status check error:', err);
-		return c.json({ authorized: true, installed: false });
+		return unknown(true);
 	}
+});
+
+/**
+ * The full release history, for the changelog in the extension's Setup tab.
+ *
+ * Served rather than bundled so that adding a release is a Worker deploy, with no
+ * extension rebuild. It sits under /sites/:siteId so it inherits the CORS and auth
+ * middleware above, though the list itself is the same for every site.
+ */
+app.get('/sites/:siteId/releases', (c) => {
+	return c.json({ latestVersion: WELL_WATERFALL.version, releases: RELEASES });
 });
 
 app.post('/sites/:siteId/install-waterfall', async (c) => {
@@ -95,6 +140,7 @@ app.post('/sites/:siteId/install-waterfall', async (c) => {
 		return c.json({
 			ok: true,
 			scriptId: script.id,
+			version: script.version,
 			needsPublish: true,
 			message: 'Waterfall installed. Publish your site to make the changes live.',
 		});

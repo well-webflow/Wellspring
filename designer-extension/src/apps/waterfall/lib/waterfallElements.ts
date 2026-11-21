@@ -5,6 +5,7 @@ import {
   EL_NAVIGATION_PREV,
   EL_PAGINATION,
   EL_PAGINATION_BULLET,
+  EL_PAGINATION_BULLET_ACTIVE,
   EL_SCROLLBAR,
   EL_SCROLLBAR_DRAG,
   EL_SLIDE_COUNT,
@@ -238,14 +239,15 @@ export async function createPagination() {
   if (!parentEl?.children) return;
 
   const paginationClass = await getOrCreateStyle('waterfall-pagination');
-  // Swiper names the active bullet itself, so this style matches its default for
-  // pagination.bulletActiveClass; override it with the Bullet Active Class setting.
-  await getOrCreateStyle('swiper-pagination-bullet-active');
   // The bullet below donates its classes to every generated bullet, so start it on
   // Swiper's own class: its bundled CSS then styles the bullets out of the box, and
-  // any class the designer adds alongside is donated too. The Bullet Class setting
-  // overrides the whole lot.
+  // any class the designer adds alongside is donated too. Donation is the only route -
+  // there is no attribute that overrides it.
   const paginationBulletClass = await getOrCreateStyle('swiper-pagination-bullet');
+  // The active bullet is named by the one class the active element adds on top of the
+  // resting one. Starting on Swiper's own name keeps the bundled CSS working and leaves
+  // the designer a real element to restyle or rename.
+  const paginationBulletActiveClass = await getOrCreateStyle('swiper-pagination-bullet-active');
 
   const pagination = await parentEl.prepend(webflow.elementPresets.DOM);
   pagination.setTag('div');
@@ -257,6 +259,13 @@ export async function createPagination() {
   paginationBullet.setTag('button');
   paginationBullet.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET);
   paginationBullet.setStyles([paginationBulletClass]);
+
+  // Carries the bullet's classes plus one more; that extra class is what marks the active
+  // bullet, so it has to sit on top of exactly the same base for the difference to read.
+  const paginationBulletActive = await pagination.append(webflow.elementPresets.DOM);
+  paginationBulletActive.setTag('button');
+  paginationBulletActive.setAttribute(ATTR_WATERFALL_ELEMENT, EL_PAGINATION_BULLET_ACTIVE);
+  paginationBulletActive.setStyles([paginationBulletClass, paginationBulletActiveClass]);
 
   webflow.notify({
     type: 'Success',
@@ -272,15 +281,19 @@ export async function convertElementToPaginationBullet() {
   convertElementTo(EL_PAGINATION_BULLET, 'Pagination Bullet');
 }
 
+export async function convertElementToPaginationBulletActive() {
+  convertElementTo(EL_PAGINATION_BULLET_ACTIVE, 'Pagination Bullet Active');
+}
+
 export async function createScrollbar() {
   const parentEl = await webflow.getSelectedElement();
   if (!parentEl?.children) return;
 
   const scrollbarClass = await getOrCreateStyle('Scrollbar');
-  // Swiper builds the drag handle itself, but reuses the drag element below when it
-  // carries the class the handle is given. Starting it on Swiper's own class means the
-  // bundled CSS styles the handle out of the box, and any class the designer adds
-  // alongside is donated too. The Drag Class setting overrides the whole lot.
+  // Swiper reuses the drag element below as the handle, finding it by the class it
+  // donates. Starting it on Swiper's own class means the bundled CSS styles the handle
+  // out of the box, and any class the designer adds alongside is donated too. Donation
+  // is the only route - there is no attribute that overrides it.
   const scrollbarDragClass = await getOrCreateStyle('swiper-scrollbar-drag');
 
   const scrollbar = await parentEl.prepend(webflow.elementPresets.DOM);

@@ -1,6 +1,7 @@
-import { faCircle, faEllipsis, faSquare } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faCircleDot, faEllipsis, faSquare } from '@fortawesome/free-solid-svg-icons';
 import {
   convertElementToPaginationBullet,
+  convertElementToPaginationBulletActive,
   convertElementToPaginationContainer,
   createPagination,
 } from '../../lib/waterfallElements';
@@ -36,6 +37,10 @@ export default function PaginationScreen() {
           <Card onClick={convertElementToPaginationBullet} className="flex flex-col text-center">
             <FontAwesomeIcon icon={faCircle} className="mb-2 text-primary" size="1x" />
             Pagination Bullet
+          </Card>
+          <Card onClick={convertElementToPaginationBulletActive} className="flex flex-col text-center">
+            <FontAwesomeIcon icon={faCircleDot} className="mb-2 text-primary" size="1x" />
+            Pagination Bullet Active
           </Card>
         </div>
       </div>

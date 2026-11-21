@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useScrollRestoration } from '../../../hooks/useScrollRestoration';
 import Button from '../../../components/UI/Button';
 import { useWaterfallInstall } from '../hooks/useWaterfallInstall';
+import { useUpdateAnnouncement } from '../hooks/useWaterfallUpdate';
 
 export default function WaterfallWrapper() {
   useEffect(() => {
@@ -26,6 +27,9 @@ export function WaterfallLayout() {
   const { isLoading } = useWaterfall();
   const scrollContainerRef = useScrollRestoration();
 
+  // Mounted here, not in Setup, so the notification reaches people who never open that tab
+  useUpdateAnnouncement();
+
   return (
     <div>
       {isLoading && <Loader />}
@@ -33,7 +37,7 @@ export function WaterfallLayout() {
         <WellflowHeader />
         <div className="flex flex-1 overflow-hidden">
           <WaterfallSidebar />
-          <div ref={scrollContainerRef} className="flex-1 w-full min-w-0 overflow-hidden flex flex-col overflow-y-auto">
+          <div ref={scrollContainerRef} className="flex-1 w-full min-w-0 flex flex-col overflow-x-hidden overflow-y-auto">
             <Outlet />
           </div>
         </div>

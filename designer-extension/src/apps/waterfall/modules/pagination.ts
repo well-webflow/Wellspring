@@ -2,8 +2,6 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { WaterfallCategory } from '../waterfall';
 import PaginationScreen from '../components/modules/PaginationScreen';
 import {
-  ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
-  ATTR_PAGINATION_BULLET_CLASS,
   ATTR_PAGINATION_CLICKABLE,
   ATTR_PAGINATION_CLICKABLE_CLASS,
   ATTR_PAGINATION_CURRENT_CLASS,
@@ -18,6 +16,7 @@ import {
   ATTR_PAGINATION_PAGINATION_DISABLED_CLASS,
   ATTR_PAGINATION_PROGRESSBAR_FILL_CLASS,
   ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
+  ATTR_PAGINATION_PROGRESSBAR_OPPOSITE_CLASS,
   ATTR_PAGINATION_TOTAL_CLASS,
   ATTR_PAGINATION_TYPE,
   ATTR_PAGINATION_VERTICAL_CLASS,
@@ -42,26 +41,6 @@ export default function paginationCategory() {
         name: 'Bullets',
         id: 'pagination-dynamic',
         items: [
-          {
-            name: 'Bullet Class',
-            attr: ATTR_PAGINATION_BULLET_CLASS,
-            type: 'string',
-            // Left empty on purpose: the default is whatever the Pagination Bullet element
-            // donates, so there is no literal to compare against. A swiperDefault here would
-            // make typing that literal remove the attribute instead of setting it.
-            swiperDefault: '',
-            description:
-              'CSS class name given to each generated pagination bullet. Overrides the classes donated by the Pagination Bullet element; leave empty to use them.',
-            value: '',
-          },
-          {
-            name: 'Bullet Active Class',
-            attr: ATTR_PAGINATION_BULLET_ACTIVE_CLASS,
-            type: 'string',
-            swiperDefault: 'swiper-pagination-bullet-active',
-            description: 'CSS class name of currently active pagination bullet',
-            value: '',
-          },
           {
             name: 'Dynamic Bullets',
             attr: ATTR_PAGINATION_DYNAMIC_BULLETS,
@@ -107,7 +86,7 @@ export default function paginationCategory() {
           },
           {
             name: 'Progressbar Opposite Class',
-            attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE,
+            attr: ATTR_PAGINATION_PROGRESSBAR_OPPOSITE_CLASS,
             swiperDefault: 'swiper-pagination-progressbar-opposite',
             value: '',
             description: 'CSS class name of pagination progressbar opposite',
