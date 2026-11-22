@@ -41,6 +41,16 @@ export interface Release {
 /** Newest first. */
 export const RELEASES: Release[] = [
 	{
+		version: '1.6.0',
+		date: '2026-11-21',
+		breaking: true,
+		summary: 'Bullet and scrollbar handle classes come only from your own elements now.',
+		changes: [
+			'waterfall-pagination-bullet-class, waterfall-pagination-bullet-active-class and waterfall-scrollbar-drag-class were removed. The Pagination Bullet, Pagination Bullet Active and Scrollbar Drag elements are the only source of those classes now, so there is one place to set them instead of two. A leftover attribute is ignored rather than reported.',
+			'waterfall-el="pagination-bullet-active" is read again after being dropped in 1.5.0. Give it the bullet element\'s classes plus one more, and that extra class is the one applied to the active bullet.',
+		],
+	},
+	{
 		version: '1.5.4',
 		date: '2026-11-11',
 		summary: 'Parallax is explicit again.',
@@ -84,7 +94,6 @@ export const RELEASES: Release[] = [
 			'waterfall-autoplay-mode, waterfall-loop-mode and waterfall-data-one-way-movement were shortened to waterfall-autoplay, waterfall-loop and waterfall-one-way-movement.',
 			'Fade sliders no longer cross-fade by default. Add waterfall-fade-effect-mode="cross-fade" to keep the old look.',
 		],
-		migrationUrl: 'https://github.com/well-webflow/Waterfall/blob/master/docs/migration-1.5.md',
 	},
 	{
 		version: '1.3.1',

@@ -20,7 +20,7 @@ const SCOPES = ['sites:read', 'pages:read', 'authorized_user:read', 'custom_code
 // Bumping this is the whole upgrade: the CDN URL is built from it, and the Designer
 // Extension compares it against what each site has applied. Two things have to move
 // with it by hand — `integrityHash` below, and a new entry in src/releases.ts.
-const WATERFALL_VERSION = '1.5.4';
+const WATERFALL_VERSION = '1.6.0';
 
 export const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
@@ -30,7 +30,7 @@ export const WELL_WATERFALL = {
 	// SHA-256 of dist/well-waterfall.umd.js in the published tarball for the version above.
 	// Recompute on every bump: npm pack well-waterfall@<version>, then
 	// openssl dgst -sha256 -binary dist/well-waterfall.umd.js | openssl base64 -A
-	integrityHash: 'sha256-JFKgfjwvpKWUzZ2SjMWc3tDmiakSpWYmhhiCKyAoZdw=',
+	integrityHash: 'sha256-tkslpcSrmMuy9PzYsw8BK6mcLAEH8BxWnfYGdm7RkXg=',
 	location: 'footer' as const,
 };
 

@@ -1,6 +1,7 @@
 import { env, fetchMock } from 'cloudflare:test';
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import app, { WELL_WATERFALL } from '../src/index';
+import { describeUpdate } from '../src/releases';
 import { getToken, saveInstall } from '../src/db';
 
 const SITE = 'site123';
@@ -119,12 +120,27 @@ describe('status', () => {
 		});
 	});
 
-	it('reports a routine update within the 1.5 line', async () => {
+	it('reports the releases a site has yet to cross', async () => {
 		const body = await statusWithVersion('1.5.1');
 
-		expect(body).toMatchObject({ installed: true, installedVersion: '1.5.1', updateKind: 'routine' });
-		// Everything above 1.5.1, and nothing at or below it.
-		expect((body.updateReleases as Array<{ version: string }>).map((r) => r.version)).toEqual(['1.5.4', '1.5.3', '1.5.2']);
+		// Everything above 1.5.1, and nothing at or below it. The kind follows the pin:
+		// 1.6.0 is breaking, so a site on 1.5.1 is told so.
+		expect(body).toMatchObject({ installed: true, installedVersion: '1.5.1', updateKind: 'breaking' });
+		expect((body.updateReleases as Array<{ version: string }>).map((r) => r.version)).toEqual([
+			'1.6.0',
+			'1.5.4',
+			'1.5.3',
+			'1.5.2',
+		]);
+	});
+
+	it('reports a routine update when the hop crosses no breaking release', () => {
+		// Against an explicit target rather than the pin, so the routine path stays
+		// covered even while the pinned version happens to be a breaking one.
+		const update = describeUpdate('1.5.1', '1.5.4');
+
+		expect(update.kind).toBe('routine');
+		expect(update.releases.map((r) => r.version)).toEqual(['1.5.4', '1.5.3', '1.5.2']);
 	});
 
 	it('reports a breaking update when the hop crosses 1.5.0', async () => {
