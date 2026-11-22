@@ -40,71 +40,18 @@ export interface Release {
 
 /** Newest first. */
 export const RELEASES: Release[] = [
-	{
-		version: '1.6.0',
-		date: '2026-11-21',
-		breaking: true,
-		summary: 'Bullet and scrollbar handle classes come only from your own elements now.',
-		changes: [
-			'waterfall-pagination-bullet-class, waterfall-pagination-bullet-active-class and waterfall-scrollbar-drag-class were removed. The Pagination Bullet, Pagination Bullet Active and Scrollbar Drag elements are the only source of those classes now, so there is one place to set them instead of two. A leftover attribute is ignored rather than reported.',
-			'waterfall-el="pagination-bullet-active" is read again after being dropped in 1.5.0. Give it the bullet element\'s classes plus one more, and that extra class is the one applied to the active bullet.',
-		],
-	},
-	{
-		version: '1.5.4',
-		date: '2026-11-11',
-		summary: 'Parallax is explicit again.',
-		changes: [
-			'Parallax no longer turns itself on when it finds data-swiper-parallax elements. Set waterfall-parallax-enabled="true" to enable it.',
-		],
-	},
-	{
-		version: '1.5.3',
-		date: '2026-11-11',
-		summary: 'Autoplay controls work without being switched on, and hover-pause works at zero delay.',
-		changes: [
-			'The autoplay control button is now on by default whenever its waterfall-el elements are present. Set waterfall-autoplay-control-enabled="false" to turn it off.',
-			'Hover-pause now works for smooth autoplay (delay 0), which Swiper\'s own pauseOnMouseEnter cannot handle.',
-		],
-	},
-	{
-		version: '1.5.2',
-		date: '2026-11-06',
-		summary: 'Documentation domain moved to heywellspring.com.',
-	},
-	{
-		version: '1.5.1',
-		date: '2026-11-03',
-		summary: 'Pagination bullets and scrollbar handles use your own classes again.',
-		changes: [
-			'Classes on your pagination bullet and scrollbar drag elements are carried onto the generated elements, as they were before 1.5.0.',
-			'Setting waterfall-scrollbar-drag-class now removes the donor element from the page.',
-		],
-	},
-	{
-		version: '1.5.0',
-		date: '2026-11-02',
-		breaking: true,
-		summary: 'Attribute names were reorganised. Sliders built before 1.5.0 need their attributes updated.',
-		changes: [
-			'39 attributes were renamed and 9 were removed, with no backwards compatibility. An old name is ignored rather than reported, so the setting silently falls back to its default.',
-			'Effect options gained an -effect- segment (waterfall-coverflow-depth is now waterfall-coverflow-effect-depth).',
-			'Mousewheel options moved from waterfall-mouse-* to waterfall-mousewheel-*.',
-			'Autoplay options gained the group prefix (waterfall-delay is now waterfall-autoplay-delay).',
-			'waterfall-autoplay-mode, waterfall-loop-mode and waterfall-data-one-way-movement were shortened to waterfall-autoplay, waterfall-loop and waterfall-one-way-movement.',
-			'Fade sliders no longer cross-fade by default. Add waterfall-fade-effect-mode="cross-fade" to keep the old look.',
-		],
-	},
-	{
-		version: '1.3.1',
-		date: '2026-10-23',
-		breaking: true,
-		summary: 'Breakpoint suffixes were renamed to match Webflow.',
-		changes: [
-			'-lmobile became -mobile-large, -large became -desktop-small, and -xlarge became -desktop-large. -tablet and -desktop are unchanged.',
-			'Breakpoint pixel ranges changed to match Webflow, and values now cascade outward from Desktop.',
-		],
-	},
+	// Deliberately empty. Waterfall has no sites on an older version to warn, so there is
+	// nothing worth listing yet; the plumbing stays so a release can be announced the moment
+	// one matters. Add newest-first, and remember an entry here is what makes an upgrade
+	// report as breaking - with the list empty every hop reads as routine.
+	//
+	// {
+	// 	version: '1.6.0',
+	// 	date: '2026-11-21',
+	// 	breaking: true,
+	// 	summary: 'One line, shown as the headline.',
+	// 	changes: ['Specifics, shown as bullets underneath.'],
+	// },
 ];
 
 export type UpdateKind = 'none' | 'routine' | 'breaking';
@@ -153,7 +100,7 @@ export function compareVersions(a: string, b: string): number | null {
  * An unreadable or newer-than-target installed version yields 'none', so a site is
  * never nagged on the strength of a version string we don't understand.
  */
-export function describeUpdate(installed: string | null, target: string): UpdateInfo {
+export function describeUpdate(installed: string | null, target: string, releases: Release[] = RELEASES): UpdateInfo {
 	const none: UpdateInfo = { kind: 'none', from: installed, to: target, releases: [] };
 
 	if (!installed) return none;
@@ -162,7 +109,7 @@ export function describeUpdate(installed: string | null, target: string): Update
 	if (behind === null || behind >= 0) return none;
 
 	// Everything newer than what's installed, up to and including the target.
-	const crossed = RELEASES.filter((release) => {
+	const crossed = releases.filter((release) => {
 		const afterInstalled = compareVersions(release.version, installed);
 		const atOrBeforeTarget = compareVersions(release.version, target);
 		return afterInstalled !== null && afterInstalled > 0 && atOrBeforeTarget !== null && atOrBeforeTarget <= 0;

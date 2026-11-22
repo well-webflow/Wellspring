@@ -120,34 +120,47 @@ describe('status', () => {
 		});
 	});
 
-	it('reports the releases a site has yet to cross', async () => {
+	it('still offers the update when the changelog is empty', async () => {
+		// RELEASES is deliberately empty, so there is nothing to list and nothing marked
+		// breaking - but a site behind the pin must still be told an update exists.
 		const body = await statusWithVersion('1.5.1');
 
-		// Everything above 1.5.1, and nothing at or below it. The kind follows the pin:
-		// 1.6.0 is breaking, so a site on 1.5.1 is told so.
-		expect(body).toMatchObject({ installed: true, installedVersion: '1.5.1', updateKind: 'breaking' });
-		expect((body.updateReleases as Array<{ version: string }>).map((r) => r.version)).toEqual([
-			'1.6.0',
-			'1.5.4',
-			'1.5.3',
-			'1.5.2',
-		]);
+		expect(body).toMatchObject({ installed: true, installedVersion: '1.5.1', updateKind: 'routine' });
+		expect(body.updateReleases).toEqual([]);
 	});
 
-	it('reports a routine update when the hop crosses no breaking release', () => {
-		// Against an explicit target rather than the pin, so the routine path stays
-		// covered even while the pinned version happens to be a breaking one.
-		const update = describeUpdate('1.5.1', '1.5.4');
+	// The kind and the list come from the release history, which is empty for now, so these
+	// cover the logic against their own fixtures rather than whatever happens to be shipped.
+	describe('describeUpdate', () => {
+		const RELEASES_FIXTURE = [
+			{ version: '2.0.0', date: '2026-01-03', breaking: true, summary: 'Breaking.' },
+			{ version: '1.1.0', date: '2026-01-02', summary: 'Routine.' },
+			{ version: '1.0.1', date: '2026-01-01', summary: 'Routine.' },
+		];
 
-		expect(update.kind).toBe('routine');
-		expect(update.releases.map((r) => r.version)).toEqual(['1.5.4', '1.5.3', '1.5.2']);
-	});
+		it('is routine when the hop crosses no breaking release', () => {
+			const update = describeUpdate('1.0.0', '1.1.0', RELEASES_FIXTURE);
 
-	it('reports a breaking update when the hop crosses 1.5.0', async () => {
-		const body = await statusWithVersion('1.4.2');
+			expect(update.kind).toBe('routine');
+			expect(update.releases.map((r) => r.version)).toEqual(['1.1.0', '1.0.1']);
+		});
 
-		expect(body).toMatchObject({ updateKind: 'breaking' });
-		expect((body.updateReleases as Array<{ version: string; breaking?: boolean }>).some((r) => r.breaking)).toBe(true);
+		it('is breaking when the hop crosses a breaking release', () => {
+			const update = describeUpdate('1.0.0', '2.0.0', RELEASES_FIXTURE);
+
+			expect(update.kind).toBe('breaking');
+			expect(update.releases.map((r) => r.version)).toEqual(['2.0.0', '1.1.0', '1.0.1']);
+		});
+
+		it('is none when the installed version is at or past the target', () => {
+			expect(describeUpdate('2.0.0', '2.0.0', RELEASES_FIXTURE).kind).toBe('none');
+			expect(describeUpdate('2.1.0', '2.0.0', RELEASES_FIXTURE).kind).toBe('none');
+		});
+
+		it('is none when the installed version cannot be read', () => {
+			expect(describeUpdate(null, '2.0.0', RELEASES_FIXTURE).kind).toBe('none');
+			expect(describeUpdate('not-a-version', '2.0.0', RELEASES_FIXTURE).kind).toBe('none');
+		});
 	});
 
 	it('does not nag when the version cannot be read', async () => {
@@ -169,8 +182,14 @@ describe('releases', () => {
 		};
 
 		expect(body.latestVersion).toBe(WELL_WATERFALL.version);
-		expect(body.releases[0].version).toBe(WELL_WATERFALL.version);
-		expect(body.releases.every((r) => r.summary.length > 0)).toBe(true);
+		expect(Array.isArray(body.releases)).toBe(true);
+
+		// RELEASES is deliberately empty for now. Both checks re-arm the moment an entry is
+		// added: the newest one should be the version being pinned, and each needs a headline.
+		if (body.releases.length > 0) {
+			expect(body.releases[0].version).toBe(WELL_WATERFALL.version);
+			expect(body.releases.every((r) => r.summary.length > 0)).toBe(true);
+		}
 	});
 });
 
