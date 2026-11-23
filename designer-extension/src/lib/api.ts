@@ -26,6 +26,9 @@ export interface SiteStatus {
   updateReleases: Release[];
 }
 
+/**
+ * Helper function to call the API with the current site's ID and the user's idToken.
+ */
 async function call<T>(path: string, method: 'GET' | 'POST' = 'POST'): Promise<T> {
   const [idToken, siteInfo] = await Promise.all([webflow.getIdToken(), webflow.getSiteInfo()]);
 
@@ -85,21 +88,15 @@ export async function checkStatus(): Promise<SiteStatus> {
 }
 
 /**
- * Opens Webflow authorization in a new window. Poll checkStatus() to see when it completes: the window's
- * `closed` flag can't be trusted from the Designer, where it reads true while the window is still open.
+ * Opens Webflow authorization in a new window.
  */
 export function launchWebflowAuth() {
-  window.open(`${API_BASE}/auth`, '_blank');
+  window.open(`${API_BASE}/auth`, '_blank', 'noopener,noreferrer');
 }
 
 export class NotAuthorizedError extends Error {}
 
-/**
- * Registers the pinned Waterfall version on the site and applies it.
- *
- * This is also the *update* path: every version of the script shares one id, so
- * applying a new one replaces whatever was there. See applyScript in the Worker.
- */
+/** Registers the pinned Waterfall version on the site and applies it. */
 export const installWaterfall = () =>
   call<{ ok: true; scriptId: string; version: string; needsPublish: boolean; message: string }>('/install-waterfall');
 

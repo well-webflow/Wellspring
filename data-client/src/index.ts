@@ -17,15 +17,12 @@ interface SitesResponse {
 
 const SCOPES = ['sites:read', 'pages:read', 'authorized_user:read', 'custom_code:read', 'custom_code:write'].join(' ');
 
-// Bumping this is the whole upgrade: the CDN URL is built from it, and the Designer
-// Extension compares it against what each site has applied. Two things have to move
-// with it by hand — `integrityHash` below, and a new entry in src/releases.ts.
+// Update src/releases.ts first, then bump this and the hash, then deploy the worker, then publish the extension.
 const WATERFALL_VERSION = '1.6.0';
 
 export const WELL_WATERFALL = {
 	displayName: 'Well Waterfall',
 	version: WATERFALL_VERSION,
-	// Exact file, not the bare package URL: jsDelivr generates that response dynamically, so SRI can't be pinned to it.
 	hostedLocation: `https://cdn.jsdelivr.net/npm/well-waterfall@${WATERFALL_VERSION}/dist/well-waterfall.umd.js`,
 	// SHA-256 of dist/well-waterfall.umd.js in the published tarball for the version above.
 	// Recompute on every bump: npm pack well-waterfall@<version>, then
@@ -40,13 +37,30 @@ const app = new Hono<AppEnv>();
 // (e.g. http://localhost:1337) in CORS_DEV_ORIGINS in .dev.vars; never set it in production.
 const EXTENSION_ORIGINS = ['https://6a5e8b1540168e9c517f1e0b.webflow-ext.com'];
 
+/**
+ * Only loopback origins may be added through CORS_DEV_ORIGINS. The variable exists for
+ * `wrangler dev`, and a stray value on the deployed Worker would otherwise hand a public
+ * origin access to authorized endpoints. This makes that mistake impossible rather than
+ * relying on the comment above being obeyed.
+ */
+function isLoopbackOrigin(origin: string): boolean {
+	try {
+		const { protocol, hostname } = new URL(origin);
+		return protocol === 'http:' && (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]');
+	} catch {
+		return false;
+	}
+}
+
 app.use(
 	'/sites/*',
 	cors({
 		origin: (origin, c) => {
+			if (EXTENSION_ORIGINS.includes(origin)) return origin;
+
 			const env = c.env as AppEnv['Bindings'];
 			const devOrigins = env.CORS_DEV_ORIGINS?.split(',').map((o) => o.trim()) ?? [];
-			return [...EXTENSION_ORIGINS, ...devOrigins].includes(origin) ? origin : null;
+			return devOrigins.includes(origin) && isLoopbackOrigin(origin) ? origin : null;
 		},
 		allowHeaders: ['Content-Type', 'X-Webflow-Id-Token'],
 		allowMethods: ['GET', 'POST', 'OPTIONS'],
@@ -61,8 +75,6 @@ app.get('/sites/:siteId/status', async (c) => {
 	const siteId = c.req.param('siteId');
 	const token = c.get('accessToken'); // Retrieved from middleware after auth
 
-	// Every exit below carries the same shape, so the Designer Extension never has to
-	// tell "no update" apart from "we couldn't tell".
 	const unknown = (authorized: boolean) =>
 		c.json({
 			authorized,

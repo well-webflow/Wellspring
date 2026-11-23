@@ -13,7 +13,6 @@ export function useWaterfallInstall() {
   const pollingIntervalRef = useRef<number | null>(null);
   const pollingTimeoutRef = useRef<number | null>(null);
   const [isInstalling, setIsInstalling] = useState(false);
-  // True from clicking Install until authorization lands (then the install starts) or is cancelled
   const [isWaitingForAuth, setIsWaitingForAuth] = useState(false);
 
   /**
@@ -26,8 +25,6 @@ export function useWaterfallInstall() {
     try {
       const result = await installWaterfall();
 
-      // Custom code only reaches the live site on publish, so remember that one is owed.
-      // Advisory only: a failure here costs the reminder, not the install.
       try {
         const { siteId } = await webflow.getSiteInfo();
         markUpdated(siteId, result.version);
@@ -97,11 +94,15 @@ export function useWaterfallInstall() {
     setIsWaitingForAuth(false);
   }
 
+  /**
+   * Opens the authorization window, then waits for it to complete.
+   */
   async function authorizeAndInstall() {
+    launchWebflowAuth();
+
     setIsWaitingForAuth(true);
     setIsInstalling(true);
 
-    launchWebflowAuth();
     await webflow.notify({ type: 'Info', message: 'Please complete authorization in the opened window.' });
 
     // Clear any existing polling

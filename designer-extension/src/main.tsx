@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { HashRouter } from 'react-router';
+import { HashRouter } from './lib/hashHistory';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core';
 
