@@ -2,7 +2,7 @@
 
 **Finding:** Popups and new windows are allowed only on direct user interaction, never on load
 or a timer. Confirm this opens from a click or other user action.
-**Bundle reviewed:** `assets/index-CDtRkxXJ.js`
+**Bundle reviewed:** `assets/index-BLyBhK71.js`
 **Summary:** Confirmed. The bundle contains exactly one `window.open`, it is the first statement
 of a click handler, and it already passes `"noopener,noreferrer"`. Nothing opens a window on
 load or from a timer.

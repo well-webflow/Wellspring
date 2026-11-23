@@ -15,7 +15,7 @@ Searching the whole `src/` tree returns no match for any of:
 `dangerouslySetInnerHTML`, `innerHTML`, `outerHTML`, `document.write`, `insertAdjacentHTML`,
 `createContextualFragment`, `eval(`, `new Function`, `srcdoc`
 
-The same holds for the compiled application chunk, `assets/index-CDtRkxXJ.js`: zero occurrences
+The same holds for the compiled application chunk, `assets/index-BLyBhK71.js`: zero occurrences
 of every sink above, including `dangerouslySetInnerHTML`. Every piece of UI is rendered through
 JSX, so React escapes all interpolated values as text nodes.
 

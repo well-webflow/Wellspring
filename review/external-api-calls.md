@@ -2,7 +2,7 @@
 
 **Finding:** Network calls found. Every endpoint must use HTTPS and point to production, and
 credential headers must never go to non-Webflow domains.
-**Bundle reviewed:** `assets/index-CDtRkxXJ.js`
+**Bundle reviewed:** `assets/index-BLyBhK71.js`
 **Summary:** Both calls are HTTPS to our own production backend. The only header sent is the
 Webflow ID token, which is designed to be sent to the App's own backend and is verified with
 Webflow before anything happens. No Webflow API credential ever reaches the browser.
