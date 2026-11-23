@@ -17,7 +17,6 @@
     "wrangler": "^4.119.0"
   },
   "dependencies": {
-    "hono": "^4.13.0",
-    "webflow-api": "^3.3.4"
+    "hono": "^4.13.0"
   }
 }
