@@ -37,16 +37,6 @@ export default function HomeView() {
                     </div>
                   </Card>
                 </Link>
-                <Card
-                  disabled
-                  size="sm"
-                  className="flex items-center gap-3 border-2 border-border2 border-dashed bg-transparent"
-                >
-                  <div className="h-12 w-12 rounded-sm bg-background5"></div>
-                  <div className="">
-                    <Heading level={5}>More Coming Soon</Heading>
-                  </div>
-                </Card>
               </div>
             </Tab>
             <Tab label="About">
