@@ -1,8 +1,9 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import type { AppEnv } from './types';
 import { requireDesignerAuth } from './auth';
-import { getToken, saveInstall, consumeState, deleteInstall } from './db';
+import { getToken, saveInstall, saveState, consumeState, deleteInstall, OAUTH_STATE_TTL_MS } from './db';
 import { ensureScriptRegistered, applyScript, getAppliedScripts, WebflowError, TokenRevokedError, removeScriptEverywhere } from './webflow';
 import { RELEASES, describeUpdate } from './releases';
 
@@ -32,6 +33,12 @@ export const WELL_WATERFALL = {
 };
 
 const app = new Hono<AppEnv>();
+
+/**
+ * Names the browser session that started an OAuth authorization. /auth sets it, the callback
+ * reads it back, and the state recorded in D1 is only valid for the session it was issued to.
+ */
+const OAUTH_SESSION_COOKIE = 'wf_oauth_sid';
 
 // The production Designer Extension origin. For local development, list extra origins
 // (e.g. http://localhost:1337) in CORS_DEV_ORIGINS in .dev.vars; never set it in production.
@@ -213,10 +220,25 @@ app.post('/sites/:siteId/uninstall', async (c) => {
 });
 
 app.get('/auth', async (c) => {
+	// This is the App's own Install URL: it mints a fresh, single-use state per request and
+	// binds it to this browser before redirecting to Webflow. The callback then rejects any
+	// state that is missing, unknown, expired, already used, or issued to another browser.
 	const state = crypto.randomUUID();
+	const sessionId = crypto.randomUUID();
 	const redirectUri = new URL('/oauth/callback', c.req.url).toString();
 
-	await c.env.DB.prepare('INSERT INTO oauth_states (state, created_at) VALUES (?, ?)').bind(state, Date.now()).run();
+	setCookie(c, OAUTH_SESSION_COOKIE, sessionId, {
+		httpOnly: true,
+		// Always true in production: the Worker is only served over HTTPS on its custom domain.
+		// It relaxes solely under `wrangler dev`, where the flow runs over http://localhost and
+		// the browser would otherwise drop the cookie.
+		secure: new URL(c.req.url).protocol === 'https:',
+		sameSite: 'Lax',
+		path: '/',
+		maxAge: OAUTH_STATE_TTL_MS / 1000,
+	});
+
+	await saveState(c.env, state, sessionId);
 
 	const url = new URL('https://webflow.com/oauth/authorize');
 	url.searchParams.set('response_type', 'code');
@@ -255,10 +277,14 @@ const authPage = (title: string, message: string) => `<!doctype html>
 app.get('/oauth/callback', async (c) => {
 	const code = c.req.query('code');
 	const state = c.req.query('state');
+	// Set by /auth on the browser that started this flow. A callback arriving without it, or
+	// carrying a different one, did not come from a flow this Worker began for this browser.
+	const sessionId = getCookie(c, OAUTH_SESSION_COOKIE) ?? '';
 
 	// The user denied access (or Webflow reported another error): nothing to exchange
 	if (c.req.query('error')) {
-		if (state) await consumeState(c.env, state);
+		if (state) await consumeState(c.env, state, sessionId);
+		deleteCookie(c, OAUTH_SESSION_COOKIE, { path: '/' });
 		return c.html(
 			authPage(
 				'Authorization cancelled',
@@ -270,15 +296,18 @@ app.get('/oauth/callback', async (c) => {
 	if (!code || !state) {
 		return c.html(authPage('Authorization incomplete', 'Close this window and start again from the Wellspring App.'), 400);
 	}
-	if (!(await consumeState(c.env, state))) {
+	if (!(await consumeState(c.env, state, sessionId))) {
 		return c.html(
 			authPage(
 				'Authorization expired',
-				'This authorization link has expired or was already used. Close this window and start again from the Wellspring App.',
+				'This authorization link has expired, was already used, or was started in a different browser. Close this window and start again from the Wellspring App.',
 			),
 			400,
 		);
 	}
+
+	// The state is spent; the cookie has nothing left to prove.
+	deleteCookie(c, OAUTH_SESSION_COOKIE, { path: '/' });
 
 	const redirectUri = new URL('/oauth/callback', c.req.url).toString();
 
@@ -318,8 +347,10 @@ app.get('/oauth/callback', async (c) => {
 });
 
 app.onError((err, c) => {
+	// Logged in full, reported as nothing: an error message here can carry a Webflow API
+	// response body (see WebflowError) or a D1 error, neither of which belongs in a response.
 	console.error('Unhandled error:', err instanceof Error ? err.stack : err);
-	return c.text(`Error: ${err instanceof Error ? err.message : String(err)}`, 500);
+	return c.json({ error: 'Internal error' }, 500);
 });
 
 export default app;

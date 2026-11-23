@@ -158,14 +158,26 @@ export async function applyScript(
 	}
 }
 
-export async function removeScript(token: string, target: Target, scriptId: string): Promise<void> {
+/**
+ * Removes every applied script whose id contains `pattern` from one target, in a single PUT,
+ * and returns how many entries were actually removed.
+ *
+ * All matches go in one request rather than one per id: the PUT replaces the whole list, so
+ * removing them one at a time would re-send the others on every call for no reason.
+ */
+export async function removeScriptsMatching(token: string, target: Target, pattern: string): Promise<number> {
 	const existing = await getAppliedScripts(token, target);
-	if (!existing.some((s) => s.id === scriptId)) return;
+	const keep = existing.filter((s) => !s.id.includes(pattern));
+	const removed = existing.length - keep.length;
+
+	if (removed === 0) return 0;
 
 	await wf(token, customCodePath(target), {
 		method: 'PUT',
-		body: JSON.stringify({ scripts: existing.filter((s) => s.id !== scriptId) }),
+		body: JSON.stringify({ scripts: keep }),
 	});
+
+	return removed;
 }
 
 interface Page {
@@ -188,12 +200,10 @@ export async function removeScriptEverywhere(token: string, siteId: string, scri
 	let removedCount = 0;
 
 	// Remove from site-level
-	const siteScripts = await getAppliedScripts(token, { type: 'site', id: siteId });
-	const siteMatches = siteScripts.filter((s) => s.id.includes(scriptIdPattern));
-	if (siteMatches.length > 0) {
-		console.log(`Removing ${siteMatches.length} script(s) from site ${siteId}`);
-		await removeScript(token, { type: 'site', id: siteId }, siteMatches[0].id);
-		removedCount += siteMatches.length;
+	const removedFromSite = await removeScriptsMatching(token, { type: 'site', id: siteId }, scriptIdPattern);
+	if (removedFromSite > 0) {
+		console.log(`Removed ${removedFromSite} script(s) from site ${siteId}`);
+		removedCount += removedFromSite;
 	}
 
 	// Remove from all pages
@@ -202,13 +212,10 @@ export async function removeScriptEverywhere(token: string, siteId: string, scri
 
 	for (const page of pages) {
 		try {
-			const pageScripts = await getAppliedScripts(token, { type: 'page', id: page.id });
-			const pageMatches = pageScripts.filter((s) => s.id.includes(scriptIdPattern));
-
-			if (pageMatches.length > 0) {
-				console.log(`Removing ${pageMatches.length} script(s) from page ${page.id} (${page.title})`);
-				await removeScript(token, { type: 'page', id: page.id }, pageMatches[0].id);
-				removedCount += pageMatches.length;
+			const removedFromPage = await removeScriptsMatching(token, { type: 'page', id: page.id }, scriptIdPattern);
+			if (removedFromPage > 0) {
+				console.log(`Removed ${removedFromPage} script(s) from page ${page.id} (${page.title})`);
+				removedCount += removedFromPage;
 			}
 		} catch (err) {
 			// A revoked token means stop calling the API entirely

@@ -7,10 +7,12 @@ import { getToken, saveInstall } from '../src/db';
 const SITE = 'site123';
 const ACCESS_TOKEN = 'access-token';
 const WEBFLOW = 'https://api.webflow.com';
+const SESSION = 'session-abc';
+const SESSION_COOKIE = 'wf_oauth_sid';
 
 const SCHEMA = [
 	'CREATE TABLE IF NOT EXISTS installs (site_id TEXT PRIMARY KEY, access_token TEXT NOT NULL, token_iv TEXT NOT NULL, scopes TEXT, installed_at TEXT NOT NULL, updated_at TEXT NOT NULL)',
-	'CREATE TABLE IF NOT EXISTS oauth_states (state TEXT PRIMARY KEY, created_at INTEGER NOT NULL)',
+	'CREATE TABLE IF NOT EXISTS oauth_states (state TEXT PRIMARY KEY, session_id TEXT NOT NULL, created_at INTEGER NOT NULL)',
 ];
 
 const request = (path: string, method = 'GET') =>
@@ -256,12 +258,52 @@ describe('uninstall', () => {
 	});
 });
 
+describe('oauth install start', () => {
+	it('binds the state it issues to an HttpOnly session cookie', async () => {
+		const res = await app.request('/auth', {}, env);
+
+		expect(res.status).toBe(302);
+
+		const cookie = res.headers.get('Set-Cookie') ?? '';
+		expect(cookie).toContain(`${SESSION_COOKIE}=`);
+		expect(cookie).toContain('HttpOnly');
+		expect(cookie).toContain('SameSite=Lax');
+
+		const sessionId = new RegExp(`${SESSION_COOKIE}=([^;]+)`).exec(cookie)?.[1];
+		const state = new URL(res.headers.get('Location')!).searchParams.get('state');
+
+		expect(sessionId).toBeTruthy();
+		expect(state).toBeTruthy();
+
+		// The state is only usable by the browser holding that cookie
+		const row = await env.DB.prepare('SELECT session_id FROM oauth_states WHERE state = ?')
+			.bind(state)
+			.first<{ session_id: string }>();
+
+		expect(row?.session_id).toBe(sessionId);
+	});
+
+	it('issues a different state and session on every request', async () => {
+		const first = await app.request('/auth', {}, env);
+		const second = await app.request('/auth', {}, env);
+
+		const stateOf = (res: Response) => new URL(res.headers.get('Location')!).searchParams.get('state');
+
+		expect(stateOf(first)).not.toBe(stateOf(second));
+		expect(first.headers.get('Set-Cookie')).not.toBe(second.headers.get('Set-Cookie'));
+	});
+});
+
 describe('oauth callback', () => {
-	const saveState = (state: string, createdAt = Date.now()) =>
-		env.DB.prepare('INSERT INTO oauth_states (state, created_at) VALUES (?, ?)').bind(state, createdAt).run();
+	const saveState = (state: string, createdAt = Date.now(), sessionId = SESSION) =>
+		env.DB.prepare('INSERT INTO oauth_states (state, session_id, created_at) VALUES (?, ?, ?)')
+			.bind(state, sessionId, createdAt)
+			.run();
 	const stateExists = async (state: string) =>
 		!!(await env.DB.prepare('SELECT 1 FROM oauth_states WHERE state = ?').bind(state).first());
-	const callback = (query: string) => app.request(`/oauth/callback?${query}`, {}, env);
+	// Defaults to the session the state was issued to; pass null to send no cookie at all.
+	const callback = (query: string, sessionId: string | null = SESSION) =>
+		app.request(`/oauth/callback?${query}`, sessionId ? { headers: { Cookie: `${SESSION_COOKIE}=${sessionId}` } } : {}, env);
 
 	it('shows a cancelled page when the user denies access', async () => {
 		await saveState('s1');
@@ -285,6 +327,35 @@ describe('oauth callback', () => {
 		await saveState('old', Date.now() - 16 * 60 * 1000);
 
 		const res = await callback('code=abc&state=old');
+
+		expect(res.status).toBe(400);
+		expect(await res.text()).toContain('Authorization expired');
+	});
+
+	// No interceptors in the three tests below: with net connect disabled, reaching the token
+	// exchange at all would fail the test. That is the point - the code is never exchanged.
+	it('rejects a state issued to a different browser', async () => {
+		await saveState('s2');
+
+		const res = await callback('code=abc&state=s2', 'someone-elses-session');
+
+		expect(res.status).toBe(400);
+		expect(await res.text()).toContain('Authorization expired');
+		// Left in place: a replayed state must not cancel the real browser's pending install
+		expect(await stateExists('s2')).toBe(true);
+	});
+
+	it('rejects a callback carrying no session cookie', async () => {
+		await saveState('s3');
+
+		const res = await callback('code=abc&state=s3', null);
+
+		expect(res.status).toBe(400);
+		expect(await stateExists('s3')).toBe(true);
+	});
+
+	it('rejects a state that was never issued', async () => {
+		const res = await callback('code=abc&state=never-issued');
 
 		expect(res.status).toBe(400);
 		expect(await res.text()).toContain('Authorization expired');
